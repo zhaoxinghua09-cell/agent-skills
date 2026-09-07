@@ -1,0 +1,43 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Collection",
+  "name": "agent-skills · LGD 通用爆款技能集",
+  "description": "Four general-purpose AI agent skills built on the LGD Three Laws (registered · evidenced · gated). Context engineering, AI cost cutting, prompt-injection shielding, EU AI Act navigation.",
+  "url": "https://github.com/zhaoxinghua09-cell/agent-skills",
+  "author": {
+    "@type": "Organization",
+    "name": "LGD / SynomosAI",
+    "url": "https://github.com/zhaoxinghua09-cell/lgd-theory"
+  },
+  "license": "https://opensource.org/licenses/MIT",
+  "hasPart": [
+    {
+      "@type": "SoftwareSourceCode",
+      "name": "context-engineering",
+      "description": "Audit & trim what goes into the context window: relevance, redundancy, budget, decay.",
+      "codeRepository": "https://github.com/zhaoxinghua09-cell/agent-skills/tree/main/context-engineering",
+      "programmingLanguage": "Python"
+    },
+    {
+      "@type": "SoftwareSourceCode",
+      "name": "ai-cost-cutter",
+      "description": "Four knives to cut LLM bills: batching, local-model fallback, cache, model routing.",
+      "codeRepository": "https://github.com/zhaoxinghua09-cell/agent-skills/tree/main/ai-cost-cutter",
+      "programmingLanguage": "Python"
+    },
+    {
+      "@type": "SoftwareSourceCode",
+      "name": "prompt-injection-shield",
+      "description": "Scan untrusted content for prompt injection before it enters the AI context.",
+      "codeRepository": "https://github.com/zhaoxinghua09-cell/agent-skills/tree/main/prompt-injection-shield",
+      "programmingLanguage": "Python"
+    },
+    {
+      "@type": "SoftwareSourceCode",
+      "name": "eu-ai-act-companion",
+      "description": "Classify EU AI Act risk level, list role obligations, surface deadlines.",
+      "codeRepository": "https://github.com/zhaoxinghua09-cell/agent-skills/tree/main/eu-ai-act-companion",
+      "programmingLanguage": "Python"
+    }
+  ]
+}
