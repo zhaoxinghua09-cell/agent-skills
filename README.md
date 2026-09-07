@@ -32,6 +32,21 @@
 | [agent-trace-audit](./skills/agent-trace-audit) | Agent Trace Audit | 智能体行为留痕审计 | AI 合规 | Ledger of agent actions (ts · actor · action · target · gate) |
 | [eval-bench-builder](./skills/eval-bench-builder) | Eval Bench Builder | 评测基准构建器 | AI 工程方法 | Spec → reproducible JSONL eval set (input/expect/judge) |
 
+## 🔥 痛点型爆款（第三批 · 2026-09-08 加推 10 个 · 直击市场痛点）
+
+| Skill | EN | 中文 | Category | 痛点 → 解法 |
+|---|---|---|---|---|
+| [output-schema-guard](./skills/output-schema-guard) | Output Schema Guard | 结构化输出校验护栏 | AI 工程方法 | 模型 JSON 缺字段/类型飘 → schema 卡必填·类型·枚举+修复提示 |
+| [tool-call-guard](./skills/tool-call-guard) | Tool Call Guard | 工具调用安全闸门 | AI 安全 | agent 误删/误发/越权 → 按副作用分级，删/外发/支付拦截 |
+| [model-router](./skills/model-router) | Model Router | 模型路由省成本 | AI 工程方法 | 全用旗舰模型烧钱 → 按复杂度分流到刚好够用的档位 |
+| [fact-check-guard](./skills/fact-check-guard) | Fact Check Guard | 事实核查护栏 | AI 工程方法 | 幻觉/编造引用过审 → 逐声明标 已支撑/存疑/无来源 |
+| [agent-loop-guard](./skills/agent-loop-guard) | Agent Loop Guard | 失控循环护栏 | AI 工程方法 | agent 跑飞无限循环烧 token → 步数/重复/无进展三路熔断 |
+| [bias-auditor](./skills/bias-auditor) | Bias Auditor | 偏见审计 | AI 工程方法 | 输出带群体刻板印象 → 扫群体词/刻板表述+去偏建议 |
+| [prompt-version-control](./skills/prompt-version-control) | Prompt Version Control | 提示版本管理 | AI 工程方法 | 提示改乱回不去 → 版本+diff+效果分，可回滚选优 |
+| [api-resilience](./skills/api-resilience) | API Resilience | API 韧性 | AI 工程方法 | 外部接口抖动拖垮全场 → 退避重试+限流+熔断+降级 |
+| [mcp-security-scan](./skills/mcp-security-scan) | MCP Security Scan | MCP 安全扫描 | AI 安全 | MCP 是新攻击面 → 扫命令执行/文件写/外联/凭证暴露 |
+| [data-rights-guard](./skills/data-rights-guard) | Data Rights Guard | 训练数据版权护栏 | AI 合规 | 爬的数据侵权雷 → 查许可证/商用权/署名/来源，缺许可不出集 |
+
 ## 🛡 治理工具集（既有）
 
 | Skill | 说明 |
