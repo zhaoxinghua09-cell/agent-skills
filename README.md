@@ -47,6 +47,8 @@ docs/      头部弱点调研报告 + 发布质检台账
 - **快速安装（手动）**：下载 `release/<name>-v<version>.zip` 解压到 `~/.workbuddy/skills/` 或 Claude Code 技能目录
 - 三镜像同步发布，内容一致；以后更新以 GitHub 为主仓，Gitee/AtomGit 跟随。
 
+**相关理论**：本工具集的方法论基座是 **LGD 全程治理论 (Lifecycle Governance Doctrine)** ——凡自治之物，有籍·有证·有门禁。理论主页：https://medxpert.cn/lgd.html ｜ 仓库：https://github.com/zhaoxinghua09-cell/lgd-theory ｜ DOI: 10.5281/zenodo.22456647 ｜ A³ 法则（AI 造 AI 三定律）见 skills/a3-law-operational。
+
 ## 踩坑实录：发布通道的根因与正确姿势（2026-09-07 实测）
 
 本仓库发布过程中踩了一轮坑，把**根因**和**验证过的正确做法**固化在这里，避免后来者（包括未来的我们自己）重复踩：
