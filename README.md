@@ -18,7 +18,7 @@
 ## 目录
 
 ```
-skills/    7 个技能源码包（每包含 SKILL.md，多数含 LICENSE.md / scripts / references）
+skills/    8 个技能源码包（7 个主题技能 + 1 个发布通道工具技能 github-api-push-workaround）
 release/   对应的打包 zip（去敏质检后版本，含 MD5 台账）
 docs/      头部弱点调研报告 + 发布质检台账
 ```
@@ -46,6 +46,30 @@ docs/      头部弱点调研报告 + 发布质检台账
 - **快速安装（SkillHub）**：`skillhub install <skill-name> --namespace user_8a3569c1`
 - **快速安装（手动）**：下载 `release/<name>-v<version>.zip` 解压到 `~/.workbuddy/skills/` 或 Claude Code 技能目录
 - 三镜像同步发布，内容一致；以后更新以 GitHub 为主仓，Gitee/AtomGit 跟随。
+
+## 踩坑实录：发布通道的根因与正确姿势（2026-09-07 实测）
+
+本仓库发布过程中踩了一轮坑，把**根因**和**验证过的正确做法**固化在这里，避免后来者（包括未来的我们自己）重复踩：
+
+| 现象 | 真正的根因 | 正确做法 |
+|---|---|---|
+| 令牌验活 200，`git push` 却 401 | Windows 凭据管理器（manager helper）残留一把**已吊销的旧 PAT**，排在自建凭据库之前被 git 优先采用 | `git -c credential.helper=` 清空 helper 链后挂内联 helper；或到「凭据管理器 → Windows 凭据」删除对应 github.com 旧条目 |
+| 令牌没问题，`git push` 挂死超时（curl 却正常） | 沙箱/企业代理放行 API 域名，却掐断 git 传输通道 | `no_proxy="<远端域名>"` 直连推送，不走代理 |
+| 一轮"令牌全失效"（401/40013），其实令牌全是好的 | 取值工具输出带 `value: ` 标签前缀，脚本把**前缀+令牌**整段当凭据用 | 脚本取值用 `--raw` 出裸值；用格式化输出必须按前缀截断 |
+| 空仓库走 Git Data API 报 409 | 空仓库没有基线提交 | 先用 contents API 落一个初始提交，再 blob→tree→commit→ref |
+| Gitee 建仓后匿名访问 404 | 新仓库默认私有 | PATCH `private=false` 转公开 |
+| 同名同版本发布被拒，怀疑被抢注 | 多半是自己此前批次发过 | 先 `search` 查归属，再决定 bump patch 还是跳过 |
+
+**正确推送模板**（凭据只走环境变量，不进命令行 / 日志 / 截图）：
+
+```bash
+export GT=$(python get_secret.py <label> --raw)     # 从本地保险库取令牌
+git -c credential.helper= \
+    -c 'credential.helper=!f() { echo username=<用户名>; echo password=$GT; }; f' \
+    -c http.version=HTTP/1.1 push <远端URL> main
+```
+
+> 排查口诀：**先探测、再归因（401=凭据 / 超时=通道 / 大面积401=取值）、后重试**；禁止不归因连环盲试。完整决策树见 [`skills/github-api-push-workaround/`](skills/github-api-push-workaround/SKILL.md)。
 
 ## License
 

@@ -3,7 +3,7 @@ name: dpapi-local-vault
 slug: dpapi-local-vault
 displayName: 本地 DPAPI 免口令凭据库（Windows）
 description: 用 Windows DPAPI 把密钥/口令加密存到本机、仅当前用户可解、明文不落盘、带权限锁与泄漏标注的可复用凭据保管 skill。适合"当前 Windows 账号即信任边界"的本地保管场景。
-version: 1.0.0
+version: 1.0.1
 license: MIT
 platforms: [Windows]
 author: 潘布达 (Buda Pan) @SynomosAI
@@ -68,9 +68,15 @@ EOF
 
 ### 取回
 ```bash
-python get_secret.py tencent_cos            # 默认隐藏密值
-python get_secret.py tencent_cos --show      # 显示明文（仅本机内存，不落盘）
+python get_secret.py tencent_cos             # 默认隐藏密值（安全展示）
+python get_secret.py tencent_cos --show      # 显示明文（格式化输出，带 value:/secret_id: 标签前缀）
+python get_secret.py tencent_cos --raw       # 只输出裸值（脚本/管道用，2026-09-07 新增）
 ```
+
+⚠️ **前缀坑（2026-09-07 实测教训）**：`--show` 输出是带 `value: ` / `secret_id:`
+标签前缀的**格式化文本**，整段当令牌塞进 HTTP 头/URL，会得到大面积 401/40013
+"令牌失效"假象——令牌其实是好的。**脚本取值一律用 `--raw`**；用 `--show` 必须
+`sed -n 's/^value: *//p'` 截掉前缀。任何工具的人类可读输出都不能直接当凭据用。
 
 ## 安全要点（落地约束）
 - **明文零落盘**：密钥只在 `CryptUnprotectData` 解密后的内存里短暂存在；文件里永远是 DPAPI 密文。
