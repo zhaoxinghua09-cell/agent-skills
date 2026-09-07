@@ -1,12 +1,12 @@
 {
   "schema": "ownership-attestation/1.0",
-  "package": "发布质量门禁 Publish Quality Gate",
-  "version": "1.0.0",
+  "package": "未命名包",
+  "version": "0.0.0",
   "author": "注册老炮 (MedXpert)",
   "year": "2026",
-  "timestamp_utc": "2026-08-25T15:33:41.813123+00:00",
-  "timestamp_local": "2026-08-25T23:33:41.813131",
-  "package_fingerprint_sha256": "d645ba5757094fc94d1d6290360469ba93d9e87bc4e3630d9b59c5bc977c8205",
+  "timestamp_utc": "2026-09-07T06:54:12.119298+00:00",
+  "timestamp_local": "2026-09-07T14:54:12.119304",
+  "package_fingerprint_sha256": "1222b6e8cf8bc34d5b81fff92698aa14791a94a6fe5d67ce5d991612d68015c0",
   "files": [
     {
       "path": "LICENSE.md",
@@ -14,7 +14,7 @@
     },
     {
       "path": "SKILL.md",
-      "sha256": "b51031276f8ad6fd3b195b9c4ffa3f4aec0e419920f9f703db578735072ab234"
+      "sha256": "8e5c653247c875afce300937903f5b364cd80ea9d49e91aeb6f83c63e6316ec8"
     },
     {
       "path": "scripts/check_release.py",

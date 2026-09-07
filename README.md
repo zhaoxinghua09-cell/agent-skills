@@ -33,6 +33,20 @@ docs/      头部弱点调研报告 + 发布质检台账
 
 各技能版本与归属见其 SKILL.md frontmatter（版本 + author + license）。LGD 理论线技能（agent-evolution / a3-law-operational / ai-brain-learning-memory-pro）© SynomosAI，理论 CC BY 4.0（DOI 10.5281/zenodo.22456647），参照声明回链 [LGD-theory](https://github.com/zhaoxinghua09-cell/lgd-theory)。
 
+## 链接与获取方式（全渠道）
+
+| 渠道 | 入口 | 说明 |
+|---|---|---|
+| GitHub | https://github.com/zhaoxinghua09-cell/agent-skills | 主仓（本页），`git clone https://github.com/zhaoxinghua09-cell/agent-skills.git` |
+| Gitee | https://gitee.com/stevenzhao26/agent-skills | 国内镜像，`git clone https://gitee.com/stevenzhao26/agent-skills.git` |
+| AtomGit / GitCode | https://gitcode.com/gcw_PcK6ZWCL/agent-skills | 第三镜像，`git clone https://atomgit.com/gcw_PcK6ZWCL/agent-skills.git` |
+| SkillHub 市场 | `skillhub install session-continuity-protocol` | 已上架 6 件：session-continuity-protocol / dpapi-local-vault / medxpert-brain-learning-memory / agent-evolution / a3-law-operational / publish-quality-gate（namespace `@user_8a3569c1`） |
+| Hugging Face | https://huggingface.co/zhaoxinghua09/skills | 51 件批量镜像仓（2026-08-31 发布） |
+
+- **快速安装（SkillHub）**：`skillhub install <skill-name> --namespace user_8a3569c1`
+- **快速安装（手动）**：下载 `release/<name>-v<version>.zip` 解压到 `~/.workbuddy/skills/` 或 Claude Code 技能目录
+- 三镜像同步发布，内容一致；以后更新以 GitHub 为主仓，Gitee/AtomGit 跟随。
+
 ## License
 
 - 代码与文档：MIT（各包附 LICENSE）

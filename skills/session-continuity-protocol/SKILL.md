@@ -1,18 +1,22 @@
 ---
 name: session-continuity-protocol
 description: "跨工作区 / 跨会话记忆连续性协议（潘布达首发）。触发场景：新会话开局、用户说「续上上下文 / 你还记得吗 / 你失忆了」、或要做任何连续性敏感任务（公众号发稿、品牌资产、发布阻塞、密钥投递、项目状态）之前。加载后严格跑「开局四步」把已固化事实回灌，避免在已定稿事项上重复问用户、避免失忆。真源 = 文件层（_ACTIVE_PROJECTS.md + 账号 MEMORY.md）优先于 localmem 语义层兜底。"
-version: 1.0
+version: 1.0.0
 agent_created: true
-author: 潘布达 / Paredros (内容发布运营团主理人)
+author: 潘布达 (Buda Pan) @SynomosAI
 license: MIT
-category: memory-learning
-platforms: [workbuddy]
+category: 通用技能
+platforms: [WorkBuddy, Claude Code, Windows, macOS, Linux]
 read_when:
   - 新会话开始、用户还没说具体任务前（默认主动跑）
   - 用户质疑「你失忆了 / 怎么又忘了 / 昨天不是已经…」
   - 要做公众号发稿、品牌资产、发布阻塞、密钥投递类任务前
   - 跨工作区接续上一个会话的半成品（如推送草稿箱仍卡在哪）
 tags: [continuity, memory, localmem, cross-session, 开局四步, 失忆, 跨工作区]
+slug: session-continuity-protocol
+displayName: 跨会话连续性协议（开局四步）
+display_name: 跨会话连续性协议（开局四步）
+title: 跨会话连续性协议（开局四步）
 ---
 
 # session-continuity-protocol · 跨会话记忆连续性协议
@@ -102,3 +106,11 @@ Glob <你的工作区根>/*/.workbuddy/memory/MEMORY.md  → 读最近修改的
 - [ ] 连续性敏感任务执行前已掌握「号名/VI/QR/阻塞/密钥」等已固化项
 - [ ] 未向用户重复询问已定稿事项
 - [ ] 若发现新终态事实，已落文件层 + localmem
+
+---
+
+## 版权与许可
+
+- © 2026 SynomosAI。本技能按 MIT 许可证开源（见 LICENSE.md）；软件依 LICENSE 使用，零数据收集。
+- **知识版权声明**：本作品汇集的方法论、协议流程与结构化知识，其编排与原创表达归 SynomosAI 所有；未经书面许可，不得复制、转载、摘编、转售或用于训练任何模型 / 商业系统。
+- **免责声明**：本作品按「现状」（AS IS）提供，不提供任何明示或暗示担保；使用风险由使用者自行承担，因使用所致任何损失作者不承担责任。

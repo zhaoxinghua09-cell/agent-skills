@@ -10,6 +10,10 @@ agent_created: true
 author: 潘布达 (Buda Pan) @SynomosAI
 license: MIT
 category: AI工程
+slug: agent-evolution
+displayName: Agent 复盘进化飞轮（复盘→固化）
+title: Agent 复盘进化飞轮（复盘→固化）
+platforms: [WorkBuddy, Claude Code, Windows, macOS, Linux]
 ---
 
 <div align="center">

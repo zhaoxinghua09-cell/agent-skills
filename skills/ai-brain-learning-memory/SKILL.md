@@ -25,6 +25,8 @@ tags:
   - 记忆安全
   - 人脑学习法
   - AI学习方法论
+slug: medxpert-brain-learning-memory
+displayName: AI大脑学习记忆方法论
 ---
 
 # AI 大脑学习记忆方法论

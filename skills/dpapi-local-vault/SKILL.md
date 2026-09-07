@@ -6,10 +6,12 @@ description: 用 Windows DPAPI 把密钥/口令加密存到本机、仅当前用
 version: 1.0.0
 license: MIT
 platforms: [Windows]
-author: 老二(Paredros)
+author: 潘布达 (Buda Pan) @SynomosAI
 category: 安全工具
 tags: [凭据管理, DPAPI, 本地加密, 免口令, Windows, 密钥保管]
 agent_created: true
+title: 本地 DPAPI 免口令凭据库（Windows）
+display_name: 本地 DPAPI 免口令凭据库（Windows）
 ---
 
 # 本地 DPAPI 免口令凭据库（Windows）
@@ -98,3 +100,11 @@ python get_secret.py tencent_cos --show      # 显示明文（仅本机内存，
 
 ## 真实案例
 本机保险库 `~/.ucvault_local/tencent_cos.enc`（Windows 即 `%USERPROFILE%\.ucvault_local\tencent_cos.enc`）即此法保管的一把腾讯云 COS 密钥（root 级，已标注 EXPOSED_PENDING_ROTATION，待用户在 CAM 禁用/轮换）。
+
+---
+
+## 版权与许可
+
+- © 2026 SynomosAI。本技能按 MIT 许可证开源（见 LICENSE.md）；软件依 LICENSE 使用，零数据收集。
+- **知识版权声明**：本作品汇集的方法论、协议流程与结构化知识，其编排与原创表达归 SynomosAI 所有；未经书面许可，不得复制、转载、摘编、转售或用于训练任何模型 / 商业系统。
+- **免责声明**：本作品按「现状」（AS IS）提供，不提供任何明示或暗示担保；使用风险由使用者自行承担，因使用所致任何损失作者不承担责任。

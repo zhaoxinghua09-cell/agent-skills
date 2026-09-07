@@ -19,11 +19,11 @@
 任何直接或间接损失，作者不承担责任。
 
 ## 4. 发布时间戳
-- 发布时间（UTC）：2026-09-07T06:54:12.119298+00:00
-- 发布时间（本地）：2026-09-07T14:54:12.119304
+- 发布时间（UTC）：2026-09-07T06:42:05.773164+00:00
+- 发布时间（本地）：2026-09-07T14:42:05.773174
 
 ## 5. 作品指纹（内容哈希）
-- 包指纹 SHA-256：1222b6e8cf8bc34d5b81fff92698aa14791a94a6fe5d67ce5d991612d68015c0
+- 包指纹 SHA-256：35d0cb386d9f883fc30cc905d7f3a302b959204400f29827458e43c427ac0d23
 - 本指纹由发布包内全部文件的哈希按确定顺序合成，可作为该版本
   「于上述时间由 注册老炮 (MedXpert) 发布」的完整性标识。篡改任一文件即导致指纹变化。
 - 加强权属：可将本指纹锚定至可信时间戳服务（RFC3161 TSA）或区块链，
@@ -32,8 +32,9 @@
 ## 附：文件清单与逐文件哈希
 | 文件 | SHA-256 |
 |---|---|
-| LICENSE.md | 5416746360f13e79761cd77b2a7655ff5446803e513f206e31e93a7abd3091ac |
-| SKILL.md | 8e5c653247c875afce300937903f5b364cd80ea9d49e91aeb6f83c63e6316ec8 |
-| scripts/check_release.py | 724fa7a08279daa2ada9978ad4d04ea4eeb768a8587e7f1f09ab5b6c5e9bd2c3 |
-| security-radar.svg | 9421134119ba9e0a8faea832aefe33e3222379bdc1e366baa074d820f83cf57f |
-| security_results.json | 2cb96e726d0a3d76eaefc8365715951376e20180a83bad704ea8e98d48a7faa1 |
+| LICENSE.md | cb22d60abe4164f2533e38d687ca3515ddabfc37aed4e603528e99d4dd6f20b4 |
+| SKILL.md | 384e8c17510fa3e6ea353d8bd4f9c35a317674d914db9172d06740bf356a9ddf |
+| __pycache__/get_secret.cpython-313.pyc | 4e72a8348658daa88159762f022fdc18ab8c1e82d0d223450b40bb098c7e37ad |
+| __pycache__/store_secret.cpython-313.pyc | 13d3279fc04bebf676444e8ec75e566122b2f7cfa94d4653ce995357587de737 |
+| get_secret.py | 8c513a4c9cdef2b041a1b90539e3ee6890cdb2f0cd6dcc04e81ff5bdedbbfbbc |
+| store_secret.py | 7f359639ddc55ee7cf7235bdce94b2fc161617038cac7d61b3d32b34dcbb3d10 |

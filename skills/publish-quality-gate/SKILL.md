@@ -8,8 +8,9 @@ license: MIT
 category: 办公效率
 platforms: [WorkBuddy, QClaw, ima, Claude Code, Cursor]
 agent_created: true
-version: "1.0.0"
+version: "1.0.1"
 tags: [发布质量, 发布前检查, 敏感扫描, 脱敏, TRACE, 安全审计]
+slug: publish-quality-gate
 ---
 
 # 发布质量门禁（Publish Quality Gate）

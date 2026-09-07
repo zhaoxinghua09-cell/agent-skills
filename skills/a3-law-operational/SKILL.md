@@ -5,7 +5,7 @@ display_name_en: A³ Law Operational
 description: '把「A³ 法则（AI 造 AI 三定律）」从原则落成可执行的工程规矩：① 触发阈值（什么动作算"造/改 AI"或"重大自主行动"，须进入 A³ 评审）；② 事前评估清单（意图/影响/可逆性/监督）；③ 事后复盘与升级/拒绝条件。配触发判定树与评分卡，让任何 AI 在动"造/改另一个 AI"或高影响动作前先过三关。触发词：A³法则、AI造AI三定律、AI自主造AI、触发阈值、自我修改、自主行动评估、AI三定律、造AI评审。'
 description_zh: '把「A³ 法则（AI 造 AI 三定律）」从原则落成可执行的工程规矩：① 触发阈值（什么动作算"造/改 AI"或"重大自主行动"，须进入 A³ 评审）；② 事前评估清单（意图/影响/可逆性/监督）；③ 事后复盘与升级/拒绝条件。配触发判定树与评分卡，让任何 AI 在动"造/改另一个 AI"或高影响动作前先过三关。触发词：A³法则、AI造AI三定律、AI自主造AI、触发阈值、自我修改、自主行动评估、AI三定律、造AI评审。'
 description_en: 'Operationalize the "A³ Laws" (AI-building-AI three laws) from principles into enforceable engineering rules: (1) trigger thresholds that define what counts as "building/modifying AI" or a "major autonomous action" requiring A³ review; (2) pre-action evaluation checklist (intent / impact / reversibility / oversight); (3) post-action review with escalation / reject conditions. Ships with a trigger decision tree and scoring card so any AI passes three gates before "building/modifying another AI" or any high-impact action. Trigger words: A³ law, AI-builds-AI three laws, self-modification, autonomous action evaluation, AI three laws, build-AI review.'
-version: 1.0.0
+version: "1.0.1"
 agent_created: true
 author: 潘布达 (Buda Pan) @SynomosAI
 license: MIT
@@ -22,6 +22,9 @@ tags:
   - 自主行动
   - 约束
   - 三定律
+slug: a3-law-operational
+displayName: A³ 法则：AI 造 AI 三定律
+title: A³ 法则：AI 造 AI 三定律
 ---
 
 <div align="center">

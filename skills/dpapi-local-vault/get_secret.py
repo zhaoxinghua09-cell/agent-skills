@@ -31,6 +31,8 @@ def main():
     ap = argparse.ArgumentParser(description="取回 DPAPI 本地库中的凭据（默认隐藏密值）")
     ap.add_argument("label")
     ap.add_argument("--show", action="store_true", help="显示密值明文")
+    ap.add_argument("--raw", action="store_true",
+                    help="只输出裸值（value 条目单行输出；secret_id 条目输出 'id<TAB>key'），无标签前缀——供脚本直接消费，勿打印到聊天/日志")
     ap.add_argument("--vault-dir", default=DEFAULT_VAULT)
     args = ap.parse_args()
     p = os.path.join(os.path.abspath(args.vault_dir), args.label + ".enc")
@@ -38,6 +40,12 @@ def main():
         print("NOT_FOUND: " + p)
         sys.exit(2)
     dec = json.loads(unprotect(base64.b64decode(open(p, "rb").read())))
+    if args.raw:
+        if "secret_id" in dec:
+            print(dec["secret_id"] + "\t" + dec.get("secret_key", ""))
+        else:
+            print(dec.get("value", ""))
+        return
     if "secret_id" in dec:
         print("secret_id:", dec["secret_id"])
         print("secret_key:", dec["secret_key"] if args.show else "<hidden, use --show to reveal>")
