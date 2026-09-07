@@ -1,0 +1,32 @@
+{
+  "schema": "ownership-attestation/1.0",
+  "package": "发布质量门禁 Publish Quality Gate",
+  "version": "1.0.0",
+  "author": "注册老炮 (MedXpert)",
+  "year": "2026",
+  "timestamp_utc": "2026-08-25T15:33:41.813123+00:00",
+  "timestamp_local": "2026-08-25T23:33:41.813131",
+  "package_fingerprint_sha256": "d645ba5757094fc94d1d6290360469ba93d9e87bc4e3630d9b59c5bc977c8205",
+  "files": [
+    {
+      "path": "LICENSE.md",
+      "sha256": "5416746360f13e79761cd77b2a7655ff5446803e513f206e31e93a7abd3091ac"
+    },
+    {
+      "path": "SKILL.md",
+      "sha256": "b51031276f8ad6fd3b195b9c4ffa3f4aec0e419920f9f703db578735072ab234"
+    },
+    {
+      "path": "scripts/check_release.py",
+      "sha256": "724fa7a08279daa2ada9978ad4d04ea4eeb768a8587e7f1f09ab5b6c5e9bd2c3"
+    },
+    {
+      "path": "security-radar.svg",
+      "sha256": "9421134119ba9e0a8faea832aefe33e3222379bdc1e366baa074d820f83cf57f"
+    },
+    {
+      "path": "security_results.json",
+      "sha256": "2cb96e726d0a3d76eaefc8365715951376e20180a83bad704ea8e98d48a7faa1"
+    }
+  ]
+}
