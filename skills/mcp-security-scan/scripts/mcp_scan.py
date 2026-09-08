@@ -24,12 +24,31 @@ def scan(name, desc):
         hits.append(("凭证暴露", "令牌前缀", "高"))
     return hits
 
+def load_tools(p):
+    """支持三种输入：@文件路径 / 已存在的纯文件路径 / 内联 JSON 字符串。
+    兼容 list[tool] 与 {"tools":[...]} 两种结构。"""
+    if p.startswith("@"):
+        p = p[1:]
+    if pathlib.Path(p).is_file():
+        raw = pathlib.Path(p).read_text(encoding="utf-8")
+    else:
+        raw = p
+    try:
+        data = json.loads(raw)
+    except json.JSONDecodeError as e:
+        raise SystemExit(f"工具清单不是合法 JSON：{e}")
+    if isinstance(data, dict) and isinstance(data.get("tools"), list):
+        data = data["tools"]
+    if not isinstance(data, list):
+        raise SystemExit("工具清单格式应为 list[{name,description}] 或 {\"tools\":[...]}")
+    return data
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--tools", required=True)
     ap.add_argument("--json", action="store_true")
     a = ap.parse_args()
-    tools = json.loads(pathlib.Path(a.tools).read_text(encoding="utf-8"))
+    tools = load_tools(a.tools)
     report = []
     high = 0
     for t in tools:
