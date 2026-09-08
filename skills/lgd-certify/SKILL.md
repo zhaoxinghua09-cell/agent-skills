@@ -62,3 +62,20 @@ python scripts/lgd_certify.py gate --dir ./my-ai       # 三律评审，PASS 签
 ## 版权与许可
 
 © MedXpert × SynomosAI · CC BY 4.0 · LGD-Powered。徽章体系见 medxpert.cn/badge。
+
+## 安装与使用矩阵
+
+```bash
+# 一键获取（skills CLI）
+npx skills add zhaoxinghua09-cell/agent-skills -g
+
+# 或手动：克隆后拷贝本技能到你的 Agent 技能目录
+git clone https://github.com/zhaoxinghua09-cell/agent-skills.git
+cp -r agent-skills/skills/lgd-certify ~/.claude/skills/
+```
+
+| Agent | 技能目录 | 运行示例 |
+|---|---|---|
+| Claude Code | `~/.claude/skills/lgd-certify/` | 让 Claude 按本技能 SKILL.md 工作流调用 `scripts/` |
+| Codex CLI / Cursor / WorkBuddy | 各自 skills 目录 | 同上，SKILL.md 即操作规程 |
+| 直接命令行 | 任意位置 | `python scripts/lgd_certify.py --help` |
