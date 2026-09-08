@@ -67,6 +67,8 @@
 | [evidence-chain-check](./skills/evidence-chain-check) | Legal Evidence-Chain Check | 法律证据链校验 | 跨域·LAW 纵深 | 证据链时间单调/主体一致/哈希链不断裂自动校验 |
 | [gov-disclosure-check](./skills/gov-disclosure-check) | Gov Disclosure Check | 政务公开披露校验 | 跨域·GOV 纵深 | 强制披露字段（决策依据/责任部门/时限/救济/数据来源）校验 |
 | [travel-rule-check](./skills/travel-rule-check) | Travel-Rule Check | 旅行规则校验 | 跨域·CRYPT 纵深 | VASP 转账收发方 KYC（姓名+账号/地址+地理）超阈强制校验 |
+| [lgd-badge-issuer](./skills/lgd-badge-issuer) | LGD Badge Issuer | 徽章签发器 | 闭环·徽章 | 三律全过才签发 lgd-certified 证书（SHA-256 指纹+签发台账），未过拒绝留痕 |
+| [lgd-badge-verify](./skills/lgd-badge-verify) | LGD Badge Verifier | 徽章验真器 | 闭环·徽章 | 验证书三重校验：指纹重算防篡改+证据哈希+台账对账（未吊销/未伪造） |
 
 > **Batch C 跨域首占（2026-09-08 · P-045）**：把三律逐条翻译进金融/法律/政务/隐私计算四大空白域的本域合规语言，做成"标准定义权占位件"——别人可抄功能，抄不走本域翻译与评判权。域码锚定 TH-FIN/LAW/GOV/CRYPT-001。
 > **Batch C 纵深工具（2026-09-08 · P-046）**：在占位守门件底座上产 5 个"能跑"的纵深合规工具（金融 calc/AML、法律证据链、政务披露、链上旅行规则），把标准定义权从占位升级为可执行能力。
