@@ -58,6 +58,12 @@
 | [agent-output-registry](./skills/agent-output-registry) | Output Registry | 产出有籍登记器 | 有籍 | 给 AI 产出发"籍"（指纹+模型/版本/权属），可溯源可证 |
 | [evidence-chain-builder](./skills/evidence-chain-builder) | Evidence Chain Builder | 论断有证证据链 | 有证 | 论断拆可验证证据链，治幻觉、强举证（不编造） |
 | [gate-policy-generator](./skills/gate-policy-generator) | Gate Policy Generator | 权限有门禁生成器 | 有门禁 | 从能力清单生成权限门禁策略（四道门禁+预算闸），防越权/误删误发/失控循环 |
+| [lgd-fin-guard](./skills/lgd-fin-guard) | Finance AI Compliance Guard | 金融AI合规守门 | 跨域·FIN | 把三律翻译进持牌机构语境（投顾/风控/反洗钱），占金融空白标准位 |
+| [lgd-law-ethic](./skills/lgd-law-ethic) | Legal AI Ethics Guard | 法律AI伦理守门 | 跨域·LAW | 把三律翻译进法律伦理语境（检索/起草/意见辅助），占法律空白标准位 |
+| [lgd-gov-guard](./skills/lgd-gov-guard) | Government AI Governance Guard | 政务AI治理守门 | 跨域·GOV | 把三律翻译进政务"不出域"语境（决策辅助/公开答复/数据治理），占政务空白标准位 |
+| [lgd-crypto-guard](./skills/lgd-crypto-guard) | Privacy-Compute Guard | 隐私计算守门 | 跨域·CRYPT | 把三律翻译进密文/最小化语境（联邦/密文/脱敏），占隐私计算空白标准位 |
+
+> **Batch C 跨域首占（2026-09-08 · P-045）**：把三律逐条翻译进金融/法律/政务/隐私计算四大空白域的本域合规语言，做成"标准定义权占位件"——别人可抄功能，抄不走本域翻译与评判权。域码锚定 TH-FIN/LAW/GOV/CRYPT-001。
 
 ## 🛡 治理工具集（既有）
 
