@@ -72,10 +72,21 @@
 | [ai-content-discloser](./skills/ai-content-discloser) | AI Content Discloser | AI 内容披露生成器 | 广谱·有证 | AI 参与（全生成/辅助/混合）内容一键生成合规披露声明（显式中/EN+隐式元数据+平台贴法），依据《AI生成合成内容标识办法》/EU AI Act Art.50 |
 | [agent-boarding-pass](./skills/agent-boarding-pass) | Agent Boarding Pass | 智能体登机牌 | 广谱·三律便携 | 给任何智能体签发可验证『登机牌』：身份+证据哈希+权限白名单+有效期，SHA-256 防篡改，一条命令验真；缺律拒发 |
 | [prompt-leak-scanner](./skills/prompt-leak-scanner) | Prompt Leak Scanner | 提示词泄漏扫描器 | 广谱·有门禁 | 提示词发布前扫五类风险：密钥/内网路径/PII/自定义敏感词/自我泄漏后门，高风险 rc=1 拦下 |
+| [data-minimizer](./skills/data-minimizer) | Data Minimizer | 给AI前脱敏器 | 广谱·有门禁 | 手机/邮箱/证件/长号/指定人名一键打码再交给 AI，输出脱敏文本+报告 |
+| [model-card-generator](./skills/model-card-generator) | Model Card Generator | 模型卡生成器 | 广谱·有籍 | 给任何 AI 系统生成一页身份卡：身份/用途/数据/限制/风险/联系人（MD+JSON） |
+| [ai-usage-policy](./skills/ai-usage-policy) | AI Usage Policy Generator | 团队AI使用守则生成器 | 广谱·有门禁 | 按团队/工具/禁区/上报线一键生成一页《AI 使用守则》 |
+| [ai-incident-log](./skills/ai-incident-log) | AI Incident Log | AI事故记录器 | 广谱·有证 | AI 失控/误操作事故 JSONL 台账：严重度/模型/处置/复盘字段+报表 |
+| [agent-kill-switch](./skills/agent-kill-switch) | Agent Kill Switch | 智能体紧急制动卡 | 广谱·有门禁 | 部署前生成制动卡：停止条件/断权动作/责任人/恢复；--check 缺项 rc=1 拦上线 |
+| [ai-reply-heuristics](./skills/ai-reply-heuristics) | AI Reply Heuristics | AI痕迹启发式检查器 | 广谱·有证 | AI 痕迹 0-100 启发式评分：套话/破折号/句长均匀度/排比（附免责，不构成判定） |
+| [citation-coverage-check](./skills/citation-coverage-check) | Citation Coverage Check | 引用覆盖率检查器 | 广谱·有证 | 含数字/论断句子的来源标注覆盖率，低于阈值 rc=1 并逐句列缺口 |
+| [ai-vendor-checklist](./skills/ai-vendor-checklist) | AI Vendor Checklist | AI供应商尽调清单 | 广谱·有籍 | 10 项 AI 采购尽调（数据权属/训练退出/事故SLA/审计/退出），--score 低于线 rc=1 |
+| [prompt-injection-drill](./skills/prompt-injection-drill) | Prompt Injection Drill | 提示词注入演练器 | 广谱·有门禁 | 为 system prompt 生成 8 类注入攻击演练用例+期望行为，上线前红队自测 |
+| [ai-decision-log](./skills/ai-decision-log) | AI Decision Log | AI决策留痕器 | 广谱·有籍+有证 | AI 参与决策 JSONL 留痕：决策/模型/证据哈希/人审人，report 标出无人审项 |
 
 > **Batch C 跨域首占（2026-09-08 · P-045）**：把三律逐条翻译进金融/法律/政务/隐私计算四大空白域的本域合规语言，做成"标准定义权占位件"——别人可抄功能，抄不走本域翻译与评判权。域码锚定 TH-FIN/LAW/GOV/CRYPT-001。
 > **Batch C 纵深工具（2026-09-08 · P-046）**：在占位守门件底座上产 5 个"能跑"的纵深合规工具（金融 calc/AML、法律证据链、政务披露、链上旅行规则），把标准定义权从占位升级为可执行能力。
 > **Batch E 广谱爆款（2026-09-08 · P-049）**：把三律做成人人天天用得上的广谱件——AI 内容披露（有证）、智能体登机牌（三律便携）、提示词泄漏扫描（有门禁），覆盖"发 AI 内容 / 接 AI 智能体 / 发提示词"三大高频场景。
+> **Batch F 广谱爆款十连发（2026-09-08 · P-050）**：把三律铺进 AI 全使用周期——给 AI 发数据前脱敏、建 AI 有身份卡、管团队有守则、出事有台账、上线有制动卡、读文有痕迹提示、写报告查引用覆盖、采购有尽调清单、上线前注入演练、决策有留痕。
 
 ## 🛡 治理工具集（既有）
 
