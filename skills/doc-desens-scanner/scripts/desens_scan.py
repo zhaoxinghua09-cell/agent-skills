@@ -9,14 +9,21 @@ RULES = [
     # 用拼接构造令牌前缀，避免扫描器把本脚本自身当成密钥泄漏
     ("密钥", re.compile("(" + "s" + "k-[A-Za-z0-9]{8,}|" + "g" + "hp_[A-Za-z0-9]{8,}|" + r"api[_-]?key[=:]\S+|" + r"password[=:]\S+)", re.I)),
     # 拼接构造路径模式，避免扫描器把本脚本自身当成路径泄漏
-    ("内部路径", re.compile("(" + "C:" + "\\\\" + "[Uu]sers[\\w\\s.-]+|/" + "home/[\\w.-]+|[\\w.-]+\\.local)")),
+    # 覆盖：任意盘符绝对路径(C:\ / D:\ 含 Users 或任意路径)、/home/*、*.local
+    ("内部路径", re.compile(r"(?:[A-Za-z]:\\[Uu]sers\\[\w.\-]+|[A-Za-z]:\\[\w.\- \\\/]+|/[Uu]sers/[\w.\-]+|/home/[\w.\-]+|[\w.\-]+\.local)")),
+    # 内置项目代号启发式：CamelCase 项目词(≥10字符) 或 含 Project/Proj/Internal/Confidential 词
+    ("内部项目代号", re.compile(r"\b([A-Z][a-z]+\d*[A-Z]\w{6,}|[A-Za-z]*Project\w*|[A-Za-z]*Proj\w*|[A-Za-z]*Internal\w*|[A-Za-z]*Confidential\w*)\b")),
 ]
 
 def scan(text, extra=None):
     hits = []
     for name, pat in RULES:
         for m in pat.finditer(text):
-            hits.append((name, m.start(), m.group(0)))
+            frag = m.group(0)
+            # 过滤明显过短/误伤的 CamelCase（单词）
+            if name == "内部项目代号" and len(frag) < 8:
+                continue
+            hits.append((name, m.start(), frag))
     if extra:
         for w in extra:
             for m in re.finditer(re.escape(w), text):
