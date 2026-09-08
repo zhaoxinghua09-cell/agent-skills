@@ -57,6 +57,7 @@
 | [lgd-certify](./skills/lgd-certify) | LGD Certifier | 三律闭环认证 | 有籍+有证+有门禁 | 市场唯一 passport→证据链→门禁→徽章 闭环 CLI |
 | [agent-output-registry](./skills/agent-output-registry) | Output Registry | 产出有籍登记器 | 有籍 | 给 AI 产出发"籍"（指纹+模型/版本/权属），可溯源可证 |
 | [evidence-chain-builder](./skills/evidence-chain-builder) | Evidence Chain Builder | 论断有证证据链 | 有证 | 论断拆可验证证据链，治幻觉、强举证（不编造） |
+| [gate-policy-generator](./skills/gate-policy-generator) | Gate Policy Generator | 权限有门禁生成器 | 有门禁 | 从能力清单生成权限门禁策略（四道门禁+预算闸），防越权/误删误发/失控循环 |
 
 ## 🛡 治理工具集（既有）
 
