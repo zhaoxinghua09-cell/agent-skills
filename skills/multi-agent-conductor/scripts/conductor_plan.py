@@ -16,14 +16,23 @@ def main():
     ap.add_argument("--agents", type=int, default=3)
     ap.add_argument("--json", action="store_true")
     a = ap.parse_args()
+    if a.agents < 1:
+        ap.error("--agents 至少为 1")
     keys = list(ROLES.keys())
-    pick = (keys[:a.agents] if a.agents <= len(keys) else keys + ["研究"] * (a.agents - len(keys)))
+    core = keys[: min(a.agents, len(keys))]
+    # 超出核心角色数时，生成带独立编号与边界的「专员」角色，绝不复用同一角色
+    extras = [f"专员{i}" for i in range(1, a.agents - len(core) + 1)]
     plan = []
-    for i, role in enumerate(pick, 1):
-        allow, forbid = ROLES.get(role, ("按职责行动", "越界操作"))
+    for i, role in enumerate(core, 1):
+        allow, forbid = ROLES[role]
         plan.append({"id": i, "role": role, "allow": allow, "forbid": forbid})
+    for j, role in enumerate(extras):
+        allow = f"专属{j + len(core)}号位职责：单一定义、与他人不重叠（由总控显式指派）"
+        forbid = "复述/侵入他人职责、越界写操作"
+        plan.append({"id": len(core) + j + 1, "role": role, "allow": allow, "forbid": forbid})
+    note = "" if not extras else f"\n⚠️ {len(extras)} 个专员位超出核心角色集，职责必须由总控逐个显式指派，禁止默认复用。"
     if a.json:
-        print(json.dumps({"task": a.task, "roster": plan}, ensure_ascii=False, indent=2))
+        print(json.dumps({"task": a.task, "roster": plan, "note": note.strip()}, ensure_ascii=False, indent=2))
         return
     print(f"任务：{a.task}\n编排方案（{len(plan)} agent）：\n" + "=" * 50)
     for p in plan:
@@ -31,6 +40,8 @@ def main():
         print(f"     ✅ 允许：{p['allow']}")
         print(f"     🔒 禁止：{p['forbid']}")
     print("=" * 50)
+    if note:
+        print(note.strip())
     print("总控（conductor）唯一出口：汇总各 agent 产物、排冲突、拦截越界写操作。")
 
 if __name__ == "__main__":
