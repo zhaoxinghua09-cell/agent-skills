@@ -1,6 +1,49 @@
-# agent-skills · LGD 智能体技能集
+<div align="center">
 
-[![LGD Powered](https://raw.githubusercontent.com/zhaoxinghua09-cell/agent-skills/main/lgd-powered.png)](https://github.com/zhaoxinghua09-cell/lgd-theory)
+<img src="lgd-powered.png" width="150" alt="LGD Powered"/>
+
+# agent-skills · AI Agent 治理技能标准库
+
+**开源版「AI 治理操作系统的 Skill 层」——让每一个 AI 输出：有籍 · 有证 · 有门禁**
+
+[![Trendshift](https://img.shields.io/badge/Trendshift-submitting-14B8A6)](https://trendshift.io/)
+[![GitHub stars](https://img.shields.io/github/stars/zhaoxinghua09-cell/agent-skills?style=social)](https://github.com/zhaoxinghua09-cell/agent-skills/stargazers)
+[![last commit](https://img.shields.io/github/last-commit/zhaoxinghua09-cell/agent-skills)](https://github.com/zhaoxinghua09-cell/agent-skills/commits)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Skills](https://img.shields.io/badge/skills-63%2B-14B8A6)](#-lgd-护城河系列)
+[![Zero-dependency](https://img.shields.io/badge/zero--dependency-stdlib%20only-0B1F3A)](#)
+[![Platforms](https://img.shields.io/badge/platform-Claude%20Code%20%7C%20Codex%20%7C%20Cursor%20%7C%20WorkBuddy-blueviolet)](#-安装矩阵)
+
+[安装](#-安装矩阵) · [LGD 护城河系列](#-lgd-护城河系列) · [通用技能](#-通用爆款2026-09-08-新增) · [理论](https://github.com/zhaoxinghua09-cell/lgd-theory) · [在线门户](https://zhaoxinghua09-cell.github.io/lgd-hub/) · [反馈](https://github.com/zhaoxinghua09-cell/agent-skills/issues)
+
+`AI治理` `LGD三律` `Agent安全` `合规自动化` `提示词治理` `记忆治理` `技能工程` `金融合规` `区块链合规`
+
+简体（本页） · English（各技能 README 自带 EN 段） · [LGD 理论总账](https://github.com/zhaoxinghua09-cell/lgd-theory)
+
+</div>
+
+## 安装矩阵
+
+```bash
+# 方式一：skills CLI 一条命令（推荐）
+npx skills add zhaoxinghua09-cell/agent-skills -g
+
+# 方式二：手动克隆 + 拷贝需要的技能
+git clone https://github.com/zhaoxinghua09-cell/agent-skills.git
+cp -r agent-skills/skills/<skill-name> ~/.claude/skills/   # Claude Code 示例
+```
+
+| Agent | 技能目录 |
+|---|---|
+| Claude Code | `~/.claude/skills/` |
+| Codex CLI | `~/.codex/skills/`（或按官方 skills 路径） |
+| Cursor | 项目 `.cursor/skills/` 或全局配置 |
+| WorkBuddy | 连接器 → 本地技能目录导入 |
+| 其他 Agent | 任何支持 SKILL.md 规范的目录均可，直接拷入 |
+
+> 每个技能目录内 SKILL.md 亦附「安装与使用矩阵」小节，含该技能的运行示例。
+
+---
 
 **EN** — AI-agent skills built on the **LGD Three Laws** (registered · evidenced · gated). Each is standalone, zero-dependency, and ships a runnable script. Published to SkillPie + GitHub.
 
