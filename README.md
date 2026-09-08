@@ -62,8 +62,14 @@
 | [lgd-law-ethic](./skills/lgd-law-ethic) | Legal AI Ethics Guard | 法律AI伦理守门 | 跨域·LAW | 把三律翻译进法律伦理语境（检索/起草/意见辅助），占法律空白标准位 |
 | [lgd-gov-guard](./skills/lgd-gov-guard) | Government AI Governance Guard | 政务AI治理守门 | 跨域·GOV | 把三律翻译进政务"不出域"语境（决策辅助/公开答复/数据治理），占政务空白标准位 |
 | [lgd-crypto-guard](./skills/lgd-crypto-guard) | Privacy-Compute Guard | 隐私计算守门 | 跨域·CRYPT | 把三律翻译进密文/最小化语境（联邦/密文/脱敏），占隐私计算空白标准位 |
+| [fin-reg-calc](./skills/fin-reg-calc) | Finance AI Compliance Calculator | 金融AI合规计算 | 跨域·FIN 纵深 | 把三律"有证/有门禁"落地为投资者适当性+大额阈值可执行计算 |
+| [aml-sentinel](./skills/aml-sentinel) | AML Sentinel | 反洗钱哨兵 | 跨域·FIN 纵深 | 可疑交易模式检测（拆分/快进快出/跨境无KYC/大额未报备） |
+| [evidence-chain-check](./skills/evidence-chain-check) | Legal Evidence-Chain Check | 法律证据链校验 | 跨域·LAW 纵深 | 证据链时间单调/主体一致/哈希链不断裂自动校验 |
+| [gov-disclosure-check](./skills/gov-disclosure-check) | Gov Disclosure Check | 政务公开披露校验 | 跨域·GOV 纵深 | 强制披露字段（决策依据/责任部门/时限/救济/数据来源）校验 |
+| [travel-rule-check](./skills/travel-rule-check) | Travel-Rule Check | 旅行规则校验 | 跨域·CRYPT 纵深 | VASP 转账收发方 KYC（姓名+账号/地址+地理）超阈强制校验 |
 
 > **Batch C 跨域首占（2026-09-08 · P-045）**：把三律逐条翻译进金融/法律/政务/隐私计算四大空白域的本域合规语言，做成"标准定义权占位件"——别人可抄功能，抄不走本域翻译与评判权。域码锚定 TH-FIN/LAW/GOV/CRYPT-001。
+> **Batch C 纵深工具（2026-09-08 · P-046）**：在占位守门件底座上产 5 个"能跑"的纵深合规工具（金融 calc/AML、法律证据链、政务披露、链上旅行规则），把标准定义权从占位升级为可执行能力。
 
 ## 🛡 治理工具集（既有）
 
