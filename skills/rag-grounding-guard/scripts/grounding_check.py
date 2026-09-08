@@ -7,13 +7,21 @@ def entities(s):
     toks = re.findall(r"\d+(?:\.\d+)?%|[A-Za-z][A-Za-z0-9/+.-]{2,}|[\u4e00-\u9fff]{2,8}", s)
     return set(t.lower() for t in toks if len(t) >= 2)
 
+def load_text(p):
+    """支持三种输入：@文件路径 / 已存在的纯文件路径 / 内联文本。"""
+    if p.startswith("@"):
+        p = p[1:]
+    if pathlib.Path(p).is_file():
+        return pathlib.Path(p).read_text(encoding="utf-8")
+    return p
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--claims", required=True)
     ap.add_argument("--sources", required=True)
     a = ap.parse_args()
-    claims = [l.strip() for l in pathlib.Path(a.claims).read_text(encoding="utf-8").splitlines() if l.strip()]
-    src_text = pathlib.Path(a.sources).read_text(encoding="utf-8").lower()
+    claims = [l.strip() for l in load_text(a.claims).splitlines() if l.strip()]
+    src_text = load_text(a.sources).lower()
     covered, uncovered = [], []
     for c in claims:
         es = entities(c)
