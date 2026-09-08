@@ -3,7 +3,14 @@
 import argparse, json, pathlib, re
 
 def load_lines(p):
-    return [l.strip() for l in pathlib.Path(p).read_text(encoding="utf-8").splitlines() if l.strip()]
+    """支持三种输入：@文件路径 / 已存在的纯文件路径 / 内联文本(按行拆分)。"""
+    if p.startswith("@"):
+        p = p[1:]
+    if pathlib.Path(p).is_file():
+        raw = pathlib.Path(p).read_text(encoding="utf-8")
+    else:
+        raw = p
+    return [l.strip() for l in raw.splitlines() if l.strip()]
 
 def support(claim, sources):
     c = claim.lower()
