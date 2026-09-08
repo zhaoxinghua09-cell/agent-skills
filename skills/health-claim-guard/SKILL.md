@@ -32,3 +32,20 @@ python scripts/health_claim_guard.py --help
 
 ## LGD 三律（有籍·有证·有门禁）
 本技能是「LGD 三律」在 医疗健康 场景的落地件：让 AI 的每一次输出**有籍可查、有证可依、有门禁可控**。
+
+## 安装与使用矩阵
+
+```bash
+# 一键获取（skills CLI）
+npx skills add zhaoxinghua09-cell/agent-skills -g
+
+# 或手动：克隆后拷贝本技能到你的 Agent 技能目录
+git clone https://github.com/zhaoxinghua09-cell/agent-skills.git
+cp -r agent-skills/skills/health-claim-guard ~/.claude/skills/
+```
+
+| Agent | 技能目录 | 运行示例 |
+|---|---|---|
+| Claude Code | `~/.claude/skills/health-claim-guard/` | 让 Claude 按本技能 SKILL.md 工作流调用 `scripts/` |
+| Codex CLI / Cursor / WorkBuddy | 各自 skills 目录 | 同上，SKILL.md 即操作规程 |
+| 直接命令行 | 任意位置 | `python scripts/health_claim_guard.py --help` |
