@@ -169,7 +169,7 @@ cp -r agent-skills/skills/<skill-name> ~/.claude/skills/   # Claude Code 示例
 | [clin-eval-route-picker](./skills/clin-eval-route-picker) | Clinical Eval Route Picker | 免临床目录/同品种/临床试验三条路确定性判定（NMPA+EU） |
 | [pmcf-plan-check](./skills/pmcf-plan-check) | PMCF Plan Completeness Checker | PMCF 计划十要素过秤，交公告机构前补齐短板 |
 | [md-link-audit](./skills/md-link-audit) | Markdown Link Auditor | README 断链就地现形，默认离线、--net 才外呼 |
-| [changelog-gen](./skills/changelog-gen) | Changelog Generator | conventional commits → 规范 CHANGELOG 草稿，原子写 |
+| [changelog-draft-gen](./skills/changelog-draft-gen) | Changelog Draft Generator | conventional commits → 规范 CHANGELOG 草稿，原子写 |
 | [env-var-audit](./skills/env-var-audit) | Env Var Auditor | 环境变量账目对清：未文档化/冗余/硬编码密钥一网打尽 |
 
 ## 🛡 治理工具集（既有）
