@@ -47,6 +47,17 @@
 | [mcp-security-scan](./skills/mcp-security-scan) | MCP Security Scan | MCP 安全扫描 | AI 安全 | MCP 是新攻击面 → 扫命令执行/文件写/外联/凭证暴露 |
 | [data-rights-guard](./skills/data-rights-guard) | Data Rights Guard | 训练数据版权护栏 | AI 合规 | 爬的数据侵权雷 → 查许可证/商用权/署名/来源，缺许可不出集 |
 
+## 🏰 护城河旗舰 · LGD 三律治理系列（2026-09-08）
+
+把「凡自治之物：有籍·有证·有门禁」做成可安装、可传播、可占位的技能集群——这是 LGD 理论的**标准定义权**，是别人抄功能抄不走的护城河。
+
+| Skill | EN | 中文 | 三律 | 作用 |
+|---|---|---|---|---|
+| [lgd-three-laws-auditor](./skills/lgd-three-laws-auditor) | LGD Three-Laws Auditor | 三律合规自检器 | 总纲 | 把三律做成可自评标准 rubric，出评分卡（定义权载体） |
+| [lgd-certify](./skills/lgd-certify) | LGD Certifier | 三律闭环认证 | 有籍+有证+有门禁 | 市场唯一 passport→证据链→门禁→徽章 闭环 CLI |
+| [agent-output-registry](./skills/agent-output-registry) | Output Registry | 产出有籍登记器 | 有籍 | 给 AI 产出发"籍"（指纹+模型/版本/权属），可溯源可证 |
+| [evidence-chain-builder](./skills/evidence-chain-builder) | Evidence Chain Builder | 论断有证证据链 | 有证 | 论断拆可验证证据链，治幻觉、强举证（不编造） |
+
 ## 🛡 治理工具集（既有）
 
 | Skill | 说明 |
