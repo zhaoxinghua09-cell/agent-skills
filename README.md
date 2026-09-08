@@ -159,6 +159,19 @@ cp -r agent-skills/skills/<skill-name> ~/.claude/skills/   # Claude Code 示例
 | [regex-sandbox](./skills/regex-sandbox) | Regex Sandbox | 正则即写即测：匹配/分组/替换预览/标志位 |
 | [hash-check](./skills/hash-check) | File Hash Check | 目录 SHA-256 清单生成/校验，防篡改验完整性 |
 
+### 🏥 爆款精品批（Batch I · 医疗器械×3 + 通用×3 · 2026-09-08 · P-061）
+
+> 质量优先精磨批：每款都带**真法规/真工程逻辑**与确定性判定树，非模板量产。医疗器械线（MedXpert 获客面）：UDI 格式校验（GS1 Mod10 + NMPA/EU 双口径）、临床评价路径选择（NMPA 73 号通告 + MDCG 2020-6 判定树）、PMCF 计划完整性检查（MDCG 2020-7 十要素）。通用线：Markdown 链接体检（默认离线 CI 友好）、conventional commits 更新日志生成（last-good 原子写）、环境变量审计（硬编码密钥 + .env.example 账目）。全系列零依赖、JSON IR、修复回执错误码。rc=0 成功 / rc=1 发现问题 / rc=2 用法错误。
+
+| Skill | Name | 一句话 |
+|---|---|---|
+| [udi-format-validator](./skills/udi-format-validator) | UDI Format Validator | UDI 串体检：GS1 校验位/日期/生产标识/Basic UDI-DI 分型 |
+| [clin-eval-route-picker](./skills/clin-eval-route-picker) | Clinical Eval Route Picker | 免临床目录/同品种/临床试验三条路确定性判定（NMPA+EU） |
+| [pmcf-plan-check](./skills/pmcf-plan-check) | PMCF Plan Completeness Checker | PMCF 计划十要素过秤，交公告机构前补齐短板 |
+| [md-link-audit](./skills/md-link-audit) | Markdown Link Auditor | README 断链就地现形，默认离线、--net 才外呼 |
+| [changelog-gen](./skills/changelog-gen) | Changelog Generator | conventional commits → 规范 CHANGELOG 草稿，原子写 |
+| [env-var-audit](./skills/env-var-audit) | Env Var Auditor | 环境变量账目对清：未文档化/冗余/硬编码密钥一网打尽 |
+
 ## 🛡 治理工具集（既有）
 
 | Skill | 说明 |
