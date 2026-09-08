@@ -7,6 +7,11 @@ slug: gate-policy-generator
 version: 1.0.0
 display_name: 权限有门禁生成器
 display_name_en: Gate Policy Generator
+category: AI 治理
+author: 潘布达@LGD（凡自治之物）
+license: MIT
+platforms: [windows, macos, linux]
+agent_created: true
 ---
 
 # 权限有门禁生成器（Gate Policy Generator）
