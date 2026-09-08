@@ -49,11 +49,15 @@ def main():
     premium_frac = (1 - args.cheap_frac)
     local_from_premium = min(args.local_frac, premium_frac)
     remaining_premium = premium_frac - local_from_premium
-    c_cost = (c_cheap * args.cheap_frac + c_full * remaining_premium + args.price_local * (local_from_premium * args.calls)) * args.calls
+    # 注意：本地部分总价 = price_local * (本地调用数)；本地调用数已含 ×calls，
+    # 不能在外层再 ×calls（否则本地项被平方放大成百万级溢出）。
+    c_cost = (c_cheap * args.cheap_frac + c_full * remaining_premium) * args.calls \
+             + args.price_local * (local_from_premium * args.calls)
     c_cost *= (1 - args.batch_disc)
 
     def pct(v):
-        return (1 - v / baseline) * 100 if baseline else 0
+        # 钳制到 [0,100]：本地回退不可能比基线更贵，越界即异常输入
+        return max(0.0, min(100.0, (1 - v / baseline) * 100)) if baseline else 0.0
 
     print(f"{'方案':<22}{'月成本(USD)':>14}{'节省':>10}")
     print("-" * 48)
