@@ -1,0 +1,41 @@
+---
+name: lgd-badge-issuer
+description: lgd-badge-issuer — 三律全过才签发 lgd-certified 徽章证书（SHA-256 指纹 + 签发台账），未过拒绝并留痕。
+slug: lgd-badge-issuer
+version: 1.0.0
+display_name: LGD 徽章签发器
+display_name_en: LGD Badge Issuer
+agent_created: true
+author: Steven Zhao (MedXpert × SynomosAI)
+license: MIT
+category: AI 治理
+platforms: [claude-code, codebuddy, workbuddy, openai-agents]
+---
+
+# LGD 徽章签发器（LGD Badge Issuer）
+
+LGD 闭环最后一环：**护照（有籍）→ 证据链（有证）→ 门禁（有门禁）→ 徽章（签发/验真）**。
+
+## 解决什么痛点
+
+闭环最后一环『徽章』缺执行件：三律过了没有权威签发动作，护城河停在三张检查表。
+
+## 功能
+
+三律全过才签发 lgd-certified 徽章证书（SHA-256 指纹 + 签发台账），未过拒绝并留痕。
+
+## 用法
+
+见 `scripts/` 下脚本 `--help`。零依赖（stdlib only），Windows/Linux/macOS 均可运行。
+
+## 对应理论
+
+- LGD-I 有籍 / LGD-II 有证 / LGD-III 有门禁（凡自治之物）
+- 域码：TH-LGD-001（闭环执行器·徽章环）
+
+## 免责声明
+
+本工具为治理辅助框架，签发效力以使用方组织制度为准。
+
+---
+© MedXpert × SynomosAI · LGD-Powered
