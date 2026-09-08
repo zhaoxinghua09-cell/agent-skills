@@ -82,11 +82,22 @@
 | [ai-vendor-checklist](./skills/ai-vendor-checklist) | AI Vendor Checklist | AI供应商尽调清单 | 广谱·有籍 | 10 项 AI 采购尽调（数据权属/训练退出/事故SLA/审计/退出），--score 低于线 rc=1 |
 | [prompt-injection-drill](./skills/prompt-injection-drill) | Prompt Injection Drill | 提示词注入演练器 | 广谱·有门禁 | 为 system prompt 生成 8 类注入攻击演练用例+期望行为，上线前红队自测 |
 | [ai-decision-log](./skills/ai-decision-log) | AI Decision Log | AI决策留痕器 | 广谱·有籍+有证 | AI 参与决策 JSONL 留痕：决策/模型/证据哈希/人审人，report 标出无人审项 |
+| [loan-rate-disclosure](./skills/loan-rate-disclosure) | Loan Rate Disclosure Check | 借贷利率披露校验 | 金融 | 借贷报价须年化口径披露 + 不超基准4倍司法上限，超线即拦（TH-LGD-015） |
+| [kyc-checklist-gen](./skills/kyc-checklist-gen) | KYC Checklist Generator | KYC 材料齐备清单 | 金融 | 一键生成个人/企业 KYC 必备材料清单并核算齐备度，缺项即 FAIL（TH-LGD-016） |
+| [invoice-risk-scan](./skills/invoice-risk-scan) | Invoice Risk Scan | 发票要素风险扫描 | 金融/财税 | 报销入账前扫税号格式/金额/日期合理性，异常即拦（TH-LGD-017） |
+| [fund-fee-calc](./skills/fund-fee-calc) | Fund Fee & Net Return Calc | 资管费率净收益试算 | 金融 | 三费总成本+净收益试算；宣传含保本承诺即 FAIL（资管新规红线）（TH-LGD-018） |
+| [wallet-address-check](./skills/wallet-address-check) | Wallet Address Check | 链上地址格式校验 | 区块链 | 转账前校验 EVM/BTC系/TRON 地址格式与链系归属，可疑即拦（TH-LGD-019） |
+| [token-disclosure-check](./skills/token-disclosure-check) | Token Disclosure Check | 代币信息披露检查 | 区块链 | 白皮书必备要素核查（总量/分配/锁仓/团队/风险），含收益承诺即 FAIL（TH-LGD-020） |
+| [contract-interact-checklist](./skills/contract-interact-checklist) | Contract Interact Checklist | 合约交互风险清单 | 区块链 | 交互前六项自检（审计/假合约/授权额度/撤销/私钥/小额试单），未完成即拦（TH-LGD-021） |
+| [contract-clause-check](./skills/contract-clause-check) | Contract Clause Check | 合同高危条款扫描 | 法律 | 签前扫必备条款与高危表述（最终解释权/自动续期/违约金>30%），缺项即拦（TH-LGD-022） |
+| [health-claim-guard](./skills/health-claim-guard) | Health Claim Guard | 健康宣称合规扫描 | 医疗健康 | 宣传文案扫违规疗效宣称（根治/治愈/无副作用），保健食品缺警示语即拦（TH-LGD-023） |
+| [data-export-check](./skills/data-export-check) | Data Export Check | 数据出境合规自检 | 数据合规/政务 | 出境前五项义务自检（分级/单独同意/PIA/标准合同/留痕），缺项即拦（TH-LGD-024） |
 
 > **Batch C 跨域首占（2026-09-08 · P-045）**：把三律逐条翻译进金融/法律/政务/隐私计算四大空白域的本域合规语言，做成"标准定义权占位件"——别人可抄功能，抄不走本域翻译与评判权。域码锚定 TH-FIN/LAW/GOV/CRYPT-001。
 > **Batch C 纵深工具（2026-09-08 · P-046）**：在占位守门件底座上产 5 个"能跑"的纵深合规工具（金融 calc/AML、法律证据链、政务披露、链上旅行规则），把标准定义权从占位升级为可执行能力。
 > **Batch E 广谱爆款（2026-09-08 · P-049）**：把三律做成人人天天用得上的广谱件——AI 内容披露（有证）、智能体登机牌（三律便携）、提示词泄漏扫描（有门禁），覆盖"发 AI 内容 / 接 AI 智能体 / 发提示词"三大高频场景。
 > **Batch F 广谱爆款十连发（2026-09-08 · P-050）**：把三律铺进 AI 全使用周期——给 AI 发数据前脱敏、建 AI 有身份卡、管团队有守则、出事有台账、上线有制动卡、读文有痕迹提示、写报告查引用覆盖、采购有尽调清单、上线前注入演练、决策有留痕。
+> **Batch G 行业爆款十连发（2026-09-08 · P-051）**：把三律扎进重点监管行业——金融（利率披露/KYC/发票/资管费率）、区块链（地址校验/代币披露/合约交互）、法律（合同条款）、医疗健康（疗效宣称）、数据出境（五项义务），每款都是行业刚需 + 即装即用。
 
 ## 🛡 治理工具集（既有）
 
