@@ -3,7 +3,7 @@ name: prompt-version-control
 display_name: 提示版本管理（Prompt Version Control）
 display_name_en: "Prompt Version Control"
 description: "当用户说『提示改乱了回不去』『不知道哪版提示效果更好』『提示也要版本管理』『怎么AB测试不同提示』，或团队多人改同一套提示容易互相覆盖时使用。把提示当『可版本化资产』：每次改动留版本+差异+绑定效果评分，可 diff/回滚/选优。理论根基：LGD 三律（有籍·有证·有门禁）。触发词：提示版本、prompt版本管理、提示回滚、prompt diff、AB测试提示、提示治理、prompt registry。"
-version: 1.0.0
+version: 1.1.0
 agent_created: true
 author: 潘布达@LGD（凡自治之物）
 license: MIT
