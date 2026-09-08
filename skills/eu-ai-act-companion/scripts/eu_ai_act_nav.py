@@ -12,9 +12,14 @@ import argparse
 
 # 禁止类关键词
 BANNED = ["社会评分", "social scoring", "实时远程生物识别", "realtime biometric", "潜意识操纵", "subliminal"]
-# 高风险领域（Annex III 启发式）
-HIGH = ["招聘", "recruit", "信贷", "credit", "教育", "education", "关键基础设施", "critical infrastructure",
-        "医疗", "medical", "医械", "medical device", "器械", "device", "安防", "law enforcement",
+# 高风险领域（Annex III 启发式；同义词已归并：信贷≈贷款≈借贷≈信用评估）
+HIGH = ["招聘", "recruit", "信贷", "credit", "贷款", "loan", "借贷", "放贷", "信用评估", "信用评分", "credit scoring",
+        "教育", "education", "招生", "考试评分", "exam scoring",
+        "关键基础设施", "critical infrastructure",
+        "医疗", "medical", "医械", "medical device", "器械", "device", "诊断辅助",
+        "保险", "insurance", "保费定价", "pricing",
+        "雇佣", "用工", "在职评估", "绩效评估", " employment", "employment",
+        "安防", "law enforcement", "签证", "visa", "移民", "migration",
         "边境", "border", "司法", "justice", "简历", "resume", "筛选", "screening"]
 # 有限风险（透明义务）
 LIMITED = ["聊天机器人", "chatbot", "深度伪造", "deepfake", "情绪识别", "emotion", "合成", "synthetic"]
@@ -51,6 +56,9 @@ def main():
     ap.add_argument("--use", required=True, help="用例描述")
     ap.add_argument("--role", default="provider", help="provider/deployer/importer/distributor")
     args = ap.parse_args()
+    # 空输入不判级（避免误判为最小风险），友好退出 rc=2
+    if not args.use.strip():
+        ap.error("用例描述为空，无法判定风险级：请提供 AI 用例的具体描述")
 
     level, note = classify(args.use)
     role = args.role.lower()
