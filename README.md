@@ -69,9 +69,13 @@
 | [travel-rule-check](./skills/travel-rule-check) | Travel-Rule Check | 旅行规则校验 | 跨域·CRYPT 纵深 | VASP 转账收发方 KYC（姓名+账号/地址+地理）超阈强制校验 |
 | [lgd-badge-issuer](./skills/lgd-badge-issuer) | LGD Badge Issuer | 徽章签发器 | 闭环·徽章 | 三律全过才签发 lgd-certified 证书（SHA-256 指纹+签发台账），未过拒绝留痕 |
 | [lgd-badge-verify](./skills/lgd-badge-verify) | LGD Badge Verifier | 徽章验真器 | 闭环·徽章 | 验证书三重校验：指纹重算防篡改+证据哈希+台账对账（未吊销/未伪造） |
+| [ai-content-discloser](./skills/ai-content-discloser) | AI Content Discloser | AI 内容披露生成器 | 广谱·有证 | AI 参与（全生成/辅助/混合）内容一键生成合规披露声明（显式中/EN+隐式元数据+平台贴法），依据《AI生成合成内容标识办法》/EU AI Act Art.50 |
+| [agent-boarding-pass](./skills/agent-boarding-pass) | Agent Boarding Pass | 智能体登机牌 | 广谱·三律便携 | 给任何智能体签发可验证『登机牌』：身份+证据哈希+权限白名单+有效期，SHA-256 防篡改，一条命令验真；缺律拒发 |
+| [prompt-leak-scanner](./skills/prompt-leak-scanner) | Prompt Leak Scanner | 提示词泄漏扫描器 | 广谱·有门禁 | 提示词发布前扫五类风险：密钥/内网路径/PII/自定义敏感词/自我泄漏后门，高风险 rc=1 拦下 |
 
 > **Batch C 跨域首占（2026-09-08 · P-045）**：把三律逐条翻译进金融/法律/政务/隐私计算四大空白域的本域合规语言，做成"标准定义权占位件"——别人可抄功能，抄不走本域翻译与评判权。域码锚定 TH-FIN/LAW/GOV/CRYPT-001。
 > **Batch C 纵深工具（2026-09-08 · P-046）**：在占位守门件底座上产 5 个"能跑"的纵深合规工具（金融 calc/AML、法律证据链、政务披露、链上旅行规则），把标准定义权从占位升级为可执行能力。
+> **Batch E 广谱爆款（2026-09-08 · P-049）**：把三律做成人人天天用得上的广谱件——AI 内容披露（有证）、智能体登机牌（三律便携）、提示词泄漏扫描（有门禁），覆盖"发 AI 内容 / 接 AI 智能体 / 发提示词"三大高频场景。
 
 ## 🛡 治理工具集（既有）
 
