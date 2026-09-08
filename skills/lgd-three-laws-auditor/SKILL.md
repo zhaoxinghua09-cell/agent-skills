@@ -80,3 +80,20 @@ python scripts/lgd_audit.py --answers 答卷.json
 ## 版权与许可
 
 © MedXpert × SynomosAI · MIT 协议 · LGD-Powered。徽章见 `lgd-powered.png`，认证徽章体系见 medxpert.cn/badge。
+
+## 安装与使用矩阵
+
+```bash
+# 一键获取（skills CLI）
+npx skills add zhaoxinghua09-cell/agent-skills -g
+
+# 或手动：克隆后拷贝本技能到你的 Agent 技能目录
+git clone https://github.com/zhaoxinghua09-cell/agent-skills.git
+cp -r agent-skills/skills/lgd-three-laws-auditor ~/.claude/skills/
+```
+
+| Agent | 技能目录 | 运行示例 |
+|---|---|---|
+| Claude Code | `~/.claude/skills/lgd-three-laws-auditor/` | 让 Claude 按本技能 SKILL.md 工作流调用 `scripts/` |
+| Codex CLI / Cursor / WorkBuddy | 各自 skills 目录 | 同上，SKILL.md 即操作规程 |
+| 直接命令行 | 任意位置 | `python scripts/lgd_audit.py --help` |
