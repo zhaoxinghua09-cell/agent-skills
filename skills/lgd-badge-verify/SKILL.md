@@ -39,3 +39,20 @@ LGD 闭环最后一环：**护照（有籍）→ 证据链（有证）→ 门禁
 
 ---
 © MedXpert × SynomosAI · LGD-Powered
+
+## 安装与使用矩阵
+
+```bash
+# 一键获取（skills CLI）
+npx skills add zhaoxinghua09-cell/agent-skills -g
+
+# 或手动：克隆后拷贝本技能到你的 Agent 技能目录
+git clone https://github.com/zhaoxinghua09-cell/agent-skills.git
+cp -r agent-skills/skills/lgd-badge-verify ~/.claude/skills/
+```
+
+| Agent | 技能目录 | 运行示例 |
+|---|---|---|
+| Claude Code | `~/.claude/skills/lgd-badge-verify/` | 让 Claude 按本技能 SKILL.md 工作流调用 `scripts/` |
+| Codex CLI / Cursor / WorkBuddy | 各自 skills 目录 | 同上，SKILL.md 即操作规程 |
+| 直接命令行 | 任意位置 | `python scripts/badge_verify.py --help` |
