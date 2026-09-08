@@ -50,3 +50,20 @@ python law_ethic.py --answers '{"LGD-I 有籍::持牌身份登记":"yes",...}' -
 
 ## 注意
 本技能输出为**结构化的合规自评与门禁判定**，不构成法律/监管意见；正式合规以持证机构签章文件为准。
+
+## 安装与使用矩阵
+
+```bash
+# 一键获取（skills CLI）
+npx skills add zhaoxinghua09-cell/agent-skills -g
+
+# 或手动：克隆后拷贝本技能到你的 Agent 技能目录
+git clone https://github.com/zhaoxinghua09-cell/agent-skills.git
+cp -r agent-skills/skills/lgd-law-ethic ~/.claude/skills/
+```
+
+| Agent | 技能目录 | 运行示例 |
+|---|---|---|
+| Claude Code | `~/.claude/skills/lgd-law-ethic/` | 让 Claude 按本技能 SKILL.md 工作流调用 `scripts/` |
+| Codex CLI / Cursor / WorkBuddy | 各自 skills 目录 | 同上，SKILL.md 即操作规程 |
+| 直接命令行 | 任意位置 | `python scripts/law_ethic.py --help` |
