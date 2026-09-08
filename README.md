@@ -142,6 +142,23 @@ cp -r agent-skills/skills/<skill-name> ~/.claude/skills/   # Claude Code 示例
 > **Batch F 广谱爆款十连发（2026-09-08 · P-050）**：把三律铺进 AI 全使用周期——给 AI 发数据前脱敏、建 AI 有身份卡、管团队有守则、出事有台账、上线有制动卡、读文有痕迹提示、写报告查引用覆盖、采购有尽调清单、上线前注入演练、决策有留痕。
 > **Batch G 行业爆款十连发（2026-09-08 · P-051）**：把三律扎进重点监管行业——金融（利率披露/KYC/发票/资管费率）、区块链（地址校验/代币披露/合约交互）、法律（合同条款）、医疗健康（疗效宣称）、数据出境（五项义务），每款都是行业刚需 + 即装即用。
 
+### ⚡ 效率工具家族（Batch H · 广谱爆款 · 2026-09-08 · P-055）
+
+> 调研 awesome-cli-apps 高星品类（批量重命名 f2 / 重复查找 fclones / 磁盘 dust / 批量替换 sd / JSON gron / CSV q / 统计 scc）后的十连发：人人天天用得上的文件与文本利器。**全系列零依赖、默认 dry-run 预览、--apply 才执行、--json 机器可读**。rc=0 成功 / rc=1 发现问题 / rc=2 用法错误。
+
+| Skill | Name | 一句话 |
+|---|---|---|
+| [batch-renamer](./skills/batch-renamer) | Batch File Renamer | 规则式批量重命名（前缀/序号/查找替换），默认预览 |
+| [dup-finder](./skills/dup-finder) | Duplicate File Finder | 三级哈希找重复文件，可一键清副本保留首个 |
+| [dir-organizer](./skills/dir-organizer) | Directory Organizer | 按类型把杂乱目录归到 图片/文档/视频… 子目录 |
+| [disk-scan](./skills/disk-scan) | Disk Usage Scan | Top N 大文件+子目录占用排行，只读定位空间杀手 |
+| [json-tidy](./skills/json-tidy) | JSON Tidy | JSON 格式化/压缩/键排序，解析错误精确定位行列 |
+| [csv-slice](./skills/csv-slice) | CSV Slice | CSV 取列/筛选/去重/计数，不打开 Excel 干完活 |
+| [text-replace](./skills/text-replace) | Bulk Text Replace | 跨文件批量查找替换（字面量/正则），.bak 自动备份 |
+| [text-stats](./skills/text-stats) | Text Stats | 字数/行数/词频TopN/阅读时长，目录批量汇总 |
+| [regex-sandbox](./skills/regex-sandbox) | Regex Sandbox | 正则即写即测：匹配/分组/替换预览/标志位 |
+| [hash-check](./skills/hash-check) | File Hash Check | 目录 SHA-256 清单生成/校验，防篡改验完整性 |
+
 ## 🛡 治理工具集（既有）
 
 | Skill | 说明 |
