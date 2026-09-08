@@ -1,9 +1,9 @@
 ---
 name: changelog-gen
-description: 更新日志生成器 — 发版手写 CHANGELOG 漏三漏四，conventional-changelog 全家桶又太重，只想按规范出个草稿（零依赖，确定性输出，rc=0/1/2，--json 机器可读）
+description: 更新日志草稿生成器 — 发版手写 CHANGELOG 漏三漏四，conventional-changelog 全家桶又太重，只想按规范出个草稿（零依赖，确定性输出，rc=0/1/2，--json 机器可读）
 slug: changelog-gen
 version: 1.0.0
-display_name: 更新日志生成器
+display_name: 更新日志草稿生成器
 display_name_en: Changelog Generator
 agent_created: true
 author: zhaoxinghua09-cell
@@ -12,7 +12,7 @@ category: 工程方法
 platforms: [claude, codex, cursor, windsurf, workbuddy]
 ---
 
-# 更新日志生成器 / Changelog Generator
+# 更新日志草稿生成器 / Changelog Generator
 
 **changelog-gen** v1.0.0 · LGD-Powered 家族 · 零依赖 · 确定性输出（JSON IR）· 修复回执错误码
 
