@@ -35,15 +35,23 @@ def main():
     lv = classify(a.task)
     tier = TIERS[lv]
     share = tier["cost"] / TIERS[2]["cost"] * 100
+    # L3 = 旗舰+复核双跑，成本为单旗舰 2 倍属预期；用语义化表述避免「200%」误导
+    if lv == 3:
+        share_text = "旗舰×2（复核双跑，属预期成本）"
+        cost_note = "高风险结论采用旗舰+独立复核双跑，成本为单旗舰 2 倍"
+    else:
+        share_text = f"约为旗舰的 {share:.0f}%"
+        cost_note = ""
     fb = "升级一档重试(上限2次)" if lv < 3 else "已是最高档，转人工复核"
     if a.json:
         print(json.dumps({"task": a.task, "level": lv, "tier": tier["name"],
                           "cost_index": tier["cost"], "cost_share_vs_flagship": round(share, 1),
+                          "cost_note": cost_note,
                           "capability": tier["cap"], "fallback": fb}, ensure_ascii=False, indent=2))
     else:
         print(f"任务：{a.task}")
         print(f"复杂度：L{lv}  推荐档位：{tier['name']}  能力：{tier['cap']}")
-        print(f"成本指数：{tier['cost']}  (约为旗舰的 {share:.0f}%)  回退：{fb}")
+        print(f"成本指数：{tier['cost']}  ({share_text})  回退：{fb}")
 
 if __name__ == "__main__":
     main()
