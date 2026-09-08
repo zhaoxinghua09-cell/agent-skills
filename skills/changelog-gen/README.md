@@ -1,4 +1,4 @@
-# 更新日志生成器 / Changelog Generator
+# 更新日志草稿生成器 / Changelog Generator
 
 ![license](https://img.shields.io/badge/license-MIT-blue) ![python](https://img.shields.io/badge/python-3.8%2B-green) ![deps](https://img.shields.io/badge/deps-zero-orange) ![LGD](https://img.shields.io/badge/LGD--Powered-三律-teal)
 
