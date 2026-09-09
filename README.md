@@ -10,7 +10,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/zhaoxinghua09-cell/agent-skills?style=social)](https://github.com/zhaoxinghua09-cell/agent-skills/stargazers)
 [![last commit](https://img.shields.io/github/last-commit/zhaoxinghua09-cell/agent-skills)](https://github.com/zhaoxinghua09-cell/agent-skills/commits)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Skills](https://img.shields.io/badge/skills-63%2B-14B8A6)](#-lgd-护城河系列)
+[![Skills](https://img.shields.io/badge/skills-87%2B-14B8A6)](#-lgd-护城河系列)
 [![Zero-dependency](https://img.shields.io/badge/zero--dependency-stdlib%20only-0B1F3A)](#)
 [![Platforms](https://img.shields.io/badge/platform-Claude%20Code%20%7C%20Codex%20%7C%20Cursor%20%7C%20WorkBuddy-blueviolet)](#-安装矩阵)
 
