@@ -5,7 +5,7 @@ display_name_en: "Context Engineering"
 description: "当用户说『AI越来越笨/答非所问/忘了前面的设定』『上下文太长』『token烧太快』『RAG召回不准』，或要设计/优化 agent 的提示、记忆、检索、工具编排时使用。把『上下文窗口里到底该放什么』当成一门工程：审计相关性·冗余·预算·衰减 四维度，给出裁剪/检索/记忆/门禁四步流程与可运行脚本（上下文预算计算器+审计清单生成器）。与 prompt engineering 的区别：prompt 是写一句话，context engineering 是设计 AI 每轮看到的全部信息。触发词：上下文工程、context engineering、上下文窗口、上下文污染、上下文衰减、context rot、token预算、RAG召回、记忆编排、agent上下文、长上下文优化。"
 version: 1.0.0
 agent_created: true
-author: 潘布达@LGD（凡自治之物）
+author: 诺声(Logos)@SynomosAI
 license: MIT
 category: AI工程方法
 platforms: [windows, macos, linux]
@@ -18,8 +18,8 @@ read_when:
 tags: [上下文工程, context engineering, 上下文窗口, token预算, RAG, 记忆编排, agent优化]
 slug: context-engineering
 title: 上下文工程（Context Engineering）
+copyright: SynomosAI
 ---
-
 ![LGD Powered](lgd-powered.png)
 
 # 上下文工程（context-engineering）

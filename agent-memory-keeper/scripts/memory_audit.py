@@ -54,13 +54,20 @@ def main():
     entries = []
     if a.dir:
         d = pathlib.Path(a.dir)
+        if not d.exists():
+            ap.error(f"目录不存在: {a.dir}")
+        if not d.is_dir():
+            ap.error(f"不是目录: {a.dir}")
         for p in sorted(d.iterdir()):
             if p.suffix == ".jsonl":
                 entries += parse_jsonl(p)
             elif p.suffix == ".md":
                 entries += parse_md(p)
     else:
-        entries = parse_jsonl(pathlib.Path(a.file))
+        f = pathlib.Path(a.file)
+        if not f.exists():
+            ap.error(f"文件不存在: {a.file}")
+        entries = parse_jsonl(f)
 
     if not entries:
         print("无记忆条目可审计")

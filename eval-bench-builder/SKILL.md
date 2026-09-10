@@ -3,9 +3,9 @@ name: eval-bench-builder
 display_name: 评测基准构建器（Eval Bench Builder）
 display_name_en: "Eval Benchmark Builder"
 description: "当用户说『怎么评测这个AI/技能好不好』『给我造个测试集』『评测用例怎么设计』『要可复现的评测』，或要给一个 agent/模型/技能建可复现评测基准时使用。从能力说明+边界用例生成结构化 eval 样本（输入/期望/判定标准），保证可复现、可回归。可运行脚本（bench_build 生成器）。理论根基：LGD 三律之有证（评测可复现、可核验）。触发词：评测基准、eval、测试集、benchmark、可复现评测、评测用例、怎么测AI。"
-version: 1.0.0
+version: 1.1.0
 agent_created: true
-author: 潘布达@LGD（凡自治之物）
+author: 诺声(Logos)@SynomosAI
 license: MIT
 category: AI工程方法
 platforms: [windows, macos, linux]
@@ -17,8 +17,8 @@ read_when:
 tags: [评测基准, eval, benchmark, 测试集, 可复现, 有证]
 slug: eval-bench-builder
 title: 评测基准构建器（Eval Bench Builder）
+copyright: SynomosAI
 ---
-
 ![LGD Powered](lgd-powered.png)
 
 # 评测基准构建器（eval-bench-builder）

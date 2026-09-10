@@ -16,12 +16,17 @@ def main():
     ap.add_argument("--spec", required=True)
     ap.add_argument("--out", required=True)
     a = ap.parse_args()
-    txt = pathlib.Path(a.spec).read_text(encoding="utf-8")
+    spec_p = pathlib.Path(a.spec)
+    if not spec_p.exists():
+        ap.error(f"spec 文件不存在: {a.spec}")
+    txt = spec_p.read_text(encoding="utf-8")
     cases = parse_spec(txt)
     if not cases:
         print("spec 未解析出用例（格式：- [能力] 输入 => 期望 (judge)）")
         return
-    pathlib.Path(a.out).write_text(
+    out_p = pathlib.Path(a.out)
+    out_p.parent.mkdir(parents=True, exist_ok=True)
+    out_p.write_text(
         "\n".join(json.dumps(c, ensure_ascii=False) for c in cases), encoding="utf-8")
     print(f"已生成 {len(cases)} 条评测样本 → {a.out}")
 

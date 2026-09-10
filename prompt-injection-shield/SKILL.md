@@ -5,7 +5,7 @@ display_name_en: "Prompt Injection Shield"
 description: "当用户要把网页抓取/邮件/工具返回值/检索文档/用户上传内容喂给 AI，又担心里面藏『忽略之前指令』『你是新AI』这类指令时使用。在不可信内容进上下文之前先扫描：中英双语文式库（忽略指令/角色劫持/越狱/DAN/索要系统提示）+ 启发式（面向AI的祈使句、角色切换、索要隐藏指令）+ 沙箱规则。附可运行扫描脚本，输出风险分·命中规则·处置建议（丢弃/隔离/沙箱）。复用 desens-scan 与 release-gate 的去敏与门禁能力。触发词：提示注入、prompt injection、注入防护、越狱、jailbreak、忽略指令、角色劫持、system prompt泄露、内容安全、AI被操控、注入扫描。"
 version: 1.0.0
 agent_created: true
-author: 潘布达@LGD（凡自治之物）
+author: 诺声(Logos)@SynomosAI
 license: MIT
 category: AI安全
 platforms: [windows, macos, linux]
@@ -17,8 +17,8 @@ read_when:
 tags: [提示注入, prompt injection, 越狱, 注入扫描, 内容安全, 沙箱, 去敏]
 slug: prompt-injection-shield
 title: 提示注入防护（Prompt Injection Shield）
+copyright: SynomosAI
 ---
-
 ![LGD Powered](lgd-powered.png)
 
 # 提示注入防护（prompt-injection-shield）

@@ -5,7 +5,7 @@ display_name_en: "Tool Call Guard"
 description: "当用户说『agent乱调工具』『误删了文件』『不该发邮件却发了』『怎么给AI的工具加权限边界』，或在给 agent 接工具（文件/网络/数据库/消息/支付）想防危险动作时使用。把每次 tool call 当『需授权操作』：按 读/写/删/外发/支付 分级，危险动作先拦截+提示确认，低风险放行。理论根基：LGD 三律（有籍·有证·有门禁）。触发词：工具调用安全、agent权限、tool call guard、危险动作拦截、误删、误发、AI工具边界、function安全。"
 version: 1.0.0
 agent_created: true
-author: 潘布达@LGD（凡自治之物）
+author: 诺声(Logos)@SynomosAI
 license: MIT
 category: AI安全
 platforms: [windows, macos, linux]
@@ -17,8 +17,8 @@ read_when:
 tags: [工具调用安全, tool call guard, agent权限, 危险动作拦截, 最小权限, AI安全, 门禁]
 slug: tool-call-guard
 title: 工具调用安全闸门（Tool Call Guard）
+copyright: SynomosAI
 ---
-
 ![LGD Powered](lgd-powered.png)
 
 # 工具调用安全闸门（tool-call-guard）

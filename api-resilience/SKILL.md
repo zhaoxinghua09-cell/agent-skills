@@ -5,7 +5,7 @@ display_name_en: "API Resilience"
 description: "当用户说『调外部API老超时』『被限流了』『接口抖一动就挂』『怎么给agent加重试退避』，或 agent 依赖的第三方服务(模型/搜索/数据库)不稳定、需要限流/退避/熔断/降级时使用。把外部调用当『会失败的对象』：指数退避+抖动重试、限流计数、熔断降级，失败可恢复不雪崩。理论根基：LGD 三律（有籍·有证·有门禁）。触发词：API重试、限流、退避、熔断、降级、接口抖动、resilience、超时、调用不稳定。"
 version: 1.0.0
 agent_created: true
-author: 潘布达@LGD（凡自治之物）
+author: 诺声(Logos)@SynomosAI
 license: MIT
 category: AI工程方法
 platforms: [windows, macos, linux]
@@ -17,8 +17,8 @@ read_when:
 tags: [API韧性, 重试退避, 限流, 熔断, 降级, resilience, 可靠性, 故障恢复, agent优化]
 slug: api-resilience
 title: API 韧性（API Resilience）
+copyright: SynomosAI
 ---
-
 ![LGD Powered](lgd-powered.png)
 
 # API 韧性（api-resilience）

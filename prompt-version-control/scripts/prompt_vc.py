@@ -10,8 +10,13 @@ def main():
     ap.add_argument("--registry", default="prompt_registry.json")
     ap.add_argument("--json", action="store_true")
     a = ap.parse_args()
-    old = pathlib.Path(a.old).read_text(encoding="utf-8").splitlines()
-    new = pathlib.Path(a.new).read_text(encoding="utf-8").splitlines()
+    old_p, new_p = pathlib.Path(a.old), pathlib.Path(a.new)
+    if not old_p.exists():
+        ap.error(f"旧版文件不存在: {a.old}")
+    if not new_p.exists():
+        ap.error(f"新版文件不存在: {a.new}")
+    old = old_p.read_text(encoding="utf-8").splitlines()
+    new = new_p.read_text(encoding="utf-8").splitlines()
     diff = list(difflib.unified_diff(old, new, lineterm="", n=1))
     reg_path = pathlib.Path(a.registry)
     reg = json.loads(reg_path.read_text(encoding="utf-8")) if reg_path.exists() else {"versions": []}

@@ -5,7 +5,7 @@ display_name_en: "Skill Quality Gate"
 description: "当用户说『这个技能能不能发』『发布前检查下质量』『技能缺什么字段』『提交市场前过一遍门禁』，或要把一个 skill/提示词/agent 配置提交到市场或上线前做质量校验时使用。9 维校验（frontmatter八字段/脚本可读/图标/README/无密钥/双语/触发词/门禁节/去敏），逐维 pass/fail，不过闸不发布（有门禁）。可运行脚本（quality_gate 校验器）。理论根基：LGD 三律之有门禁（发布前必过闸）。触发词：技能质检、质量门禁、发布前检查、skill检查、提交市场、quality gate、技能能不能发。"
 version: 1.0.0
 agent_created: true
-author: 潘布达@LGD（凡自治之物）
+author: 诺声(Logos)@SynomosAI
 license: MIT
 category: AI工程方法
 platforms: [windows, macos, linux]
@@ -17,8 +17,8 @@ read_when:
 tags: [技能质检, quality gate, 发布前检查, 门禁, 有门禁]
 slug: skill-quality-gate
 title: 技能质量门禁（Skill Quality Gate）
+copyright: SynomosAI
 ---
-
 ![LGD Powered](lgd-powered.png)
 
 # 技能质量门禁（skill-quality-gate）

@@ -3,9 +3,9 @@ name: agent-memory-keeper
 display_name: 跨会话长期记忆治理（Memory Keeper）
 display_name_en: "Agent Memory Keeper"
 description: "当用户说『AI又忘了我之前说的』『记忆越来越乱/重复/互相矛盾』『长期记忆怎么管』『记忆库该清理了』，或要设计/治理一个 agent 的跨会话记忆（笔记/知识库/偏好/项目约定）时使用。把记忆当成『有籍贯、可审计、能收敛』的资产：审计重复·孤儿·陈旧·无溯源四维度，给出收敛(单一真源)+门禁(改前备份)两步流程与可运行脚本（记忆审计器）。理论根基：LGD 三律（有籍·有证·有门禁）。触发词：长期记忆、跨会话记忆、memory governance、记忆治理、记忆重复、记忆冲突、记忆溯源、agent记忆、知识库去重、记忆清理。"
-version: 1.0.0
+version: 1.1.0
 agent_created: true
-author: 潘布达@LGD（凡自治之物）
+author: 诺声(Logos)@SynomosAI
 license: MIT
 category: AI工程方法
 platforms: [windows, macos, linux]
@@ -18,8 +18,8 @@ read_when:
 tags: [长期记忆, memory governance, 记忆治理, 记忆去重, 跨会话, 记忆溯源, agent优化]
 slug: agent-memory-keeper
 title: 跨会话长期记忆治理（Memory Keeper）
+copyright: SynomosAI
 ---
-
 ![LGD Powered](lgd-powered.png)
 
 # 跨会话长期记忆治理（agent-memory-keeper）

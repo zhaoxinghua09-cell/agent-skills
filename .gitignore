@@ -8,3 +8,9 @@ _*.py
 # 公众号封面（本地素材，不进公开仓）
 cover.png
 __pycache__/
+# 发布/测试日志与中间产物（含内部流程信息，不进公开仓）
+_*.log
+_*.jsonl
+_*.md
+_*.json
+scripts_b.py
