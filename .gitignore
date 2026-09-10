@@ -14,3 +14,6 @@ _*.jsonl
 _*.md
 _*.json
 scripts_b.py
+
+# 本地一次性备份包（体积大、含历史快照，不进公开仓）
+_backup/
