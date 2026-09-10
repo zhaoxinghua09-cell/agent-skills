@@ -1,0 +1,32 @@
+{
+  "schema": "ownership-attestation/1.0",
+  "package": "未命名包",
+  "version": "0.0.0",
+  "author": "注册老炮 (MedXpert)",
+  "year": "2026",
+  "timestamp_utc": "2026-09-07T06:54:12.119298+00:00",
+  "timestamp_local": "2026-09-07T14:54:12.119304",
+  "package_fingerprint_sha256": "1222b6e8cf8bc34d5b81fff92698aa14791a94a6fe5d67ce5d991612d68015c0",
+  "files": [
+    {
+      "path": "LICENSE.md",
+      "sha256": "5416746360f13e79761cd77b2a7655ff5446803e513f206e31e93a7abd3091ac"
+    },
+    {
+      "path": "SKILL.md",
+      "sha256": "8e5c653247c875afce300937903f5b364cd80ea9d49e91aeb6f83c63e6316ec8"
+    },
+    {
+      "path": "scripts/check_release.py",
+      "sha256": "724fa7a08279daa2ada9978ad4d04ea4eeb768a8587e7f1f09ab5b6c5e9bd2c3"
+    },
+    {
+      "path": "security-radar.svg",
+      "sha256": "9421134119ba9e0a8faea832aefe33e3222379bdc1e366baa074d820f83cf57f"
+    },
+    {
+      "path": "security_results.json",
+      "sha256": "2cb96e726d0a3d76eaefc8365715951376e20180a83bad704ea8e98d48a7faa1"
+    }
+  ]
+}

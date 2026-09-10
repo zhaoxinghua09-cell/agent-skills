@@ -1,0 +1,36 @@
+{
+  "schema": "ownership-attestation/1.0",
+  "package": "未命名包",
+  "version": "0.0.0",
+  "author": "注册老炮 (MedXpert)",
+  "year": "2026",
+  "timestamp_utc": "2026-09-07T06:42:05.773164+00:00",
+  "timestamp_local": "2026-09-07T14:42:05.773174",
+  "package_fingerprint_sha256": "35d0cb386d9f883fc30cc905d7f3a302b959204400f29827458e43c427ac0d23",
+  "files": [
+    {
+      "path": "LICENSE.md",
+      "sha256": "cb22d60abe4164f2533e38d687ca3515ddabfc37aed4e603528e99d4dd6f20b4"
+    },
+    {
+      "path": "SKILL.md",
+      "sha256": "384e8c17510fa3e6ea353d8bd4f9c35a317674d914db9172d06740bf356a9ddf"
+    },
+    {
+      "path": "__pycache__/get_secret.cpython-313.pyc",
+      "sha256": "4e72a8348658daa88159762f022fdc18ab8c1e82d0d223450b40bb098c7e37ad"
+    },
+    {
+      "path": "__pycache__/store_secret.cpython-313.pyc",
+      "sha256": "13d3279fc04bebf676444e8ec75e566122b2f7cfa94d4653ce995357587de737"
+    },
+    {
+      "path": "get_secret.py",
+      "sha256": "8c513a4c9cdef2b041a1b90539e3ee6890cdb2f0cd6dcc04e81ff5bdedbbfbbc"
+    },
+    {
+      "path": "store_secret.py",
+      "sha256": "7f359639ddc55ee7cf7235bdce94b2fc161617038cac7d61b3d32b34dcbb3d10"
+    }
+  ]
+}
