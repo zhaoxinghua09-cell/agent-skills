@@ -1,7 +1,8 @@
 ---
 name: github-api-push-workaround
 description: "git 推 GitHub/Gitee/AtomGit 的根因化排查与推送模板：401=凭据问题（helper 链残留死旧 PAT）、超时/挂死=通道问题（代理掐 git 传输，须 no_proxy 直连）、大面积 401=取值前缀坑（--raw 取裸值）。含直连推送模板（令牌走环境变量）、Git Data API 兜底（blob→tree→commit→ref）、Gitee 私有转公开、AtomGit 后端 gitcode 等实测坑。当用户说'推 GitHub'、'git push 失败/401/超时'、'发布仓库到远端'、'令牌失效了'时使用。"
-author: 潘布达 (Buda Pan) @SynomosAI
+author: 诺声(Logos)@SynomosAI
+copyright: SynomosAI
 version: 1.2.0
 agent_created: true
 license: MIT

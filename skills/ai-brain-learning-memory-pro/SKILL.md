@@ -8,7 +8,8 @@ description_zh: "ai-brain-learning-memory 的进阶工程版，面向 AI 开发�
 description_en: "Advanced engineering version of ai-brain-learning-memory. Aimed at AI developers, cognitive-science enthusiasts, and agent architects. Pushes beyond the basic version (concepts + examples + cheatsheet) into engineering-grade depth: three-tier memory reference implementation (Python), integration with the agent-memory tool, how to run memory_eval_battery.py and interpret its 6 dimensions, code-level defense against OWASP ASI06 memory poisoning, automated rrule config for the four review nodes, and cognitive-science evidence → engineering decision mapping. Recommend reading the basic version first."
 version: 1.0.0
 agent_created: true
-author: 潘布达 (Buda Pan) @SynomosAI
+author: 诺声(Logos)@SynomosAI
+copyright: SynomosAI
 license: MIT
 category: AI学习方法论
 platforms: [windows, macos, linux]
