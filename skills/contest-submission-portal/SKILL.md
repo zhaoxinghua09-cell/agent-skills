@@ -2,7 +2,7 @@
 name: contest-submission-portal
 slug: contest-submission-portal
 displayName: 赛事作品提交合规校验器
-version: 1.0.0
+version: 1.1.0
 category: ai-agent
 display_name: 赛事作品提交合规校验器
 title: 赛事作品提交合规校验器

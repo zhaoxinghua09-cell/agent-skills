@@ -2,7 +2,7 @@
 name: judging-rubric-grader
 slug: judging-rubric-grader
 displayName: 赛事评审打分器
-version: 1.0.0
+version: 1.1.0
 category: ai-agent
 display_name: 赛事评审打分器
 title: 赛事评审打分器
