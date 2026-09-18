@@ -4,6 +4,9 @@
 
 # agent-skills · AI Agent 治理技能标准库
 
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/zhaoxinghua09-cell/agent-skills/badge)](https://scorecard.dev/viewer/?uri=github.com/zhaoxinghua09-cell/agent-skills)
+[![Skill inventory validation](https://github.com/zhaoxinghua09-cell/agent-skills/actions/workflows/validate.yml/badge.svg)](https://github.com/zhaoxinghua09-cell/agent-skills/actions/workflows/validate.yml)
+
 **开源版「AI 治理操作系统的 Skill 层」——让每一个 AI 输出：有籍 · 有证 · 有门禁**
 
 [![Trendshift](https://img.shields.io/badge/Trendshift-submitting-14B8A6)](https://trendshift.io/)

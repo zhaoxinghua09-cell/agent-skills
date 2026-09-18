@@ -1,0 +1,34 @@
+name: Skill inventory validation
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate:
+    name: Every skill has SKILL.md
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Validate skill inventory
+        run: |
+          set -e
+          fail=0
+          for d in skills/*/; do
+            name=$(basename "$d")
+            if [ ! -f "$d/SKILL.md" ]; then
+              echo "MISSING SKILL.md: $name"
+              fail=1
+            fi
+            if ! grep -qiE '^(name|description):' "$d/SKILL.md" 2>/dev/null; then
+              echo "SKILL.md missing frontmatter (name/description): $name"
+              fail=1
+            fi
+          done
+          count=$(ls -d skills/*/ 2>/dev/null | wc -l)
+          echo "validated $count skills"
+          exit $fail

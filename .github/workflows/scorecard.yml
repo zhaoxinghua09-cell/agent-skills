@@ -1,0 +1,29 @@
+name: Scorecard supply-chain security
+on:
+  # 每周六 02:00 UTC（北京 10:00）定期复扫，与 uibc-core 错峰
+  schedule:
+    - cron: '0 2 * * 6'
+  push:
+    branches: [main]
+
+permissions: read-all
+
+jobs:
+  analysis:
+    name: Scorecard analysis
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      id-token: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Run analysis
+        uses: ossf/scorecard-action@v2
+        with:
+          results_file: results.sarif
+          results_format: sarif
+          publish_results: true
