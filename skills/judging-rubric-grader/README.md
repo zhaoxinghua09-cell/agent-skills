@@ -1,0 +1,27 @@
+# judging-rubric-grader · 赛事评审打分器
+
+> AI-assisted decision-support CLI for UIBC contest operations. NOT final adjudication — verify with organizing committee.
+
+## What it does
+Classifies `judging-rubric-grader` per UIBC rules: **UIBC 评审规范（rubric 加权）**.
+
+## Install & run (zero-dependency, Python 3.8+)
+```bash
+python judging-rubric-grader.py --demo
+```
+
+## Output
+Deterministic JSON IR with `rc` (0=ok, 1=with warnings, 2=insufficient input) and `aigc_mark` (GB45438-2025 metadata).
+
+## Compliance & IP
+- LGD-Powered badge · theory TH-EVT-003 · ambassador 诺律@LAW 域首席发声人
+- 中文文档见 `SKILL.md`。本工具为决策支持，须人工复核。
+
+## 家族合集
+| 赛事环节 | 工具 | 大使 |
+|---|---|---|
+| 报名/提交门户 | contest-submission-portal | 诺声 |
+| 赛题生成 | problem-set-generator | 诺声 |
+| 评审打分 | judging-rubric-grader | 诺律 |
+| 反作弊/身份核验 | anti-cheat-identity | 诺卫 |
+| 作品查重 | originality-check | 诺源 |

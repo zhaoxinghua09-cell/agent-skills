@@ -1,0 +1,64 @@
+---
+name: originality-check
+slug: originality-check
+displayName: 赛事作品原创性查重器
+version: 1.0.0
+category: ai-agent
+display_name: 赛事作品原创性查重器
+title: 赛事作品原创性查重器
+author: 诺源(SynomosAI)
+license: MIT
+description: 赛事作品原创性查重器——基于 UIBC 赛事规范的零依赖决策支持工具，JSON IR 输出，覆盖TH-EVT-005域。
+tags: [赛事, 判定器, TH-EVT-005, originality-check]
+---
+
+![LGD-Powered](https://medxpert.cn/badge/powered/svg/lgd-powered-cn.svg)
+
+# 赛事作品原创性查重器
+
+> ⚠️ 本工具由 AI 辅助生成，仅供**决策参考**，不构成赛事终裁。输出请人工复核（组委会保留最终裁定权）。
+
+## 一、痛点
+赛事规模化运营中，提交校验/赛题生成/评审打分/反作弊/查重等环节人工成本高、标准易漂移。本工具把赛事规范变成可枚举的判定器。
+
+## 二、能力边界
+- 仅做**规则判定**，不做赛事终裁；结论须人工复核。
+- 规则源：`UIBC 原创性规范 + 学术不端界定`（以 UIBC 赛事章程最新版为准）。
+
+## 三、用法
+```bash
+python originality-check.py --demo            # 跑内置冒烟案例
+```
+参数：`submission_hash / known_hashes`
+
+## 四、真机输出（--demo 节选）
+```json
+{"tool":"originality-check","rc":0}
+```
+
+## 五、错误码
+- `rc=0` 判定完成；`rc=1` 完成但带风险提示（warnings）；`rc=2` 输入不足/无法判定。
+
+## 六、FAQ
+- Q：结果能当赛事终裁吗？ A：不能，仅决策支持，以组委会认定为准。
+- Q：规则过期怎么办？ A：以 UIBC 章程最新版为准，本工具附规则源便于核对。
+
+## 理论依据
+原创须可被证明——指纹查重即把'这作品是谁的'写进可信账本。
+域站位件：TH-EVT-005 · UIBC 赛事线。
+
+## 延伸阅读
+- LGD 理论总账：https://medxpert.cn/theory
+- UIBC 赛事官网 / GitHub lgd-theory 仓库
+
+## 家族合集
+| 赛事环节 | 工具 | 大使 |
+|---|---|---|
+| 报名/提交门户 | contest-submission-portal | 诺声 |
+| 赛题生成 | problem-set-generator | 诺声 |
+| 评审打分 | judging-rubric-grader | 诺律 |
+| 反作弊/身份核验 | anti-cheat-identity | 诺卫 |
+| 作品查重 | originality-check | 诺源 |
+
+---
+诺源@DAT 域首席发声人 · TH-EVT-005 · SynomosAI（AI 辅助生成，非自然人）
