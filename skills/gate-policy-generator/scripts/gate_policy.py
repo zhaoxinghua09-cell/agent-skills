@@ -3,7 +3,7 @@
 """
 gate_policy.py — LGD-III 有门禁（GATED）权限策略生成器
 =====================================================
-把"凡自治之物：有籍·有证·有门禁"的第三律，落成一份可挂载到
+把"凡自治之物：LGD-I 有籍 · LGD-II 有证 · LGD-III 有门禁"的第三条（LGD-III），落成一份可挂载到
 agent 的权限门禁策略（policy-as-code）。
 
 痛点映射：agent 越权 / 误删误发 / 失控循环 / 无权限边界
@@ -30,7 +30,7 @@ import json
 import sys
 from datetime import datetime, timezone
 
-LGD_VERSION = "LGD-v1.0"
+LGD_VERSION = "LGD-v1.0.1"  # v1.0.1（2026-09-17）：风险归一化改 fail-closed，未识别风险值不再静默放行
 
 # 内置 preset：决定 risk 如何映射到 allow/review/deny
 PRESETS = {
@@ -41,8 +41,18 @@ PRESETS = {
 
 
 def _norm_risk(r):
+    """风险归一化（fail-closed）。
+
+    🔴 2026-09-17 修复（端到端走查发现）：原实现 `return r if r in ("low","mid","high") else "low"`
+    会把**任何未识别的风险值静默降级为 low → allow**（fail-open）：
+    manifest 里写 `"risk": "sensitive"` 或拼错（`crit`/`highrisk`/`重要`）时，
+    高危工具会被放进允许清单。治理门禁绝不可 fail-open，故改为：
+      未识别 → "unknown" → 归入 review（需人工评审放行），并打印告警。
+    """
     r = (r or "").lower()
-    return r if r in ("low", "mid", "high") else "low"
+    if r in ("low", "mid", "high", "sensitive", "critical"):
+        return r
+    return "unknown"
 
 
 def build_policy(manifest, preset_name):
@@ -51,6 +61,7 @@ def build_policy(manifest, preset_name):
     scenario = manifest.get("scenario", "未声明场景") if isinstance(manifest, dict) else "未声明场景"
 
     allow, review, deny = [], [], []
+    unknown_risk = []
     for t in tools:
         if not isinstance(t, dict):
             continue
@@ -58,9 +69,13 @@ def build_policy(manifest, preset_name):
         if not name:
             continue
         risk = _norm_risk(t.get("risk"))
-        sensitive = bool(t.get("sensitive"))
+        if risk == "unknown":
+            unknown_risk.append(f"{name}(risk={t.get('risk')!r})")
+        sensitive = bool(t.get("sensitive")) or risk in ("sensitive", "critical")
         if sensitive:
             bucket = preset["sensitive"]
+        elif risk == "unknown":
+            bucket = "review"          # fail-closed：不认识的风险不默认放行
         elif risk == "high":
             bucket = preset["high"]
         elif risk == "mid":
@@ -73,6 +88,10 @@ def build_policy(manifest, preset_name):
             review.append(name)
         else:
             allow.append(name)
+
+    if unknown_risk:
+        print("[!] 风险值无法识别，已按 fail-closed 归入 review（未默认放行）："
+              + "、".join(unknown_risk), file=sys.stderr)
 
     policy = {
         "lgd_version": LGD_VERSION,

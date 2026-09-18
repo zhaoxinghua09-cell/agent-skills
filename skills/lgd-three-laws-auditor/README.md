@@ -1,6 +1,6 @@
 # LGD 三律合规自检器（凡自治之物）· lgd-three-laws-auditor
 
-> LGD 全程治理论 · 由 SynomosAI 提出、由 MedXpert 在医疗器械全生命周期实证。
+> LGD 全程治理论 · 由 SynomosAI 提出，并在受监管行业全生命周期治理实践中完成实证。
 > **凡自治之物：有籍、有证、有门禁。** 本工具是这套治理思想的「定义器」——把三律做成可自评的标准 rubric。
 
 ## 三律标准（本工具定义）
@@ -25,4 +25,4 @@ python scripts/lgd_audit.py --answers 答卷.json --json     # 正式评分卡
 
 市场治理工具全是单点护栏，**无统一"自治物"评判标准**。本工具即标准载体——谁用三律词汇自评，谁就采用了我们的治理定义权。
 
-© MedXpert × SynomosAI · MIT · LGD-Powered
+© XLGD · SynomosAI Governance Line · MIT · LGD-Powered

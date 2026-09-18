@@ -13,7 +13,7 @@ Agent 护照（FoloToy ai-passport 250★ = 硬件产品，非协议；agent-pas
   gate      有门禁 GATED     凡演化必经门禁：三律评审 → PASS/FAIL → 签发结论 + 官方徽章嵌入码
 
 零依赖（纯 stdlib）；产物全落 --dir 项目目录；评审徽章指向 medxpert.cn/badge/（已上线）。
-© MedXpert × SynomosAI · CC BY 4.0 · LGD-Powered
+© SynomosAI Governance Line · CC BY 4.0 · LGD-Powered
 """
 import argparse, hashlib, json, os, sys, datetime as dt
 
@@ -48,7 +48,7 @@ def save_state(d, st):
               ensure_ascii=False, indent=2)
 
 # ---------- 有籍 register ----------
-def cmd_register(d, name, algo_id, issuer, org="MedXpert × SynomosAI"):
+def cmd_register(d, name, algo_id, issuer, org="SynomosAI Governance Line"):
     st = load_state(d)
     if st.get("passport"):
         print("[!] 本项目已登记（有籍），如需重签先删除 lgd_state.json 中 passport 字段")
@@ -78,6 +78,15 @@ def cmd_register(d, name, algo_id, issuer, org="MedXpert × SynomosAI"):
 
 # ---------- 有证 evidence ----------
 def cmd_evidence(d):
+    """有证 · 取证（**append-only**）。
+
+    🔴 2026-09-17 修复（端到端走查发现）：原实现每次重跑都**重建链并丢弃历史块**
+    （旧 head 仅作新链首块的 prev），违反"台账只增不减"纪律，且无法回答
+    "这份证据件改过没有、改了几次"。现改为：
+      · 仅追加新块；同文件哈希变化 → 追加"继任块"并标 `supersedes`（旧块保留）；
+      · 全部块落 `evidence_chain_history.jsonl`（append-only 审计流）；
+      · 哈希未变则链头不动（幂等重跑）。
+    """
     st = load_state(d)
     if not st.get("passport"):
         print("[!] 尚未登记（先跑 register —— 凡造必登，登记先于取证）")
@@ -89,7 +98,10 @@ def cmd_evidence(d):
             os.makedirs(os.path.join(ev_dir, k), exist_ok=True)
             print(f"[i] 建目录 evidence/{k}/ —— 放：{SIX[k]}")
         print("[!] 证据目录已建好。放入工件后重跑 evidence。已放入的可重跑增量收录。")
-    chain, prev = [], st.get("evidence_chain", {}).get("head", "genesis")
+    old = st.get("evidence_chain", {})
+    chain = list(old.get("blocks", []))
+    prev = old.get("head", "genesis")
+    latest = {(b["evidence_class"], b["file"]): b["hash"] for b in chain}
     files = []
     for k in sorted(SIX):
         sub = os.path.join(ev_dir, k)
@@ -101,29 +113,100 @@ def cmd_evidence(d):
     if not files:
         print("[i] 尚无任何证据工件（六类目录均为空）")
         return
+    appended = []
+    added = updated = skipped = 0
     for k, fn, fp in files:
-        block = {"evidence_class": k, "file": fn, "hash": sha256_file(fp),
-                 "recorded_at": NOW(), "prev": prev}
+        h = sha256_file(fp)
+        cur = latest.get((k, fn))
+        if cur == h:
+            skipped += 1
+            continue
+        block = {"evidence_class": k, "file": fn, "hash": h, "recorded_at": NOW(), "prev": prev}
+        if cur is not None:
+            block["supersedes"] = cur
+            updated += 1
+        else:
+            added += 1
         block["block_hash"] = sha256_obj(block)
-        chain.append(block); prev = block["block_hash"]
+        chain.append(block); appended.append(block); prev = block["block_hash"]
+    if not appended:
+        print(f"[i] 证据链无变化（{skipped} 个工件哈希一致），链头不变：{prev[:27]}…")
+        return
+    cur_latest = {}
+    for b in chain:
+        cur_latest[(b["evidence_class"], b["file"])] = b["hash"]  # 后者覆盖前者 = 取最新
     st["evidence_chain"] = {"head": prev, "blocks": chain,
-                            "classes_covered": sorted({b["evidence_class"] for b in chain}),
+                            "classes_covered": sorted({k for (k, _f) in cur_latest}),
                             "updated_at": NOW()}
     save_state(d, st)
+    with open(os.path.join(d, "evidence_chain_history.jsonl"), "a", encoding="utf-8") as f:
+        for b in appended:
+            f.write(json.dumps(b, ensure_ascii=False, sort_keys=True) + "\n")
     p = os.path.join(d, "evidence_chain.json")
     json.dump(st["evidence_chain"], open(p, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
     cov = ",".join(st["evidence_chain"]["classes_covered"])
-    print(f"[✓] 有证 · 证据链 {len(chain)} 块（覆盖 {cov}）→ {p}")
-    print(f"    链头={prev[:27]}…")
+    print(f"[✓] 有证 · 证据链 {len(chain)} 块（本次新增 {added} / 继任 {updated} / 未变 {skipped}，覆盖 {cov}）→ {p}")
+    print(f"    链头={prev[:27]}…  审计流=evidence_chain_history.jsonl")
+
+
+# ---------- 防篡改复验 verify（2026-09-17 新增）----------
+def cmd_verify(d):
+    """防篡改复验：逐件重算哈希 + 链自洽 + 与签发冻结值对齐。任一不符即 rc=1。"""
+    st = load_state(d)
+    ec = st.get("evidence_chain")
+    if not ec or not ec.get("blocks"):
+        print("[!] 尚无证据链，无可复验对象")
+        sys.exit(2)
+    latest = {(b["evidence_class"], b["file"]): b for b in ec["blocks"]}
+    problems, checked = [], 0
+    for (k, fn), b in sorted(latest.items()):
+        fp = os.path.join(d, "evidence", k, fn)
+        if not os.path.exists(fp):
+            problems.append(f"缺失  {k}/{fn}")
+            continue
+        checked += 1
+        if sha256_file(fp) != b["hash"]:
+            problems.append(f"被改  {k}/{fn}（现哈希 ≠ 链上哈希）")
+    if st.get("gate_verdict"):
+        if st["gate_verdict"].get("evidence_head") != ec["head"]:
+            problems.append("链头不一致  证据链头 ≠ 签发时冻结值（签发后证据有变动）")
+        cur_pp = st["passport"]["verification_ticket"]["passport_hash"]
+        if st["gate_verdict"].get("passport_hash") != cur_pp:
+            problems.append("护照不一致  护照指纹 ≠ 签发时冻结值")
+    print("=" * 62)
+    print("  LGD 防篡改复验 · " + dt.date.today().isoformat())
+    print("=" * 62)
+    print(f"  复验工件：{checked} 件 ｜ 链块：{len(ec['blocks'])} ｜ 链头：{ec['head'][:27]}…")
+    if problems:
+        for x in problems:
+            print("  [✗] " + x)
+        print("  结论：TAMPERED / BROKEN（请勿采信本件证据）")
+        print("=" * 62)
+        sys.exit(1)
+    print("  [✓] 全部工件哈希与链上一致")
+    print("  [✓] 链头与签发时冻结值一致")
+    print("  结论：VERIFIED")
+    print("=" * 62)
 
 # ---------- 有门禁 gate ----------
 def cmd_gate(d):
     st = load_state(d)
-    classes = set(st.get("evidence_chain", {}).get("classes_covered", []))
+    ec = st.get("evidence_chain", {})
+    classes = set(ec.get("classes_covered", []))
+    # 链-盘一致性：防止"改了证据件但不重跑 evidence 就想蒙过门禁"（2026-09-17 加固）
+    cur_latest = {}
+    for b in ec.get("blocks", []):
+        cur_latest[(b["evidence_class"], b["file"])] = b["hash"]
+    drift = []
+    for (k, fn), h in cur_latest.items():
+        fp = os.path.join(d, "evidence", k, fn)
+        if not os.path.exists(fp) or sha256_file(fp) != h:
+            drift.append(f"{k}/{fn}")
     checks = {
         "L1-有籍 REGISTERED": bool(st.get("passport")),
-        "L2-有证 EVIDENCED": bool(st.get("evidence_chain")) and classes >= set(SIX),
-        "L3-有门禁 GATED": "06-issuance" in classes,  # 签发规程材料在位；本次评审动作本身完成门禁
+        "L2-有证 EVIDENCED": bool(ec) and classes >= set(SIX),
+        "L3-有门禁 GATED": "06-issuance" in classes,
+        "L4-链盘一致 CONSISTENT": not drift,
     }
     verdict = "PASS" if all(checks.values()) else "FAIL"
     print("=" * 62)
@@ -131,6 +214,8 @@ def cmd_gate(d):
     print("=" * 62)
     for k, ok in checks.items():
         print(f"  [{'✓' if ok else '✗'}] {k}")
+    if drift:
+        print("      ↳ 链外改动（请重跑 evidence）：" + "、".join(drift))
     missing = [k for k, ok in checks.items() if not ok]
     print(f"  结论：{verdict}" + (f"（缺：{'、'.join(missing)}）" if missing else ""))
     print("=" * 62)
@@ -171,7 +256,7 @@ def cmd_certify(a):
 
 def main():
     ap = argparse.ArgumentParser(description="LGD 三律闭环 CLI（有籍·有证·有门禁）")
-    ap.add_argument("command", choices=["init", "register", "evidence", "gate", "certify"])
+    ap.add_argument("command", choices=["init", "register", "evidence", "gate", "verify", "certify"])
     ap.add_argument("--dir", default=".", help="项目目录（产物全落此处）")
     ap.add_argument("--name", help="算法/模型名")
     ap.add_argument("--id", dest="id", help="算法唯一 ID（did:web:… 或 UUID）")
@@ -191,6 +276,8 @@ def main():
         cmd_evidence(a.dir)
     elif a.command == "gate":
         cmd_gate(a.dir)
+    elif a.command == "verify":
+        cmd_verify(a.dir)
     elif a.command == "certify":
         if not (a.name and a.id and a.issuer):
             ap.error("certify 需要 --name --id --issuer")

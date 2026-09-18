@@ -14,7 +14,7 @@
 import argparse, datetime, hashlib, json, pathlib, sys
 
 LAW_PREFIX = ("l1-", "l2-", "l3-")
-ISSUER = "LGD Certification Authority (MedXpert x SynomosAI)"
+ISSUER = "LGD Certification Authority (SynomosAI Governance Line)"
 BADGE = "lgd-certified"
 
 

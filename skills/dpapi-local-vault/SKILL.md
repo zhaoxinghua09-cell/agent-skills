@@ -6,7 +6,7 @@ description: 用 Windows DPAPI 把密钥/口令加密存到本机、仅当前用
 version: 1.0.1
 license: MIT
 platforms: [Windows]
-author: 潘布达 (Buda Pan) @SynomosAI
+author: 诺声(Logos)@SynomosAI
 category: 安全工具
 tags: [凭据管理, DPAPI, 本地加密, 免口令, Windows, 密钥保管]
 agent_created: true

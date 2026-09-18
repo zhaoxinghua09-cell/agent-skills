@@ -1,0 +1,984 @@
+{
+  "name": "medxpert-synomosai-skills",
+  "owner": {
+    "name": "MedXpert × SynomosAI",
+    "url": "https://medxpert.cn",
+    "email": "info@medxpert.cn"
+  },
+  "metadata": {
+    "description": "MedXpert × SynomosAI AI skills — medical-device regulatory compliance, LGD lifecycle governance, AI agent engineering and document processing.",
+    "version": "1.0.0",
+    "homepage": "https://medxpert.cn/skills",
+    "repository": "https://github.com/zhaoxinghua09-cell/agent-skills"
+  },
+  "plugins": [
+    {
+      "name": "a3-law-operational",
+      "source": "./skills/a3-law-operational",
+      "description": "把「A³ 法则（AI 造 AI 三定律）」从原则落成可执行的工程规矩：① 触发阈值（什么动作算\"造/改 AI\"或\"重大自主行动\"，须进入 A³ 评审）；② 事前评估清单（意图/影响/可逆性/监督）；③ 事后复盘与升级/拒绝条件。配触发判定树与评分卡，让任何 AI 在动\"造/改另一个 AI\"或高影响动作前先过三关。触发词：A³法则、AI造AI三定律、AI自主造AI、触发阈值、自我修改、自主行动评估、AI三定律、造AI评审。",
+      "version": "1.0.1",
+      "category": "AI治理",
+      "author": {
+        "name": "潘布达 (Buda Pan) @SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "agent-boarding-pass",
+      "source": "./skills/agent-boarding-pass",
+      "description": "agent-boarding-pass — 给任何 AI 智能体签发一张可验证的『登机牌』：身份 + 证据哈希 + 权限白名单 + 有效期，SHA-256 防篡改；一条命令验真（指纹重算 + 过期校验）。可整张贴进 system prompt / 仓库 / 工单。",
+      "version": "1.0.0",
+      "category": "AI 治理",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "agent-evolution",
+      "source": "./skills/agent-evolution",
+      "description": "AI 团队「复盘→固化」进化飞轮。当某席数字员工完成一单任务、或用户要求「复盘/进化/沉淀经验/固化经验」时调用。提取本次可复用经验，判定沉淀为技能(SkillManage,动作型)还是记忆(memory,信息型)，并回写该席能力卡的进化记录，使团队下次更强。触发词：复盘、进化、沉淀经验、固化经验、agent-evolution、能力提升。",
+      "version": "1.1.0",
+      "category": "AI工程",
+      "author": {
+        "name": "潘布达 (Buda Pan) @SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "agent-kill-switch",
+      "source": "./skills/agent-kill-switch",
+      "description": "agent-kill-switch — 部署智能体前生成『制动卡』：停止条件/断权动作/责任人/恢复条件；--check 校验制动卡字段齐全，缺项 rc=1 不许上线。",
+      "version": "1.0.0",
+      "category": "AI 治理",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "agent-loop-guard",
+      "source": "./skills/agent-loop-guard",
+      "description": "当用户说『agent卡死了』『一直在重复同样动作』『跑飞了烧光token』『怎么给agent设步数上限』，或 agent 出现无限循环/重复调用/原地打转时使用。把 agent 的运行当『受控进程』：监控步数上限·重复动作·状态无进展，触发即熔断并产出诊断。理论根基：LGD 三律（有籍·有证·有门禁）。触发词：agent卡死、无限循环、重复动作、跑飞、步数上限、loop guard、token烧光、失控循环。",
+      "version": "1.0.0",
+      "category": "AI工程方法",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "agent-memory-keeper",
+      "source": "./skills/agent-memory-keeper",
+      "description": "当用户说『AI又忘了我之前说的』『记忆越来越乱/重复/互相矛盾』『长期记忆怎么管』『记忆库该清理了』，或要设计/治理一个 agent 的跨会话记忆（笔记/知识库/偏好/项目约定）时使用。把记忆当成『有籍贯、可审计、能收敛』的资产：审计重复·孤儿·陈旧·无溯源四维度，给出收敛(单一真源)+门禁(改前备份)两步流程与可运行脚本（记忆审计器）。理论根基：LGD 三律（有籍·有证·有门禁）。触发词：长期记忆、跨会话记忆、memory governance、记忆治理、记忆重复、记忆冲突、记忆溯源、agent记忆、知识库去重、记忆清理。",
+      "version": "1.1.0",
+      "category": "AI工程方法",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "agent-output-registry",
+      "source": "./skills/agent-output-registry",
+      "description": "当用户要『给 AI 产出溯源 / IP 归属 / 防篡改 / 审计留痕』，或担心『AI 生成内容说不清来源、被改了认不出、权属扯不清』时用。给每条 AI 产出发一张『籍』(户口)：SHA-256 指纹 + 模型/版本/提示哈希 + 时间戳 + 权属，写入本地台账；支持 verify 证完整性、lookup 查归属、report 列全部。这是 LGD-I 有籍的落地执行器——把抽象的『有籍』变成每条产出可查的户口。触发词：AI 产出溯源、AI 内容登记、IP 归属、产出指纹、防篡改、审计留痕、有籍、产出户口。",
+      "version": "1.0.0",
+      "category": "AI 治理",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "agent-redteam-kit",
+      "source": "./skills/agent-redteam-kit",
+      "description": "当用户说『测一下这个AI安不安全』『会不会被越狱』『让AI干危险的事它听不听』『上线前做对抗测试』，或要给一个 agent/提示词做安全性红队时使用。中英双库扫描越狱/危险能力请求（DAN/忽略指令/提权/数据外泄/自改进等），给出风险分级+加固建议，并设「危险操作闸门」（有门禁）。可运行脚本（redteam_scan 扫描器）。理论根基：LGD 三律之有门禁（危险动作先过闸）。触发词：红队、red team、越狱、jailbreak、对抗测试、prompt攻击、AI安全测试、危险指令、安全评估。",
+      "version": "1.0.0",
+      "category": "AI安全",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "agent-trace-audit",
+      "source": "./skills/agent-trace-audit",
+      "description": "当用户说『AI刚才干了什么我要查』『agent操作有没有越界』『出事了能回溯吗』『给AI行为留个账本』，或要给 agent 的操作做可审计留痕时使用。把 agent 的动作日志（时间戳/执行者/动作/对象/是否过闸）建成可追溯账本，标出未过闸的越界操作（有籍），输出时间线+违规清单。可运行脚本（trace_audit 审计器）。理论根基：LGD 三律之有籍（全程可追溯）。与 agent-redteam-kit/有门禁互补。触发词：行为留痕、trace audit、操作审计、agent回溯、可追溯、行为账本、审计日志。",
+      "version": "1.0.0",
+      "category": "AI合规",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "ai-brain-learning-memory",
+      "source": "./skills/ai-brain-learning-memory",
+      "description": "AI 大脑学习记忆方法论（汇总版）——把 AI 的学习与记忆按人脑模型组织：三层记忆架构 + 编码→存储→提取三阶段 + 训战省化学习飞轮 + 复习与遗忘机制 + 人脑学习法原理与 AI 对照 + 记忆安全。让 AI 真正「学得进、记得住、用得上」。含 30 秒上手、触发说明、场景例子、问题速查表，普通用户也能直接用。触发词：大脑学习记忆、AI学习记忆、记忆架构、怎么让AI记住、学习记忆机制、海马体、记忆固化、brain memory、learning memory、记忆模型、记忆分层、艾宾浩斯、间隔重复、记忆宫殿、费曼学习法、主动回忆、睡眠巩固、记忆投毒、记忆安全、情节记忆、语义记忆、快速绑",
+      "version": "2.4.0",
+      "category": "AI学习方法论",
+      "author": {
+        "name": "注册老炮@MedXpert"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "ai-brain-learning-memory-pro",
+      "source": "./skills/ai-brain-learning-memory-pro",
+      "description": "ai-brain-learning-memory 的进阶工程版，面向 AI 开发者 / 认知科学爱好者 / agent 架构师。在基础版（概念+例子+速查）之上往工程化推一步：三层记忆的参考实现（Python）、与 agent-memory 工具集成、评测电池 memory_eval_battery.py 的跑法与 6 维解读、OWASP ASI06 记忆投毒防御的代码落地、复习四节点的自动化 rrule 配置、认知科学证据→工程决策映射。建议先读基础版再读本版。触发词：大脑学习记忆进阶、记忆系统实现、memory system design、记忆架构代码、agent-memory 集成、记忆",
+      "version": "1.0.0",
+      "category": "AI学习方法论",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "ai-content-discloser",
+      "source": "./skills/ai-content-discloser",
+      "description": "ai-content-discloser — 为 AI 参与（全生成/辅助/混合）的内容一键生成合规披露声明：显式声明（中/EN）+ 隐式元数据标注 + 平台贴法，依据中国《人工智能生成合成内容标识办法》与 EU AI Act 第 50 条口径。",
+      "version": "1.0.0",
+      "category": "AI 治理",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "ai-cost-cutter",
+      "source": "./skills/ai-cost-cutter",
+      "description": "当用户说『API账单太贵』『token烧太快』『能不能用本地模型』『批处理怎么省钱』『离线跑AI』，或要把大模型调用从烧钱变省钱时使用。四把刀降本：批处理（高峰调度/合并请求）、本地模型回退（贱活本地跑、贵活才上云）、缓存层（相同请求不重复花钱）、模型路由分级（按任务难度选便宜/贵模型）。附可运行成本估算脚本，输入任务量+模型单价即输出月度账单与三档降本方案的差额。源自 GOSIM 参赛作 cross-machine-offline-taskbox 的离线跑批思路。触发词：AI省钱、降本、token太贵、本地模型、批处理、离线跑AI、模型路由、缓存层、cost cutter、AI成本、API账",
+      "version": "1.1.0",
+      "category": "AI工程方法",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "ai-decision-log",
+      "source": "./skills/ai-decision-log",
+      "description": "ai-decision-log — AI 参与的决策一键留痕（JSONL）：决策/模型/证据/人审人/时间；--report 统计模型使用与人审覆盖，无人审的决策重点标出。",
+      "version": "1.0.0",
+      "category": "AI 治理",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "ai-incident-log",
+      "source": "./skills/ai-incident-log",
+      "description": "ai-incident-log — AI 失控/误操作/幻觉事故一键入账（JSONL 台账）：时间/严重度/模型/动作/复盘字段；--list/--report 一键汇总。",
+      "version": "1.0.0",
+      "category": "AI 治理",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "ai-policy-radar",
+      "source": "./skills/ai-policy-radar",
+      "description": "当用户说『最近AI出了什么新规』『EU AI Act/脆监会/NMPA有没有新动作』『法规更新我得跟上』『帮我盯AI政策』，或要持续跟踪 AI 监管动态（EU AI Act / 中国 NMPA / 美国 FDA / GDPR 等）时使用。扫描法规库/更新日志，按主题（风险分级/透明度/数据/准入）归类变动并留痕（有证），输出「本月新增了什么、对你有何影响」。可运行脚本（policy_radar 扫描器）。理论根基：LGD 三律之有证（法规变动留痕可溯）。与 eu-ai-act-companion 互补（它管单法导航，本技能管跨法动态监测）。触发词：AI法规、政策雷达、监管动态、EU AI Ac",
+      "version": "1.0.0",
+      "category": "AI合规",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "ai-reply-heuristics",
+      "source": "./skills/ai-reply-heuristics",
+      "description": "ai-reply-heuristics — 启发式估计一段文字的 AI 痕迹强度：套话密度/破折号频率/句长均匀度/排比结构 → 0-100 分与三档区间（启发式，不构成判定，附免责）。",
+      "version": "1.0.0",
+      "category": "AI 治理",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "ai-usage-policy",
+      "source": "./skills/ai-usage-policy",
+      "description": "ai-usage-policy — 按团队/工具/禁区/上报线一键生成一页《AI 使用守则》Markdown：可用什么、干什么、禁止什么、出事找谁。",
+      "version": "1.0.0",
+      "category": "AI 治理",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "ai-vendor-checklist",
+      "source": "./skills/ai-vendor-checklist",
+      "description": "ai-vendor-checklist — 10 项 AI 采购尽调清单（数据权属/训练退出/留存/资质/事故通报/子处理者/出境/模型卡/审计/迁移退出）；--template 出清单，--score 打分低于线 rc=1。",
+      "version": "1.0.0",
+      "category": "AI 治理",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "aml-sentinel",
+      "source": "./skills/aml-sentinel",
+      "description": "aml-sentinel — LGD 三律在金融 / 反洗钱（AML）交易监测域的纵深合规工具（零依赖）：可疑交易模式检测（拆分/快进快出/跨境无KYC/大额未报备），对 AI 系统/数据做可执行合规校验。",
+      "version": "1.0.0",
+      "category": "AI 治理",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "api-resilience",
+      "source": "./skills/api-resilience",
+      "description": "当用户说『调外部API老超时』『被限流了』『接口抖一动就挂』『怎么给agent加重试退避』，或 agent 依赖的第三方服务(模型/搜索/数据库)不稳定、需要限流/退避/熔断/降级时使用。把外部调用当『会失败的对象』：指数退避+抖动重试、限流计数、熔断降级，失败可恢复不雪崩。理论根基：LGD 三律（有籍·有证·有门禁）。触发词：API重试、限流、退避、熔断、降级、接口抖动、resilience、超时、调用不稳定。",
+      "version": "1.0.0",
+      "category": "AI工程方法",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "batch-renamer",
+      "source": "./skills/batch-renamer",
+      "description": "批量重命名器 — 规则式批量重命名：前缀/后缀/序号/查找替换/扩展名过滤，默认预览 --apply 才执行（零依赖）",
+      "version": "1.0.0",
+      "category": "效率工具",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "bias-auditor",
+      "source": "./skills/bias-auditor",
+      "description": "当用户说『AI回答有偏见』『输出性别/地域/年龄刻板印象』『怎么检测模型偏见』『内容要过公平审查』，或在发布面向人群的内容(招聘/推荐/客服/评测)前想做公平性自检时使用。把模型输出当『带视角的生产物』：扫人口群体词·刻板表述·单边归因，标出潜在偏见并给去偏改写建议。理论根基：LGD 三律（有籍·有证·有门禁）。触发词：偏见检测、bias audit、公平性、刻板印象、AI歧视、内容审查、公平自检、stereotype。",
+      "version": "1.1.0",
+      "category": "AI工程方法",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "changelog-draft-gen",
+      "source": "./skills/changelog-draft-gen",
+      "description": "更新日志草稿生成器 — 发版手写 CHANGELOG 漏三漏四，conventional-changelog 全家桶又太重，只想按规范出个草稿（零依赖，确定性输出，rc=0/1/2，--json 机器可读）",
+      "version": "1.0.0",
+      "category": "工程方法",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "citation-coverage-check",
+      "source": "./skills/citation-coverage-check",
+      "description": "citation-coverage-check — 扫描文章中含数字/日期/论断的句子，统计带来源标注（据/来源/source/链接/文献）的比例；低于阈值 rc=1，逐句列出缺出处清单。",
+      "version": "1.0.0",
+      "category": "AI 治理",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "clin-eval-route-picker",
+      "source": "./skills/clin-eval-route-picker",
+      "description": "临床评价路径选择器 — 免临床目录、同品种路径、临床试验三条路怎么选说不清，资料写到一半才发现路走错了（零依赖，确定性输出，rc=0/1/2，--json 机器可读）",
+      "version": "1.0.0",
+      "category": "医疗器械合规",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "context-engineering",
+      "source": "./skills/context-engineering",
+      "description": "当用户说『AI越来越笨/答非所问/忘了前面的设定』『上下文太长』『token烧太快』『RAG召回不准』，或要设计/优化 agent 的提示、记忆、检索、工具编排时使用。把『上下文窗口里到底该放什么』当成一门工程：审计相关性·冗余·预算·衰减 四维度，给出裁剪/检索/记忆/门禁四步流程与可运行脚本（上下文预算计算器+审计清单生成器）。与 prompt engineering 的区别：prompt 是写一句话，context engineering 是设计 AI 每轮看到的全部信息。触发词：上下文工程、context engineering、上下文窗口、上下文污染、上下文衰减、context ro",
+      "version": "1.0.0",
+      "category": "AI工程方法",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "contract-clause-check",
+      "source": "./skills/contract-clause-check",
+      "description": "合同高危条款扫描器 — 签合同前扫必备条款（违约/争议/管辖）与高危表述（最终解释权/自动续期/高违约金），缺项即 FAIL（零依赖）",
+      "version": "1.0.0",
+      "category": "AI 治理",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "contract-interact-checklist",
+      "source": "./skills/contract-interact-checklist",
+      "description": "合约交互风险清单 — 智能合约交互前六项风险自检（审计/地址/授权额度/撤销/私钥/小额试单），未完成即 FAIL（零依赖）",
+      "version": "1.0.0",
+      "category": "AI 治理",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "csv-slice",
+      "source": "./skills/csv-slice",
+      "description": "CSV 切片器 — CSV 快速查看/取列/去重/条件筛选/统计行数，纯标准库 csv 模块（零依赖）",
+      "version": "1.0.0",
+      "category": "效率工具",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "data-export-check",
+      "source": "./skills/data-export-check",
+      "description": "数据出境合规自检 — 数据出境前五项义务自检（分级/单独同意/PIA/标准合同或安全评估/留痕），缺项即 FAIL（零依赖）",
+      "version": "1.0.0",
+      "category": "AI 治理",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "data-minimizer",
+      "source": "./skills/data-minimizer",
+      "description": "data-minimizer — 把文本里的手机号/邮箱/证件号/长号/指定人名一键打码后交给 AI，输出脱敏文本+脱敏报告；支持 --names 自定义人名、--json。",
+      "version": "1.0.0",
+      "category": "AI 治理",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "data-rights-guard",
+      "source": "./skills/data-rights-guard",
+      "description": "当用户说『爬的数据能拿来训练吗』『数据集没写许可证』『微调数据版权合规吗』『怎么确认数据能商用』，或在用数据(爬取/购买/公开集/用户授权)做训练/微调/评测前想确认版权与许可边界时使用。把每条数据当『带权属的资产』：查许可证·商用权限·署名要求·来源可溯，缺许可的不许进训练集。理论根基：LGD 三律（有籍·有证·有门禁）。触发词：数据版权、训练数据合规、数据集许可证、版权护栏、数据权属、商用权限、data license、微调合规。",
+      "version": "1.0.0",
+      "category": "AI合规",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "dir-organizer",
+      "source": "./skills/dir-organizer",
+      "description": "文件夹整理器 — 按扩展名把杂乱目录归类到 图片/文档/表格/音视频/压缩包/代码/其他 子目录，默认预览 --apply 才移动（零依赖）",
+      "version": "1.0.0",
+      "category": "效率工具",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "disk-scan",
+      "source": "./skills/disk-scan",
+      "description": "磁盘占用扫描 — 只读扫描目录占用：Top N 大文件 + 各子目录大小排行，快速定位空间杀手（零依赖）",
+      "version": "1.0.0",
+      "category": "效率工具",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "doc-desens-scanner",
+      "source": "./skills/doc-desens-scanner",
+      "description": "当用户说『这篇文档有敏感信息要发出去』『先脱敏再发』『别把内部路径/密钥/人名露出去』『对外发布前扫一遍隐私』，或要把文档/代码/日志对外前做去敏时使用。扫描 个人标识(PII)·密钥·内部路径·内部项目代号 四类敏感项并打码/留痕，输出去敏版+清单（有证：脱敏动作可审计）。可运行脚本（desens_scan 扫描器）。理论根基：LGD 三律之有证（脱敏留痕，可追责）。触发词：去敏、脱敏、desensitize、脱敏扫描、隐私打码、密钥泄露、内部路径、对外发布前检查、PII。",
+      "version": "1.1.0",
+      "category": "AI安全",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "dpapi-local-vault",
+      "source": "./skills/dpapi-local-vault",
+      "description": "用 Windows DPAPI 把密钥/口令加密存到本机、仅当前用户可解、明文不落盘、带权限锁与泄漏标注的可复用凭据保管 skill。适合\"当前 Windows 账号即信任边界\"的本地保管场景。",
+      "version": "1.0.1",
+      "category": "安全工具",
+      "author": {
+        "name": "潘布达 (Buda Pan) @SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "dup-finder",
+      "source": "./skills/dup-finder",
+      "description": "重复文件查找器 — 三级哈希（大小→首块→全量SHA1）找重复文件，默认只报告 --apply 删多余保留首个（零依赖）",
+      "version": "1.0.0",
+      "category": "效率工具",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "env-var-audit",
+      "source": "./skills/env-var-audit",
+      "description": "环境变量审计器 — 代码里 os.getenv 了三个新变量忘写进 .env.example，新人克隆跑不起来；更怕的是哪个密码被硬编码进了源码（零依赖，确定性输出，rc=0/1/2，--json 机器可读）",
+      "version": "1.0.0",
+      "category": "安全合规",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "eu-ai-act-companion",
+      "source": "./skills/eu-ai-act-companion",
+      "description": "当用户问『我的AI产品要过EU AI Act吗』『高风险还是有限风险』『provider还是deployer义务』『合规要做什么』『截止日期』，或要把 AI 系统投放欧盟市场/在欧部署时使用。把 EU AI Act 从法规文本落成导航：风险四级分类（不可接受/高/有限/最小）、按角色的义务清单（provider/deployer/importer）、关键时间节点（2024-08 生效、2025-02 禁止类、2026-08 高危义务、2027-08 全量）、文档与合格评定路径。附可运行分类器，输入用例即输出风险级+义务+节点。泛化自 eu-ai-act-check。触发词：EU AI Act、",
+      "version": "1.1.0",
+      "category": "AI合规",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "eval-bench-builder",
+      "source": "./skills/eval-bench-builder",
+      "description": "当用户说『怎么评测这个AI/技能好不好』『给我造个测试集』『评测用例怎么设计』『要可复现的评测』，或要给一个 agent/模型/技能建可复现评测基准时使用。从能力说明+边界用例生成结构化 eval 样本（输入/期望/判定标准），保证可复现、可回归。可运行脚本（bench_build 生成器）。理论根基：LGD 三律之有证（评测可复现、可核验）。触发词：评测基准、eval、测试集、benchmark、可复现评测、评测用例、怎么测AI。",
+      "version": "1.1.0",
+      "category": "AI工程方法",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "evidence-chain-builder",
+      "source": "./skills/evidence-chain-builder",
+      "description": "当用户要『验证 AI 论断 / 防幻觉 / 给结论找证据 / 判断信源可信度』时用。把论断拆成可验证证据链：每条证据标来源类型(official/paper/data/internal/assertion)、是否可独立验证、可信度，输出『证成度』与未支撑论断清单。对齐 EIFP 不编造原教旨——本工具不判定论断真假，只评估证据质量；缺可验证证据的论断明确标『勿作结论』。这是 LGD-II 有证的落地执行器。触发词：证据链、论断验证、防幻觉、信源可信、有证、claim 证据、论断举证。",
+      "version": "1.0.0",
+      "category": "AI 治理",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "evidence-chain-check",
+      "source": "./skills/evidence-chain-check",
+      "description": "evidence-chain-check — LGD 三律在法律 / 电子证据链完整性域的纵深合规工具（零依赖）：证据链时间单调 / 主体一致 / 哈希链不断裂校验，对 AI 系统/数据做可执行合规校验。",
+      "version": "1.0.0",
+      "category": "AI 治理",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "fact-check-guard",
+      "source": "./skills/fact-check-guard",
+      "description": "当用户说『AI胡说八道』『内容发出去怕有错』『怎么验证模型给的事实』『引用要有出处』，或要把 agent 生成的内容(文章/报告/回复)对外发布、必须可溯源时使用。把每条关键声明当『待证主张』：对照检索来源逐条标注 已支撑/无来源/存疑，无来源的不许当事实对外。理论根基：LGD 三律（有籍·有证·有门禁）。触发词：事实核查、fact check、幻觉检测、引用溯源、内容可证、AI胡说、出处校验、grounding。",
+      "version": "1.1.0",
+      "category": "AI工程方法",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "fin-reg-calc",
+      "source": "./skills/fin-reg-calc",
+      "description": "fin-reg-calc — LGD 三律在金融 / 持牌机构 AI（投顾·风控·反洗钱）域的纵深合规工具（零依赖）：投资者适当性匹配 + 大额上报阈值校验，对 AI 系统/数据做可执行合规校验。",
+      "version": "1.0.0",
+      "category": "AI 治理",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "fund-fee-calc",
+      "source": "./skills/fund-fee-calc",
+      "description": "资管费率净收益试算器 — 试算管理/托管/销售三费总成本与净收益，宣传含保本承诺即 FAIL（零依赖）",
+      "version": "1.0.0",
+      "category": "AI 治理",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "gate-policy-generator",
+      "source": "./skills/gate-policy-generator",
+      "description": "生成 LGD-III「有门禁」权限策略（policy-as-code），给 agent 划清可调用/需评审/禁止的工具边界与四道门禁，防越权、误删误发、失控循环。",
+      "version": "1.0.0",
+      "category": "AI 治理",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "github-api-push-workaround",
+      "source": "./skills/github-api-push-workaround",
+      "description": "git 推 GitHub/Gitee/AtomGit 的根因化排查与推送模板：401=凭据问题（helper 链残留死旧 PAT）、超时/挂死=通道问题（代理掐 git 传输，须 no_proxy 直连）、大面积 401=取值前缀坑（--raw 取裸值）。含直连推送模板（令牌走环境变量）、Git Data API 兜底（blob→tree→commit→ref）、Gitee 私有转公开、AtomGit 后端 gitcode 等实测坑。当用户说'推 GitHub'、'git push 失败/401/超时'、'发布仓库到远端'、'令牌失效了'时使用。",
+      "version": "1.2.0",
+      "category": "开发效率",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "gov-disclosure-check",
+      "source": "./skills/gov-disclosure-check",
+      "description": "gov-disclosure-check — LGD 三律在政务 / 信息公开披露域的纵深合规工具（零依赖）：强制披露字段校验（决策依据/责任部门/时限/救济渠道/数据来源），对 AI 系统/数据做可执行合规校验。",
+      "version": "1.0.0",
+      "category": "AI 治理",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "hash-check",
+      "source": "./skills/hash-check",
+      "description": "文件哈希校验 — 生成/校验目录 SHA-256 清单：下载验 integrity、传输前后比对、防篡改留证（零依赖）",
+      "version": "1.0.0",
+      "category": "效率工具",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "health-claim-guard",
+      "source": "./skills/health-claim-guard",
+      "description": "健康宣称合规扫描 — 保健品/食品宣传文案扫违规疗效宣称（根治/治愈/无副作用等），缺警示语即 FAIL（零依赖）",
+      "version": "1.0.0",
+      "category": "AI 治理",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "invoice-risk-scan",
+      "source": "./skills/invoice-risk-scan",
+      "description": "发票要素风险扫描 — 报销/入账前扫发票要素：税号格式、金额、日期合理性，异常即拦（零依赖）",
+      "version": "1.0.0",
+      "category": "AI 治理",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "json-tidy",
+      "source": "./skills/json-tidy",
+      "description": "JSON 整形器 — JSON 格式化/压缩/键排序，解析错误精确定位行列，管道可用（零依赖）",
+      "version": "1.0.0",
+      "category": "效率工具",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "kyc-checklist-gen",
+      "source": "./skills/kyc-checklist-gen",
+      "description": "KYC 材料齐备清单 — 一键生成个人/企业 KYC 必备材料清单并核算齐备度，缺项即 FAIL（零依赖）",
+      "version": "1.0.0",
+      "category": "AI 治理",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "lgd-badge-issuer",
+      "source": "./skills/lgd-badge-issuer",
+      "description": "lgd-badge-issuer — 三律全过才签发 lgd-certified 徽章证书（SHA-256 指纹 + 签发台账），未过拒绝并留痕。",
+      "version": "1.0.0",
+      "category": "AI 治理",
+      "author": {
+        "name": "XLGD · 诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "lgd-badge-verify",
+      "source": "./skills/lgd-badge-verify",
+      "description": "lgd-badge-verify — 验徽章证书：指纹重算防篡改 + 证据哈希格式校验 + 台账对账（serial 存在且未吊销）。",
+      "version": "1.0.0",
+      "category": "AI 治理",
+      "author": {
+        "name": "XLGD · 诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "lgd-certify",
+      "source": "./skills/lgd-certify",
+      "description": "当用户要『给 AI 产物发可信护照 / 做三律合规认证 / 生成可挂载徽章』时用。这是市场唯一把『有籍护照签发 → 有证证据链 → 有门禁签发 → 可挂载徽章』做成闭环的 CLI：register 签发算法护照(三锚一票同源+SHA-256指纹)、evidence 扫六类证据工件链式哈希、gate 三律评审 PASS/FAIL 并签发认证 + medxpert.cn 徽章嵌入码。LGD 三律旗舰执行器，对标调研证实治理生态全是单点工具、无此闭环。触发词：LGD 认证、三律闭环、算法护照、可信徽章、有籍有证有门禁认证、护照签发。",
+      "version": "1.0.0",
+      "category": "AI 治理",
+      "author": {
+        "name": "XLGD · 诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "lgd-crypto-guard",
+      "source": "./skills/lgd-crypto-guard",
+      "description": "lgd-crypto-guard — 把 LGD 三律（有籍·有证·有门禁）翻译进隐私计算 / 数据加密与最小化 AI 应用（联邦·密文·脱敏）的合规守门器，对 AI 系统做三律自评与门禁判定（零依赖）。",
+      "version": "1.0.0",
+      "category": "AI 治理",
+      "author": {
+        "name": "XLGD · 诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "lgd-fin-guard",
+      "source": "./skills/lgd-fin-guard",
+      "description": "lgd-fin-guard — 把 LGD 三律（有籍·有证·有门禁）翻译进金融 / 持牌机构 AI 应用（投顾·风控·反洗钱）的合规守门器，对 AI 系统做三律自评与门禁判定（零依赖）。",
+      "version": "1.0.0",
+      "category": "AI 治理",
+      "author": {
+        "name": "XLGD · 诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "lgd-gov-guard",
+      "source": "./skills/lgd-gov-guard",
+      "description": "lgd-gov-guard — 把 LGD 三律（有籍·有证·有门禁）翻译进政务 / 公共部门 AI 应用（决策辅助·公开答复·数据治理）的合规守门器，对 AI 系统做三律自评与门禁判定（零依赖）。",
+      "version": "1.0.0",
+      "category": "AI 治理",
+      "author": {
+        "name": "XLGD · 诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "lgd-law-ethic",
+      "source": "./skills/lgd-law-ethic",
+      "description": "lgd-law-ethic — 把 LGD 三律（有籍·有证·有门禁）翻译进法律 / 律所与法务 AI 应用（检索·起草·意见辅助）的合规守门器，对 AI 系统做三律自评与门禁判定（零依赖）。",
+      "version": "1.0.0",
+      "category": "AI 治理",
+      "author": {
+        "name": "XLGD · 诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "lgd-three-laws-auditor",
+      "source": "./skills/lgd-three-laws-auditor",
+      "description": "当用户问『我的 AI 系统合不合规 / 怎么评判 AI 治理水平 / agent 要不要上治理护栏』，或要落地『有籍·有证·有门禁』时用。把 LGD 三律做成一套可自评的标准 rubric（有籍=身份/版本/血缘/责任四项登记；有证=六类证据工件齐备；有门禁=触发/评审/放行/复盘四道门），输入系统描述即出评分卡+改进项。这不仅是工具，更是 LGD 治理思想的『定义器』——谁用三籍词汇自评，谁就采用了我们的治理定义权（护城河）。触发词：LGD 三律、有籍有证有门禁、凡自治之物、AI 合规自评、AI 治理标准、agent 治理护栏、三律审计。",
+      "version": "1.0.0",
+      "category": "AI 治理",
+      "author": {
+        "name": "XLGD · 诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "loan-rate-disclosure",
+      "source": "./skills/loan-rate-disclosure",
+      "description": "借贷利率披露校验器 — 校验借贷报价是否按年化口径披露、是否超基准利率4倍司法保护上限（零依赖）",
+      "version": "1.0.0",
+      "category": "AI 治理",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-security-scan",
+      "source": "./skills/mcp-security-scan",
+      "description": "当用户说『接了个MCP server不放心』『MCP工具能执行命令怕有风险』『怎么审计MCP权限』『第三方MCP会不会偷数据』，或要把某 MCP server(模型上下文协议)接进 agent、担心它是新攻击面时使用。把 MCP server 当『需审查的第三方』：扫工具清单里的 命令执行/文件系统写/网络外联/凭证暴露 四类风险，给风险评级与最小授权建议。理论根基：LGD 三律（有籍·有证·有门禁）。触发词：MCP安全、mcp security、MCP审计、MCP权限、第三方MCP、MCP风险、server扫描、协议安全。",
+      "version": "1.1.0",
+      "category": "AI安全",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "md-link-audit",
+      "source": "./skills/md-link-audit",
+      "description": "Markdown 链接体检器 — README 里链接一堆 404、改了路径没人发现，CI 上还老因为外网检查超时误报（零依赖，确定性输出，rc=0/1/2，--json 机器可读）",
+      "version": "1.0.0",
+      "category": "效率工具",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "model-card-generator",
+      "source": "./skills/model-card-generator",
+      "description": "model-card-generator — 给团队内任何 AI 系统/智能体生成一页『模型卡』：身份/用途/数据/限制/风险/联系人，输出 Markdown+JSON，对齐模型卡惯例与透明度义务。",
+      "version": "1.0.0",
+      "category": "AI 治理",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "model-router",
+      "source": "./skills/model-router",
+      "description": "当用户说『全用旗舰模型太贵』『小任务也要排队等大模型』『怎么按难度选模型』『怎么给agent配模型梯队』，或想在不降质前提下把推理成本压下来时使用。按任务复杂度把请求路由到『刚好够用』的模型档位(旗舰/中端/小模型/本地)，附成本对比与回退策略。理论根基：LGD 三律（有籍·有证·有门禁）。触发词：模型路由、model routing、省钱、成本优化、模型梯队、小任务大模型、路由策略、LLM成本。",
+      "version": "1.1.0",
+      "category": "AI工程方法",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "multi-agent-conductor",
+      "source": "./skills/multi-agent-conductor",
+      "description": "当用户说『这个任务好大要拆给多个AI』『多智能体怎么分工』『agent之间怎么不串权限』『编排几个agent协作』，或要把一个大任务拆成多个 agent 并行/串行协作时使用。把任务分解为子任务→分配角色→划清每个 agent 的边界与禁止项（有门禁），输出编排方案+边界清单。可运行脚本（conductor_plan 规划器）。理论根基：LGD 三律之有门禁（任务边界+权限隔离）。触发词：多智能体、multi-agent、agent编排、任务分解、协作agent、agent权限、并行agent、orchestration。",
+      "version": "1.1.0",
+      "category": "AI工程方法",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "output-schema-guard",
+      "source": "./skills/output-schema-guard",
+      "description": "当用户说『模型返回的JSON又崩了』『字段缺失对不上』『下游解析失败』『怎么强制LLM输出合规结构』，或要把 LLM 的 JSON/结构化输出接进代码（API/数据库/表单）时使用。把模型输出当『不可信外部输入』：用 schema 校验必填字段·类型·枚举，缺则给可执行的修复提示而非裸报错。理论根基：LGD 三律（有籍·有证·有门禁）。触发词：结构化输出、JSON校验、schema guard、输出格式、字段缺失、模型输出解析、function calling、tool output。",
+      "version": "1.0.0",
+      "category": "AI工程方法",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "pmcf-plan-check",
+      "source": "./skills/pmcf-plan-check",
+      "description": "PMCF 计划完整性检查器 — PMCF 计划写了一半交上去，公告机构说缺方法缺终点缺统计考量，来回补件三个月（零依赖，确定性输出，rc=0/1/2，--json 机器可读）",
+      "version": "1.0.0",
+      "category": "医疗器械合规",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "prompt-compressor",
+      "source": "./skills/prompt-compressor",
+      "description": "当用户说『提示词太长/token烧太快』『上下文塞不下了』『把这段压缩一下还别丢重点』『长文档怎么塞进窗口』，或要压低 agent 每轮上下文成本时使用。基于「信息密度」裁剪：保留关键词密集/位置靠前的句子，删冗余/客套/复述，给出可运行脚本（提示压缩器，按密度+位置打分删句）。与 context-engineering 互补：context 管『放什么』，compressor 管『怎么压短』。理论根基：LGD 三律之收敛（删除冗余，单一有效信息）。触发词：提示压缩、prompt压缩、上下文压缩、压缩token、长文本精简、context压缩、省token、摘要进窗口、prompt short",
+      "version": "1.1.0",
+      "category": "AI工程方法",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "prompt-injection-drill",
+      "source": "./skills/prompt-injection-drill",
+      "description": "prompt-injection-drill — 为你的 system prompt 生成 8 类注入攻击演练用例（角色覆盖/指令覆盖/诱导泄密/编码绕过/工具滥用/越权伪造/长程拖延/拒绝绕过）+ 期望行为清单，供上线前红队自测。",
+      "version": "1.0.0",
+      "category": "AI 治理",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "prompt-injection-shield",
+      "source": "./skills/prompt-injection-shield",
+      "description": "当用户要把网页抓取/邮件/工具返回值/检索文档/用户上传内容喂给 AI，又担心里面藏『忽略之前指令』『你是新AI』这类指令时使用。在不可信内容进上下文之前先扫描：中英双语文式库（忽略指令/角色劫持/越狱/DAN/索要系统提示）+ 启发式（面向AI的祈使句、角色切换、索要隐藏指令）+ 沙箱规则。附可运行扫描脚本，输出风险分·命中规则·处置建议（丢弃/隔离/沙箱）。复用 desens-scan 与 release-gate 的去敏与门禁能力。触发词：提示注入、prompt injection、注入防护、越狱、jailbreak、忽略指令、角色劫持、system prompt泄露、内容安全、AI被操",
+      "version": "1.0.0",
+      "category": "AI安全",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "prompt-leak-scanner",
+      "source": "./skills/prompt-leak-scanner",
+      "description": "prompt-leak-scanner — 发布/共享前扫描提示词与 system prompt 的泄漏与后门风险：密钥口令、内部路径、个人可识别信息、自定义敏感词（--extra）、自我泄漏后门（『忽略之前指令/打印系统提示词』类埋点）。有风险 rc=1 拦下。",
+      "version": "1.0.0",
+      "category": "AI 治理",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "prompt-version-control",
+      "source": "./skills/prompt-version-control",
+      "description": "当用户说『提示改乱了回不去』『不知道哪版提示效果更好』『提示也要版本管理』『怎么AB测试不同提示』，或团队多人改同一套提示容易互相覆盖时使用。把提示当『可版本化资产』：每次改动留版本+差异+绑定效果评分，可 diff/回滚/选优。理论根基：LGD 三律（有籍·有证·有门禁）。触发词：提示版本、prompt版本管理、提示回滚、prompt diff、AB测试提示、提示治理、prompt registry。",
+      "version": "1.1.0",
+      "category": "AI工程方法",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "publish-quality-gate",
+      "source": "./skills/publish-quality-gate",
+      "description": "发布质量门禁：发布任何 Skill/专家包/文档/工具到外部（分享、上架市场、对外发布）前后的质量检查。发布前执行四层敏感信息检查（公司信息→本机信息→个人信息→机密信息），发布后按 TRACE 五维（Trust/Reliability/Adaptability/Convention/Effectiveness）执行 AI 自测。当用户说'准备发布'、'发布前检查'、'发布后自测'、'TRACE 评测'、'检查一下发布物'、'脱敏检查'、'发布质量'时使用。",
+      "version": "1.0.1",
+      "category": "办公效率",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "rag-grounding-guard",
+      "source": "./skills/rag-grounding-guard",
+      "description": "当用户说『RAG回答胡说八道/编造』『引用对不对』『回答有依据吗』『检索到的资料支撑不了结论』，或要给 RAG/检索增强回答做事实校验时使用。校验每条声明在检索来源里是否有支撑（ grounding 覆盖率），未覆盖的声明标红为幻觉风险，并要求来源带出处（有籍）。可运行脚本（grounding_check 校验器）。理论根基：LGD 三律之有籍(引用溯源)+有证(防幻觉可核验)。触发词：RAG校验、grounding、事实溯源、防幻觉、引用核查、检索支撑、hallucination、回答有依据吗。",
+      "version": "1.1.0",
+      "category": "AI工程方法",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "regex-sandbox",
+      "source": "./skills/regex-sandbox",
+      "description": "正则沙盒 — 正则即写即测：匹配/分组捕获/替换预览/标志位，无匹配给 rc=1，调正则不用来回跑脚本（零依赖）",
+      "version": "1.0.0",
+      "category": "效率工具",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "session-continuity-protocol",
+      "source": "./skills/session-continuity-protocol",
+      "description": "跨工作区 / 跨会话记忆连续性协议（潘布达首发）。触发场景：新会话开局、用户说「续上上下文 / 你还记得吗 / 你失忆了」、或要做任何连续性敏感任务（公众号发稿、品牌资产、发布阻塞、密钥投递、项目状态）之前。加载后严格跑「开局四步」把已固化事实回灌，避免在已定稿事项上重复问用户、避免失忆。真源 = 文件层（_ACTIVE_PROJECTS.md + 账号 MEMORY.md）优先于 localmem 语义层兜底。",
+      "version": "1.0.0",
+      "category": "通用技能",
+      "author": {
+        "name": "潘布达 (Buda Pan) @SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "skill-admission-gate",
+      "source": "./skills/skill-admission-gate",
+      "description": "技能上架安全闸门——一个技能/插件在安装或上架前，先跑确定性安全审查：查破坏性命令、远程执行、数据外泄、提示注入、隐蔽行为、混淆载荷与作用域越界，产出「分级发现 + 闸门判定 + 包指纹证据」。当需要审查第三方 skill、安装来源不明的技能、给自研技能做发布前安检、做供应链安全评估、或需要出具\"该包未被篡改且已评估风险\"的证据时调用。核心三件事：①按规则集扫全部文件并分级（BLOCK/WARN）②支持\"已接受风险\"声明（.admission-allow.json，须署名留痕）③输出包指纹与文件哈希作为\"有证\"产物。触发词：技能安全、审查 skill、安装前检查、恶意技能、skill 安全扫描",
+      "version": "1.0.0",
+      "category": "lgd-theory",
+      "author": {
+        "name": "XLGD · SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "skill-quality-gate",
+      "source": "./skills/skill-quality-gate",
+      "description": "当用户说『这个技能能不能发』『发布前检查下质量』『技能缺什么字段』『提交市场前过一遍门禁』，或要把一个 skill/提示词/agent 配置提交到市场或上线前做质量校验时使用。9 维校验（frontmatter八字段/脚本可读/图标/README/无密钥/双语/触发词/门禁节/去敏），逐维 pass/fail，不过闸不发布（有门禁）。可运行脚本（quality_gate 校验器）。理论根基：LGD 三律之有门禁（发布前必过闸）。触发词：技能质检、质量门禁、发布前检查、skill检查、提交市场、quality gate、技能能不能发。",
+      "version": "1.0.0",
+      "category": "AI工程方法",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "text-replace",
+      "source": "./skills/text-replace",
+      "description": "跨文件批量替换 — 多文件批量查找替换（字面量/正则），默认统计命中不写盘 --apply 才改，改前自动 .bak 备份（零依赖）",
+      "version": "1.0.0",
+      "category": "效率工具",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "text-stats",
+      "source": "./skills/text-stats",
+      "description": "文本统计器 — 文本/代码统计：字数/行数/词频TopN/阅读时长，支持目录批量汇总（零依赖）",
+      "version": "1.0.0",
+      "category": "效率工具",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "token-disclosure-check",
+      "source": "./skills/token-disclosure-check",
+      "description": "代币信息披露检查器 — 白皮书/披露文案核查必备要素（总量/分配/锁仓/团队/风险提示），含收益承诺即 FAIL（零依赖）",
+      "version": "1.0.0",
+      "category": "AI 治理",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "tool-call-guard",
+      "source": "./skills/tool-call-guard",
+      "description": "当用户说『agent乱调工具』『误删了文件』『不该发邮件却发了』『怎么给AI的工具加权限边界』，或在给 agent 接工具（文件/网络/数据库/消息/支付）想防危险动作时使用。把每次 tool call 当『需授权操作』：按 读/写/删/外发/支付 分级，危险动作先拦截+提示确认，低风险放行。理论根基：LGD 三律（有籍·有证·有门禁）。触发词：工具调用安全、agent权限、tool call guard、危险动作拦截、误删、误发、AI工具边界、function安全。",
+      "version": "1.0.0",
+      "category": "AI安全",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "travel-rule-check",
+      "source": "./skills/travel-rule-check",
+      "description": "travel-rule-check — LGD 三律在链上资产 / VASP 旅行规则（FATF）域的纵深合规工具（零依赖）：VASP 转账收发方 KYC（姓名+账号/地址+地理）超阈强制校验，对 AI 系统/数据做可执行合规校验。",
+      "version": "1.0.0",
+      "category": "AI 治理",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "udi-format-validator",
+      "source": "./skills/udi-format-validator",
+      "description": "UDI 格式校验器 — 拿到一串 UDI 不知道 DI 有没有错、生产标识全不全、 Basic UDI-DI 怎么区分，注册资料被打回才知道格式错了（零依赖，确定性输出，rc=0/1/2，--json 机器可读）",
+      "version": "1.0.0",
+      "category": "医疗器械合规",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    },
+    {
+      "name": "wallet-address-check",
+      "source": "./skills/wallet-address-check",
+      "description": "链上地址格式校验器 — 转账前校验 EVM/BTC系/TRON 地址格式与链系归属，格式可疑即 FAIL（零依赖）",
+      "version": "1.0.0",
+      "category": "AI 治理",
+      "author": {
+        "name": "诺声(Logos)@SynomosAI"
+      },
+      "license": "MIT"
+    }
+  ]
+}

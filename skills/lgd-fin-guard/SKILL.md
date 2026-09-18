@@ -6,15 +6,15 @@ version: 1.0.0
 display_name: 金融AI合规守门
 display_name_en: Finance AI Compliance Guard
 agent_created: true
-author: 诺声(Logos)@SynomosAI
+author: XLGD · 诺声(Logos)@SynomosAI
 license: MIT
 category: AI 治理
 platforms: [windows, macos, linux]
-copyright: SynomosAI
+copyright: XLGD · SynomosAI
 ---
 # 金融AI合规守门（Finance AI Compliance Guard）
 
-> **LGD 凡自治之物 · 三律护城河技能（MedXpert × SynomosAI）**
+> **LGD 凡自治之物 · 三律护城河技能（SynomosAI Governance Line）**
 > 本技能是护城河体系的**跨域首占件**：把"有籍·有证·有门禁"标准定义权，翻译进「金融 / 持牌机构 AI 应用（投顾·风控·反洗钱）」本域合规语言，抢占空白标准位。
 
 ## 行业痛点

@@ -6,7 +6,7 @@ display_name_en: "LGD Three-Laws Compliance Auditor"
 description: "当用户问『我的 AI 系统合不合规 / 怎么评判 AI 治理水平 / agent 要不要上治理护栏』，或要落地『有籍·有证·有门禁』时用。把 LGD 三律做成一套可自评的标准 rubric（有籍=身份/版本/血缘/责任四项登记；有证=六类证据工件齐备；有门禁=触发/评审/放行/复盘四道门），输入系统描述即出评分卡+改进项。这不仅是工具，更是 LGD 治理思想的『定义器』——谁用三籍词汇自评，谁就采用了我们的治理定义权（护城河）。触发词：LGD 三律、有籍有证有门禁、凡自治之物、AI 合规自评、AI 治理标准、agent 治理护栏、三律审计。"
 version: 1.0.0
 agent_created: true
-author: 诺声(Logos)@SynomosAI
+author: XLGD · 诺声(Logos)@SynomosAI
 license: MIT
 category: AI 治理
 platforms: [windows, macos, linux]
@@ -16,11 +16,11 @@ read_when:
   - 要给别人讲清楚 AI 治理该看哪几栏（标准定义）
   - 做合规自检、写治理方案、准备认证前摸底
 tags: [LGD, 三律, 凡自治之物, AI治理, 合规自检, 有籍, 有证, 有门禁, 标准定义]
-copyright: SynomosAI
+copyright: XLGD · SynomosAI
 ---
 # LGD 三律合规自检器（凡自治之物）
 
-> **LGD 全程治理论**（由 SynomosAI 提出、由 MedXpert 在医疗器械全生命周期实证）：
+> **LGD 全程治理论**（由 SynomosAI 提出，并在受监管行业全生命周期治理实践中完成实证）：
 > **凡自治之物——有籍、有证、有门禁。** 我们的每个工具，都是这套治理思想的一个执行器。
 
 ## 这是什么
@@ -79,7 +79,7 @@ python scripts/lgd_audit.py --answers 答卷.json
 
 ## 版权与许可
 
-© MedXpert × SynomosAI · MIT 协议 · LGD-Powered。徽章见 `lgd-powered.png`，认证徽章体系见 medxpert.cn/badge。
+© SynomosAI Governance Line · MIT 协议 · LGD-Powered。徽章见 `lgd-powered.png`，认证徽章体系见 medxpert.cn/badge。
 
 ## 安装与使用矩阵
 

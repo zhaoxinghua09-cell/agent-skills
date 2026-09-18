@@ -1,0 +1,40 @@
+{
+  "schema": "ownership-attestation/1.0",
+  "package": "pmcf-evaluation-report-check",
+  "version": "1.0.0",
+  "author": "注册老炮@MedXpert",
+  "copyright": "MedXpert",
+  "license": "MIT",
+  "year": "2026",
+  "package_fingerprint_sha256": "05189d94e7f1da9c5fd869d7807cb724a5b3a0dac7f27bd662faf41c4cb2eed8",
+  "files": [
+    {
+      "path": "ATTESTATION.md",
+      "sha256": "b5f17921828fdf1a9fabc67777e2be415fea5ef0599098fd40684fcea11ae93a"
+    },
+    {
+      "path": "LICENSE.md",
+      "sha256": "f1b905b5bc63f10fb0edb6992c5f71641ca58a9e4418788036aa009cc4e21487"
+    },
+    {
+      "path": "README.md",
+      "sha256": "0c73a9368a83ad88ff9162b14b413fc22a7a6e8011fe8a72f60f15fc830b776a"
+    },
+    {
+      "path": "SKILL.md",
+      "sha256": "99e17af91db096dea3f4452e7e60307874d82eaa5c23cfaa7f27e2b52147eb7a"
+    },
+    {
+      "path": "llms.txt",
+      "sha256": "3d792084234ce0c041675c85d68bb37245eb32a03b714ec8b565537c0d25fa04"
+    },
+    {
+      "path": "pmcf-evaluation-report-check.py",
+      "sha256": "df5eee9e0c95d0a670a17f3b0a6fa513fdaaa0eee6449e3423cdf2bd3b4fb467"
+    },
+    {
+      "path": "assets/overview.svg",
+      "sha256": "d9fef9ff6823e20b45175b3bb8a3c7e9b916e599fb78093719577867a0fdb209"
+    }
+  ]
+}

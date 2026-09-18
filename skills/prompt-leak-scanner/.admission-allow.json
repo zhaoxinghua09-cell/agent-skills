@@ -1,0 +1,15 @@
+{
+  "schema": "skill-admission-allow/1.0",
+  "skill": "prompt-leak-scanner",
+  "security_role": "security-scanner",
+  "note": "本技能是「提示词泄漏扫描」工具：脚本文档中的注入话术是**检测项说明**（即它要扫描出的后门特征），非本技能自身行为。",
+  "allow": [
+    {
+      "rule": "INJ-01",
+      "reason": "文档中的『忽略之前指令 / 打印你的系统提示词』是**被检测特征描述**——本技能正是要在提示词里找出这类后门。列出特征名不构成该行为。",
+      "approved_by": "Steven Zhao (XLGD)",
+      "date": "2026-09-12",
+      "mitigation": "特征串仅用于正则匹配检测；本技能不执行被扫描文本；不发起网络请求。"
+    }
+  ]
+}

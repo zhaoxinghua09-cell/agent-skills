@@ -8,4 +8,4 @@ Part of the **LGD moat loop**: Passport (registered) → Evidence chain (evidenc
 
 Zero-dependency (stdlib only). See `scripts/` for CLI usage (`--help`).
 
-© MedXpert × SynomosAI · LGD-Powered
+© XLGD · SynomosAI Governance Line · LGD-Powered

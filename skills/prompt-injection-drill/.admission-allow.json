@@ -1,0 +1,15 @@
+{
+  "schema": "skill-admission-allow/1.0",
+  "skill": "prompt-injection-drill",
+  "security_role": "security-scanner",
+  "note": "本技能是「提示注入演练」工具：其内置的注入样本是**攻击载荷样例**，用于测试目标提示词是否会被攻破，不是本技能自身的行为。",
+  "allow": [
+    {
+      "rule": "INJ-01",
+      "reason": "脚本内的『忽略之前所有指令』等字符串是**演练用例（测试样本）**，用于向目标提示词发起模拟攻击以检验其抵抗力；不构成本技能的指令。",
+      "approved_by": "Steven Zhao (XLGD)",
+      "date": "2026-09-12",
+      "mitigation": "样本仅作为字符串常量传入被测目标；本技能不修改自身或宿主 agent 的指令；不发起网络请求。"
+    }
+  ]
+}

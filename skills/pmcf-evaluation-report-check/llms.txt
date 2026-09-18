@@ -1,0 +1,12 @@
+# pmcf-evaluation-report-check
+
+> PMCF 评价报告完整性检查器 — 医疗器械合规判定器（决策支持，非权威结论）
+
+- 类型：零依赖确定性 CLI 技能
+- 输入：命令行参数（枚举值）
+- 输出：JSON IR（result / rc / error_code / aigc_mark）
+- 规则源：MDR (EU) 2017/745 Annex XIV Part B + Art 86 / MDCG 2020-7、2020-8
+- 定位：决策支持；正式结论以主管部门决定与官方最新文件为准
+- 作者：注册老炮@MedXpert · © 2026 MedXpert · MIT
+- 在线：https://medxpert.cn/knowledge/
+- 家族合集：https://medxpert.cn/skills/

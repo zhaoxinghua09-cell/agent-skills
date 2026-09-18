@@ -185,6 +185,47 @@ cp -r agent-skills/skills/<skill-name> ~/.claude/skills/   # Claude Code 示例
 | [publish-quality-gate](./skills/publish-quality-gate) | 发布质量门禁（去敏+质检） |
 | [session-continuity-protocol](./skills/session-continuity-protocol) | 跨会话连续性协议 |
 
+## 🤝 参与贡献（Open Source）
+
+本项目是一个**开源项目** —— 方法与工具全开源，欢迎任何形式的贡献。
+
+| 文件 | 内容 |
+|---|---|
+| [CONTRIBUTING.md](CONTRIBUTING.md) | 贡献指南（环境、命名规范、九维质量门禁、DCO 提交规范） |
+| [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) | 社区行为准则 |
+| [SECURITY.md](SECURITY.md) | 安全政策（漏洞上报流程，请勿开公开 Issue） |
+| [TRADEMARK.md](TRADEMARK.md) | **商标与品牌使用说明（开源 ≠ 放弃品牌）** |
+| [CHANGELOG.md](CHANGELOG.md) | 变更记录 |
+
+**贡献前请先跑质量门禁**：
+
+```bash
+python skills/skill-quality-gate/scripts/quality_gate.py --dir skills/<your-skill>
+```
+
+**本项目采用 DCO（非 CLA）** —— commit 加 `Signed-off-by` 即可：
+
+```bash
+git commit -s -m "feat(skills): add your-skill"
+```
+
+> **原则**：方法与工具全开源，权威与裁决权保留。
+> 开源的是"怎么做"，保留的是"谁说了算"。
+
+## 📐 公开规范
+
+本仓库是以下公开规范的参考实现：
+
+| 编号 | 规范 | 状态 |
+|---|---|---|
+| **UIBC-SPEC-001** | 自治智能体结算治理规范（四道闸门） | 草案 |
+| UIBC-SPEC-002 | 自治之物三律符合性要求 | 规划 |
+| UIBC-SPEC-003 | AI 技能包供应与升级规范 | 规划 |
+| UIBC-SPEC-004 | 赛事评测方法规范 | 规划 |
+
+规范专区：https://medxpert.cn/uibc/standards/
+在线阅读自评（27 项，免费）：https://medxpert.cn/uibc/standards/selfcheck.html
+
 ## Install
 
 - **SkillPie**: search the skill name in the SkillPie market and install.
@@ -197,5 +238,9 @@ Every skill carries the same governance spine — **registered** (sources record
 ## License
 
 MIT. Theory CC BY 4.0. © LGD / SynomosAI 2026.
+
+> **开源 ≠ 放弃品牌**：代码按 MIT 自由使用，但**项目名称、铸词、徽章与"官方"标识的使用权归 SynomosAI**。
+> 你可以自由 fork、商用、二次开发并如实说明来源；但**不得声称"官方认证"或暗示官方背书**。
+> 详见 [TRADEMARK.md](TRADEMARK.md)。
 
 Theoretical root: [LGD-theory](https://github.com/zhaoxinghua09-cell/lgd-theory).

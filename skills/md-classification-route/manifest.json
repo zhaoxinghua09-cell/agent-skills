@@ -1,0 +1,40 @@
+{
+  "schema": "ownership-attestation/1.0",
+  "package": "md-classification-route",
+  "version": "1.0.0",
+  "author": "注册老炮@MedXpert",
+  "copyright": "MedXpert",
+  "license": "MIT",
+  "year": "2026",
+  "package_fingerprint_sha256": "26ad66c1494ed3df5ae4b910c63f6f6ef95a0c49bdadbb00ec1cafb5f17c805b",
+  "files": [
+    {
+      "path": "ATTESTATION.md",
+      "sha256": "a92eedc42b81743672b3fa591ef527265efeb17918400f441ee7fa88cf3a088b"
+    },
+    {
+      "path": "LICENSE.md",
+      "sha256": "f1b905b5bc63f10fb0edb6992c5f71641ca58a9e4418788036aa009cc4e21487"
+    },
+    {
+      "path": "README.md",
+      "sha256": "a18d8f500ef290ebd6d1e4901df4a451f480f6576552ad2e95e0f0793f04d6c0"
+    },
+    {
+      "path": "SKILL.md",
+      "sha256": "adaaf50b237c0895eceb903c26a32e69a9fae820ad3a60ee6c2faa88da565977"
+    },
+    {
+      "path": "llms.txt",
+      "sha256": "c6c28c902f0f2468fc96755349683aa5165d8d3f2108efa93e3795b85a97e3ef"
+    },
+    {
+      "path": "md-classification-route.py",
+      "sha256": "dc8692d614fa3cf5e2c6c72cf42605478a312bd3ad7b96b363194b475410cafb"
+    },
+    {
+      "path": "assets/overview.svg",
+      "sha256": "13912ba874f27239445452579661b321c61a97992b42d569219461669659fe50"
+    }
+  ]
+}

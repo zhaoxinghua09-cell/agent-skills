@@ -1,0 +1,40 @@
+{
+  "schema": "ownership-attestation/1.0",
+  "package": "test-lab-match-check",
+  "version": "1.0.0",
+  "author": "注册老炮@MedXpert",
+  "copyright": "MedXpert",
+  "license": "MIT",
+  "year": "2026",
+  "package_fingerprint_sha256": "2b2574c7e6c3a7344b72b204139ceaf1436e96aeaf3604af67463e143af2dbc9",
+  "files": [
+    {
+      "path": "ATTESTATION.md",
+      "sha256": "4684a2dd2d85ac847adbf33902d1f0659efce2b97e928488ec42d0e92abf786d"
+    },
+    {
+      "path": "LICENSE.md",
+      "sha256": "f1b905b5bc63f10fb0edb6992c5f71641ca58a9e4418788036aa009cc4e21487"
+    },
+    {
+      "path": "README.md",
+      "sha256": "72e1c631ec20fc6822e95b208387f2c8e766ca2fd7780165ec39d708258443b6"
+    },
+    {
+      "path": "SKILL.md",
+      "sha256": "9c96a989d12ee28d97589e8afce7918a493e1ca4d6894ffcdcdcdd3fa16ef560"
+    },
+    {
+      "path": "llms.txt",
+      "sha256": "0f95cd2f2e1cca05d72b41f33b20c098fbfd2fafad9e66dc1e868ba3ef4dec2d"
+    },
+    {
+      "path": "test-lab-match-check.py",
+      "sha256": "dc238106540e8a2818241a440740a08a12f92d997d22080cc3ba3a23a3f701ea"
+    },
+    {
+      "path": "assets/overview.svg",
+      "sha256": "8efcfeef81ce71c01fbd3f0a349da50eb3623de9b1a871151181bb133dadc57b"
+    }
+  ]
+}

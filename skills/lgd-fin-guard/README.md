@@ -21,3 +21,5 @@ python fin_guard.py --answers '{...}' --json
 本技能是"凡自治之物"标准在金融 / 持牌机构 AI 应用（投顾·风控·反洗钱）域的**首占定义件**——别人可抄功能，抄不走标准定义权。
 
 ![LGD-Powered](lgd-powered.png)
+
+© XLGD · SynomosAI

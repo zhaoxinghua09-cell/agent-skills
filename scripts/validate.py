@@ -33,6 +33,21 @@ SECRET_PATTERNS = [
     (r'-----BEGIN [A-Z ]*PRIVATE KEY-----', 'private key'),
 ]
 
+# 占位符豁免：形如 AKIDxxxx / AKID**** / sk-xxxx 的掩码串不是真密钥
+PLACEHOLDER_RE = [
+    r'^AKID[xX*]+$',
+    r'^AKIDx{6,}$',
+    r'^sk-[xX*]+$',
+    r'^ghp_[xX*]+$',
+]
+
+
+def is_placeholder(token):
+    for p in PLACEHOLDER_RE:
+        if re.match(p, token):
+            return True
+    return False
+
 violations = []
 
 
@@ -100,7 +115,9 @@ def main():
                 except Exception:
                     continue
                 for pat, label in SECRET_PATTERNS:
-                    if re.search(pat, txt):
+                    hits = [m.group(0) for m in re.finditer(pat, txt)]
+                    real = [h for h in hits if not is_placeholder(h)]
+                    if real:
                         rel = os.path.relpath(fp, REPO)
                         add('R7', f'{rel}: 疑似明文 {label}')
 

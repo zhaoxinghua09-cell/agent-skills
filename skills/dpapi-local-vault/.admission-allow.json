@@ -1,0 +1,15 @@
+{
+  "schema": "skill-admission-allow/1.0",
+  "skill": "dpapi-local-vault",
+  "security_role": "credential-vault",
+  "note": "本技能即本地凭据保险库（DPAPI 加密）。读写 ~/.ucvault_local 是其声明用途，非数据外泄。",
+  "allow": [
+    {
+      "rule": "EXF-02",
+      "reason": "读写 ~/.ucvault_local 是本技能唯一且声明的用途；密钥以 DPAPI 加密存储，不落明文、不出本机。",
+      "approved_by": "Steven Zhao (XLGD)",
+      "date": "2026-09-12",
+      "mitigation": "本技能不发起任何网络请求；保险库目录由 DPAPI 保护，仅当前用户可解。"
+    }
+  ]
+}

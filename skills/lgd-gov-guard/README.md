@@ -21,3 +21,5 @@ python gov_guard.py --answers '{...}' --json
 本技能是"凡自治之物"标准在政务 / 公共部门 AI 应用（决策辅助·公开答复·数据治理）域的**首占定义件**——别人可抄功能，抄不走标准定义权。
 
 ![LGD-Powered](lgd-powered.png)
+
+© XLGD · SynomosAI

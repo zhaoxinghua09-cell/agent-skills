@@ -6,7 +6,7 @@
 
 ```bash
 python scripts/lgd_certify.py init --dir ./my-ai                 # 建 evidence/ 六类骨架
-python scripts/lgd_certify.py register --dir ./my-ai --name "客服助手" --id "did:web:medxpert/ka" --issuer MedXpert
+python scripts/lgd_certify.py register --dir ./my-ai --name "客服助手" --id "did:web:medxpert/ka" --issuer "SynomosAI Governance Line"
 python scripts/lgd_certify.py evidence --dir ./my-ai             # 放六类工件后重跑→链式哈希
 python scripts/lgd_certify.py gate --dir ./my-ai                # 三律评审 PASS→certification.json + BADGES.md
 ```
@@ -19,4 +19,4 @@ python scripts/lgd_certify.py gate --dir ./my-ai                # 三律评审 P
 
 唯一闭环 + 可挂载视觉徽章（medxpert.cn/badge 已上线）。"凡用 LGD 工具即有徽章"。
 
-© MedXpert × SynomosAI · CC BY 4.0 · LGD-Powered
+© XLGD · SynomosAI Governance Line · CC BY 4.0 · LGD-Powered

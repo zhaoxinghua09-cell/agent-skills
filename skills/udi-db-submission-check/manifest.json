@@ -1,0 +1,40 @@
+{
+  "schema": "ownership-attestation/1.0",
+  "package": "udi-db-submission-check",
+  "version": "1.0.0",
+  "author": "注册老炮@MedXpert",
+  "copyright": "MedXpert",
+  "license": "MIT",
+  "year": "2026",
+  "package_fingerprint_sha256": "eb1282acaf12e93b844d7dfd1ab6288f396989d3e1acba2ff293c1c4d446b461",
+  "files": [
+    {
+      "path": "ATTESTATION.md",
+      "sha256": "21bb466e8634351742d9144c921688a1b7cb28a4b5b7dc6660781816475a171d"
+    },
+    {
+      "path": "LICENSE.md",
+      "sha256": "f1b905b5bc63f10fb0edb6992c5f71641ca58a9e4418788036aa009cc4e21487"
+    },
+    {
+      "path": "README.md",
+      "sha256": "77b040d592d9f990c85c7626c68722665e2a12683eb3439b94c6ef635244a173"
+    },
+    {
+      "path": "SKILL.md",
+      "sha256": "158a71ff632725b5ae48f4beec8227bd04e5052675deb3fa035b74b2acd18fe6"
+    },
+    {
+      "path": "llms.txt",
+      "sha256": "34d1643e9b808a1456c56c364e97856cbf15c070d9144f60b8e76a4770c36f19"
+    },
+    {
+      "path": "udi-db-submission-check.py",
+      "sha256": "5cc4efee3b7e8d3f44a0725e49ef5861ce7a68a9758a68a855e687cad5b758f7"
+    },
+    {
+      "path": "assets/overview.svg",
+      "sha256": "c0c8951871c54db2930e000931aec36435d6bab575c1473246aa5dbe61bce2ce"
+    }
+  ]
+}

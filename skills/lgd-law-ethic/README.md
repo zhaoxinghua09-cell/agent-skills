@@ -21,3 +21,5 @@ python law_ethic.py --answers '{...}' --json
 本技能是"凡自治之物"标准在法律 / 律所与法务 AI 应用（检索·起草·意见辅助）域的**首占定义件**——别人可抄功能，抄不走标准定义权。
 
 ![LGD-Powered](lgd-powered.png)
+
+© XLGD · SynomosAI

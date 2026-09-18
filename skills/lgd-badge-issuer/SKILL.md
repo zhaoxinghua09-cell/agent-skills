@@ -6,11 +6,11 @@ version: 1.0.0
 display_name: LGD 徽章签发器
 display_name_en: LGD Badge Issuer
 agent_created: true
-author: 诺声(Logos)@SynomosAI
+author: XLGD · 诺声(Logos)@SynomosAI
 license: MIT
 category: AI 治理
 platforms: [claude-code, codebuddy, workbuddy, openai-agents]
-copyright: SynomosAI
+copyright: XLGD · SynomosAI
 ---
 # LGD 徽章签发器（LGD Badge Issuer）
 
@@ -38,7 +38,7 @@ LGD 闭环最后一环：**护照（有籍）→ 证据链（有证）→ 门禁
 本工具为治理辅助框架，签发效力以使用方组织制度为准。
 
 ---
-© MedXpert × SynomosAI · LGD-Powered
+© SynomosAI Governance Line · LGD-Powered
 
 ## 安装与使用矩阵
 

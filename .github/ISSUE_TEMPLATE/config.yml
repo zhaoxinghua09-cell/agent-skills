@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 🔒 报告安全问题
+    url: https://github.com/zhaoxinghua09-cell/agent-skills/blob/main/SECURITY.md
+    about: 安全漏洞请勿开公开 Issue，请先阅读安全政策
+  - name: 💬 查看公开规范
+    url: https://medxpert.cn/uibc/standards/
+    about: 了解 LGD 三律与四道闸门等规范内容
+  - name: 📖 阅读贡献指南
+    url: https://github.com/zhaoxinghua09-cell/agent-skills/blob/main/CONTRIBUTING.md
+    about: 提 PR 之前请先读贡献指南

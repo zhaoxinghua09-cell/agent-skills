@@ -6,7 +6,7 @@ display_name_en: "LGD Three-Laws Closed-Loop Certifier"
 description: "当用户要『给 AI 产物发可信护照 / 做三律合规认证 / 生成可挂载徽章』时用。这是市场唯一把『有籍护照签发 → 有证证据链 → 有门禁签发 → 可挂载徽章』做成闭环的 CLI：register 签发算法护照(三锚一票同源+SHA-256指纹)、evidence 扫六类证据工件链式哈希、gate 三律评审 PASS/FAIL 并签发认证 + medxpert.cn 徽章嵌入码。LGD 三律旗舰执行器，对标调研证实治理生态全是单点工具、无此闭环。触发词：LGD 认证、三律闭环、算法护照、可信徽章、有籍有证有门禁认证、护照签发。"
 version: 1.0.0
 agent_created: true
-author: 诺声(Logos)@SynomosAI
+author: XLGD · 诺声(Logos)@SynomosAI
 license: MIT
 category: AI 治理
 platforms: [windows, macos, linux]
@@ -16,7 +16,7 @@ read_when:
   - 要落地"有籍→有证→有门禁"的完整闭环（非单点护栏）
   - 做产品发布前的治理背书、对外可信声明
 tags: [LGD, 三律闭环, 算法护照, 认证, 徽章, 有籍, 有证, 有门禁, 闭环]
-copyright: SynomosAI
+copyright: XLGD · SynomosAI
 ---
 # LGD 三律闭环认证（有籍→有证→有门禁）
 
@@ -42,7 +42,7 @@ copyright: SynomosAI
 
 ```bash
 python scripts/lgd_certify.py init --dir ./my-ai      # 建 evidence/ 六类目录骨架
-python scripts/lgd_certify.py register --dir ./my-ai --name "客服助手" --id "did:web:medxpert/ka" --issuer "MedXpert"
+python scripts/lgd_certify.py register --dir ./my-ai --name "客服助手" --id "did:web:medxpert/ka" --issuer "SynomosAI Governance Line"
 python scripts/lgd_certify.py evidence --dir ./my-ai   # 放入六类工件后重跑，生成链式哈希
 python scripts/lgd_certify.py gate --dir ./my-ai       # 三律评审，PASS 签发 certification.json + BADGES.md
 ```
@@ -61,7 +61,7 @@ python scripts/lgd_certify.py gate --dir ./my-ai       # 三律评审，PASS 签
 
 ## 版权与许可
 
-© MedXpert × SynomosAI · CC BY 4.0 · LGD-Powered。徽章体系见 medxpert.cn/badge。
+© SynomosAI Governance Line · CC BY 4.0 · LGD-Powered。徽章体系见 medxpert.cn/badge。
 
 ## 安装与使用矩阵
 

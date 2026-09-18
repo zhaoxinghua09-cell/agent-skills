@@ -14,7 +14,7 @@
   --system "描述"        对一段 AI 系统描述做启发式自评（标注"推测，请确认"，不编造结论）
   --answers file.json    按你填的答卷 {law:{checkpoint:yes|partial|no}} 出正式评分卡
 
-零依赖（纯 stdlib）。© MedXpert × SynomosAI · LGD-Powered
+零依赖（纯 stdlib）。© SynomosAI Governance Line · LGD-Powered
 """
 import argparse, json, sys, re
 
