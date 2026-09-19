@@ -2,7 +2,7 @@
 name: originality-check
 slug: originality-check
 displayName: 赛事作品原创性查重器
-version: 1.0.0
+version: 1.1.0
 category: ai-agent
 display_name: 赛事作品原创性查重器
 title: 赛事作品原创性查重器

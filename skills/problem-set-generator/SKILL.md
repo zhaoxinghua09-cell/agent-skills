@@ -2,7 +2,7 @@
 name: problem-set-generator
 slug: problem-set-generator
 displayName: 赛事赛题生成器
-version: 1.0.0
+version: 1.1.0
 category: ai-agent
 display_name: 赛事赛题生成器
 title: 赛事赛题生成器

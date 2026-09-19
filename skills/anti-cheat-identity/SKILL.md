@@ -2,7 +2,7 @@
 name: anti-cheat-identity
 slug: anti-cheat-identity
 displayName: 赛事反作弊身份核验器
-version: 1.0.0
+version: 1.1.0
 category: ai-agent
 display_name: 赛事反作弊身份核验器
 title: 赛事反作弊身份核验器
