@@ -12,6 +12,11 @@ Each spec is standalone — no runtime dependency, no bundled scripts. A team sp
 | [`wb-safe-team`](wb-safe-team.md) | Safe Ops Team / 安全稳定运行专家团 | 6 | DevOps & Infrastructure | The AI assistant runtime itself: credentials and encryption, cost governance, runtime health, config drift, risk readiness, recovery |
 | [`traceability-audit-team`](traceability-audit-team.md) | Traceability Audit Team / 溯源审计团 | 3 | Security & Compliance | Provenance and identity claims: standards grounding, three-anchor verification, reproducible evidence-chained audit reports |
 | [`device-market-access-team`](device-market-access-team.md) | Device Market Access Team / 医械国际准入专家团 | 6 | Security & Compliance | Multi-market medical-device registration: EU MDR, US FDA, Japan PMDA, Southeast Asia, Gulf and Latin America, as one sequenced roadmap |
+| [`content-publish-ops-team`](content-publish-ops-team.md) | Content Publishing Ops Team / 内容发布运营团 | 6 | Content Marketing | External publishing for regulated industries: material provenance, de-identification, channel-native drafting, single-veto pre-publish review, confirmation-gated release, and a publishing ledger |
+
+### Teams deliberately not listed here
+
+Some internal teams carry a charter restriction that prohibits publishing their operating method on any public remote. Those teams are omitted from this directory by design, not by oversight — a spec in this format necessarily describes a team's roles, workflow and review mechanism, which is exactly what such a charter withholds. Where a team's charter and this directory conflict, the charter governs.
 
 ## What a Team Spec contains
 
