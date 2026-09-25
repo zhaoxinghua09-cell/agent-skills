@@ -17,12 +17,19 @@ jobs:
       id-token: write
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        # 固定到 commit SHA（= v4.4.0）。Scorecard 自身的 Pinned-Dependencies
+        # 检查要求第三方 action 用 SHA 固定，移动 tag 会被扣分。
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
           persist-credentials: false
 
       - name: Run analysis
-        uses: ossf/scorecard-action@v2
+        # 固定到 commit SHA（= v2.4.4）。
+        # 此前写的是 ossf/scorecard-action@v2 —— 上游并没有裸 v2 这个移动 tag
+        # （只有 v2.4.x），故 2026-09-25 11:12Z／11:18Z 本仓首跑两次
+        # 均卡在 "Set up job" 失败（action 引用解析不了，runner 未起）。
+        # 与 uibc-core 同一修法（该仓 run#1 同因 v2 失败，SHA 固定后双绿）。
+        uses: ossf/scorecard-action@2d1146689b8cda280b9bc96326124645441f03bc
         with:
           results_file: results.sarif
           results_format: sarif
