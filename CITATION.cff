@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+title: "agent-skills · AI Agent Governance Skill Library"
+message: "If you use this software, please cite it using these metadata."
+type: software
+authors:
+  - family-names: Zhao
+    given-names: Xinghua
+    email: zhaoxinghua2022@qq.com
+    orcid: "https://orcid.org/0009-0001-0512-1237"
+    affiliation:
+      name: "Steven Zhao·China（署名口径：赵兴华 / Steven Zhao·China）"
+abstract: "Open-format AI agent governance skill library: registry, evidence, gates for every AI output."
+keywords:
+  - "ai-governance"
+  - "agent-skills"
+  - "compliance"
+  - "skills"
+repository-code: "https://github.com/zhaoxinghua09-cell/agent-skills"
+license: "Apache-2.0"
