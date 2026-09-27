@@ -8,9 +8,10 @@ on:
     branches: [main]
   workflow_dispatch:
 
+# 注：repository-level GITHUB_TOKEN 自带管理员权限，可直接 PATCH description；
+#     故 permissions 只保留 contents: write（`administration` 不是合法权限名，写了会 YAML 解析失败）。
 permissions:
   contents: write
-  administration: write
 
 jobs:
   sync:
