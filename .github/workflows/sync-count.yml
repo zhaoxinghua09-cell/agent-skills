@@ -8,8 +8,9 @@ on:
     branches: [main]
   workflow_dispatch:
 
-# 注：repository-level GITHUB_TOKEN 自带管理员权限，可直接 PATCH description；
-#     故 permissions 只保留 contents: write（`administration` 不是合法权限名，写了会 YAML 解析失败）。
+# 注：GITHUB_TOKEN 改不了仓库 description（实测 403 "Resource not accessible by integration"），
+#     故 PATCH 用 PAT secret GH_PAT；permissions 只保留 contents: write
+#     （`administration` 不是合法 workflow 权限名，写了会 YAML 解析失败）。
 permissions:
   contents: write
 
@@ -25,23 +26,24 @@ jobs:
 
       - name: Sync repo description
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.GH_PAT }}
           REPO: ${{ github.repository }}
         run: |
           set -e
           count=$(ls -d skills/*/ | wc -l)
           desc="开源 AI Agent 治理技能库：${count} 个零依赖技能，让每个 AI 输出有籍·有证·有门禁。覆盖 AI 治理 / Agent 安全 / 合规自动化 / 记忆治理，适配 Claude Code · Codex · Cursor · WorkBuddy。"
           current=$(gh api "repos/$REPO" --jq .description)
+          echo "原文案: $current"
           if [ "$current" != "$desc" ]; then
             gh api -X PATCH "repos/$REPO" -f description="$desc"
-            echo "✅ description 已校准为 ${count} 个技能"
+            echo "✅ description 已自愈为 ${count} 个技能"
           else
             echo "✅ description 已一致（${count} 个技能）"
           fi
 
       - name: Sync README count mentions
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.GH_PAT }}
           REPO: ${{ github.repository }}
         run: |
           set -e
@@ -53,7 +55,7 @@ jobs:
             git add README.md
             git commit -m "docs: sync skill count in README (${count})"
             git push "https://x-access-token:${GH_TOKEN}@github.com/${REPO}.git" main
-            echo "✅ README 技能数已校准为 ${count}"
+            echo "✅ README 技能数已自愈为 ${count}"
           else
             echo "✅ README 已一致（${count} 个技能）"
           fi
