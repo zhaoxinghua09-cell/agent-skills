@@ -1,0 +1,58 @@
+name: Sync skill count
+# 目的：让仓库 description 与 README 中的技能数始终等于 skills/ 实际目录数。
+# 背景：2026-09-27 发现 description 写 87、实际 109（AtomGit 镜像为 109），
+#       "GitHub Topic 抓到的描述" 读的正是 description，造成双镜像索引不一致。
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  administration: write
+
+jobs:
+  sync:
+    name: Align description & README with skills/ count
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Sync repo description
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -e
+          count=$(ls -d skills/*/ | wc -l)
+          desc="开源 AI Agent 治理技能库：${count} 个零依赖技能，让每个 AI 输出有籍·有证·有门禁。覆盖 AI 治理 / Agent 安全 / 合规自动化 / 记忆治理，适配 Claude Code · Codex · Cursor · WorkBuddy。"
+          current=$(gh api "repos/$REPO" --jq .description)
+          if [ "$current" != "$desc" ]; then
+            gh api -X PATCH "repos/$REPO" -f description="$desc"
+            echo "✅ description 已校准为 ${count} 个技能"
+          else
+            echo "✅ description 已一致（${count} 个技能）"
+          fi
+
+      - name: Sync README count mentions
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -e
+          count=$(ls -d skills/*/ | wc -l)
+          if ! grep -qE "${count} 个零依赖" README.md; then
+            sed -i -E "s/[0-9]+ 个零依赖/${count} 个零依赖/g" README.md
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add README.md
+            git commit -m "docs: sync skill count in README (${count})"
+            git push "https://x-access-token:${GH_TOKEN}@github.com/${REPO}.git" main
+            echo "✅ README 技能数已校准为 ${count}"
+          else
+            echo "✅ README 已一致（${count} 个技能）"
+          fi
