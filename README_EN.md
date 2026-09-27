@@ -2,10 +2,17 @@
 
 > **CN remains the primary README** ([README.md](README.md)). This file is the English entry point requested by international readers — the individual skill packages each carry their own EN sections as before.
 
+
+## ⏱ 30-second overview
+
+1. **What is it?** The source repository of **109 zero-dependency governance skills** (count = skill folders under `skills/`), turning the LGD governance theory — *every AI output must be registered, evidenced, and gated* — into runnable tools.
+2. **How to try it?** Copy any skill folder into your agent's skills directory and follow its `SKILL.md` — no installs, no dependencies; works with Claude Code, Codex, Cursor, and WorkBuddy.
+3. **What problem does it solve?** Autonomous agents increasingly take real actions; these skills give each output an audit trail and each agent explicit, bounded authority — from agent boarding passes and prompt-injection shields to EU-AI-Act-oriented compliance helpers.
+
 <div align="center">
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Skills](https://img.shields.io/badge/skills-63%2B-14B8A6)](README.md#-lgd-护城河系列)
+[![Skills](https://img.shields.io/badge/skills-109-14B8A6)](README.md#-lgd-护城河系列)
 [![Zero-dependency](https://img.shields.io/badge/zero--dependency-stdlib%20only-0B1F3A)](#)
 
 **The Skill layer of an open "AI governance operating system" — so that every AI output is: registered · evidenced · gated.**
