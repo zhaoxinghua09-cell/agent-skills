@@ -17,7 +17,7 @@ python scripts/lgd_certify.py gate --dir ./my-ai                # 三律评审 P
 
 ## 护城河
 
-唯一闭环 + 可挂载视觉徽章（medxpert.cn/badge 已上线）。"凡用 LGD 工具即有徽章"。
+闭环链路 + 可挂载视觉徽章（medxpert.cn/badge 已上线）。"凡用 LGD 工具即有徽章"。
 
 © XLGD · SynomosAI Governance Line · CC BY 4.0 · LGD-Powered
 

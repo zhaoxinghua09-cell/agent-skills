@@ -3,7 +3,7 @@ name: lgd-certify
 slug: lgd-certify
 display_name: LGD 三律闭环认证（有籍→有证→有门禁）
 display_name_en: "LGD Three-Laws Closed-Loop Certifier"
-description: "当用户要『给 AI 产物发可信护照 / 做三律合规认证 / 生成可挂载徽章』时用。这是市场唯一把『有籍护照签发 → 有证证据链 → 有门禁签发 → 可挂载徽章』做成闭环的 CLI：register 签发算法护照(三锚一票同源+SHA-256指纹)、evidence 扫六类证据工件链式哈希、gate 三律评审 PASS/FAIL 并签发认证 + medxpert.cn 徽章嵌入码。LGD 三律旗舰执行器，对标调研证实治理生态全是单点工具、无此闭环。触发词：LGD 认证、三律闭环、算法护照、可信徽章、有籍有证有门禁认证、护照签发。"
+description: "当用户要『给 AI 产物发可信护照 / 做三律合规认证 / 生成可挂载徽章』时用。这是把『有籍护照签发 → 有证证据链 → 有门禁签发 → 可挂载徽章』做成闭环的 CLI：register 签发算法护照(三锚一票同源+SHA-256指纹)、evidence 扫六类证据工件链式哈希、gate 三律评审 PASS/FAIL 并签发认证 + medxpert.cn 徽章嵌入码。LGD 三律旗舰执行器，对标调研显示治理生态多为单点工具。触发词：LGD 认证、三律闭环、算法护照、可信徽章、有籍有证有门禁认证、护照签发。"
 version: 1.0.0
 agent_created: true
 author: XLGD · 诺声(Logos)@SynomosAI
@@ -36,7 +36,7 @@ copyright: XLGD · SynomosAI
 
 ## 闭环价值（护城河）
 
-- **唯一闭环**：护照 → 证据链 → 门禁 → 徽章，一步到位，市场无竞品。
+- **闭环链路**：护照 → 证据链 → 门禁 → 徽章，一步到位。
 - **可挂载视觉护城河**：`gate` 通过后生成 `BADGES.md`，嵌入 medxpert.cn 已上线三律徽章（有籍/有证/有门禁 + LGD-Powered），"凡用 LGD 工具即有徽章"。
 - **零依赖离线**：纯 stdlib，产物全落 `--dir` 项目目录。
 
