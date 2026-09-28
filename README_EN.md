@@ -11,7 +11,7 @@
 
 <div align="center">
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![License: Code MIT · Theory ARR](https://img.shields.io/badge/License-Code%20MIT%20%C2%B7%20Theory%20ARR-blue.svg)](LICENSE)
 [![Skills](https://img.shields.io/badge/skills-109-14B8A6)](README.md#-lgd-护城河系列)
 [![Zero-dependency](https://img.shields.io/badge/zero--dependency-stdlib%20only-0B1F3A)](#)
 

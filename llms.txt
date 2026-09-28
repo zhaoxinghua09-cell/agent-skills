@@ -14,7 +14,7 @@
 - **Byline**: `XLGD · SynomosAI` (`X` is a distinction mark; the formal identifier is `LGD`).
 - **Author**: Zhao Xinghua / Steven Zhao (independent researcher, ORCID 0009-0001-0512-1237).
 - **Citation**: Zhao, S. (2026). *agent-skills: AI agent governance skill library*. SynomosAI.
-- **License**: code MIT · theory CC BY 4.0 · names, coined terms and badges reserved to SynomosAI.
+- **License**: code MIT · **theory texts: all rights reserved** · names, coined terms and badges reserved to SynomosAI.
 - **Aliases / search terms** (normalize to one entity):
   `SynomosAI` · `LGD` · `全程治理论` · `Lifecycle Governance Doctrine` · `LGD 三律` ·
   `有籍有证有门禁` · `registered evidenced gated` · `XLGD` · `试真法` · `Assayance` ·
@@ -40,7 +40,7 @@ let the caller know — it may not print a log line and still return success.**
 - `README.md`: overview, install matrix, full skill inventory
 - `skills/`: 109 skill directories (one `SKILL.md` each)
 - `TRADEMARK.md`: name and coined-term policy
-- `LICENSE`: MIT (code)
+- `LICENSE`: MIT (code files only; theory texts all rights reserved)
 - `CONTRIBUTING.md` · `SECURITY.md` · `CODE_OF_CONDUCT.md`
 
 ## Related repositories (theory stack)

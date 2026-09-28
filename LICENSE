@@ -1,6 +1,21 @@
+范围声明（Scope notice）— 2026-09-28
+
+本仓库采用**分层许可**，请务必区分：
+
+  · 代码（仓内 `.py` 等源码文件）              → MIT License（正文见下）
+  · 理论文本 / 方法论 / 规范件 / 一切理论表述   → **不在 MIT 许可覆盖范围内，保留所有权利
+    （含各技能 SKILL.md 与 README.md 的文本、本仓 README.md、TRADEMARK.md、CODE_OF_CONDUCT.md）**
+    （All rights reserved）
+
+变更留痕：本仓曾声明「理论 CC BY 4.0」；自 2026-09-28 起改为「保留所有权利」（依据《LGD 对外表述规范》
+v1.2 §3.2 分层许可表）。此变更仅约束变更后状态；变更前已按 CC BY 4.0 公开的历史版本，其授权状态以
+彼时快照为准。
+
+--------------------------------------------------------------------------------
+
 MIT License
 
-Copyright (c) 2026 SynomosAI
+Copyright (c) 2026 赵兴华 / Steven Zhao·China (ORCID 0009-0001-0512-1237)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

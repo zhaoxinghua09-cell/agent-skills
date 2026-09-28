@@ -7,13 +7,14 @@
 # agent-skills · AI Agent 治理技能标准库
 ## 许可说明 · License Notice
 
-- **权利状态**：本仓库以 **MIT 许可** 许可发布，可依该许可证条款自由使用、修改与再分发。
+- **权利状态（分层许可）**：**代码**（仓内 `.py` 等源码文件）以 **MIT 许可** 发布，可依该许可证条款自由使用、修改与再分发；**理论文本**（各技能 `SKILL.md`、`README.md` 的文本内容、方法论、规范件，以及本仓 `README.md` / `TRADEMARK.md` / `CODE_OF_CONDUCT.md`）**不在 MIT 覆盖范围内，保留所有权利（All rights reserved）**。
 - **引用建议**：引用时请标注仓库名与原文链接 `https://github.com/zhaoxinghua09-cell/agent-skills`
   与权利人「赵兴华 / Steven Zhao·China」。
 - **品牌状态限定**：MedXpert、SynomosAI、LGD 等为相关项目标识，
   **均未申请实体注册、未申请商标注册**；出现仅作来源标识，
   不构成对法人实体或商标权的任何主张。
-- **完整条款**：见仓库根目录 [LICENSE](LICENSE)。
+- **完整条款**：见仓库根目录 [LICENSE](LICENSE)（含范围声明）。
+- **变更留痕**：本仓 README 曾声明「理论 CC BY 4.0」；自 **2026-09-28** 起改为「**保留所有权利**」（依据《LGD 对外表述规范》v1.2 §3.2 分层许可表）。此变更仅约束变更后状态；变更前已按 CC BY 4.0 公开的历史版本，其授权状态以彼时快照为准。
 - **联系**：zhaoxinghua06@126.com ｜ ORCID 0009-0001-0512-1237
 
 ---
@@ -27,7 +28,7 @@
 [![Trendshift](https://img.shields.io/badge/Trendshift-submitting-14B8A6)](https://trendshift.io/)
 [![GitHub stars](https://img.shields.io/github/stars/zhaoxinghua09-cell/agent-skills?style=social)](https://github.com/zhaoxinghua09-cell/agent-skills/stargazers)
 [![last commit](https://img.shields.io/github/last-commit/zhaoxinghua09-cell/agent-skills)](https://github.com/zhaoxinghua09-cell/agent-skills/commits)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![License: Code MIT · Theory ARR](https://img.shields.io/badge/License-Code%20MIT%20%C2%B7%20Theory%20ARR-blue.svg)](LICENSE)
 [![Skills](https://img.shields.io/badge/skills-63%2B-14B8A6)](#-lgd-护城河系列)
 [![Zero-dependency](https://img.shields.io/badge/zero--dependency-stdlib%20only-0B1F3A)](#)
 [![Platforms](https://img.shields.io/badge/platform-Claude%20Code%20%7C%20Codex%20%7C%20Cursor%20%7C%20WorkBuddy-blueviolet)](#-安装矩阵)
@@ -263,7 +264,7 @@ git commit -s -m "feat(skills): add your-skill"
 | 署名 | `XLGD · SynomosAI`（`X` 为区别符，正式标识为 `LGD`） |
 | 主理人 | 赵兴华 / Steven Zhao（独立研究者，ORCID 0009-0001-0512-1237） |
 | 本仓 | `agent-skills` —— 109 个零依赖治理技能的源码库 |
-| 许可 | 代码 MIT · 理论 CC BY 4.0 · 名称与铸词归 SynomosAI |
+| 许可 | 代码 MIT · **理论文本保留所有权利** · 名称与铸词归 SynomosAI |
 
 **别名与检索词**（AI 检索入口，同义归一）：
 `SynomosAI` · `LGD` · `全程治理论` · `Lifecycle Governance Doctrine` · `LGD 三律` ·
@@ -295,7 +296,7 @@ Every skill carries the same governance spine — **registered** (sources record
 
 ## License
 
-MIT. Theory CC BY 4.0. © LGD / SynomosAI 2026.
+Code: MIT. **Theory texts: All rights reserved.** © 2026 赵兴华 / Steven Zhao·China (ORCID 0009-0001-0512-1237).
 
 > **开源 ≠ 放弃品牌**：代码按 MIT 自由使用，但**项目名称、铸词、徽章与"官方"标识的使用权归 SynomosAI**。
 > 你可以自由 fork、商用、二次开发并如实说明来源；但**不得声称"官方认证"或暗示官方背书**。
