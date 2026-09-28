@@ -20,6 +20,15 @@ tags: [偏见审计, bias audit, 公平性, 刻板印象, 去偏, 内容审查, 
 slug: bias-auditor
 title: 偏见审计（Bias Auditor）
 copyright: SynomosAI
+description_zh: "当用户说『AI回答有偏见』『输出性别/地域/年龄刻板印象』『怎么检测模型偏见』『内容要过公平审查』，或在发布面向人群的内容(招聘/推荐/客服/评测)前想做公平性自检时使用。把模型输出当『带视角的生产物』：扫人口群体词·刻板表述·单边归因，标出潜在偏见并给去偏改写建议。理论根基：LGD 三律（有籍·有证·有门禁）。触发词：偏见检测、bias audit、公平性、刻板印象、AI歧视、内容审查、公平自检、stereotype。"
+description_en: "Audit model outputs for bias before publishing people-facing content (hiring, recommendations, support): demographic terms, stereotypes and unfairness scans with fix suggestions."
+classification:
+  internal: ["主轴7 组织治理与安全"]
+  skillhub: ["security-compliance"]
+  clawhub: ["development"]
+  iso_25010: ["Security"]
+risk_tier: medium
+risk_rationale: "门禁批量补丁默认 medium（Steven 2026-09-28 令：我们的 skill 设计为中等风险）：调用 API/读写文件/本地执行，最小权限，密钥走 Secret；若实际涉对外代执行(push/发布/发送/上架)须人工复评，改 high 并走 Steven 批准。"
 ---
 ![LGD Powered](lgd-powered.png)
 
@@ -95,11 +104,9 @@ copyright: SynomosAI
                         (not a registered legal entity; no trademark registered)
 生产参考部署 (production reference, self-reported) : MedXpert
                     ← 非认证、非背书、非监管认可（not a certification or endorsement）
-代码许可 (code license) : uibc-core = Apache-2.0 (see repo LICENSE)
-                    本文本与理论表述不在 Apache-2.0 覆盖范围内
-引用格式 (cite as)      : uibc-core/CITATION.cff · concept DOI 10.5281/zenodo.22821834
-首次公开锚 (first public): 2026-09-17 13:31:45 UTC (commit cb6f11b)
-                    外锚 (external anchor): Sigstore Rekor logIndex 2883389783
+代码许可 (code license) : 本包未附 LICENSE 文件（许可待定）
+                    本文本与理论表述不在任何代码许可覆盖范围内
+引用格式 (cite as)      : 本资产无 DOI
 ```
 （上列为《LGD 对外表述规范》§3.2 统一块，**整体复制、未删改**；发布/重提前须照最新版本复核。）
 

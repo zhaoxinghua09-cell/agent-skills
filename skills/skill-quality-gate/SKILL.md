@@ -20,6 +20,15 @@ tags: [技能质检, quality gate, 发布前检查, 门禁, 有门禁]
 slug: skill-quality-gate
 title: 技能质量门禁（Skill Quality Gate）
 copyright: SynomosAI
+description_zh: "当用户说『这个技能能不能发』『发布前检查下质量』『技能缺什么字段』『提交市场前过一遍门禁』，或要把一个 skill/提示词/agent 配置提交到市场或上线前做质量校验时使用。9 维校验（frontmatter八字段/脚本可读/图标/README/无密钥/双语/触发词/门禁节/去敏），逐维 pass/fail，不过闸不发布（有门禁）。可运行脚本（quality_gate 校验器）。理论根基：LGD 三律之有门禁（发布前必过闸）。触发词：技能质检、质量门禁、发布前检查、skill检查、提交市场、quality gate、技能能不能发。"
+description_en: "Nine-dimension skill quality validation (frontmatter fields, scripts, docs, structure) before marketplace submission or go-live."
+classification:
+  internal: ["主轴7 组织治理与安全"]
+  skillhub: ["security-compliance"]
+  clawhub: ["development"]
+  iso_25010: ["Security"]
+risk_tier: medium
+risk_rationale: "门禁批量补丁默认 medium（Steven 2026-09-28 令：我们的 skill 设计为中等风险）：调用 API/读写文件/本地执行，最小权限，密钥走 Secret；若实际涉对外代执行(push/发布/发送/上架)须人工复评，改 high 并走 Steven 批准。"
 ---
 ![LGD Powered](lgd-powered.png)
 
@@ -89,11 +98,9 @@ copyright: SynomosAI
                         (not a registered legal entity; no trademark registered)
 生产参考部署 (production reference, self-reported) : MedXpert
                     ← 非认证、非背书、非监管认可（not a certification or endorsement）
-代码许可 (code license) : uibc-core = Apache-2.0 (see repo LICENSE)
-                    本文本与理论表述不在 Apache-2.0 覆盖范围内
-引用格式 (cite as)      : uibc-core/CITATION.cff · concept DOI 10.5281/zenodo.22821834
-首次公开锚 (first public): 2026-09-17 13:31:45 UTC (commit cb6f11b)
-                    外锚 (external anchor): Sigstore Rekor logIndex 2883389783
+代码许可 (code license) : 本包未附 LICENSE 文件（许可待定）
+                    本文本与理论表述不在任何代码许可覆盖范围内
+引用格式 (cite as)      : 本资产无 DOI
 ```
 （上列为《LGD 对外表述规范》§3.2 统一块，**整体复制、未删改**；发布/重提前须照最新版本复核。）
 

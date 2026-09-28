@@ -13,6 +13,15 @@ allowed-tools: Read, Glob, Grep, Bash, Write, WebFetch
 category: AI 治理
 platforms: [claude-code, codebuddy, workbuddy, openai-agents]
 copyright: SynomosAI
+description_zh: "data-minimizer — 把文本里的手机号/邮箱/证件号/长号/指定人名一键打码后交给 AI，输出脱敏文本+脱敏报告；支持 --names 自定义人名、--json。"
+description_en: "Mask phone numbers, emails, ID numbers, long digits and names before handing text to AI; outputs masked text plus masking report; supports --names and --json."
+classification:
+  internal: ["主轴7 组织治理与安全"]
+  skillhub: ["security-compliance"]
+  clawhub: ["development"]
+  iso_25010: ["Security"]
+risk_tier: medium
+risk_rationale: "门禁批量补丁默认 medium（Steven 2026-09-28 令：我们的 skill 设计为中等风险）：调用 API/读写文件/本地执行，最小权限，密钥走 Secret；若实际涉对外代执行(push/发布/发送/上架)须人工复评，改 high 并走 Steven 批准。"
 ---
 # 给AI前脱敏器（Data Minimizer）
 
@@ -78,11 +87,9 @@ cp -r agent-skills/skills/data-minimizer ~/.claude/skills/
                         (not a registered legal entity; no trademark registered)
 生产参考部署 (production reference, self-reported) : MedXpert
                     ← 非认证、非背书、非监管认可（not a certification or endorsement）
-代码许可 (code license) : uibc-core = Apache-2.0 (see repo LICENSE)
-                    本文本与理论表述不在 Apache-2.0 覆盖范围内
-引用格式 (cite as)      : uibc-core/CITATION.cff · concept DOI 10.5281/zenodo.22821834
-首次公开锚 (first public): 2026-09-17 13:31:45 UTC (commit cb6f11b)
-                    外锚 (external anchor): Sigstore Rekor logIndex 2883389783
+代码许可 (code license) : 本包未附 LICENSE 文件（许可待定）
+                    本文本与理论表述不在任何代码许可覆盖范围内
+引用格式 (cite as)      : 本资产无 DOI
 ```
 （上列为《LGD 对外表述规范》§3.2 统一块，**整体复制、未删改**；发布/重提前须照最新版本复核。）
 

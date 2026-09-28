@@ -18,8 +18,15 @@ description: "UDI 码串格式对了，但该传哪个库、什么时候传、�
 description_en: "Deterministic zero-dependency CLI screener for medical-device compliance (udi-db-submission-check). JSON IR output, rc=0/1/2, demo case included. Decision support only — always verify against official texts."
 agent_created: true
 verified_links: "规则源条款号已逐条标注；包内全部外链（含徽章）于 2026-09-12 逐条 HTTP 探测核验，11/11 可达"
+description_zh: "UDI 码串格式对了，但该传哪个库、什么时候传、必填哪些字段，没人一次说清；漏传或漏维护，上市即违规。（零依赖 CLI · 确定性 JSON IR · rc=0/1/2 · --demo 自带案例）"
+classification:
+  internal: ["主轴1 医械合规咨询"]
+  skillhub: ["medtech-reg"]
+  clawhub: ["productivity", "data-analytics", "development"]
+  iso_25010: ["Functional suitability"]
+risk_tier: medium
+risk_rationale: "门禁批量补丁默认 medium（Steven 2026-09-28 令：我们的 skill 设计为中等风险）：调用 API/读写文件/本地执行，最小权限，密钥走 Secret；若实际涉对外代执行(push/发布/发送/上架)须人工复评，改 high 并走 Steven 批准。"
 ---
-
 ![LGD-aligned MED 医疗](https://medxpert.cn/badge/directions/svg/lgd-aligned-med-cn.svg)
 ![LGD 有籍 Registered](https://medxpert.cn/badge/laws/svg/lgd-registered-cn.svg)
 ![LGD 有证 Evidenced](https://medxpert.cn/badge/laws/svg/lgd-evidenced-cn.svg)
@@ -157,9 +164,7 @@ python udi-db-submission-check.py --json <你的参数...>        # 正式判定
                         (not a registered legal entity; no trademark registered)
 生产参考部署 (production reference, self-reported) : MedXpert
                     ← 非认证、非背书、非监管认可（not a certification or endorsement）
-代码许可 (code license) : uibc-core = Apache-2.0 (see repo LICENSE)
-                    本文本与理论表述不在 Apache-2.0 覆盖范围内
-引用格式 (cite as)      : uibc-core/CITATION.cff · concept DOI 10.5281/zenodo.22821834
-首次公开锚 (first public): 2026-09-17 13:31:45 UTC (commit cb6f11b)
-                    外锚 (external anchor): Sigstore Rekor logIndex 2883389783
+代码许可 (code license) : 本包 = MIT (see LICENSE)
+                    本文本与理论表述不在任何代码许可覆盖范围内
+引用格式 (cite as)      : 本资产无 DOI
 ```

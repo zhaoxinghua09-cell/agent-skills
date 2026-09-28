@@ -20,6 +20,15 @@ tags: [RAG校验, grounding, 事实溯源, 防幻觉, 引用核查, 有籍]
 slug: rag-grounding-guard
 title: RAG事实溯源校验（Grounding Guard）
 copyright: SynomosAI
+description_zh: "当用户说『RAG回答胡说八道/编造』『引用对不对』『回答有依据吗』『检索到的资料支撑不了结论』，或要给 RAG/检索增强回答做事实校验时使用。校验每条声明在检索来源里是否有支撑（ grounding 覆盖率），未覆盖的声明标红为幻觉风险，并要求来源带出处（有籍）。可运行脚本（grounding_check 校验器）。理论根基：LGD 三律之有籍(引用溯源)+有证(防幻觉可核验)。触发词：RAG校验、grounding、事实溯源、防幻觉、引用核查、检索支撑、hallucination、回答有依据吗。"
+description_en: "Verify RAG answers are grounded: per-claim support coverage against retrieved sources, with unsupported claims flagged before the answer ships."
+classification:
+  internal: ["主轴7 组织治理与安全"]
+  skillhub: ["security-compliance"]
+  clawhub: ["development", "search"]
+  iso_25010: ["Security"]
+risk_tier: medium
+risk_rationale: "门禁批量补丁默认 medium（Steven 2026-09-28 令：我们的 skill 设计为中等风险）：调用 API/读写文件/本地执行，最小权限，密钥走 Secret；若实际涉对外代执行(push/发布/发送/上架)须人工复评，改 high 并走 Steven 批准。"
 ---
 ![LGD Powered](lgd-powered.png)
 
@@ -87,11 +96,9 @@ copyright: SynomosAI
                         (not a registered legal entity; no trademark registered)
 生产参考部署 (production reference, self-reported) : MedXpert
                     ← 非认证、非背书、非监管认可（not a certification or endorsement）
-代码许可 (code license) : uibc-core = Apache-2.0 (see repo LICENSE)
-                    本文本与理论表述不在 Apache-2.0 覆盖范围内
-引用格式 (cite as)      : uibc-core/CITATION.cff · concept DOI 10.5281/zenodo.22821834
-首次公开锚 (first public): 2026-09-17 13:31:45 UTC (commit cb6f11b)
-                    外锚 (external anchor): Sigstore Rekor logIndex 2883389783
+代码许可 (code license) : 本包未附 LICENSE 文件（许可待定）
+                    本文本与理论表述不在任何代码许可覆盖范围内
+引用格式 (cite as)      : 本资产无 DOI
 ```
 （上列为《LGD 对外表述规范》§3.2 统一块，**整体复制、未删改**；发布/重提前须照最新版本复核。）
 

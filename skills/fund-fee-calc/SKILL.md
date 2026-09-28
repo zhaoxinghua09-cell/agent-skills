@@ -13,6 +13,15 @@ allowed-tools: Read, Glob, Grep, Bash, Write, WebFetch
 category: AI 治理
 platforms: [claude, codex, cursor, windsurf, workbuddy]
 copyright: SynomosAI
+description_zh: "资管费率净收益试算器 — 试算管理/托管/销售三费总成本与净收益，宣传含保本承诺即 FAIL（零依赖）"
+description_en: "Fund fee and net-return calculator: management, custody and sales fee total cost with net return; guarantee-of-principal claims FAIL (zero-dependency)."
+classification:
+  internal: ["主轴7 组织治理与安全"]
+  skillhub: ["security-compliance"]
+  clawhub: ["development"]
+  iso_25010: ["Security"]
+risk_tier: medium
+risk_rationale: "门禁批量补丁默认 medium（Steven 2026-09-28 令：我们的 skill 设计为中等风险）：调用 API/读写文件/本地执行，最小权限，密钥走 Secret；若实际涉对外代执行(push/发布/发送/上架)须人工复评，改 high 并走 Steven 批准。"
 ---
 # 资管费率净收益试算器 / Fund Fee & Net Return Calc
 
@@ -72,11 +81,9 @@ cp -r agent-skills/skills/fund-fee-calc ~/.claude/skills/
                         (not a registered legal entity; no trademark registered)
 生产参考部署 (production reference, self-reported) : MedXpert
                     ← 非认证、非背书、非监管认可（not a certification or endorsement）
-代码许可 (code license) : uibc-core = Apache-2.0 (see repo LICENSE)
-                    本文本与理论表述不在 Apache-2.0 覆盖范围内
-引用格式 (cite as)      : uibc-core/CITATION.cff · concept DOI 10.5281/zenodo.22821834
-首次公开锚 (first public): 2026-09-17 13:31:45 UTC (commit cb6f11b)
-                    外锚 (external anchor): Sigstore Rekor logIndex 2883389783
+代码许可 (code license) : 本包未附 LICENSE 文件（许可待定）
+                    本文本与理论表述不在任何代码许可覆盖范围内
+引用格式 (cite as)      : 本资产无 DOI
 ```
 （上列为《LGD 对外表述规范》§3.2 统一块，**整体复制、未删改**；发布/重提前须照最新版本复核。）
 

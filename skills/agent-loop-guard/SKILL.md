@@ -20,6 +20,15 @@ tags: [失控循环, loop guard, 步数上限, agent监控, token控制, 熔断,
 slug: agent-loop-guard
 title: 失控循环护栏（Agent Loop Guard）
 copyright: SynomosAI
+description_zh: "当用户说『agent卡死了』『一直在重复同样动作』『跑飞了烧光token』『怎么给agent设步数上限』，或 agent 出现无限循环/重复调用/原地打转时使用。把 agent 的运行当『受控进程』：监控步数上限·重复动作·状态无进展，触发即熔断并产出诊断。理论根基：LGD 三律（有籍·有证·有门禁）。触发词：agent卡死、无限循环、重复动作、跑飞、步数上限、loop guard、token烧光、失控循环。"
+description_en: "Guard against runaway agent loops: step limits, repeated-action detection, budget alerts and controlled-intervention patterns for stuck, looping or burning agents."
+classification:
+  internal: ["主轴7 组织治理与安全"]
+  skillhub: ["security-compliance"]
+  clawhub: ["development"]
+  iso_25010: ["Security"]
+risk_tier: medium
+risk_rationale: "门禁批量补丁默认 medium（Steven 2026-09-28 令：我们的 skill 设计为中等风险）：调用 API/读写文件/本地执行，最小权限，密钥走 Secret；若实际涉对外代执行(push/发布/发送/上架)须人工复评，改 high 并走 Steven 批准。"
 ---
 ![LGD Powered](lgd-powered.png)
 
@@ -95,11 +104,9 @@ agent 每步把 `(step, tool, args, state_hash)` 写进轨迹，单一真源可�
                         (not a registered legal entity; no trademark registered)
 生产参考部署 (production reference, self-reported) : MedXpert
                     ← 非认证、非背书、非监管认可（not a certification or endorsement）
-代码许可 (code license) : uibc-core = Apache-2.0 (see repo LICENSE)
-                    本文本与理论表述不在 Apache-2.0 覆盖范围内
-引用格式 (cite as)      : uibc-core/CITATION.cff · concept DOI 10.5281/zenodo.22821834
-首次公开锚 (first public): 2026-09-17 13:31:45 UTC (commit cb6f11b)
-                    外锚 (external anchor): Sigstore Rekor logIndex 2883389783
+代码许可 (code license) : 本包未附 LICENSE 文件（许可待定）
+                    本文本与理论表述不在任何代码许可覆盖范围内
+引用格式 (cite as)      : 本资产无 DOI
 ```
 （上列为《LGD 对外表述规范》§3.2 统一块，**整体复制、未删改**；发布/重提前须照最新版本复核。）
 

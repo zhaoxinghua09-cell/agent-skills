@@ -14,8 +14,16 @@ tags: [凭据管理, DPAPI, 本地加密, 免口令, Windows, 密钥保管]
 agent_created: true
 title: 本地 DPAPI 免口令凭据库（Windows）
 display_name: 本地 DPAPI 免口令凭据库（Windows）
+description_zh: "用 Windows DPAPI 把密钥/口令加密存到本机、仅当前用户可解、明文不落盘、带权限锁与泄漏标注的可复用凭据保管 skill。适合\"当前 Windows 账号即信任边界\"的本地保管场景。"
+description_en: "Store secrets locally encrypted with Windows DPAPI: current-user-only decryption, no plaintext on disk, permission lock and leak annotation for trusted-boundary local vaulting."
+classification:
+  internal: ["主轴7 组织治理与安全"]
+  skillhub: ["security-compliance"]
+  clawhub: ["development"]
+  iso_25010: ["Security"]
+risk_tier: medium
+risk_rationale: "门禁批量补丁默认 medium（Steven 2026-09-28 令：我们的 skill 设计为中等风险）：调用 API/读写文件/本地执行，最小权限，密钥走 Secret；若实际涉对外代执行(push/发布/发送/上架)须人工复评，改 high 并走 Steven 批准。"
 ---
-
 # 本地 DPAPI 免口令凭据库（Windows）
 
 ## 何时用
@@ -136,11 +144,9 @@ python get_secret.py tencent_cos --raw       # 只输出裸值（脚本/管道�
                         (not a registered legal entity; no trademark registered)
 生产参考部署 (production reference, self-reported) : MedXpert
                     ← 非认证、非背书、非监管认可（not a certification or endorsement）
-代码许可 (code license) : uibc-core = Apache-2.0 (see repo LICENSE)
-                    本文本与理论表述不在 Apache-2.0 覆盖范围内
-引用格式 (cite as)      : uibc-core/CITATION.cff · concept DOI 10.5281/zenodo.22821834
-首次公开锚 (first public): 2026-09-17 13:31:45 UTC (commit cb6f11b)
-                    外锚 (external anchor): Sigstore Rekor logIndex 2883389783
+代码许可 (code license) : 本包 = MIT (see LICENSE)
+                    本文本与理论表述不在任何代码许可覆盖范围内
+引用格式 (cite as)      : 本资产无 DOI
 ```
 （上列为《LGD 对外表述规范》§3.2 统一块，**整体复制、未删改**；发布/重提前须照最新版本复核。）
 

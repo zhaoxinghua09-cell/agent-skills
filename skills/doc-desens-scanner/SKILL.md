@@ -20,6 +20,15 @@ tags: [去敏, 脱敏, desensitize, 隐私打码, PII, 密钥, 发布前检查]
 slug: doc-desens-scanner
 title: 文档智能去敏（Desens Scanner）
 copyright: SynomosAI
+description_zh: "当用户说『这篇文档有敏感信息要发出去』『先脱敏再发』『别把内部路径/密钥/人名露出去』『对外发布前扫一遍隐私』，或要把文档/代码/日志对外前做去敏时使用。扫描 个人标识(PII)·密钥·内部路径·内部项目代号 四类敏感项并打码/留痕，输出去敏版+清单（有证：脱敏动作可审计）。可运行脚本（desens_scan 扫描器）。理论根基：LGD 三律之有证（脱敏留痕，可追责）。触发词：去敏、脱敏、desensitize、脱敏扫描、隐私打码、密钥泄露、内部路径、对外发布前检查、PII。"
+description_en: "Scan documents, code and logs for PII, secrets, internal paths and project codenames before external release, with masking suggestions for each finding."
+classification:
+  internal: ["主轴7 组织治理与安全"]
+  skillhub: ["security-compliance"]
+  clawhub: ["development"]
+  iso_25010: ["Security"]
+risk_tier: medium
+risk_rationale: "门禁批量补丁默认 medium（Steven 2026-09-28 令：我们的 skill 设计为中等风险）：调用 API/读写文件/本地执行，最小权限，密钥走 Secret；若实际涉对外代执行(push/发布/发送/上架)须人工复评，改 high 并走 Steven 批准。"
 ---
 ![LGD Powered](lgd-powered.png)
 
@@ -94,11 +103,9 @@ copyright: SynomosAI
                         (not a registered legal entity; no trademark registered)
 生产参考部署 (production reference, self-reported) : MedXpert
                     ← 非认证、非背书、非监管认可（not a certification or endorsement）
-代码许可 (code license) : uibc-core = Apache-2.0 (see repo LICENSE)
-                    本文本与理论表述不在 Apache-2.0 覆盖范围内
-引用格式 (cite as)      : uibc-core/CITATION.cff · concept DOI 10.5281/zenodo.22821834
-首次公开锚 (first public): 2026-09-17 13:31:45 UTC (commit cb6f11b)
-                    外锚 (external anchor): Sigstore Rekor logIndex 2883389783
+代码许可 (code license) : 本包未附 LICENSE 文件（许可待定）
+                    本文本与理论表述不在任何代码许可覆盖范围内
+引用格式 (cite as)      : 本资产无 DOI
 ```
 （上列为《LGD 对外表述规范》§3.2 统一块，**整体复制、未删改**；发布/重提前须照最新版本复核。）
 

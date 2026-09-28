@@ -14,8 +14,16 @@ agent_created: true
 version: "1.0.1"
 tags: [发布质量, 发布前检查, 敏感扫描, 脱敏, TRACE, 安全审计]
 slug: publish-quality-gate
+description_zh: "发布质量门禁：发布任何 Skill/专家包/文档/工具到外部（分享、上架市场、对外发布）前后的质量检查。发布前执行四层敏感信息检查（公司信息→本机信息→个人信息→机密信息），发布后按 TRACE 五维（Trust/Reliability/Adaptability/Convention/Effectiveness）执行 AI 自测。当用户说'准备发布'、'发布前检查'、'发布后自测'、'TRACE 评测'、'检查一下发布物'、'脱敏检查'、'发布质量'时使用。"
+description_en: "Pre- and post-publish quality gate for any skill, expert pack, document or tool: four-layer sensitive-info checks before release and TRACE five-dimension review after."
+classification:
+  internal: ["主轴7 组织治理与安全"]
+  skillhub: ["security-compliance"]
+  clawhub: ["development", "data-analytics"]
+  iso_25010: ["Security"]
+risk_tier: medium
+risk_rationale: "门禁批量补丁默认 medium（Steven 2026-09-28 令：我们的 skill 设计为中等风险）：调用 API/读写文件/本地执行，最小权限，密钥走 Secret；若实际涉对外代执行(push/发布/发送/上架)须人工复评，改 high 并走 Steven 批准。"
 ---
-
 # 发布质量门禁（Publish Quality Gate）
 
 > **任何要对外发布的东西（Skill、专家包、文档、HTML、PPT、工具），发布前后都必须过这道门禁：**
@@ -260,11 +268,9 @@ python scripts/check_release.py <发布目录> <目标名>
                         (not a registered legal entity; no trademark registered)
 生产参考部署 (production reference, self-reported) : MedXpert
                     ← 非认证、非背书、非监管认可（not a certification or endorsement）
-代码许可 (code license) : uibc-core = Apache-2.0 (see repo LICENSE)
-                    本文本与理论表述不在 Apache-2.0 覆盖范围内
-引用格式 (cite as)      : uibc-core/CITATION.cff · concept DOI 10.5281/zenodo.22821834
-首次公开锚 (first public): 2026-09-17 13:31:45 UTC (commit cb6f11b)
-                    外锚 (external anchor): Sigstore Rekor logIndex 2883389783
+代码许可 (code license) : 本包 = MIT (see LICENSE)
+                    本文本与理论表述不在任何代码许可覆盖范围内
+引用格式 (cite as)      : 本资产无 DOI
 ```
 （上列为《LGD 对外表述规范》§3.2 统一块，**整体复制、未删改**；发布/重提前须照最新版本复核。）
 

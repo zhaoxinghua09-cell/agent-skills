@@ -20,6 +20,15 @@ tags: [数据版权, 训练数据合规, 数据集许可证, 权属护栏, 商�
 slug: data-rights-guard
 title: 训练数据版权护栏（Data Rights Guard）
 copyright: SynomosAI
+description_zh: "当用户说『爬的数据能拿来训练吗』『数据集没写许可证』『微调数据版权合规吗』『怎么确认数据能商用』，或在用数据(爬取/购买/公开集/用户授权)做训练/微调/评测前想确认版权与许可边界时使用。把每条数据当『带权属的资产』：查许可证·商用权限·署名要求·来源可溯，缺许可的不许进训练集。理论根基：LGD 三律（有籍·有证·有门禁）。触发词：数据版权、训练数据合规、数据集许可证、版权护栏、数据权属、商用权限、data license、微调合规。"
+description_en: "Copyright and license guard for training data: verify provenance, license terms and commercial-use boundaries before training, fine-tuning or evaluating on scraped, purchased, public or user-authorized data."
+classification:
+  internal: ["主轴7 组织治理与安全"]
+  skillhub: ["security-compliance"]
+  clawhub: ["development", "data-analytics"]
+  iso_25010: ["Security"]
+risk_tier: medium
+risk_rationale: "门禁批量补丁默认 medium（Steven 2026-09-28 令：我们的 skill 设计为中等风险）：调用 API/读写文件/本地执行，最小权限，密钥走 Secret；若实际涉对外代执行(push/发布/发送/上架)须人工复评，改 high 并走 Steven 批准。"
 ---
 ![LGD Powered](lgd-powered.png)
 
@@ -98,11 +107,9 @@ copyright: SynomosAI
                         (not a registered legal entity; no trademark registered)
 生产参考部署 (production reference, self-reported) : MedXpert
                     ← 非认证、非背书、非监管认可（not a certification or endorsement）
-代码许可 (code license) : uibc-core = Apache-2.0 (see repo LICENSE)
-                    本文本与理论表述不在 Apache-2.0 覆盖范围内
-引用格式 (cite as)      : uibc-core/CITATION.cff · concept DOI 10.5281/zenodo.22821834
-首次公开锚 (first public): 2026-09-17 13:31:45 UTC (commit cb6f11b)
-                    外锚 (external anchor): Sigstore Rekor logIndex 2883389783
+代码许可 (code license) : 本包未附 LICENSE 文件（许可待定）
+                    本文本与理论表述不在任何代码许可覆盖范围内
+引用格式 (cite as)      : 本资产无 DOI
 ```
 （上列为《LGD 对外表述规范》§3.2 统一块，**整体复制、未删改**；发布/重提前须照最新版本复核。）
 

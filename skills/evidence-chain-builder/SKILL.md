@@ -19,6 +19,15 @@ read_when:
   - 要落地「凡所行必有证据」的有证原则
 tags: [LGD, 有证, 证据链, 防幻觉, 事实核查, 信源, 证成度, 不编造]
 copyright: SynomosAI
+description_zh: "当用户要『验证 AI 论断 / 防幻觉 / 给结论找证据 / 判断信源可信度』时用。把论断拆成可验证证据链：每条证据标来源类型(official/paper/data/internal/assertion)、是否可独立验证、可信度，输出『证成度』与未支撑论断清单。对齐 EIFP 不编造原教旨——本工具不判定论断真假，只评估证据质量；缺可验证证据的论断明确标『勿作结论』。这是 LGD-II 有证的落地执行器。触发词：证据链、论断验证、防幻觉、信源可信、有证、claim 证据、论断举证。"
+description_en: "Decompose AI claims into verifiable evidence chains (LGD-II): each item tagged by source type (official, paper, data, internal, assertion) with independent verifiability status."
+classification:
+  internal: ["主轴2 理论体系(LGD)"]
+  skillhub: ["ai-governance"]
+  clawhub: ["search", "data-analytics", "development"]
+  iso_25010: ["Security", "Maintainability"]
+risk_tier: medium
+risk_rationale: "门禁批量补丁默认 medium（Steven 2026-09-28 令：我们的 skill 设计为中等风险）：调用 API/读写文件/本地执行，最小权限，密钥走 Secret；若实际涉对外代执行(push/发布/发送/上架)须人工复评，改 high 并走 Steven 批准。"
 ---
 # AI 论断有证证据链（LGD-II 有证）
 
@@ -112,11 +121,9 @@ cp -r agent-skills/skills/evidence-chain-builder ~/.claude/skills/
                         (not a registered legal entity; no trademark registered)
 生产参考部署 (production reference, self-reported) : MedXpert
                     ← 非认证、非背书、非监管认可（not a certification or endorsement）
-代码许可 (code license) : uibc-core = Apache-2.0 (see repo LICENSE)
-                    本文本与理论表述不在 Apache-2.0 覆盖范围内
-引用格式 (cite as)      : uibc-core/CITATION.cff · concept DOI 10.5281/zenodo.22821834
-首次公开锚 (first public): 2026-09-17 13:31:45 UTC (commit cb6f11b)
-                    外锚 (external anchor): Sigstore Rekor logIndex 2883389783
+代码许可 (code license) : 本包未附 LICENSE 文件（许可待定）
+                    本文本与理论表述不在任何代码许可覆盖范围内
+引用格式 (cite as)      : 本资产无 DOI
 ```
 （上列为《LGD 对外表述规范》§3.2 统一块，**整体复制、未删改**；发布/重提前须照最新版本复核。）
 

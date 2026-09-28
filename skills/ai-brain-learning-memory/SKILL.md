@@ -29,8 +29,17 @@ tags:
   - AI学习方法论
 slug: medxpert-brain-learning-memory
 displayName: AI大脑学习记忆方法论
+description_zh: "AI 大脑学习记忆方法论（汇总版）——把 AI 的学习与记忆按人脑模型组织：三层记忆架构 + 编码→存储→提取三阶段 + 训战省化学习飞轮 + 复习与遗忘机制 + 人脑学习法原理与 AI 对照 + 记忆安全。让 AI 真正「学得进、记得住、用得上」。含 30 秒上手、触发说明、场景例子、问题速查表，普通用户也能直接用。触发词：大脑学习记忆、AI学习记忆、记忆架构、怎么让AI记住、学习记忆机制、海马体、记忆固化、brain memory、learning memory、记忆模型、记忆分层、艾宾浩斯、间隔重复、记忆宫殿、费曼学习法、主动回忆、睡眠巩固、记忆投毒、记忆安全、情节记忆、语义记忆、快速绑定、记忆评测。"
+description_en: "Human-brain-inspired methodology for AI learning and memory: three-tier memory architecture, encode-store-retrieve stages, training flywheel, review/forgetting mechanisms and memory safety."
+classification:
+  internal: ["主轴5 知识资产与本地AI"]
+  skillhub: ["knowledge"]
+  clawhub: ["search", "development"]
+  iso_25010: ["Maintainability"]
+risk_tier: medium
+risk_rationale: "门禁批量补丁默认 medium（Steven 2026-09-28 令：我们的 skill 设计为中等风险）：调用 API/读写文件/本地执行，最小权限，密钥走 Secret；若实际涉对外代执行(push/发布/发送/上架)须人工复评，改 high 并走 Steven 批准。"
+standards_ref: ["OWASP Agentic Top 10"]
 ---
-
 # AI 大脑学习记忆方法论
 
 > **核心理念：把 AI 的学习与记忆，按人脑模型来设计和运行——AI 不是「什么都存」，而是像人一样：该记的记得住、该忘的会忘、用时想得起、越用越聪明。**
@@ -438,11 +447,9 @@ displayName: AI大脑学习记忆方法论
                         (not a registered legal entity; no trademark registered)
 生产参考部署 (production reference, self-reported) : MedXpert
                     ← 非认证、非背书、非监管认可（not a certification or endorsement）
-代码许可 (code license) : uibc-core = Apache-2.0 (see repo LICENSE)
-                    本文本与理论表述不在 Apache-2.0 覆盖范围内
-引用格式 (cite as)      : uibc-core/CITATION.cff · concept DOI 10.5281/zenodo.22821834
-首次公开锚 (first public): 2026-09-17 13:31:45 UTC (commit cb6f11b)
-                    外锚 (external anchor): Sigstore Rekor logIndex 2883389783
+代码许可 (code license) : 本包 = MIT (see LICENSE)
+                    本文本与理论表述不在任何代码许可覆盖范围内
+引用格式 (cite as)      : 本资产无 DOI
 ```
 （上列为《LGD 对外表述规范》§3.2 统一块，**整体复制、未删改**；发布/重提前须照最新版本复核。）
 

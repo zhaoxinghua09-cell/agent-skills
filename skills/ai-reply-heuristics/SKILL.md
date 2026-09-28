@@ -13,6 +13,15 @@ allowed-tools: Read, Glob, Grep, Bash, Write, WebFetch
 category: AI 治理
 platforms: [claude-code, codebuddy, workbuddy, openai-agents]
 copyright: SynomosAI
+description_zh: "ai-reply-heuristics — 启发式估计一段文字的 AI 痕迹强度：套话密度/破折号频率/句长均匀度/排比结构 → 0-100 分与三档区间（启发式，不构成判定，附免责）。"
+description_en: "Heuristic estimation of AI-flavor intensity in a text: boilerplate density, dash frequency, sentence-length uniformity and parallelism, scored 0-100 with three bands (heuristic only, with disclaimer)."
+classification:
+  internal: ["主轴7 组织治理与安全"]
+  skillhub: ["security-compliance"]
+  clawhub: ["development"]
+  iso_25010: ["Security"]
+risk_tier: medium
+risk_rationale: "门禁批量补丁默认 medium（Steven 2026-09-28 令：我们的 skill 设计为中等风险）：调用 API/读写文件/本地执行，最小权限，密钥走 Secret；若实际涉对外代执行(push/发布/发送/上架)须人工复评，改 high 并走 Steven 批准。"
 ---
 # AI痕迹启发式检查器（AI Reply Heuristics）
 
@@ -78,11 +87,9 @@ cp -r agent-skills/skills/ai-reply-heuristics ~/.claude/skills/
                         (not a registered legal entity; no trademark registered)
 生产参考部署 (production reference, self-reported) : MedXpert
                     ← 非认证、非背书、非监管认可（not a certification or endorsement）
-代码许可 (code license) : uibc-core = Apache-2.0 (see repo LICENSE)
-                    本文本与理论表述不在 Apache-2.0 覆盖范围内
-引用格式 (cite as)      : uibc-core/CITATION.cff · concept DOI 10.5281/zenodo.22821834
-首次公开锚 (first public): 2026-09-17 13:31:45 UTC (commit cb6f11b)
-                    外锚 (external anchor): Sigstore Rekor logIndex 2883389783
+代码许可 (code license) : 本包未附 LICENSE 文件（许可待定）
+                    本文本与理论表述不在任何代码许可覆盖范围内
+引用格式 (cite as)      : 本资产无 DOI
 ```
 （上列为《LGD 对外表述规范》§3.2 统一块，**整体复制、未删改**；发布/重提前须照最新版本复核。）
 

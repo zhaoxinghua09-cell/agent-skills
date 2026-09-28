@@ -12,8 +12,16 @@ license_scope: 代码（.py 文件）MIT；本 SKILL.md 与其中理论文本不
 allowed-tools: Read, Glob, Grep, Bash, Write, WebFetch
 agent_created: true
 author: XLGD · SynomosAI
+description_zh: "技能上架安全闸门——一个技能/插件在安装或上架前，先跑确定性安全审查：查破坏性命令、远程执行、数据外泄、提示注入、隐蔽行为、混淆载荷与作用域越界，产出「分级发现 + 闸门判定 + 包指纹证据」。当需要审查第三方 skill、安装来源不明的技能、给自研技能做发布前安检、做供应链安全评估、或需要出具\"该包未被篡改且已评估风险\"的证据时调用。核心三件事：①按规则集扫全部文件并分级（BLOCK/WARN）②支持\"已接受风险\"声明（.admission-allow.json，须署名留痕）③输出包指纹与文件哈希作为\"有证\"产物。触发词：技能安全、审查 skill、安装前检查、恶意技能、skill 安全扫描、上架闸门、供应链安全、这个技能安全吗、第三方技能、能不能装、木马、后门、提示注入。"
+description_en: "Deterministic security review before installing or listing a skill: destructive commands, remote execution, data exfiltration, prompt injection, covert behavior, obfuscated payloads and scope overrun, with graded findings and package fingerprint."
+classification:
+  internal: ["主轴7 组织治理与安全"]
+  skillhub: ["security-compliance"]
+  clawhub: ["development", "data-analytics"]
+  iso_25010: ["Security"]
+risk_tier: medium
+risk_rationale: "门禁批量补丁默认 medium（Steven 2026-09-28 令：我们的 skill 设计为中等风险）：调用 API/读写文件/本地执行，最小权限，密钥走 Secret；若实际涉对外代执行(push/发布/发送/上架)须人工复评，改 high 并走 Steven 批准。"
 ---
-
 # skill-admission-gate · 技能上架安全闸门
 
 > **LGD 三律的可执行实现**：有籍（包指纹）· 有证（扫描证据留痕）· 有门禁（判定与已接受风险须署名）。
@@ -172,11 +180,9 @@ python scripts/scan_skill.py <技能根目录> --batch --json batch-result.json
                         (not a registered legal entity; no trademark registered)
 生产参考部署 (production reference, self-reported) : MedXpert
                     ← 非认证、非背书、非监管认可（not a certification or endorsement）
-代码许可 (code license) : uibc-core = Apache-2.0 (see repo LICENSE)
-                    本文本与理论表述不在 Apache-2.0 覆盖范围内
-引用格式 (cite as)      : uibc-core/CITATION.cff · concept DOI 10.5281/zenodo.22821834
-首次公开锚 (first public): 2026-09-17 13:31:45 UTC (commit cb6f11b)
-                    外锚 (external anchor): Sigstore Rekor logIndex 2883389783
+代码许可 (code license) : 本包未附 LICENSE 文件（许可待定）
+                    本文本与理论表述不在任何代码许可覆盖范围内
+引用格式 (cite as)      : 本资产无 DOI
 ```
 （上列为《LGD 对外表述规范》§3.2 统一块，**整体复制、未删改**；发布/重提前须照最新版本复核。）
 

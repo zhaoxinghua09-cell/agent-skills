@@ -11,8 +11,16 @@ allowed-tools: Read, Glob, Grep, Bash, Write, Edit, WebFetch
 category: 开发效率
 platforms: [WorkBuddy]
 tags: [github, git-push, 代理, 凭据, 排查, 发布, gitee, atomgit]
+description_zh: "git 推 GitHub/Gitee/AtomGit 的根因化排查与推送模板：401=凭据问题（helper 链残留死旧 PAT）、超时/挂死=通道问题（代理掐 git 传输，须 no_proxy 直连）、大面积 401=取值前缀坑（--raw 取裸值）。含直连推送模板（令牌走环境变量）、Git Data API 兜底（blob→tree→commit→ref）、Gitee 私有转公开、AtomGit 后端 gitcode 等实测坑。当用户说'推 GitHub'、'git push 失败/401/超时'、'发布仓库到远端'、'令牌失效了'时使用。"
+description_en: "Root-cause troubleshooting and push templates for git remotes (GitHub/Gitee/AtomGit): 401 means credentials, timeout means channel, with no_proxy and API-fallback patterns."
+classification:
+  internal: ["通用工具(跨主轴·待归类)"]
+  skillhub: ["productivity"]
+  clawhub: ["productivity", "development"]
+  iso_25010: ["Maintainability", "Usability"]
+risk_tier: medium
+risk_rationale: "门禁批量补丁默认 medium（Steven 2026-09-28 令：我们的 skill 设计为中等风险）：调用 API/读写文件/本地执行，最小权限，密钥走 Secret；若实际涉对外代执行(push/发布/发送/上架)须人工复评，改 high 并走 Steven 批准。"
 ---
-
 # git 远端推送：根因化排查与推送模板
 
 > 2026-09-07 全天实测定版。核心教训：**先归因，再重试**。401 是凭据问题，超时/挂死是通道问题，大面积 401 多半是取值姿势问题——三者根因完全不同，混着盲试只会浪费时间。
@@ -109,11 +117,9 @@ curl -s --noproxy '*' -o /dev/null -w "%{http_code}" https://github.com   # 200=
                         (not a registered legal entity; no trademark registered)
 生产参考部署 (production reference, self-reported) : MedXpert
                     ← 非认证、非背书、非监管认可（not a certification or endorsement）
-代码许可 (code license) : uibc-core = Apache-2.0 (see repo LICENSE)
-                    本文本与理论表述不在 Apache-2.0 覆盖范围内
-引用格式 (cite as)      : uibc-core/CITATION.cff · concept DOI 10.5281/zenodo.22821834
-首次公开锚 (first public): 2026-09-17 13:31:45 UTC (commit cb6f11b)
-                    外锚 (external anchor): Sigstore Rekor logIndex 2883389783
+代码许可 (code license) : 本包未附 LICENSE 文件（许可待定）
+                    本文本与理论表述不在任何代码许可覆盖范围内
+引用格式 (cite as)      : 本资产无 DOI
 ```
 （上列为《LGD 对外表述规范》§3.2 统一块，**整体复制、未删改**；发布/重提前须照最新版本复核。）
 

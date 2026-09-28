@@ -20,6 +20,15 @@ tags: [提示注入, prompt injection, 越狱, 注入扫描, 内容安全, 沙�
 slug: prompt-injection-shield
 title: 提示注入防护（Prompt Injection Shield）
 copyright: SynomosAI
+description_zh: "当用户要把网页抓取/邮件/工具返回值/检索文档/用户上传内容喂给 AI，又担心里面藏『忽略之前指令』『你是新AI』这类指令时使用。在不可信内容进上下文之前先扫描：中英双语文式库（忽略指令/角色劫持/越狱/DAN/索要系统提示）+ 启发式（面向AI的祈使句、角色切换、索要隐藏指令）+ 沙箱规则。附可运行扫描脚本，输出风险分·命中规则·处置建议（丢弃/隔离/沙箱）。复用 desens-scan 与 release-gate 的去敏与门禁能力。触发词：提示注入、prompt injection、注入防护、越狱、jailbreak、忽略指令、角色劫持、system prompt泄露、内容安全、AI被操控、注入扫描。"
+description_en: "Scan untrusted content (web pages, emails, tool returns, retrieved documents) for hidden instructions before it enters context: bilingual patterns for overrides, hijacks, jailbreaks and DAN."
+classification:
+  internal: ["主轴7 组织治理与安全"]
+  skillhub: ["security-compliance"]
+  clawhub: ["development", "data-analytics", "search"]
+  iso_25010: ["Security"]
+risk_tier: medium
+risk_rationale: "门禁批量补丁默认 medium（Steven 2026-09-28 令：我们的 skill 设计为中等风险）：调用 API/读写文件/本地执行，最小权限，密钥走 Secret；若实际涉对外代执行(push/发布/发送/上架)须人工复评，改 high 并走 Steven 批准。"
 ---
 ![LGD Powered](lgd-powered.png)
 
@@ -112,11 +121,9 @@ python scripts/prompt_injection_scan.py --file mail.txt
                         (not a registered legal entity; no trademark registered)
 生产参考部署 (production reference, self-reported) : MedXpert
                     ← 非认证、非背书、非监管认可（not a certification or endorsement）
-代码许可 (code license) : uibc-core = Apache-2.0 (see repo LICENSE)
-                    本文本与理论表述不在 Apache-2.0 覆盖范围内
-引用格式 (cite as)      : uibc-core/CITATION.cff · concept DOI 10.5281/zenodo.22821834
-首次公开锚 (first public): 2026-09-17 13:31:45 UTC (commit cb6f11b)
-                    外锚 (external anchor): Sigstore Rekor logIndex 2883389783
+代码许可 (code license) : 本包未附 LICENSE 文件（许可待定）
+                    本文本与理论表述不在任何代码许可覆盖范围内
+引用格式 (cite as)      : 本资产无 DOI
 ```
 （上列为《LGD 对外表述规范》§3.2 统一块，**整体复制、未删改**；发布/重提前须照最新版本复核。）
 

@@ -19,8 +19,16 @@ slug: session-continuity-protocol
 displayName: 跨会话连续性协议（开局四步）
 display_name: 跨会话连续性协议（开局四步）
 title: 跨会话连续性协议（开局四步）
+description_zh: "跨工作区 / 跨会话记忆连续性协议（潘布达首发）。触发场景：新会话开局、用户说「续上上下文 / 你还记得吗 / 你失忆了」、或要做任何连续性敏感任务（公众号发稿、品牌资产、发布阻塞、密钥投递、项目状态）之前。加载后严格跑「开局四步」把已固化事实回灌，避免在已定稿事项上重复问用户、避免失忆。真源 = 文件层（_ACTIVE_PROJECTS.md + 账号 MEMORY.md）优先于 localmem 语义层兜底。"
+description_en: "Cross-workspace and cross-session memory continuity protocol: session-opening and continuity-sensitive task flows so context survives account, workspace and device switches."
+classification:
+  internal: ["主轴5 知识资产与本地AI"]
+  skillhub: ["knowledge"]
+  clawhub: ["search", "development"]
+  iso_25010: ["Maintainability"]
+risk_tier: medium
+risk_rationale: "门禁批量补丁默认 medium（Steven 2026-09-28 令：我们的 skill 设计为中等风险）：调用 API/读写文件/本地执行，最小权限，密钥走 Secret；若实际涉对外代执行(push/发布/发送/上架)须人工复评，改 high 并走 Steven 批准。"
 ---
-
 # session-continuity-protocol · 跨会话记忆连续性协议
 
 > 作者：潘布达（内容发布运营团主理人）｜定稿：2026-09-04｜背景：Steven 多次指出「失忆」——根因不是方案缺失，而是**开局没按协议回灌已知事实**。
@@ -136,11 +144,9 @@ Glob <你的工作区根>/*/.workbuddy/memory/MEMORY.md  → 读最近修改的
                         (not a registered legal entity; no trademark registered)
 生产参考部署 (production reference, self-reported) : MedXpert
                     ← 非认证、非背书、非监管认可（not a certification or endorsement）
-代码许可 (code license) : uibc-core = Apache-2.0 (see repo LICENSE)
-                    本文本与理论表述不在 Apache-2.0 覆盖范围内
-引用格式 (cite as)      : uibc-core/CITATION.cff · concept DOI 10.5281/zenodo.22821834
-首次公开锚 (first public): 2026-09-17 13:31:45 UTC (commit cb6f11b)
-                    外锚 (external anchor): Sigstore Rekor logIndex 2883389783
+代码许可 (code license) : 本包 = MIT (see LICENSE)
+                    本文本与理论表述不在任何代码许可覆盖范围内
+引用格式 (cite as)      : 本资产无 DOI
 ```
 （上列为《LGD 对外表述规范》§3.2 统一块，**整体复制、未删改**；发布/重提前须照最新版本复核。）
 

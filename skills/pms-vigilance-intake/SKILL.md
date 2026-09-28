@@ -12,8 +12,16 @@ allowed-tools: Read, Glob, Grep, Bash, Write, WebFetch
 license_scope: 代码（.py 文件）MIT；本 SKILL.md 与其中理论文本不在 MIT 覆盖范围内（见文末「License & attribution」）
 description: 医疗器械不良事件报告路径判定器——基于官方规则源的零依赖决策支持工具，JSON IR 输出，覆盖TH-MED-002域（医疗器械全链路）。
 tags: [医疗器械, 合规, 判定器, TH-MED-002, pms-vigilance-intake]
+description_zh: "医疗器械不良事件报告路径判定器——基于官方规则源的零依赖决策支持工具，JSON IR 输出，覆盖TH-MED-002域（医疗器械全链路）。"
+description_en: "Medical device adverse-event reporting pathway determination tool: zero-dependency decision support with JSON IR output (domain TH-MED-002, full device chain)."
+classification:
+  internal: ["主轴1 医械合规咨询"]
+  skillhub: ["medtech-reg"]
+  clawhub: ["productivity", "development"]
+  iso_25010: ["Functional suitability"]
+risk_tier: medium
+risk_rationale: "门禁批量补丁默认 medium（Steven 2026-09-28 令：我们的 skill 设计为中等风险）：调用 API/读写文件/本地执行，最小权限，密钥走 Secret；若实际涉对外代执行(push/发布/发送/上架)须人工复评，改 high 并走 Steven 批准。"
 ---
-
 ![LGD-Powered](https://medxpert.cn/badge/powered/svg/lgd-powered-cn.svg)
 
 # 医疗器械不良事件报告路径判定器
@@ -124,11 +132,9 @@ python pms-vigilance-intake.py --demo                         # 跑内置冒烟�
                         (not a registered legal entity; no trademark registered)
 生产参考部署 (production reference, self-reported) : MedXpert
                     ← 非认证、非背书、非监管认可（not a certification or endorsement）
-代码许可 (code license) : uibc-core = Apache-2.0 (see repo LICENSE)
-                    本文本与理论表述不在 Apache-2.0 覆盖范围内
-引用格式 (cite as)      : uibc-core/CITATION.cff · concept DOI 10.5281/zenodo.22821834
-首次公开锚 (first public): 2026-09-17 13:31:45 UTC (commit cb6f11b)
-                    外锚 (external anchor): Sigstore Rekor logIndex 2883389783
+代码许可 (code license) : 本包未附 LICENSE 文件（许可待定）
+                    本文本与理论表述不在任何代码许可覆盖范围内
+引用格式 (cite as)      : 本资产无 DOI
 ```
 
 ---

@@ -21,6 +21,15 @@ tags: [上下文工程, context engineering, 上下文窗口, token预算, RAG, 
 slug: context-engineering
 title: 上下文工程（Context Engineering）
 copyright: SynomosAI
+description_zh: "当用户说『AI越来越笨/答非所问/忘了前面的设定』『上下文太长』『token烧太快』『RAG召回不准』，或要设计/优化 agent 的提示、记忆、检索、工具编排时使用。把『上下文窗口里到底该放什么』当成一门工程：审计相关性·冗余·预算·衰减 四维度，给出裁剪/检索/记忆/门禁四步流程与可运行脚本（上下文预算计算器+审计清单生成器）。与 prompt engineering 的区别：prompt 是写一句话，context engineering 是设计 AI 每轮看到的全部信息。触发词：上下文工程、context engineering、上下文窗口、上下文污染、上下文衰减、context rot、token预算、RAG召回、记忆编排、agent上下文、长上下文优化。"
+description_en: "Engineer what goes into the context window: relevance audit, memory/retrieval/tool orchestration patterns to fix degraded answers, context overflow and token burn."
+classification:
+  internal: ["主轴7 组织治理与安全"]
+  skillhub: ["security-compliance"]
+  clawhub: ["development", "search"]
+  iso_25010: ["Security"]
+risk_tier: medium
+risk_rationale: "门禁批量补丁默认 medium（Steven 2026-09-28 令：我们的 skill 设计为中等风险）：调用 API/读写文件/本地执行，最小权限，密钥走 Secret；若实际涉对外代执行(push/发布/发送/上架)须人工复评，改 high 并走 Steven 批准。"
 ---
 ![LGD Powered](lgd-powered.png)
 
@@ -128,11 +137,9 @@ RAG 召回必须带「出处 + 相关度分数」，低于阈值的块不进窗�
                         (not a registered legal entity; no trademark registered)
 生产参考部署 (production reference, self-reported) : MedXpert
                     ← 非认证、非背书、非监管认可（not a certification or endorsement）
-代码许可 (code license) : uibc-core = Apache-2.0 (see repo LICENSE)
-                    本文本与理论表述不在 Apache-2.0 覆盖范围内
-引用格式 (cite as)      : uibc-core/CITATION.cff · concept DOI 10.5281/zenodo.22821834
-首次公开锚 (first public): 2026-09-17 13:31:45 UTC (commit cb6f11b)
-                    外锚 (external anchor): Sigstore Rekor logIndex 2883389783
+代码许可 (code license) : 本包未附 LICENSE 文件（许可待定）
+                    本文本与理论表述不在任何代码许可覆盖范围内
+引用格式 (cite as)      : 本资产无 DOI
 ```
 （上列为《LGD 对外表述规范》§3.2 统一块，**整体复制、未删改**；发布/重提前须照最新版本复核。）
 
