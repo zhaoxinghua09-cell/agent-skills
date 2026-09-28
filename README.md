@@ -2,6 +2,8 @@
 
 <img src="lgd-powered.png" width="150" alt="LGD Powered"/>
 
+[![skills.sh](https://img.shields.io/badge/skills.sh-Compatible-blue)](https://www.skills.sh/gh/zhaoxinghua09-cell/agent-skills)
+
 # agent-skills · AI Agent 治理技能标准库
 ## 许可说明 · License Notice
 
