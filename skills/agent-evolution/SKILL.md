@@ -16,8 +16,14 @@ slug: agent-evolution
 displayName: Agent 复盘进化飞轮（复盘→固化）
 title: Agent 复盘进化飞轮（复盘→固化）
 platforms: [WorkBuddy, Claude Code, Windows, macOS, Linux]
+classification:
+  internal: ["主轴7 组织治理与安全"]
+  skillhub: ["security-compliance"]
+  clawhub: ["development", "search"]
+  iso_25010: ["Security"]
+risk_tier: medium
+risk_rationale: "门禁批量补丁默认 medium（Steven 2026-09-28 令：我们的 skill 设计为中等风险）：调用 API/读写文件/本地执行，最小权限，密钥走 Secret；若实际涉对外代执行(push/发布/发送/上架)须人工复评，改 high 并走 Steven 批准。"
 ---
-
 <div align="center">
 
 ![LGD 头像 · 终版](lgd-avatar.png)
@@ -26,7 +32,7 @@ platforms: [WorkBuddy, Claude Code, Windows, macOS, Linux]
 
 > **品牌归属**：本技能隶属 **LGD「凡自治之物」** 治理理论线，采用**终版头像**（3D 金属红环 + 藏青盾 + LGD 字标 + 三律横杠 + 下弧铭文"有籍·有证·有门禁"，新魏体，1536×1536，永久定版）。
 > 同步挂载官方徽记「三律之盾」[lgd-shield-color.svg](lgd-shield-color.svg)（徽章程序 v1.0 · 母本 = LGD 项目号头像 B 系统化）。
-> 头像与徽记 © SynomosAI 2026；理论 CC BY 4.0（DOI 10.5281/zenodo.22456647）。参照声明须回链：[LGD-theory](https://github.com/zhaoxinghua09-cell/lgd-theory）。
+> 头像与徽记 © SynomosAI 2026；理论文本保留所有权利（DOI 10.5281/zenodo.22456647）。参照声明须回链：[LGD-theory](https://github.com/zhaoxinghua09-cell/lgd-theory）。
 
 # agent-evolution · 能力进化飞轮
 

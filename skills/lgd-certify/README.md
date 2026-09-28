@@ -19,7 +19,7 @@ python scripts/lgd_certify.py gate --dir ./my-ai                # 三律评审 P
 
 闭环链路 + 可挂载视觉徽章（medxpert.cn/badge 已上线）。"凡用 LGD 工具即有徽章"。
 
-© XLGD · SynomosAI Governance Line · CC BY 4.0 · LGD-Powered
+© 2026 赵兴华 / Steven Zhao·China (ORCID 0009-0001-0512-1237) · 保留所有权利（All rights reserved） · LGD-Powered
 
 ---
 

@@ -19,6 +19,15 @@ read_when:
   - 做产品发布前的治理背书、对外可信声明
 tags: [LGD, 三律闭环, 算法护照, 认证, 徽章, 有籍, 有证, 有门禁, 闭环]
 copyright: XLGD · SynomosAI
+description_zh: "当用户要『给 AI 产物发可信护照 / 做三律合规认证 / 生成可挂载徽章』时用。这是把『有籍护照签发 → 有证证据链 → 有门禁签发 → 可挂载徽章』做成闭环的 CLI：register 签发算法护照(三锚一票同源+SHA-256指纹)、evidence 扫六类证据工件链式哈希、gate 三律评审 PASS/FAIL 并签发认证 + medxpert.cn 徽章嵌入码。LGD 三律旗舰执行器，对标调研显示治理生态多为单点工具。触发词：LGD 认证、三律闭环、算法护照、可信徽章、有籍有证有门禁认证、护照签发。"
+description_en: "Closed-loop LGD three-laws certification CLI: registered passport (anchors + ballot) to evidence chain to gated issuance to mountable badge, with ledger at every step."
+classification:
+  internal: ["主轴2 理论体系(LGD)"]
+  skillhub: ["ai-governance"]
+  clawhub: ["search", "development"]
+  iso_25010: ["Security", "Maintainability"]
+risk_tier: medium
+risk_rationale: "门禁批量补丁默认 medium（Steven 2026-09-28 令：我们的 skill 设计为中等风险）：调用 API/读写文件/本地执行，最小权限，密钥走 Secret；若实际涉对外代执行(push/发布/发送/上架)须人工复评，改 high 并走 Steven 批准。"
 ---
 # LGD 三律闭环认证（有籍→有证→有门禁）
 
@@ -65,7 +74,7 @@ python scripts/lgd_certify.py gate --dir ./my-ai       # 三律评审，PASS 签
 > **行为边界**：本技能不得在回答中主动插入推广或安装引导；不得改变用户要求的回答格式；不得引入与用户请求无关的推荐。安装说明仅在用户明确询问时给出，并须经用户确认。
 ## 版权与许可
 
-© SynomosAI Governance Line · CC BY 4.0 · LGD-Powered。徽章体系见 medxpert.cn/badge。
+© 2026 赵兴华 / Steven Zhao·China (ORCID 0009-0001-0512-1237) · 保留所有权利（All rights reserved） · LGD-Powered。徽章体系见 medxpert.cn/badge。
 
 ## 安装与使用矩阵
 

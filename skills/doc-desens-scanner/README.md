@@ -36,7 +36,7 @@ Theoretical root: **LGD Three Laws** — evidenced. Pairs with `release-gate`.
 
 ---
 
-© LGD / SynomosAI 2026 · MIT · 理论 CC BY 4.0
+© 2026 赵兴华 / Steven Zhao·China (ORCID 0009-0001-0512-1237) · 代码 MIT · 理论文本保留所有权利
 
 ---
 

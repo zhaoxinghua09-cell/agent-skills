@@ -13,7 +13,7 @@ Agent 护照（FoloToy ai-passport 250★ = 硬件产品，非协议；agent-pas
   gate      有门禁 GATED     凡演化必经门禁：三律评审 → PASS/FAIL → 签发结论 + 官方徽章嵌入码
 
 零依赖（纯 stdlib）；产物全落 --dir 项目目录；评审徽章指向 medxpert.cn/badge/（已上线）。
-© SynomosAI Governance Line · CC BY 4.0 · LGD-Powered
+© 2026 赵兴华 / Steven Zhao·China (ORCID 0009-0001-0512-1237) · 代码许可 MIT (code: MIT) · LGD-Powered
 """
 import argparse, hashlib, json, os, sys, datetime as dt
 
