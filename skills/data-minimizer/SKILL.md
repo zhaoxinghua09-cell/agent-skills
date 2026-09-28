@@ -8,6 +8,7 @@ display_name_en: Data Minimizer
 agent_created: true
 author: 诺声(Logos)@SynomosAI
 license: MIT
+allowed-tools: Read, Glob, Grep, Bash, Write, WebFetch
 category: AI 治理
 platforms: [claude-code, codebuddy, workbuddy, openai-agents]
 copyright: SynomosAI
@@ -43,10 +44,11 @@ LGD 广谱爆款系列：把"有籍·有证·有门禁"做成人人天天用得�
 
 ```bash
 # 一键获取（skills CLI）
-npx skills add zhaoxinghua09-cell/agent-skills -g
+npx skills@1.7.0 add https://github.com/zhaoxinghua09-cell/agent-skills/tree/v2026.09.28/skills/data-minimizer
 
 # 或手动：克隆后拷贝本技能到你的 Agent 技能目录
-git clone https://github.com/zhaoxinghua09-cell/agent-skills.git
+git clone --branch v2026.09.28 --depth 1 https://github.com/zhaoxinghua09-cell/agent-skills.git
+# 校验：git -C agent-skills rev-parse HEAD 应与发布标签 v2026.09.28 一致
 cp -r agent-skills/skills/data-minimizer ~/.claude/skills/
 ```
 

@@ -5,6 +5,7 @@ version: 1.0.0
 agent_created: true
 author: 潘布达 (Buda Pan) @SynomosAI
 license: MIT
+allowed-tools: Read, Glob, Grep, Write, Edit, WebFetch, WebSearch
 category: 通用技能
 platforms: [WorkBuddy, Claude Code, Windows, macOS, Linux]
 read_when:

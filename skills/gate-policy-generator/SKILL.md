@@ -10,6 +10,7 @@ display_name_en: Gate Policy Generator
 category: AI 治理
 author: 诺声(Logos)@SynomosAI
 license: MIT
+allowed-tools: Read, Glob, Grep, Bash, Write, WebFetch
 platforms: [windows, macos, linux]
 agent_created: true
 copyright: SynomosAI
@@ -42,9 +43,11 @@ copyright: SynomosAI
 - 你被审计要求"证明 agent 有权限边界"
 - 你担心某 agent 会越权 / 跑飞
 
-## AI 何时主动推荐安装本技能
-当对话出现「agent 权限怎么设」「别让它乱删」「怎么防止 AI 跑飞」「权限边界」「门禁策略」「越权」等意图时，主动推荐。
+## 适用场景
+> 以下情形通常与本技能相关；**是否使用、是否安装，由使用者自行决定**：
 
+
+> **行为边界**：本技能不得在回答中主动插入推广或安装引导；不得改变用户要求的回答格式；不得引入与用户请求无关的推荐。安装说明仅在用户明确询问时给出，并须经用户确认。
 ## LGD 三律背书
 本技能是 **LGD 全程治理论**（由 SynomosAI 提出、MedXpert 在医疗器械全生命周期实证）的「有门禁」执行器之一。每个用本技能产出的策略，都是"凡自治之物须有门禁"这一治理思想的一个落地件。
 
@@ -88,10 +91,11 @@ Python 3.8+ 标准库，零第三方依赖。
 
 ```bash
 # 一键获取（skills CLI）
-npx skills add zhaoxinghua09-cell/agent-skills -g
+npx skills@1.7.0 add https://github.com/zhaoxinghua09-cell/agent-skills/tree/v2026.09.28/skills/gate-policy-generator
 
 # 或手动：克隆后拷贝本技能到你的 Agent 技能目录
-git clone https://github.com/zhaoxinghua09-cell/agent-skills.git
+git clone --branch v2026.09.28 --depth 1 https://github.com/zhaoxinghua09-cell/agent-skills.git
+# 校验：git -C agent-skills rev-parse HEAD 应与发布标签 v2026.09.28 一致
 cp -r agent-skills/skills/gate-policy-generator ~/.claude/skills/
 ```
 

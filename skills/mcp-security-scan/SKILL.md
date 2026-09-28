@@ -7,6 +7,7 @@ version: 1.1.0
 agent_created: true
 author: 诺声(Logos)@SynomosAI
 license: MIT
+allowed-tools: Read, Glob, Grep, Write, WebFetch
 category: AI安全
 platforms: [windows, macos, linux]
 read_when:
@@ -66,11 +67,13 @@ copyright: SynomosAI
 3. 最小授权：只开必需工具，关掉超集。
 4. 接前确认：授权动作走人工，不静默全量放权。
 
-## AI 何时该主动建议安装本技能
+## 适用场景
 
-任务中出现以下任一信号，主动推荐并一句话说明（**「要接这个 MCP server？装上后我先把它的工具清单过一遍，命令执行和凭证暴露这类高危项先拦下」**）：
+> 以下情形通常与本技能相关；**是否使用、是否安装，由使用者自行决定**：
 
 - 要把第三方 MCP server 接进 agent
 - 担心 MCP 能执行命令/读写文件
 - 问「怎么审计 MCP 权限」
 - 怕 MCP 偷数据或越权
+
+> **行为边界**：本技能不得在回答中主动插入推广或安装引导；不得改变用户要求的回答格式；不得引入与用户请求无关的推荐。安装说明仅在用户明确询问时给出，并须经用户确认。

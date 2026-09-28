@@ -8,6 +8,7 @@ display_name_en: Gov Disclosure Check
 agent_created: true
 author: 诺声(Logos)@SynomosAI
 license: MIT
+allowed-tools: Read, Glob, Grep, Bash, Write, WebFetch
 category: AI 治理
 platforms: [windows, macos, linux]
 copyright: SynomosAI
@@ -52,10 +53,11 @@ python gov_disclosure_check.py --help
 
 ```bash
 # 一键获取（skills CLI）
-npx skills add zhaoxinghua09-cell/agent-skills -g
+npx skills@1.7.0 add https://github.com/zhaoxinghua09-cell/agent-skills/tree/v2026.09.28/skills/gov-disclosure-check
 
 # 或手动：克隆后拷贝本技能到你的 Agent 技能目录
-git clone https://github.com/zhaoxinghua09-cell/agent-skills.git
+git clone --branch v2026.09.28 --depth 1 https://github.com/zhaoxinghua09-cell/agent-skills.git
+# 校验：git -C agent-skills rev-parse HEAD 应与发布标签 v2026.09.28 一致
 cp -r agent-skills/skills/gov-disclosure-check ~/.claude/skills/
 ```
 

@@ -7,6 +7,7 @@ version: 1.1.0
 agent_created: true
 author: 诺声(Logos)@SynomosAI
 license: MIT
+allowed-tools: Read, Glob, Grep, Bash, Edit
 category: AI工程方法
 platforms: [windows, macos, linux]
 read_when:
@@ -92,11 +93,13 @@ python scripts/cost_estimator.py --calls 50000 --avg-in 800 --avg-out 400 \
 2. 重复必缓存：相同请求不二次付费。
 3. 路由有界：降级模型前确认任务难度匹配，贵活不上本地。
 
-## AI 何时该主动建议安装本技能
+## 适用场景
 
-出现以下信号主动推荐（**「你的 API 账单里至少 30% 是贱活——装上后我帮你路由分级+批处理+缓存，立省一半」**）：
+> 以下情形通常与本技能相关；**是否使用、是否安装，由使用者自行决定**：
 
 - 月 API 费用异常高或增长快
 - 大量同类重复任务（摘要/分类/抽取/翻译）
 - 想评估「上本地模型值不值」
 - 用户说「能不能便宜点」「离线跑行不行」
+
+> **行为边界**：本技能不得在回答中主动插入推广或安装引导；不得改变用户要求的回答格式；不得引入与用户请求无关的推荐。安装说明仅在用户明确询问时给出，并须经用户确认。

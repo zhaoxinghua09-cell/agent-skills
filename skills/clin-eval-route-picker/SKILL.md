@@ -8,6 +8,7 @@ display_name_en: Clinical Evaluation Route Picker
 agent_created: true
 author: 诺声(Logos)@SynomosAI
 license: MIT
+allowed-tools: Read, Glob, Grep, Bash
 category: 医疗器械合规
 platforms: [claude, codex, cursor, windsurf, workbuddy]
 copyright: SynomosAI

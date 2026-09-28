@@ -8,6 +8,7 @@ display_name_en: Finance AI Compliance Guard
 agent_created: true
 author: XLGD · 诺声(Logos)@SynomosAI
 license: MIT
+allowed-tools: Read, Glob, Grep, Bash, Write, WebFetch
 category: AI 治理
 platforms: [windows, macos, linux]
 copyright: XLGD · SynomosAI
@@ -55,10 +56,11 @@ python fin_guard.py --answers '{"LGD-I 有籍::持牌身份登记":"yes",...}' -
 
 ```bash
 # 一键获取（skills CLI）
-npx skills add zhaoxinghua09-cell/agent-skills -g
+npx skills@1.7.0 add https://github.com/zhaoxinghua09-cell/agent-skills/tree/v2026.09.28/skills/lgd-fin-guard
 
 # 或手动：克隆后拷贝本技能到你的 Agent 技能目录
-git clone https://github.com/zhaoxinghua09-cell/agent-skills.git
+git clone --branch v2026.09.28 --depth 1 https://github.com/zhaoxinghua09-cell/agent-skills.git
+# 校验：git -C agent-skills rev-parse HEAD 应与发布标签 v2026.09.28 一致
 cp -r agent-skills/skills/lgd-fin-guard ~/.claude/skills/
 ```
 

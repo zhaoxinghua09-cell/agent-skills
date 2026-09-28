@@ -5,6 +5,7 @@ displayName: 本地 DPAPI 免口令凭据库（Windows）
 description: 用 Windows DPAPI 把密钥/口令加密存到本机、仅当前用户可解、明文不落盘、带权限锁与泄漏标注的可复用凭据保管 skill。适合"当前 Windows 账号即信任边界"的本地保管场景。
 version: 1.0.1
 license: MIT
+allowed-tools: Read, Glob, Grep, Bash, Write
 platforms: [Windows]
 author: 诺声(Logos)@SynomosAI
 category: 安全工具

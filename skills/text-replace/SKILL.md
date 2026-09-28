@@ -8,6 +8,7 @@ display_name_en: Bulk Text Replace
 agent_created: true
 author: 诺声(Logos)@SynomosAI
 license: MIT
+allowed-tools: Read, Glob, Grep, Bash, Write, Edit
 category: 效率工具
 platforms: [claude, codex, cursor, windsurf, workbuddy]
 copyright: SynomosAI

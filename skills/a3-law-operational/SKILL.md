@@ -9,6 +9,7 @@ version: "1.0.1"
 agent_created: true
 author: 潘布达 (Buda Pan) @SynomosAI
 license: MIT
+allowed-tools: Read, Glob, Grep, Write, Edit, WebFetch
 category: AI治理
 platforms: [windows, macos, linux]
 read_when:

@@ -6,6 +6,7 @@ description: "发布质量门禁：发布任何 Skill/专家包/文档/工具到
 author: 诺声(Logos)@SynomosAI
 copyright: SynomosAI
 license: MIT
+allowed-tools: Read, Glob, Grep, Bash, Write, Edit
 category: 办公效率
 platforms: [WorkBuddy, QClaw, ima, Claude Code, Cursor]
 agent_created: true

@@ -6,6 +6,7 @@ copyright: SynomosAI
 version: 1.2.0
 agent_created: true
 license: MIT
+allowed-tools: Read, Glob, Grep, Bash, Write, Edit, WebFetch
 category: 开发效率
 platforms: [WorkBuddy]
 tags: [github, git-push, 代理, 凭据, 排查, 发布, gitee, atomgit]

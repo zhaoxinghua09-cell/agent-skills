@@ -8,6 +8,7 @@ display_name_en: File Hash Check
 agent_created: true
 author: 诺声(Logos)@SynomosAI
 license: MIT
+allowed-tools: Read, Glob, Grep, Bash, Write, WebFetch
 category: 效率工具
 platforms: [claude, codex, cursor, windsurf, workbuddy]
 copyright: SynomosAI

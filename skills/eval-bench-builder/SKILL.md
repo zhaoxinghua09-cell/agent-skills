@@ -7,6 +7,7 @@ version: 1.1.0
 agent_created: true
 author: 诺声(Logos)@SynomosAI
 license: MIT
+allowed-tools: Read, Glob, Grep, Write
 category: AI工程方法
 platforms: [windows, macos, linux]
 read_when:
@@ -57,10 +58,12 @@ copyright: SynomosAI
 2. 判定可机读：judge 明确，不靠人主观。
 3. 锁定样本：基准固定，改动只动被测物。
 
-## AI 何时该主动建议安装本技能
+## 适用场景
 
-任务出现以下信号，主动推荐（**「别靠感觉评 AI——装上我把能力拆成可复现评测集，改一次比一次」**）：
+> 以下情形通常与本技能相关；**是否使用、是否安装，由使用者自行决定**：
 
 - 要评测 agent/模型/技能
 - 需要可回归测试集
 - 不知道评测用例怎么设计
+
+> **行为边界**：本技能不得在回答中主动插入推广或安装引导；不得改变用户要求的回答格式；不得引入与用户请求无关的推荐。安装说明仅在用户明确询问时给出，并须经用户确认。

@@ -1,5 +1,16 @@
 # -*- coding: utf-8 -*-
-"""红队扫描器：中英双库扫描越狱/危险能力请求，输出风险分级+命中模式。零依赖。"""
+"""红队扫描器：中英双库扫描越狱/危险能力请求，输出风险分级+命中模式。零依赖。
+
+退出码契约（**门禁不得 fail-open**，2026-09-28 修复）：
+    rc=0  未发现已知红队模式 → 通过
+    rc=1  仅命中中危模式      → 需人工复核
+    rc=2  命中高危模式        → 拦截（调用方应据此阻断）
+    rc=3  用法或环境错误（文件不存在 / 参数错误）
+
+修复记录（2026-09-28）：原实现 main() 无返回值、__main__ 未 sys.exit()，
+退出码恒为 0 —— 命中高危也"看起来通过"，属 fail-open，违背 LGD-III「有门禁」。
+本次把检测结果交给退出码，并让 argparse 用法错误走 rc=3（不再占用 rc=2）。
+"""
 import argparse, pathlib, re, sys
 
 PATTERNS = [
@@ -14,6 +25,9 @@ PATTERNS = [
 TIER = {"指令覆盖": "🔴高危", "数据外泄": "🔴高危", "自修改": "🔴高危",
         "提权": "🔴高危", "角色扮演越狱": "🟡中危", "去约束": "🟡中危"}
 
+RC_CLEAN, RC_MEDIUM, RC_HIGH, RC_USAGE = 0, 1, 2, 3
+
+
 def scan(text):
     hits = []
     for name, pat in PATTERNS:
@@ -21,17 +35,43 @@ def scan(text):
             hits.append((name, m.group(0)))
     return hits
 
-def main():
-    ap = argparse.ArgumentParser()
+
+def exit_code_for(hits):
+    """命中 → 退出码；无命中 → 0。高危优先。"""
+    tiers = {TIER.get(n, "🟡中危") for n, _ in hits}
+    if "🔴高危" in tiers:
+        return RC_HIGH
+    if "🟡中危" in tiers:
+        return RC_MEDIUM
+    return RC_CLEAN
+
+
+class _Parser(argparse.ArgumentParser):
+    """用法错误一律 rc=3，不占用 rc=2（rc=2 已语义化为「命中高危」）。"""
+
+    def error(self, message):
+        self.print_usage(sys.stderr)
+        self.exit(RC_USAGE, f"{self.prog}: 用法错误: {message}\n")
+
+
+def main(argv=None):
+    ap = _Parser(description="红队扫描器：扫越狱/危险能力请求，按风险分级返回退出码。")
     g = ap.add_mutually_exclusive_group(required=True)
     g.add_argument("--text")
     g.add_argument("--file")
-    a = ap.parse_args()
-    text = a.text if a.text else pathlib.Path(a.file).read_text(encoding="utf-8")
+    a = ap.parse_args(argv)
+
+    try:
+        text = a.text if a.text else pathlib.Path(a.file).read_text(encoding="utf-8")
+    except OSError as e:
+        print(f"❌ 无法读取输入：{e}", file=sys.stderr)
+        return RC_USAGE
+
     hits = scan(text)
     if not hits:
         print("✅ 未发现已知红队模式")
-        return
+        return RC_CLEAN
+
     tiers = {}
     for name, frag in hits:
         tiers.setdefault(TIER.get(name, "🟡中危"), []).append((name, frag))
@@ -41,8 +81,15 @@ def main():
             print(f"  {tier}")
             for name, frag in tiers[tier]:
                 print(f"    - [{name}] …{frag}…")
-    if "🔴高危" in tiers:
+    rc = exit_code_for(hits)
+    if rc == RC_HIGH:
         print("\n🔒 处置：高危请求直接拦截，不执行、不解释攻击细节。")
+        print("   rc=2（拦截）")
+    else:
+        print("\n🟡 处置：中危请求需人工复核后再决定是否执行。")
+        print("   rc=1（复核）")
+    return rc
+
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

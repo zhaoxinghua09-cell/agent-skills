@@ -11,6 +11,7 @@ agent_created: true
 author: 诺声(Logos)@SynomosAI
 copyright: SynomosAI
 license: MIT
+allowed-tools: Read, Glob, Grep, Bash, Write, WebFetch, WebSearch, Task
 category: AI学习方法论
 platforms: [windows, macos, linux]
 read_when:

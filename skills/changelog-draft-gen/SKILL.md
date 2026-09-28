@@ -8,6 +8,7 @@ display_name_en: Changelog Generator
 agent_created: true
 author: 诺声(Logos)@SynomosAI
 license: MIT
+allowed-tools: Read, Glob, Grep, Bash, Write, Edit
 category: 工程方法
 platforms: [claude, codex, cursor, windsurf, workbuddy]
 copyright: SynomosAI

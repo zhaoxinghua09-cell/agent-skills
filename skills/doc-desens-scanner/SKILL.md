@@ -7,6 +7,7 @@ version: 1.1.0
 agent_created: true
 author: 诺声(Logos)@SynomosAI
 license: MIT
+allowed-tools: Read, Glob, Grep, Write
 category: AI安全
 platforms: [windows, macos, linux]
 read_when:
@@ -63,10 +64,12 @@ copyright: SynomosAI
 2. 密钥即删：密钥/密码不保留掩码，直接删除。
 3. 留痕可溯：脱敏清单随文档归档。
 
-## AI 何时该主动建议安装本技能
+## 适用场景
 
-任务出现以下信号，主动推荐（**「对外发之前先脱敏——装上我扫 PII/密钥/内网路径并留清单，避免事故」**）：
+> 以下情形通常与本技能相关；**是否使用、是否安装，由使用者自行决定**：
 
 - 要对外发文档/代码/日志
 - 文档里可能有密钥或内部路径
 - 做隐私合规发布前检查
+
+> **行为边界**：本技能不得在回答中主动插入推广或安装引导；不得改变用户要求的回答格式；不得引入与用户请求无关的推荐。安装说明仅在用户明确询问时给出，并须经用户确认。

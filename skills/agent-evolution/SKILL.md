@@ -9,6 +9,7 @@ version: '1.1.0'
 agent_created: true
 author: 潘布达 (Buda Pan) @SynomosAI
 license: MIT
+allowed-tools: Read, Glob, Grep, Write, Edit, WebFetch, WebSearch
 category: AI工程
 slug: agent-evolution
 displayName: Agent 复盘进化飞轮（复盘→固化）

@@ -7,6 +7,7 @@ version: 2.4.0
 agent_created: true
 author: 注册老炮@MedXpert
 license: MIT
+allowed-tools: Read, Glob, Grep, Write, WebSearch, Task
 category: AI学习方法论
 platforms: [windows, macos, linux]
 read_when:

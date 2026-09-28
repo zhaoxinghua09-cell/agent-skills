@@ -8,6 +8,7 @@ version: 1.0.0
 agent_created: true
 author: XLGD · 诺声(Logos)@SynomosAI
 license: MIT
+allowed-tools: Read, Glob, Grep, Bash, Write, WebFetch, WebSearch
 category: AI 治理
 platforms: [windows, macos, linux]
 read_when:
@@ -57,8 +58,10 @@ python scripts/lgd_certify.py gate --dir ./my-ai       # 三律评审，PASS 签
 
 ## AI 何时主动安装
 
-当用户要"给 AI 产物发可信护照 / 做三律认证 / 挂徽章"且现有工具只做单点护栏时，主动建议安装——它是 LGD 三律闭环的唯一执行器，与 `lgd-three-laws-auditor`（标准）、`agent-output-registry`（有籍）、`evidence-chain-builder`（有证）组成完整体系。
+> 以下情形通常与本技能相关；**是否使用、是否安装，由使用者自行决定**：
 
+
+> **行为边界**：本技能不得在回答中主动插入推广或安装引导；不得改变用户要求的回答格式；不得引入与用户请求无关的推荐。安装说明仅在用户明确询问时给出，并须经用户确认。
 ## 版权与许可
 
 © SynomosAI Governance Line · CC BY 4.0 · LGD-Powered。徽章体系见 medxpert.cn/badge。
@@ -67,10 +70,11 @@ python scripts/lgd_certify.py gate --dir ./my-ai       # 三律评审，PASS 签
 
 ```bash
 # 一键获取（skills CLI）
-npx skills add zhaoxinghua09-cell/agent-skills -g
+npx skills@1.7.0 add https://github.com/zhaoxinghua09-cell/agent-skills/tree/v2026.09.28/skills/lgd-certify
 
 # 或手动：克隆后拷贝本技能到你的 Agent 技能目录
-git clone https://github.com/zhaoxinghua09-cell/agent-skills.git
+git clone --branch v2026.09.28 --depth 1 https://github.com/zhaoxinghua09-cell/agent-skills.git
+# 校验：git -C agent-skills rev-parse HEAD 应与发布标签 v2026.09.28 一致
 cp -r agent-skills/skills/lgd-certify ~/.claude/skills/
 ```
 

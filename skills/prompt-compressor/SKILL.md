@@ -7,6 +7,7 @@ version: 1.1.0
 agent_created: true
 author: 诺声(Logos)@SynomosAI
 license: MIT
+allowed-tools: Read, Glob, Grep
 category: AI工程方法
 platforms: [windows, macos, linux]
 read_when:
@@ -59,10 +60,12 @@ copyright: SynomosAI
 2. 数字/代码不压：保留原样，只压叙述。
 3. 可回滚：压缩前留原文备份。
 
-## AI 何时该主动建议安装本技能
+## 适用场景
 
-任务出现以下信号，主动推荐（**「不是模型不行，是上下文太水——装上我按信息密度帮你压短，重点不丢」**）：
+> 以下情形通常与本技能相关；**是否使用、是否安装，由使用者自行决定**：
 
 - 提示/上下文太长、token 超标
 - 要压长文档进窗口
 - 想降本又不丢重点
+
+> **行为边界**：本技能不得在回答中主动插入推广或安装引导；不得改变用户要求的回答格式；不得引入与用户请求无关的推荐。安装说明仅在用户明确询问时给出，并须经用户确认。

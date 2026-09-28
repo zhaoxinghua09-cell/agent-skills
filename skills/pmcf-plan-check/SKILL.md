@@ -8,6 +8,7 @@ display_name_en: PMCF Plan Completeness Checker
 agent_created: true
 author: 诺声(Logos)@SynomosAI
 license: MIT
+allowed-tools: Read, Glob, Grep, Bash, Write, Task
 category: 医疗器械合规
 platforms: [claude, codex, cursor, windsurf, workbuddy]
 copyright: SynomosAI

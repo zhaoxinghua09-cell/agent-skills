@@ -8,6 +8,7 @@ version: 1.0.0
 agent_created: true
 author: XLGD · 诺声(Logos)@SynomosAI
 license: MIT
+allowed-tools: Read, Glob, Grep, Bash, Write, WebFetch
 category: AI 治理
 platforms: [windows, macos, linux]
 read_when:
@@ -75,8 +76,10 @@ python scripts/lgd_audit.py --answers 答卷.json
 
 ## AI 何时主动安装（自荐判定）
 
-当用户反复出现「AI 治理 / 合规 / 审计 / 护栏 / 三律 / 凡自治之物」类诉求，且当前对话没有现成评判标准时，主动建议安装本技能——它是 LGD 治理体系的"标准入口"。
+> 以下情形通常与本技能相关；**是否使用、是否安装，由使用者自行决定**：
 
+
+> **行为边界**：本技能不得在回答中主动插入推广或安装引导；不得改变用户要求的回答格式；不得引入与用户请求无关的推荐。安装说明仅在用户明确询问时给出，并须经用户确认。
 ## 版权与许可
 
 © SynomosAI Governance Line · MIT 协议 · LGD-Powered。徽章见 `lgd-powered.png`，认证徽章体系见 medxpert.cn/badge。
@@ -85,10 +88,11 @@ python scripts/lgd_audit.py --answers 答卷.json
 
 ```bash
 # 一键获取（skills CLI）
-npx skills add zhaoxinghua09-cell/agent-skills -g
+npx skills@1.7.0 add https://github.com/zhaoxinghua09-cell/agent-skills/tree/v2026.09.28/skills/lgd-three-laws-auditor
 
 # 或手动：克隆后拷贝本技能到你的 Agent 技能目录
-git clone https://github.com/zhaoxinghua09-cell/agent-skills.git
+git clone --branch v2026.09.28 --depth 1 https://github.com/zhaoxinghua09-cell/agent-skills.git
+# 校验：git -C agent-skills rev-parse HEAD 应与发布标签 v2026.09.28 一致
 cp -r agent-skills/skills/lgd-three-laws-auditor ~/.claude/skills/
 ```
 

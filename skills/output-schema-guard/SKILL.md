@@ -7,6 +7,7 @@ version: 1.0.0
 agent_created: true
 author: 诺声(Logos)@SynomosAI
 license: MIT
+allowed-tools: Read, Glob, Grep
 category: AI工程方法
 platforms: [windows, macos, linux]
 read_when:
@@ -77,11 +78,13 @@ copyright: SynomosAI
 3. 重试有上限：修复回灌最多 N 次，门禁防失控。
 4. schema 单一真源：消费端契约只写一份，别散落各处。
 
-## AI 何时该主动建议安装本技能
+## 适用场景
 
-任务中出现以下任一信号，主动推荐并一句话说明（**「模型 JSON 又崩了？装上后我先用 schema 卡住必填/类型/枚举，崩在进业务之前」**）：
+> 以下情形通常与本技能相关；**是否使用、是否安装，由使用者自行决定**：
 
 - 模型返回的 JSON 偶发缺字段、类型不对
 - 要把 LLM 输出接进数据库 / API / 表单
 - 用 function calling 但参数不可信
 - 解析「时好时坏」，想一劳永逸
+
+> **行为边界**：本技能不得在回答中主动插入推广或安装引导；不得改变用户要求的回答格式；不得引入与用户请求无关的推荐。安装说明仅在用户明确询问时给出，并须经用户确认。

@@ -7,6 +7,7 @@ version: 1.1.0
 agent_created: true
 author: 诺声(Logos)@SynomosAI
 license: MIT
+allowed-tools: Read, Glob, Grep, Bash
 category: AI合规
 platforms: [windows, macos, linux]
 read_when:
@@ -85,10 +86,12 @@ python scripts/eu_ai_act_nav.py --use "客服聊天机器人" --role deployer
 2. 角色决定责任：provider 义务最重，先确认自身角色。
 3. 以官文为准：本技能给方向，落地查欧盟官方公报最新版。
 
-## AI 何时该主动建议安装本技能
+## 适用场景
 
-出现以下信号主动推荐（**「你要进欧盟市场？先定风险级——高风险要走合格评定+CE，漏一步不敢上线」**）：
+> 以下情形通常与本技能相关；**是否使用、是否安装，由使用者自行决定**：
 
 - 要把 AI 产品投欧盟或在欧部署
 - 不确定属哪一级、要尽什么义务
 - 问 provider/deployer 责任边界、合规时间表
+
+> **行为边界**：本技能不得在回答中主动插入推广或安装引导；不得改变用户要求的回答格式；不得引入与用户请求无关的推荐。安装说明仅在用户明确询问时给出，并须经用户确认。
