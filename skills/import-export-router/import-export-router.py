@@ -5,7 +5,7 @@
 """
 import argparse, json, sys
 
-META = {"slug": "import-export-router", "version": "1.0.0", "args": [{"name": "direction", "help": "方向: import/export", "required": True}, {"name": "is_registered", "help": "境内是否已注册/上市: yes/no", "required": False}, {"name": "dest_region", "help": "目的国/地区: cn/us/eu/other", "required": False}]}
+META = {"slug": "import-export-router", "version": "1.0.0", "args": [{"name": "direction", "help": "方向: import/export（必填，缺失时报错 rc=2）", "required": False}, {"name": "is_registered", "help": "境内是否已注册/上市: yes/no（缺省从严按未注册处理）", "required": False}, {"name": "dest_region", "help": "目的国/地区: cn/us/eu/other（缺省按 other 处理）", "required": False}]}
 
 class GateError(Exception):
     pass
@@ -17,6 +17,8 @@ def classify_importexport(args):
     dest = (args.get('dest_region') or '').lower()         # cn/us/eu/other
     if not direction:
         raise GateError("缺少必要参数：direction(import/export) 必填")
+    if direction not in ('import', 'export'):
+        raise GateError("direction 取值非法：仅接受 import/export（实收 %r）" % direction)
     if direction == 'import':
         if registered in ('yes', 'true'):
             route, docs, warns = "凭境内注册证进口", ["境内医疗器械注册证/备案凭证", "进口报关单", "中文标签/说明书"], []
@@ -26,8 +28,11 @@ def classify_importexport(args):
         if registered in ('yes', 'true'):
             base = "可办理《医疗器械出口销售证明》（省级药监局）"
             docs = ["境内注册证/生产许可", "出口销售证明申请表", "质量承诺"]
+            warns = []
         else:
             base, docs = "须先取得境内注册/生产资质方可办理出口证明", ["境内注册证/生产许可"]
+            # 从严推定：未注册即出口属高风险状态，明示告警，不静默按可出口输出
+            warns = ["境内未取得注册/生产资质：《医疗器械出口销售证明》无法办理，须先完成境内注册/取得生产资质后再出口"]
         if dest == 'us':
             route = base + "；境外上市须走 FDA 510(k)/PMA 等路径"
         elif dest == 'eu':
@@ -36,7 +41,6 @@ def classify_importexport(args):
             route = base
         else:
             route = base + "；境外上市依目的国法规办理"
-        warns = []
     oblig = ["进口：境内未注册不得销售", "出口：凭出口销售证明+目的国准入", "跨境须符合双边/多边监管要求"]
     notes = ["FDA/EU MDR 为境外准入，独立于境内注册", "时限与材料以官方最新规定为准", "本判定为路径建议，非监管结论"]
     return {"route": route, "required_docs": docs, "obligations": oblig,
@@ -57,31 +61,31 @@ def main():
     p.add_argument("--json", action="store_true", help="输出 JSON IR（默认）")
     ns = p.parse_args()
     argnames = [a["name"] for a in META["args"]]
+    AIGC = {"standard": "GB 45438-2025", "is_generated": True, "generator": META["slug"] + "@SynomosAI",
+            "content_type": "decision_support_output",
+            "label_note": "标识口径待核：输出由确定性规则代码计算，规则文本为 AI 辅助撰写",
+            "disclaimer": "决策支持非权威结论，须人工复核"}
     if ns.demo:
-        demos = [{"direction": "import", "is_registered": "no"}, {"direction": "export", "is_registered": "yes", "dest_region": "us"}, {"direction": "export", "is_registered": "yes", "dest_region": "eu"}]
+        demos = [{"direction": "import", "is_registered": "yes"}, {"direction": "import", "is_registered": "no"}, {"direction": "export", "is_registered": "yes", "dest_region": "us"}, {"direction": "export", "is_registered": "no", "dest_region": "eu"}]
         allok = True
+        out_list = []
         for d in demos:
             try:
                 res, rc = _run(dict(d))
-                print(json.dumps({"tool": META["slug"], "input": d, "result": res, "rc": rc}, ensure_ascii=False))
+                out_list.append({"tool": META["slug"], "input": d, "result": res, "rc": rc, "aigc_mark": AIGC})
             except GateError as e:
                 allok = False
-                print(json.dumps({"tool": META["slug"], "input": d, "errors": [str(e)], "rc": 2}, ensure_ascii=False))
+                out_list.append({"tool": META["slug"], "input": d, "errors": [str(e)], "rc": 2, "aigc_mark": AIGC})
+        print(json.dumps(out_list, ensure_ascii=False, indent=2))
         sys.exit(0 if allok else 2)
     args = {k: getattr(ns, k) for k in argnames}
-    if not any(v not in (None, "") for v in args.values()):
-        # 无参数时打印帮助
-        p.print_help()
-        sys.exit(0)
     try:
         res, rc = _run(args)
     except GateError as e:
-        ir = {"tool": META["slug"], "version": META["version"], "input": args, "errors": [str(e)], "rc": 2}
+        ir = {"tool": META["slug"], "version": META["version"], "input": args, "errors": [str(e)], "rc": 2, "aigc_mark": AIGC}
         print(json.dumps(ir, ensure_ascii=False, indent=2))
         sys.exit(2)
-    ir = {"tool": META["slug"], "version": META["version"], "input": args, "result": res, "rc": rc,
-           "aigc_mark": {"standard": "GB45438-2025", "is_generated": False, "generator": META["slug"] + "@SynomosAI",
-                         "content_type": "decision_support_output", "disclaimer": "决策支持非权威结论，须人工复核"}}
+    ir = {"tool": META["slug"], "version": META["version"], "input": args, "result": res, "rc": rc, "aigc_mark": AIGC}
     print(json.dumps(ir, ensure_ascii=False, indent=2))
     sys.exit(rc)
 

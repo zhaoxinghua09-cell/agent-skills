@@ -15,20 +15,28 @@ def classify_anticheat(args):
     author = args.get('author_id') or ''
     env = args.get('env_hash') or ''
     prev_env = args.get('prev_env_hashes') or '[]'
+    sc_raw = args.get('submit_count')
     try:
-        submit_count = int(args.get('submit_count') or 1)
-    except Exception:
-        submit_count = 1
+        submit_count = int(sc_raw) if sc_raw not in (None, '') else 1
+    except (TypeError, ValueError):
+        raise GateError("submit_count 必须为整数（同作者提交次数）")
+    if submit_count < 1:
+        raise GateError("submit_count 必须为正整数（≥1）")
+    tg_raw = args.get('time_gap_min')
     try:
-        time_gap_min = float(args.get('time_gap_min') or 9999)
-    except Exception:
-        time_gap_min = 9999.0
+        time_gap_min = float(tg_raw) if tg_raw not in (None, '') else 9999.0
+    except (TypeError, ValueError):
+        raise GateError("time_gap_min 必须为数字（距上次提交分钟）")
+    if time_gap_min < 0:
+        raise GateError("time_gap_min 不应为负数，请核对输入")
     if not author or not env:
         raise GateError("缺少必要参数：author_id 与 env_hash 必填")
     try:
         prev = json.loads(prev_env) if isinstance(prev_env, str) else prev_env
     except Exception:
-        prev = []
+        raise GateError("prev_env_hashes 必须为 JSON 数组字符串（如 '[\"abc123\"]'）")
+    if not isinstance(prev, list):
+        raise GateError("prev_env_hashes 必须为 JSON 数组字符串（如 '[\"abc123\"]'）")
     flags = []
     risk = 'low'
     if prev and env not in prev:
@@ -65,7 +73,6 @@ def main():
     for a in META["args"]:
         p.add_argument("--" + a["name"], required=False, help=a.get("help", ""))
     p.add_argument("--demo", action="store_true", help="跑内置冒烟案例")
-    p.add_argument("--json", action="store_true", help="输出 JSON IR（默认）")
     ns = p.parse_args()
     argnames = [a["name"] for a in META["args"]]
     AIGC = {"standard": "GB45438-2025", "is_generated": False, "generator": META["slug"] + "@SynomosAI",

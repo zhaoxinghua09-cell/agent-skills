@@ -14,13 +14,16 @@ def classify_problem(args):
     """按赛事主题生成结构化赛题（AI 辅助，须组委会审核）。规则源：UIBC 赛题规范 + 主题'迁移的判定与问责'。"""
     theme = args.get('theme') or '迁移的判定与问责'
     difficulty = (args.get('difficulty') or 'mid').lower()
+    diff_map = {'easy': '入门', 'mid': '进阶', 'hard': '挑战'}
+    if difficulty not in diff_map:
+        # 非法难度直接判非法，不静默按 mid 输出
+        raise GateError("difficulty 取值非法：仅接受 easy/mid/hard（实收 %r）" % difficulty)
     try:
         count = int(args.get('count') or 3)
     except Exception:
-        count = 3
+        raise GateError("count 须为 1-10 的整数（实收 %r）" % args.get('count'))
     if count < 1 or count > 10:
         raise GateError("count 须为 1-10 的整数")
-    diff_map = {'easy': '入门', 'mid': '进阶', 'hard': '挑战'}
     # 难度修饰段：底稿三场景 × 难度要求差异化（修复"不同难度返回同底稿"）
     modifier = {
         'easy': ("\n【入门要求】给出可照做的脚手架：分步提示 + 1 个最小可运行示例 + 明确的判定通过条件；"
@@ -37,16 +40,23 @@ def classify_problem(args):
     ]
     problems = []
     for i in range(count):
-        spec = base[i % len(base)] + modifier.get(difficulty, modifier['mid'])
+        spec = base[i % len(base)] + modifier[difficulty]
         problems.append({"index": i + 1, "theme": theme,
-                         "difficulty": diff_map.get(difficulty, difficulty),
+                         "difficulty": diff_map[difficulty],
                          "spec": spec,
                          "review_status": "待审（组委会人工审核后方可发布）",
-                         "ai_note": "本赛题由 AI 按规范辅助生成（GB45438-2025），须经组委会审核后发布"})
+                         "ai_note": "本赛题由 AI 按规范辅助生成（GB 45438-2025），须经组委会审核后发布"})
+    # 从严推定与告警分层：常设提示（AI 审核/知识产权）入 notes；自定义主题（非当前赛季主题）属
+    # 赛题适配风险，入 warnings（rc=1）——不静默按赛季主题通过输出
+    warnings = []
+    if theme != '迁移的判定与问责':
+        warnings.append("自定义主题「%s」非当前赛季主题「迁移的判定与问责」：是否采用须组委会确认赛题适配性。" % theme)
     return {"theme": theme, "difficulty": difficulty, "count": count, "problems": problems,
-            "warnings": ["AI 生成内容须经组委会人工审核", "赛题知识产权归赛事主办方"],
+            "warnings": warnings,
             "notes": ["主题'迁移的判定与问责'为 UIBC 当前赛季主题",
-                      "诚实边界：底稿为三场景模板，难度经由难度要求段区分；同一底稿在不同难度下要求不同，发布前须组委会精修去重"],
+                      "诚实边界：底稿为三场景模板，难度经由难度要求段区分；同一底稿在不同难度下要求不同，发布前须组委会精修去重",
+                      "AI 生成内容须经组委会人工审核（各赛题 review_status/ai_note 已逐条标注）",
+                      "赛题知识产权归赛事主办方"],
             "evidence": ["UIBC 赛题规范"]}
 
 
@@ -64,10 +74,12 @@ def main():
     p.add_argument("--json", action="store_true", help="输出 JSON IR（默认）")
     ns = p.parse_args()
     argnames = [a["name"] for a in META["args"]]
-    AIGC = {"standard": "GB45438-2025", "is_generated": False, "generator": META["slug"] + "@SynomosAI",
-             "content_type": "decision_support_output", "disclaimer": "决策支持非权威结论，须人工复核"}
+    AIGC = {"standard": "GB 45438-2025", "is_generated": True, "generator": META["slug"] + "@SynomosAI",
+            "content_type": "decision_support_output",
+            "label_note": "标识口径待核：赛题底稿文本为 AI 辅助生成，属生成合成内容",
+            "disclaimer": "决策支持非权威结论，须人工复核"}
     if ns.demo:
-        demos = [{"theme": "迁移的判定与问责", "difficulty": "mid", "count": "2"}, {"difficulty": "hard", "count": "1"}]
+        demos = [{"theme": "迁移的判定与问责", "difficulty": "mid", "count": "2"}, {"difficulty": "hard", "count": "1"}, {"theme": "跨境数据判定", "difficulty": "easy", "count": "1"}]
         allok = True
         out_list = []
         for d in demos:

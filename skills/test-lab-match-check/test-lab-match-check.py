@@ -26,6 +26,10 @@ def match_test_lab(args):
     method = (args.get("steril_method") or "").lower()
     software = (args.get("has_software") or "").lower()
     dest = (args.get("dest") or "cn").lower()
+    if contact and contact not in ("surface", "insert", "implant", "blood", "mucosa"):
+        raise GateError("contact 必须为 surface / insert / implant / blood / mucosa 之一", "E_ENUM_INVALID")
+    if dest not in ("cn", "eu", "us"):
+        raise GateError("dest 必须为 cn / eu / us 之一", "E_ENUM_INVALID")
 
     items = []
     if dtype == "implant" or contact == "implant":

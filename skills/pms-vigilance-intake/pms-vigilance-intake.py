@@ -16,6 +16,10 @@ def classify_pms(args):
     etype = (args.get('event_type') or '').lower()         # fault/use_error/design_defect
     if not sev:
         raise GateError("缺少必要参数：severity(死亡/严重伤害/可能严重伤害/其他) 必填")
+    if sev not in ('death', 'serious', 'possible_serious', 'other'):
+        raise GateError("severity 必须为 death / serious / possible_serious / other 之一")
+    if etype and etype not in ('fault', 'use_error', 'design_defect'):
+        raise GateError("event_type 必须为 fault / use_error / design_defect 之一")
     if sev == 'death':
         path, deadline, trigger = "持有人立即报告（导致死亡→即时，经营企业/使用单位 20 日内）", "即时", True
     elif sev == 'serious':
@@ -27,6 +31,9 @@ def classify_pms(args):
     warns = []
     if trigger:
         warns.append("可能触发召回或再评价——须同步启动召回决策评估（recall-decision-checker）")
+    if sev == 'possible_serious' and not etype:
+        warns.append("输入不完整：severity=possible_serious 但未提供 event_type——若事件属 design_defect（设计缺陷），"
+                     "按从严推定可能同样触发召回/再评价评估；建议补参后复核（当前未计入 trigger_recall）。")
     oblig = ["持有人为监测责任主体", "死亡/严重伤害事件须时限内上报", "开展风险评价与再评价"]
     notes = ["群体不良事件→立即报告并采取紧急控制措施", "时限以官方最新规定为准", "本判定为报告路径建议，非监管结论"]
     return {"report_path": path, "deadline": deadline, "trigger_recall": trigger,
@@ -71,8 +78,10 @@ def main():
         print(json.dumps(ir, ensure_ascii=False, indent=2))
         sys.exit(2)
     ir = {"tool": META["slug"], "version": META["version"], "input": args, "result": res, "rc": rc,
-           "aigc_mark": {"standard": "GB45438-2025", "is_generated": False, "generator": META["slug"] + "@SynomosAI",
-                         "content_type": "decision_support_output", "disclaimer": "决策支持非权威结论，须人工复核"}}
+           "aigc_mark": {"standard": "GB 45438-2025", "is_generated": True, "generator": META["slug"] + "@SynomosAI",
+                         "content_type": "decision_support_output",
+                         "label_note": "标识口径待核：输出由确定性规则代码计算，规则文本为 AI 辅助撰写",
+                         "disclaimer": "决策支持非权威结论，须人工复核"}}
     print(json.dumps(ir, ensure_ascii=False, indent=2))
     sys.exit(rc)
 

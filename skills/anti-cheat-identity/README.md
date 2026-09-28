@@ -1,21 +1,97 @@
 # anti-cheat-identity · 赛事反作弊身份核验器
 
-> AI-assisted decision-support CLI for UIBC contest operations. NOT final adjudication — verify with organizing committee.
+> AI-assisted decision-support CLI for UIBC contest operations. NOT final adjudication — verify with organizing committee. Text verified: 2026-09-26.
+
+[![LGD-Powered](https://medxpert.cn/badge/powered/svg/lgd-powered-cn.svg)](https://medxpert.cn/lgd.html)
 
 ## What it does
-Classifies `anti-cheat-identity` per UIBC rules: **UIBC 反作弊规范 + 通用学术诚信原则**.
+Verifies submitter identity / environment consistency per **UIBC 反作弊规范 + 通用学术诚信原则** (thresholds pending manual verification; the latest UIBC charter prevails).
+
+- Risk tiers: `low` (放行) / `mid` (人工抽检) / `high` (冻结通道并人工核查；冻结≠撤销).
+- **No silent defaults on invalid input**: non-numeric `submit_count` / `time_gap_min`, negative values, or a non-JSON-array `prev_env_hashes` → gate error (`rc=2`), never a lenient default.
 
 ## Install & run (zero-dependency, Python 3.8+)
 ```bash
-python anti-cheat-identity.py --demo
+python anti-cheat-identity.py --demo   # 2 built-in smoke cases
+# rc=0 (low risk)
+python anti-cheat-identity.py --author_id teamA --env_hash abc123 --prev_env_hashes '["abc123"]' --submit_count 1 --time_gap_min 120
+# rc=1 (completed with warnings)
+python anti-cheat-identity.py --author_id teamB --env_hash xyz999 --prev_env_hashes '["a1","a2","a3","a4","a5"]' --submit_count 8 --time_gap_min 3
+# rc=2 (invalid input)
+python anti-cheat-identity.py --author_id teamC --env_hash h1 --submit_count abc
 ```
 
-## Output
-Deterministic JSON IR with `rc` (0=ok, 1=with warnings, 2=insufficient input) and `aigc_mark` (GB45438-2025 metadata).
+## Parameters
+| Parameter | Required | Meaning |
+|---|---|---|
+| `author_id` | yes | 作者标识 |
+| `env_hash` | yes | 环境指纹哈希 |
+| `prev_env_hashes` | no | 历史环境指纹 JSON 数组字符串 |
+| `submit_count` | no | 同作者提交次数（正整数，默认 1） |
+| `time_gap_min` | no | 距上次提交分钟（非负数字，默认按无间隔信息处理） |
 
-## Compliance & IP
-- LGD-Powered badge · theory TH-EVT-004 · ambassador 诺卫@UAS/安全域首席发声人
-- 中文文档见 `SKILL.md`。本工具为决策支持，须人工复核。
+## Output
+Deterministic JSON IR with `rc` (**0** = ok / **1** = completed with warnings / **2** = insufficient or invalid input), `risk_level`, `flags`, `advice`, `warnings`, and `aigc_mark` (GB45438-2025 metadata).
+
+Real excerpt (`--demo` case 2, values verbatim):
+
+```json
+{
+  "tool": "anti-cheat-identity",
+  "input": {"author_id": "teamB", "env_hash": "xyz999",
+            "prev_env_hashes": "[\"a1\",\"a2\",\"a3\",\"a4\",\"a5\"]",
+            "submit_count": "8", "time_gap_min": "3"},
+  "result": {
+    "risk_level": "high",
+    "flags": ["环境指纹与历史不一致（疑似换设备/环境）", "历史环境指纹过多（疑似多环境轮换）",
+              "同作者提交次数过高(8)", "相邻提交间隔过短(3分钟)"],
+    "advice": "高风险：冻结提交通道并人工核查（冻结≠撤销，处置记录须留痕）",
+    "warnings": ["…与 flags 相同 4 条"]
+  },
+  "rc": 1
+}
+```
+
+## Rule-source review checklist (pending manual verification)
+| Rule / threshold | Used for | Status |
+|---|---|---|
+| UIBC 反作弊规范 | 环境指纹一致性 / 多环境轮换判定口径 | 待人工核对 |
+| 历史指纹 >3 个 | 「疑似多环境轮换」触发线 | 待人工核对 |
+| 同作者提交 >5 次 | 「提交次数过高」触发线 | 待人工核对 |
+| 相邻间隔 <10 分钟 | 「间隔过短」触发线 | 待人工核对 |
+
+## Theory hook
+可信始于身份——环境一致性核验即把'谁在参赛'锁进防作弊的围栏。域站位件：TH-EVT-004。
+
+## Pointers
+- LGD theory page: https://medxpert.cn/lgd.html · Skill library: https://medxpert.cn/skills/ · llms.txt: https://medxpert.cn/llms.txt
+- 理论总账 REGISTRY 在线页：(地址待补) · 赛事线速查页：(地址待补)
+
+## License & attribution
+**Layered licence — the code licence does NOT cover the docs or the theory text.**
+
+| Layer | Carrier | Licence |
+|---|---|---|
+| Code | `anti-cheat-identity.py` | **MIT** |
+| Docs & theory text | this `README.md`, `SKILL.md`, the 「理论依据」 section and all theory wording | **Not covered by MIT**: all rights reserved |
+
+> 代码可依 MIT 使用与再分发；文档与理论文本不因代码许可而默认可自由再发布。
+
+```
+© 2026 赵兴华 / Steven Zhao·China (ORCID 0009-0001-0512-1237). All rights reserved.
+理论署名 (attribution) : LGD（Lifecycle Governance Doctrine / 全程治理论）— SynomosAI initiative
+名称状态 (name status)  : "SynomosAI" / "MedXpert" — 未申请实体注册、未申请商标注册
+                        (not a registered legal entity; no trademark registered)
+生产参考部署 (production reference, self-reported) : MedXpert
+                    ← 非认证、非背书、非监管认可（not a certification or endorsement）
+代码许可 (code license) : uibc-core = Apache-2.0 (see repo LICENSE)
+                    本文本与理论表述不在 Apache-2.0 覆盖范围内
+引用格式 (cite as)      : uibc-core/CITATION.cff · concept DOI 10.5281/zenodo.22821834
+首次公开锚 (first public): 2026-09-17 13:31:45 UTC (commit cb6f11b)
+                    外锚 (external anchor): Sigstore Rekor logIndex 2883389783
+```
+（上列为《LGD 对外表述规范》§3.2 统一块，**整体复制、未删改**。）
+**本包补充**：`anti-cheat-identity.py` = MIT；本 `README.md` / `SKILL.md` 及其中理论文本不在任何代码许可覆盖范围内。中文文档见 `SKILL.md`。
 
 ## 家族合集
 | 赛事环节 | 工具 | 大使 |

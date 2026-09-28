@@ -16,6 +16,10 @@ def classify_recall(args):
     phase = (args.get('use_phase') or '').lower()         # on_market/in_use/sold
     if not harm:
         raise GateError("缺少必要参数：harm_level(严重健康危害/可逆可控危害/一般不会危害) 必填")
+    if harm not in ('severe', 'reversible', 'none'):
+        raise GateError("harm_level 必须为 severe / reversible / none 之一")
+    if phase and phase not in ('on_market', 'in_use', 'sold'):
+        raise GateError("use_phase 必须为 on_market / in_use / sold 之一")
     if harm == 'severe':
         level, days, oblig = "一级（使用该器械可能或已经引起严重健康危害）", 1, ["1 日内通知到有关单位", "启动一级召回", "向省局报告"]
     elif harm == 'reversible':
@@ -25,6 +29,9 @@ def classify_recall(args):
     warns = []
     if harm == 'severe':
         warns.append("一级召回为最高级——须立即控制流通与使用")
+    if phase in ('in_use', 'sold'):
+        warns.append("use_phase=%s：器械已进入使用/流通环节——召回通知范围还须覆盖经营企业与使用单位，"
+                     "已植入/已使用部分按召回计划评估随访与处置（当前不改变召回级别判定）。" % phase)
     notes = ["召回级别随危害严重程度与可逆性判定", "境外召回须同步上报", "时限以官方最新规定为准"]
     return {"recall_level": level, "notify_within_days": days, "obligations": oblig,
             "notes": notes, "evidence": ["医疗器械召回管理办法 第29号"], "warnings": warns}
@@ -67,8 +74,10 @@ def main():
         print(json.dumps(ir, ensure_ascii=False, indent=2))
         sys.exit(2)
     ir = {"tool": META["slug"], "version": META["version"], "input": args, "result": res, "rc": rc,
-           "aigc_mark": {"standard": "GB45438-2025", "is_generated": False, "generator": META["slug"] + "@SynomosAI",
-                         "content_type": "decision_support_output", "disclaimer": "决策支持非权威结论，须人工复核"}}
+           "aigc_mark": {"standard": "GB 45438-2025", "is_generated": True, "generator": META["slug"] + "@SynomosAI",
+                         "content_type": "decision_support_output",
+                         "label_note": "标识口径待核：输出由确定性规则代码计算，规则文本为 AI 辅助撰写",
+                         "disclaimer": "决策支持非权威结论，须人工复核"}}
     print(json.dumps(ir, ensure_ascii=False, indent=2))
     sys.exit(rc)
 

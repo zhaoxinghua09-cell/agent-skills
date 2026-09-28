@@ -7,6 +7,8 @@ display_name: UDI 数据库提交合规判定器
 display_name_en: UDI Database Submission Compliance Checker
 version: 1.0.0
 license: MIT
+allowed-tools: Read, Glob, Grep, Bash, Write, WebFetch
+license_scope: 代码（.py 文件）MIT；本 SKILL.md 与其中理论文本不在 MIT 覆盖范围内（见文末「License & attribution」）
 author: 注册老炮@MedXpert
 copyright: MedXpert
 category: 医疗器械合规
@@ -26,7 +28,8 @@ verified_links: "规则源条款号已逐条标注；包内全部外链（含徽
 
 # UDI 数据库提交合规判定器
 
-> ⚠️ **免责声明**：本工具由 AI 辅助生成，输出为**决策支持**，不构成医疗器械注册、合规或法律意见。正式结论须以主管部门决定与官方最新文件为准。**核验日期：2026-09-12**。
+> ⚠️ **免责声明**：本工具由 AI 辅助生成，输出为**决策支持**，不构成医疗器械注册、合规或法律意见。输出请人工复核，正式结论须以主管部门决定与官方最新文件为准。
+> 文本核验日期：2026-09-26 · 条款文本以官方最新发布为准
 
 > 🌐 **在线版与家族合集**
 > - 医械注册知识库（免费公开层）：https://medxpert.cn/knowledge/
@@ -64,9 +67,45 @@ python udi-db-submission-check.py --json <你的参数...>        # 正式判定
 
 可用参数：`--market / --is_registered / --has_di / --has_pi / --reusable / --implant / --sterile`
 
+## 四A、真机输出（实跑节选）
+> 实跑命令 `python udi-db-submission-check.py --market cn --has_di yes --sterile yes`（2026-09-26，Python 3.13.12）。仅调整 JSON 缩进便于阅读，**字段与字段值逐字未改**（完整原文见做齐报告）。
+
+```json
+{
+  "tool": "udi-db-submission-check",
+  "version": "1.0.0",
+  "input": {"market": "cn", "is_registered": null, "has_di": "yes", "has_pi": null,
+            "reusable": null, "implant": null, "sterile": "yes"},
+  "result": {
+    "market": "cn",
+    "database": "国家药监局·医疗器械唯一标识数据库（UDI 数据库）",
+    "submit_timing": "产品上市销售前完成数据上传与维护；实施范围按 NMPA 分批公告推进，以最新公告为准",
+    "issuing_agency": "GS1 / 中关村工信 / 阿里健康（合规发码机构）",
+    "core_fields": ["器械标识（DI）", "器械名称", "标签人/注册人", "型号规格", "生产日期与失效日期（如适用）",
+                    "注册证号/备案号", "是否植入", "是否无菌", "是否可重复使用", "无菌指示项（须与标签申报一致）"],
+    "formatters_present": {"DI": "yes", "PI": "未提供"},
+    "obligations": ["…3 条（载体与数据一致 / 持续维护 / 发码机构须合规）"],
+    "notes": ["…3 条（义务清单非操作指引 / 以最新公告为准 / 以官方系统界面为准）"],
+    "evidence": ["NMPA 医疗器械唯一标识系统规则", "FDA 21 CFR 830 / GUDID", "MDR (EU) 2017/745 Art 27-29 / EUDAMED"],
+    "official_portals": ["https://udi.nmpa.gov.cn/", "https://accessgudid.nlm.nih.gov/", "https://ec.europa.eu/tools/eudamed"],
+    "warnings": [
+      "输入不完整：未提供 --is_registered——中国 UDI 数据库提交通常与注册/备案信息绑定，按从严推定请先确认注册状态后复核。"
+    ]
+  },
+  "rc": 1,
+  "error_code": null,
+  "aigc_mark": {"standard": "GB 45438-2025", "is_generated": true, "generator": "udi-db-submission-check@MedXpert",
+                "content_type": "decision_support_output", "disclaimer": "决策支持非权威结论，须人工复核；以官方最新文件为准"}
+}
+```
+（`obligations` / `notes` 数组字段值逐字未改，此处折叠。）
+
+三档 rc 实测：`--market cn --is_registered yes --has_di yes --has_pi yes --sterile no --implant no` → rc=0；`--market us --has_di yes --reusable yes` → rc=1（PI 缺失高风险提示）；`--market jp` → rc=2（枚举非法）。
+
 ## 五、能力边界（请务必阅读）
 
-- 只做**规则判定**，不做法律意见、不出具证明。
+- 只做**规则判定**，不做法律意见、不出具证明；结论须人工复核，最终以监管机构认定为准。
+- **输入不足时从严提示**：DI/PI 缺失、cn 场景注册状态未确认等均在 `warnings` 中明示（`rc=1`），不静默按「可提交」输出。
 - 不覆盖特殊情形（创新器械、药械组合、边界产品、纳米材料等），此类须走官方界定程序。
 - 规则版本会变；**条款号已给出，请以官方最新文本核对**。
 - 输出为起始清单，**不替代产品技术要求、适用标准清单与专业评价者判断**。
@@ -100,3 +139,27 @@ python udi-db-submission-check.py --json <你的参数...>        # 正式判定
 
 诺桥@MED 域·国际准入 · TH-MED-007 · © 2026 MedXpert · MIT License
 本内容由 AI 辅助生成（非自然人），署名机构承担出品责任。
+
+## License & attribution
+**分层许可（务必并读；代码许可不覆盖文档与理论文本）**
+
+| 层 | 载体 | 许可 |
+|---|---|---|
+| 代码 | `udi-db-submission-check.py` | **MIT** |
+| 文档与理论文本 | 本 `SKILL.md`、`README.md`、其中「理论依据」段与一切理论表述 | **不在 MIT 覆盖范围内**：保留所有权利（All rights reserved） |
+
+> 即：**代码（.py）MIT；本 SKILL.md 与其中理论文本不在 MIT 覆盖范围内（理论文本保留所有权利）。** 代码可依 MIT 使用与再分发；文档与理论文本不因代码许可而默认可自由再发布。
+
+```
+© 2026 赵兴华 / Steven Zhao·China (ORCID 0009-0001-0512-1237). All rights reserved.
+理论署名 (attribution) : LGD（Lifecycle Governance Doctrine / 全程治理论）— SynomosAI initiative
+名称状态 (name status)  : "SynomosAI" / "MedXpert" — 未申请实体注册、未申请商标注册
+                        (not a registered legal entity; no trademark registered)
+生产参考部署 (production reference, self-reported) : MedXpert
+                    ← 非认证、非背书、非监管认可（not a certification or endorsement）
+代码许可 (code license) : uibc-core = Apache-2.0 (see repo LICENSE)
+                    本文本与理论表述不在 Apache-2.0 覆盖范围内
+引用格式 (cite as)      : uibc-core/CITATION.cff · concept DOI 10.5281/zenodo.22821834
+首次公开锚 (first public): 2026-09-17 13:31:45 UTC (commit cb6f11b)
+                    外锚 (external anchor): Sigstore Rekor logIndex 2883389783
+```

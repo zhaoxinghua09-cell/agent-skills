@@ -45,6 +45,9 @@ def check_udi_submission(args):
         issuer = "GS1 / HIBCC / ICCBBA（issued entity）"
         fields += ["Basic UDI-DI", "SRN（单一注册号）", "器械风险等级"]
 
+    if sterile in ("yes", "true"):
+        fields.append("无菌指示项（须与标签申报一致）")
+
     warns = []
     if has_di in ("no", "false", ""):
         warns.append("缺失 DI（器械标识）——DI 为数据库提交的基础字段，未就绪即无法提交")
@@ -53,6 +56,9 @@ def check_udi_submission(args):
         warns.append("可重复使用或植入类器械须具备 PI（生产标识）以实现追溯，当前缺失，属高风险缺口")
     if registered in ("no", "false") and market == "cn":
         warns.append("境内尚未取得注册证/备案——中国 UDI 数据库提交通常与注册信息绑定，请先厘清注册状态")
+    if registered not in ("yes", "true", "no", "false") and market == "cn":
+        warns.append("输入不完整：未提供 --is_registered——中国 UDI 数据库提交通常与注册/备案信息绑定，"
+                     "按从严推定请先确认注册状态后复核。")
 
     oblig = [
         "UDI 载体（标签/包装）与数据库数据须一致，任一变更须同步更新",

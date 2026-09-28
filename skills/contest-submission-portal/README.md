@@ -1,21 +1,93 @@
 # contest-submission-portal · 赛事作品提交合规校验器
 
-> AI-assisted decision-support CLI for UIBC contest operations. NOT final adjudication — verify with organizing committee.
+> AI-assisted decision-support CLI for UIBC contest operations. NOT final adjudication — verify with organizing committee. Text verified: 2026-09-26.
+
+[![LGD-Powered](https://medxpert.cn/badge/powered/svg/lgd-powered-cn.svg)](https://medxpert.cn/lgd.html)
 
 ## What it does
-Classifies `contest-submission-portal` per UIBC rules: **UIBC 赛事提交规范（四规范·提交章）**.
+Validates submission completeness & format per **UIBC 赛事提交规范（四规范·提交章）v0.1** (pending manual verification; the latest UIBC charter prevails).
+
+- Tracks: `code` (.uibc + seal.json + AIGC 声明 + RUN.md) / `theory` (paper + 最小可执行示例) / `design` (方案 + 失败模式分析).
+- **No silent pass**: missing `format` → warning "未做白名单校验" (`rc=1`); unknown `track` → gate error (`rc=2`), never a fake checklist.
+- Executables (`.exe/.dll/.bat/.ps1/.so/.bin`) → rejected.
 
 ## Install & run (zero-dependency, Python 3.8+)
 ```bash
-python contest-submission-portal.py --demo
+python contest-submission-portal.py --demo   # 3 built-in smoke cases
+# rc=0 (all required items present)
+python contest-submission-portal.py --track code --files "submission.uibc,seal.json,aigc-declaration.md,RUN.md,attack-report.md" --format py
+# rc=1 (missing items + bad format)
+python contest-submission-portal.py --track code --files "solution.py,readme.md" --format exe
+# rc=2 (unknown track)
+python contest-submission-portal.py --track music --files "a.md" --format md
 ```
 
-## Output
-Deterministic JSON IR with `rc` (0=ok, 1=with warnings, 2=insufficient input) and `aigc_mark` (GB45438-2025 metadata).
+## Parameters
+| Parameter | Required | Meaning |
+|---|---|---|
+| `track` | yes | 赛道：code/theory/design |
+| `files` | no | 提交文件清单（逗号分隔） |
+| `format` | no | 主文件格式（缺省时白名单不做判定并告警） |
 
-## Compliance & IP
-- LGD-Powered badge · theory TH-EVT-001 · ambassador 诺声@赛事首席发声人
-- 中文文档见 `SKILL.md`。本工具为决策支持，须人工复核。
+## Output
+Deterministic JSON IR with `rc` (**0** = ok / **1** = completed with warnings / **2** = insufficient or invalid input), `required`, `provided`, `missing`, `valid`, `format_ok`, `warnings`, and `aigc_mark` (GB45438-2025 metadata).
+
+Real excerpt (`--demo` case 1, values verbatim):
+
+```json
+{
+  "input": {"track": "code", "files": "submission.uibc,seal.json,aigc-declaration.md,RUN.md,attack-report.md", "format": "py"},
+  "result": {
+    "required": ["uibc-package", "seal", "aigc", "run"],
+    "missing": [],
+    "valid": true,
+    "format_ok": true,
+    "warnings": [],
+    "evidence": ["UIBC 赛事提交规范·提交章 v0.1"]
+  },
+  "rc": 0
+}
+```
+
+## Rule-source review checklist (pending manual verification)
+| Rule | Used for | Status |
+|---|---|---|
+| 提交章 v0.1 必交项清单 | 各赛道完整性校验 | 待人工核对 |
+| 格式白名单 code/theory/design | 主文件格式校验 | 待人工核对 |
+| 禁止可执行二进制 | 提交门禁直接退回 | 待人工核对 |
+
+## Theory hook
+公平始于可核验的入口——提交校验即把'谁在参赛'钉进可信起点。域站位件：TH-EVT-001。
+
+## Pointers
+- LGD theory page: https://medxpert.cn/lgd.html · Skill library: https://medxpert.cn/skills/ · llms.txt: https://medxpert.cn/llms.txt
+- LGD 理论总账 REGISTRY 在线页：(地址待补) · 赛事线速查页：(地址待补)
+
+## License & attribution
+**Layered licence — the code licence does NOT cover the docs or the theory text.**
+
+| Layer | Carrier | Licence |
+|---|---|---|
+| Code | `contest-submission-portal.py` | **MIT** |
+| Docs & theory text | this `README.md`, `SKILL.md`, the 「理论依据」 section and all theory wording | **Not covered by MIT**: all rights reserved |
+
+> 代码可依 MIT 使用与再分发；文档与理论文本不因代码许可而默认可自由再发布。
+
+```
+© 2026 赵兴华 / Steven Zhao·China (ORCID 0009-0001-0512-1237). All rights reserved.
+理论署名 (attribution) : LGD（Lifecycle Governance Doctrine / 全程治理论）— SynomosAI initiative
+名称状态 (name status)  : "SynomosAI" / "MedXpert" — 未申请实体注册、未申请商标注册
+                        (not a registered legal entity; no trademark registered)
+生产参考部署 (production reference, self-reported) : MedXpert
+                    ← 非认证、非背书、非监管认可（not a certification or endorsement）
+代码许可 (code license) : uibc-core = Apache-2.0 (see repo LICENSE)
+                    本文本与理论表述不在 Apache-2.0 覆盖范围内
+引用格式 (cite as)      : uibc-core/CITATION.cff · concept DOI 10.5281/zenodo.22821834
+首次公开锚 (first public): 2026-09-17 13:31:45 UTC (commit cb6f11b)
+                    外锚 (external anchor): Sigstore Rekor logIndex 2883389783
+```
+（上列为《LGD 对外表述规范》§3.2 统一块，**整体复制、未删改**。）
+**本包补充**：`contest-submission-portal.py` = MIT；本 `README.md` / `SKILL.md` 及其中理论文本不在任何代码许可覆盖范围内。中文文档见 `SKILL.md`。
 
 ## 家族合集
 | 赛事环节 | 工具 | 大使 |

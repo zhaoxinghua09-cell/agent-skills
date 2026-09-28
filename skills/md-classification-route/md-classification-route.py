@@ -86,6 +86,13 @@ def classify_route(args):
         warns.append("初判落在最高风险档，后续须公告机构/技术审评介入，建议尽早安排分类界定或 Pre-Sub 复核")
     if contact in ("cns", "heart"):
         warns.append("接触中枢神经/心脏属高风险接触部位，请复核是否触发更严格规则（如 Rule 11/12）")
+    if software in ("yes", "true") and not contact:
+        warns.append("输入不完整：软件器械未提供 --contact——若软件输出用于危及生命/不可逆损害情形的诊断或治疗决策"
+                     "（接触中枢神经/心脏等），按 MDR Rule 11 可能升至 III 类（推定）；当前按 IIa（推定，多数情形）输出，"
+                     "建议补参后复核。")
+    if invasive in ("yes", "true") and duration == "long_term" and not implant:
+        warns.append("输入不完整：长期侵入器械未提供 --implant——若为植入器械，按 MDR Annex VIII Rule 8 可能归 III 类（推定）；"
+                     "当前按 IIb 或 III（推定）输出，建议补参后复核。")
     return {
         "market": market, "eu_class_hint": eu, "eu_rule": rule,
         "cn_class_hint": cn_hint, "us_class_hint": us_hint,

@@ -1,7 +1,7 @@
 # udi-db-submission-check · UDI 数据库提交合规判定器
 
 > Zero-dependency deterministic CLI screener for medical-device compliance.
-> **Decision support only — NOT legal/regulatory advice. Always verify against official texts.**
+> **Decision support only — NOT legal/regulatory advice. Always verify against official texts.** Text verified: 2026-09-26.
 
 ## Why
 
@@ -12,6 +12,10 @@ UDI 码串格式对了，但该传哪个库、什么时候传、必填哪些字�
 Screens `udi-db-submission-check` against public rule sources: **NMPA《医疗器械唯一标识系统规则》/ FDA 21 CFR 830 + GUDID / EU MDR Art 27-29 + EUDAMED**.
 Outputs deterministic JSON IR with `rc` (0 = ok / 1 = ok with warnings / 2 = insufficient input),
 `error_code`, and GB 45438-2025 AIGC metadata. No network, no API key, no third-party packages.
+
+- **Insufficient input → strict presumption**: missing DI/PI and an unconfirmed CN registration status are flagged in `warnings` (`rc=1`) — never silently treated as "submittable".
+- `--sterile yes` adds the sterile-indicator field to `core_fields` (must match the label).
+- Measured: full CN args → rc=0; `--market us --has_di yes --reusable yes` → rc=1 (PI missing); `--market jp` → rc=2.
 
 ## Run it (Python 3.8+)
 
@@ -26,6 +30,9 @@ python udi-db-submission-check.py --json <your args...>
 - Theory anchor: `TH-MED-007` (LGD · registry / evidence / gate)
 - Published by an AI-assisted studio; the institution bears responsibility for the output.
 - Online (Chinese): https://medxpert.cn/knowledge/
+
+## License & attribution
+**Layered licence** — `udi-db-submission-check.py` = **MIT**; this `README.md` / `SKILL.md` and the theory text therein are **not covered by MIT** (all rights reserved). Code (.py) is MIT; the SKILL.md and its theory text are outside the MIT scope.
 
 ## Family
 

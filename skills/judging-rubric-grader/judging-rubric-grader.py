@@ -25,22 +25,40 @@ def classify_judge(args):
         sc = json.loads(scores) if isinstance(scores, str) else scores
     except Exception:
         raise GateError("criteria / scores 须为合法 JSON")
+    if not isinstance(sc, dict):
+        raise GateError("scores 须为 JSON 对象（维度→分数映射，如 {\"创新\":90}）")
     if not isinstance(crit, list) or not crit:
         raise GateError("criteria 须为非零维度列表")
+    weight_sum = sum(float(c.get('weight', 0)) for c in crit)
     total = 0.0
     per = []
+    missing_dims = []
     for c in crit:
         dim = c.get('dim')
         w = float(c.get('weight', 0))
+        if dim not in sc:
+            missing_dims.append(dim)
         s = float(sc.get(dim, 0) if isinstance(sc, dict) else 0)
         total += s * w
         per.append({"dim": dim, "weight": w, "score": s, "weighted": round(s * w, 3)})
     total = round(total, 2)
     grade = 'S' if total >= 90 else ('A' if total >= 80 else ('B' if total >= 70 else ('C' if total >= pass_line else 'D')))
     passed = total >= pass_line
+    warnings = []
+    if missing_dims:
+        # 从严推定：缺失维度按 0 分计（拉低总分），明示告警与补参建议，不静默处理
+        warnings.append(
+            "以下维度未提供分数，从严按 0 分计（会拉低总分）：%s；请补齐 scores 中对应维度后复核。"
+            % "、".join(str(d) for d in missing_dims))
+    if abs(weight_sum - 1.0) > 1e-9:
+        warnings.append(
+            "criteria 权重之和为 %s（≠1）：加权总分的基准可能失真，请核对维度权重后复核。"
+            % round(weight_sum, 6))
+    if not passed:
+        warnings.append("未达达标线（%s）：机器门禁通过≠评审通过，建议复评或退回" % pass_line)
     return {"total": total, "grade": grade, "passed": passed, "pass_line": pass_line,
             "per_dimension": per,
-            "warnings": [] if passed else ["未达达标线（%s）：机器门禁通过≠评审通过，建议复评或退回" % pass_line],
+            "warnings": warnings,
             "notes": ["加权总分 = Σ(维度分×权重)", "等级映射 S≥90/A≥80/B≥70/C≥达标线/D<达标线",
                       "评审工具为决策支持，最终裁定权归组委会（不可让渡）",
                       "打分须双评委独立进行后再合议；本输出仅为单一输入",
@@ -62,10 +80,12 @@ def main():
     p.add_argument("--json", action="store_true", help="输出 JSON IR（默认）")
     ns = p.parse_args()
     argnames = [a["name"] for a in META["args"]]
-    AIGC = {"standard": "GB45438-2025", "is_generated": False, "generator": META["slug"] + "@SynomosAI",
-             "content_type": "decision_support_output", "disclaimer": "决策支持非权威结论，须人工复核"}
+    AIGC = {"standard": "GB 45438-2025", "is_generated": True, "generator": META["slug"] + "@SynomosAI",
+            "content_type": "decision_support_output",
+            "label_note": "标识口径待核：输出由确定性规则代码计算，规则文本为 AI 辅助撰写",
+            "disclaimer": "决策支持非权威结论，须人工复核"}
     if ns.demo:
-        demos = [{"criteria": "[{\"dim\":\"创新\",\"weight\":0.4},{\"dim\":\"工程\",\"weight\":0.3},{\"dim\":\"表达\",\"weight\":0.3}]", "scores": "{\"创新\":90,\"工程\":85,\"表达\":80}", "pass_line": "60"}, {"criteria": "[{\"dim\":\"创新\",\"weight\":0.5},{\"dim\":\"合规\",\"weight\":0.5}]", "scores": "{\"创新\":50,\"合规\":40}", "pass_line": "60"}]
+        demos = [{"criteria": "[{\"dim\":\"创新\",\"weight\":0.4},{\"dim\":\"工程\",\"weight\":0.3},{\"dim\":\"表达\",\"weight\":0.3}]", "scores": "{\"创新\":90,\"工程\":85,\"表达\":80}", "pass_line": "60"}, {"criteria": "[{\"dim\":\"创新\",\"weight\":0.5},{\"dim\":\"合规\",\"weight\":0.5}]", "scores": "{\"创新\":50,\"合规\":40}", "pass_line": "60"}, {"criteria": "[{\"dim\":\"创新\",\"weight\":0.5},{\"dim\":\"合规\",\"weight\":0.5}]", "scores": "{\"创新\":90}", "pass_line": "60"}]
         allok = True
         out_list = []
         for d in demos:

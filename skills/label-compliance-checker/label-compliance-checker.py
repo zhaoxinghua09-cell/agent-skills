@@ -10,6 +10,9 @@ META = {"slug": "label-compliance-checker", "version": "1.0.0", "args": [{"name"
 class GateError(Exception):
     pass
 
+_YES = ('yes', 'true', '1')
+_NO = ('no', 'false', '0')
+
 def classify_label(args):
     """标签/说明书要素完整性核对。规则源：《医疗器械说明书和标签管理规定》(原总局令 第6号) 第10-11条。"""
     fields = {
@@ -21,16 +24,29 @@ def classify_label(args):
         "has_lot": "生产批号/生产日期/有效期",
         "has_udi": "UDI 标识（若适用）",
     }
-    missing = [cn for k, cn in fields.items() if (args.get(k) or '').lower() not in ('yes', 'true', '1')]
-    compliant = len(missing) == 0
+    provided = [k for k in fields if args.get(k) not in (None, '')]
+    if not provided:
+        raise GateError("缺少必要参数：请至少提供一个 has_* 要素字段（取值 yes/no），否则无法核对")
+    bad = [(k, args.get(k)) for k in provided
+           if (args.get(k) or '').lower() not in _YES + _NO]
+    if bad:
+        raise GateError("取值非法（仅接受 yes/no）：%s；请核对输入" %
+                        "、".join("%s=%r" % (k, v) for k, v in bad))
+    explicit_no = [cn for k, cn in fields.items() if (args.get(k) or '').lower() in _NO]
+    unknown = [cn for k, cn in fields.items() if args.get(k) in (None, '')]
+    missing_fields = explicit_no + unknown
+    compliant = len(missing_fields) == 0
     oblig = ["标签须含产品名称、注册证号、生产企业、批号等法定要素", "说明书须含适用范围、禁忌、警示、使用方法", "植入类须注明注意事项与随访要求"]
-    notes = ["要素以《规定》第10条(标签)/第11条(说明书)为准", "UDI 标识依产品风险类别适用", "本核对为清单化自查，非合规证明"]
+    notes = ["要素以《规定》第10条(标签)/第11条(说明书)为准", "UDI 标识依产品风险类别适用", "本核对为清单化自查，非合规证明",
+             "要素齐全，但内容准确性仍须与注册证/技术要求一致核对"]
     warns = []
-    if not compliant:
-        warns.append("存在缺失要素：" + "、".join(missing) + "——上市前须补齐")
-    else:
-        warns.append("要素齐全，但内容准确性仍须与注册证/技术要求一致核对")
-    return {"compliant": compliant, "missing_fields": missing, "obligations": oblig,
+    if explicit_no:
+        warns.append("存在缺失要素：" + "、".join(explicit_no) + "——上市前须补齐")
+    if unknown:
+        # 从严推定：未提供的字段从严按缺失处理，明示告警与补参建议，不静默按齐全输出
+        warns.append("以下要素未提供核对信息，从严按缺失处理：" + "、".join(unknown) +
+                     "；建议补齐后复核，避免核对范围不完整。")
+    return {"compliant": compliant, "missing_fields": missing_fields, "obligations": oblig,
             "notes": notes, "evidence": ["说明书和标签管理规定 第6号 第10-11条"], "warnings": warns}
 
 
@@ -48,31 +64,31 @@ def main():
     p.add_argument("--json", action="store_true", help="输出 JSON IR（默认）")
     ns = p.parse_args()
     argnames = [a["name"] for a in META["args"]]
+    AIGC = {"standard": "GB 45438-2025", "is_generated": True, "generator": META["slug"] + "@SynomosAI",
+            "content_type": "decision_support_output",
+            "label_note": "标识口径待核：输出由确定性规则代码计算，规则文本为 AI 辅助撰写",
+            "disclaimer": "决策支持非权威结论，须人工复核"}
     if ns.demo:
-        demos = [{"has_name": "yes", "has_reg_no": "yes", "has_manufacturer": "yes", "has_indications": "yes", "has_warnings": "yes", "has_lot": "yes", "has_udi": "yes"}, {"has_name": "yes", "has_reg_no": "no", "has_manufacturer": "yes", "has_indications": "no", "has_warnings": "no", "has_lot": "yes", "has_udi": "no"}]
+        demos = [{"has_name": "yes", "has_reg_no": "yes", "has_manufacturer": "yes", "has_indications": "yes", "has_warnings": "yes", "has_lot": "yes", "has_udi": "yes"}, {"has_name": "yes", "has_reg_no": "no", "has_manufacturer": "yes", "has_indications": "no", "has_warnings": "no", "has_lot": "yes", "has_udi": "no"}, {"has_name": "yes", "has_reg_no": "yes", "has_manufacturer": "yes", "has_indications": "yes", "has_warnings": "yes", "has_lot": "yes"}]
         allok = True
+        out_list = []
         for d in demos:
             try:
                 res, rc = _run(dict(d))
-                print(json.dumps({"tool": META["slug"], "input": d, "result": res, "rc": rc}, ensure_ascii=False))
+                out_list.append({"tool": META["slug"], "input": d, "result": res, "rc": rc, "aigc_mark": AIGC})
             except GateError as e:
                 allok = False
-                print(json.dumps({"tool": META["slug"], "input": d, "errors": [str(e)], "rc": 2}, ensure_ascii=False))
+                out_list.append({"tool": META["slug"], "input": d, "errors": [str(e)], "rc": 2, "aigc_mark": AIGC})
+        print(json.dumps(out_list, ensure_ascii=False, indent=2))
         sys.exit(0 if allok else 2)
     args = {k: getattr(ns, k) for k in argnames}
-    if not any(v not in (None, "") for v in args.values()):
-        # 无参数时打印帮助
-        p.print_help()
-        sys.exit(0)
     try:
         res, rc = _run(args)
     except GateError as e:
-        ir = {"tool": META["slug"], "version": META["version"], "input": args, "errors": [str(e)], "rc": 2}
+        ir = {"tool": META["slug"], "version": META["version"], "input": args, "errors": [str(e)], "rc": 2, "aigc_mark": AIGC}
         print(json.dumps(ir, ensure_ascii=False, indent=2))
         sys.exit(2)
-    ir = {"tool": META["slug"], "version": META["version"], "input": args, "result": res, "rc": rc,
-           "aigc_mark": {"standard": "GB45438-2025", "is_generated": False, "generator": META["slug"] + "@SynomosAI",
-                         "content_type": "decision_support_output", "disclaimer": "决策支持非权威结论，须人工复核"}}
+    ir = {"tool": META["slug"], "version": META["version"], "input": args, "result": res, "rc": rc, "aigc_mark": AIGC}
     print(json.dumps(ir, ensure_ascii=False, indent=2))
     sys.exit(rc)
 

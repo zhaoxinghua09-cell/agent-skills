@@ -1,7 +1,7 @@
 # test-lab-match-check · 医疗器械检测项目与实验室匹配器
 
 > Zero-dependency deterministic CLI screener for medical-device compliance.
-> **Decision support only — NOT legal/regulatory advice. Always verify against official texts.**
+> **Decision support only — NOT legal/regulatory advice. Always verify against official texts.** Text verified: 2026-09-26.
 
 ## Why
 
@@ -12,6 +12,10 @@
 Screens `test-lab-match-check` against public rule sources: **GB/T 16886 系列 / GB 9706.1 / YY 0505 / ISO 11135·11137·17665 / ISO 11607 / IEC 62304**.
 Outputs deterministic JSON IR with `rc` (0 = ok / 1 = ok with warnings / 2 = insufficient input),
 `error_code`, and GB 45438-2025 AIGC metadata. No network, no API key, no third-party packages.
+
+- **Insufficient input → strict presumption**: missing `--material` and sterile-without-method are flagged in `warnings` (`rc=1`) — never silently outputs a lenient checklist.
+- Invalid enums are rejected (`rc=2`): `device_type`, `contact`, `dest`.
+- Measured: full implant args → rc=0; `--device_type active --sterile yes` → rc=1; `--dest jp` → rc=2.
 
 ## Run it (Python 3.8+)
 
@@ -26,6 +30,9 @@ python test-lab-match-check.py --json <your args...>
 - Theory anchor: `TH-MED-010` (LGD · registry / evidence / gate)
 - Published by an AI-assisted studio; the institution bears responsibility for the output.
 - Online (Chinese): https://medxpert.cn/knowledge/
+
+## License & attribution
+**Layered licence** — `test-lab-match-check.py` = **MIT**; this `README.md` / `SKILL.md` and the theory text therein are **not covered by MIT** (all rights reserved). Code (.py) is MIT; the SKILL.md and its theory text are outside the MIT scope.
 
 ## Family
 

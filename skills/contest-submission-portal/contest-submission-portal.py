@@ -33,8 +33,7 @@ def classify_submit(args):
     spec = required_spec.get(track)
     file_list = [f.strip().lower() for f in files.split(',') if f.strip()]
     if spec is None:
-        required = ['submission', 'originality']
-        missing = ['submission']
+        raise GateError("track 取值必须为 code/theory/design（当前：%s）" % track)
     else:
         required = [r[0] for r in spec]
         missing = []
@@ -50,14 +49,18 @@ def classify_submit(args):
     allowed_map = {'code': 'md,py,json', 'theory': 'md,py,json,pdf',
                    'design': 'md,pdf,png,svg'}
     allowed = allowed_map.get(track, 'md,pdf')
-    if fmt and fmt not in allowed.split(','):
-        fmt_ok = False
-        fmt_warn.append("主文件格式 %s 不在赛道允许范围(%s)" % (fmt, allowed))
+    if not fmt:
+        warnings_pre = ["未提供 format 参数：主文件格式未做白名单校验，请补齐后复核。"]
+    else:
+        warnings_pre = []
+        if fmt not in allowed.split(','):
+            fmt_ok = False
+            fmt_warn.append("主文件格式 %s 不在赛道允许范围(%s)" % (fmt, allowed))
     exec_hits = [f for f in file_list if f.endswith(('.exe', '.dll', '.bat', '.ps1', '.so', '.bin'))]
-    warnings = []
+    warnings = list(warnings_pre)
     if not valid:
         warnings.append("缺少必提交项：%s" % "; ".join(missing))
-    if not fmt_ok:
+    if fmt and not fmt_ok:
         warnings.append(fmt_warn[0])
     if exec_hits:
         fmt_ok = False
@@ -82,7 +85,6 @@ def main():
     for a in META["args"]:
         p.add_argument("--" + a["name"], required=False, help=a.get("help", ""))
     p.add_argument("--demo", action="store_true", help="跑内置冒烟案例")
-    p.add_argument("--json", action="store_true", help="输出 JSON IR（默认）")
     ns = p.parse_args()
     argnames = [a["name"] for a in META["args"]]
     AIGC = {"standard": "GB45438-2025", "is_generated": False, "generator": META["slug"] + "@SynomosAI",

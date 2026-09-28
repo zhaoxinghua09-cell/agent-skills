@@ -1,7 +1,7 @@
 # md-classification-route · 医疗器械分类与注册路径初判器
 
 > Zero-dependency deterministic CLI screener for medical-device compliance.
-> **Decision support only — NOT legal/regulatory advice. Always verify against official texts.**
+> **Decision support only — NOT legal/regulatory advice. Always verify against official texts.** Text verified: 2026-09-26.
 
 ## Why
 
@@ -12,6 +12,9 @@
 Screens `md-classification-route` against public rule sources: **EU MDR (EU) 2017/745 Annex VIII /《医疗器械分类目录》/ FDA 21 CFR 860**.
 Outputs deterministic JSON IR with `rc` (0 = ok / 1 = ok with warnings / 2 = insufficient input),
 `error_code`, and GB 45438-2025 AIGC metadata. No network, no API key, no third-party packages.
+
+- **Insufficient input → strict presumption**: software device without `--contact` → warning that MDR Rule 11 may push it to Class III; long-term invasive device without `--implant` → warning that Rule 8 may place it in Class III (`rc=1`). It never silently returns the lenient class as final.
+- Measured: `--market cn --invasive no --active yes` → rc=0; `--market eu --invasive yes --duration long_term --implant yes` → rc=1; `--market jp --active yes` → rc=2.
 
 ## Run it (Python 3.8+)
 
@@ -26,6 +29,9 @@ python md-classification-route.py --json <your args...>
 - Theory anchor: `TH-MED-006` (LGD · registry / evidence / gate)
 - Published by an AI-assisted studio; the institution bears responsibility for the output.
 - Online (Chinese): https://medxpert.cn/knowledge/
+
+## License & attribution
+**Layered licence** — `md-classification-route.py` = **MIT**; this `README.md` / `SKILL.md` and the theory text therein are **not covered by MIT** (all rights reserved). Code (.py) is MIT; the SKILL.md and its theory text are outside the MIT scope.
 
 ## Family
 

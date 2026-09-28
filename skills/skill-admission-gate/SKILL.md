@@ -8,6 +8,7 @@ name: skill-admission-gate
 description: 技能上架安全闸门——一个技能/插件在安装或上架前，先跑确定性安全审查：查破坏性命令、远程执行、数据外泄、提示注入、隐蔽行为、混淆载荷与作用域越界，产出「分级发现 + 闸门判定 + 包指纹证据」。当需要审查第三方 skill、安装来源不明的技能、给自研技能做发布前安检、做供应链安全评估、或需要出具"该包未被篡改且已评估风险"的证据时调用。核心三件事：①按规则集扫全部文件并分级（BLOCK/WARN）②支持"已接受风险"声明（.admission-allow.json，须署名留痕）③输出包指纹与文件哈希作为"有证"产物。触发词：技能安全、审查 skill、安装前检查、恶意技能、skill 安全扫描、上架闸门、供应链安全、这个技能安全吗、第三方技能、能不能装、木马、后门、提示注入。
 version: 1.0.0
 license: MIT
+license_scope: 代码（.py 文件）MIT；本 SKILL.md 与其中理论文本不在 MIT 覆盖范围内（见文末「License & attribution」）
 allowed-tools: Read, Glob, Grep, Bash, Write, WebFetch
 agent_created: true
 author: XLGD · SynomosAI
@@ -151,3 +152,32 @@ python scripts/scan_skill.py <技能根目录> --batch --json batch-result.json
 ---
 
 *skill-admission-gate v1.0.0 · © XLGD · SynomosAI · 2026-09-12*
+
+---
+
+## License & attribution
+**分层许可（务必并读；代码许可不覆盖文档与理论文本）**
+
+| 层 | 载体 | 许可 |
+|---|---|---|
+| 代码 | `scan_skill.py` | **MIT** |
+| 文档与理论文本 | 本 `SKILL.md`、`README.md`、其中「理论依据」段与一切理论表述 | **不在 MIT 覆盖范围内**：保留所有权利（All rights reserved） |
+
+> 即：**代码可依 MIT 使用与再分发；文档与理论文本不因代码许可而默认可自由再发布。**
+
+```
+© 2026 赵兴华 / Steven Zhao·China (ORCID 0009-0001-0512-1237). All rights reserved.
+理论署名 (attribution) : LGD（Lifecycle Governance Doctrine / 全程治理论）— SynomosAI initiative
+名称状态 (name status)  : "SynomosAI" / "MedXpert" — 未申请实体注册、未申请商标注册
+                        (not a registered legal entity; no trademark registered)
+生产参考部署 (production reference, self-reported) : MedXpert
+                    ← 非认证、非背书、非监管认可（not a certification or endorsement）
+代码许可 (code license) : uibc-core = Apache-2.0 (see repo LICENSE)
+                    本文本与理论表述不在 Apache-2.0 覆盖范围内
+引用格式 (cite as)      : uibc-core/CITATION.cff · concept DOI 10.5281/zenodo.22821834
+首次公开锚 (first public): 2026-09-17 13:31:45 UTC (commit cb6f11b)
+                    外锚 (external anchor): Sigstore Rekor logIndex 2883389783
+```
+（上列为《LGD 对外表述规范》§3.2 统一块，**整体复制、未删改**；发布/重提前须照最新版本复核。）
+
+**本包补充（包级许可事实）**：本包代码文件 `scan_skill.py` = **MIT**；本 `SKILL.md` / `README.md` 及其中的理论文本**不在任何代码许可（含 MIT / Apache-2.0）覆盖范围内**。

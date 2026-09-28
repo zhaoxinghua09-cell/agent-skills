@@ -1,7 +1,7 @@
 # cer-equivalence-check · 临床评价报告等同性论证要素检查器
 
 > Zero-dependency deterministic CLI screener for medical-device compliance.
-> **Decision support only — NOT legal/regulatory advice. Always verify against official texts.**
+> **Decision support only — NOT legal/regulatory advice. Always verify against official texts.** Text verified: 2026-09-26.
 
 ## Why
 
@@ -12,6 +12,9 @@
 Screens `cer-equivalence-check` against public rule sources: **MDR (EU) 2017/745 Art 61 + Annex XIV Part A / MDCG 2020-5、2020-6 / MEDDEV 2.7/1 rev.4**.
 Outputs deterministic JSON IR with `rc` (0 = ok / 1 = ok with warnings / 2 = insufficient input),
 `error_code`, and GB 45438-2025 AIGC metadata. No network, no API key, no third-party packages.
+
+- **Insufficient input → strict presumption**: missing CER sections and a missing data-access contract are both spelled out in `warnings` (`rc=1`) — never silently treated as "complete".
+- Measured: all ten args `yes` → rc=0; `--is_equivalent yes` alone → rc=1 (access-right + missing-section warnings); `--has_plan yes` alone (no `--is_equivalent`) → rc=2.
 
 ## Run it (Python 3.8+)
 
@@ -26,6 +29,9 @@ python cer-equivalence-check.py --json <your args...>
 - Theory anchor: `TH-MED-009` (LGD · registry / evidence / gate)
 - Published by an AI-assisted studio; the institution bears responsibility for the output.
 - Online (Chinese): https://medxpert.cn/knowledge/
+
+## License & attribution
+**Layered licence** — `cer-equivalence-check.py` = **MIT**; this `README.md` / `SKILL.md` and the theory text therein are **not covered by MIT** (all rights reserved). Code (.py) is MIT; the SKILL.md and its theory text are outside the MIT scope.
 
 ## Family
 

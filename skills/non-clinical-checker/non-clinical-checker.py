@@ -17,6 +17,12 @@ def classify_nonclinical(args):
     contact = (args.get('contact') or '').lower()           # surface/insert/implant
     if not dclass and not dtype:
         raise GateError("缺少必要参数：请提供 device_class(I/II/III) 或 device_type(active/passive/implant/ivd)")
+    if dclass and dclass not in ('I', 'II', 'III'):
+        raise GateError("device_class 必须为 I / II / III 之一")
+    if dtype and dtype not in ('active', 'passive', 'implant', 'ivd'):
+        raise GateError("device_type 必须为 active / passive / implant / ivd 之一")
+    if contact and contact not in ('surface', 'insert', 'implant'):
+        raise GateError("contact 必须为 surface / insert / implant 之一")
     studies = []
     # 生物学评价（GB/T 16886）：接触性质+持续时间决定终点
     if contact in ('implant',) or dclass == 'III' or dtype in ('implant',):
@@ -35,8 +41,19 @@ def classify_nonclinical(args):
         studies += ["分析性能（准确度/精密度/检出限等）", "稳定性（实时+加速）", "参考区间/干扰研究"]
     oblig = ["委托具备 CMA/CNAS 资质的检测机构", "研究与风险管理输出同步", "结果纳入注册申报资料"]
     notes = ["生物学评价终点以 GB/T 16886.1 表 A.1 接触性质+持续时间为准", "有源器械 EMC/安规为强制", "本判定为项目清单建议，非检测结论"]
+    # 输入不足时从严提示（不静默按宽松清单输出）：warnings 明示可能区间与补参建议
+    warns = []
+    if not dtype:
+        warns.append("输入不完整：未提供 device_type——若为有源器械须追加 EMC（YY 0505/YY 9706.102）与电气安全（GB 9706.1），"
+                     "若为 IVD 须追加分析性能/稳定性/参考区间研究；当前清单未含上述项（从严推定下的可能区间），建议补参后复核。")
+    if not dclass:
+        warns.append("输入不完整：未提供 device_class——风险类别直接影响生物学评价范围（II/III 类追加项）；"
+                     "已按现有参数从严给出清单，类别判定后须复核。")
+    if not contact:
+        warns.append("输入不完整：未提供 contact（接触性质）——生物学评价终点按 GB/T 16886.1 表 A.1 接触性质+持续时间判定，"
+                     "建议补参后按表 A.1 复核终点选择。")
     return {"required_studies": studies, "obligations": oblig, "notes": notes,
-            "evidence": ["GB/T 16886 系列", "YY 0505", "GB 9706.1"], "warnings": []}
+            "evidence": ["GB/T 16886 系列", "YY 0505", "GB 9706.1"], "warnings": warns}
 
 
 def _run(args):
@@ -76,8 +93,10 @@ def main():
         print(json.dumps(ir, ensure_ascii=False, indent=2))
         sys.exit(2)
     ir = {"tool": META["slug"], "version": META["version"], "input": args, "result": res, "rc": rc,
-           "aigc_mark": {"standard": "GB45438-2025", "is_generated": False, "generator": META["slug"] + "@SynomosAI",
-                         "content_type": "decision_support_output", "disclaimer": "决策支持非权威结论，须人工复核"}}
+           "aigc_mark": {"standard": "GB 45438-2025", "is_generated": True, "generator": META["slug"] + "@SynomosAI",
+                         "content_type": "decision_support_output",
+                         "label_note": "标识口径待核：输出由确定性规则代码计算，规则文本为 AI 辅助撰写",
+                         "disclaimer": "决策支持非权威结论，须人工复核"}}
     print(json.dumps(ir, ensure_ascii=False, indent=2))
     sys.exit(rc)
 

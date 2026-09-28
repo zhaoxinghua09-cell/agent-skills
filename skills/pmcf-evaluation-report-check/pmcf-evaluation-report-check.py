@@ -39,6 +39,9 @@ def check_pmcf_report(args):
         warns.append("报告要素缺失：" + "、".join(missing) + "——提交前须补齐，否则易被公告机构发补")
     if (args.get("has_actions") or "").lower() not in ("yes", "true", "1"):
         warns.append("未填写「所采取措施」——PMCF 的价值在于闭环，缺此节等同于无输出")
+    if cls == "IIB" and not implant:
+        warns.append("输入不完整：IIb 类器械未提供 --implant——若为植入类 IIb，按 MDR Art 86 须至少每年一次 PSUR"
+                     "（从严推定下的可能区间）；当前按非植入 IIb（至少每 2 年一次）输出，建议补参后复核。")
     oblig = [
         "PMCF 评价报告须与 PMCF 计划对应，且纳入技术文件动态更新",
         "报告周期与 PSUR 联动，不得超期",

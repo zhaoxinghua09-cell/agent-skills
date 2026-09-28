@@ -5,6 +5,7 @@ version: 1.0.0
 agent_created: true
 author: 潘布达 (Buda Pan) @SynomosAI
 license: MIT
+license_scope: 代码（.py 文件）MIT；本 SKILL.md 与其中理论文本不在 MIT 覆盖范围内（见文末「License & attribution」）
 allowed-tools: Read, Glob, Grep, Write, Edit, WebFetch, WebSearch
 category: 通用技能
 platforms: [WorkBuddy, Claude Code, Windows, macOS, Linux]
@@ -115,3 +116,32 @@ Glob <你的工作区根>/*/.workbuddy/memory/MEMORY.md  → 读最近修改的
 - © 2026 SynomosAI。本技能按 MIT 许可证开源（见 LICENSE.md）；软件依 LICENSE 使用，零数据收集。
 - **知识版权声明**：本作品汇集的方法论、协议流程与结构化知识，其编排与原创表达归 SynomosAI 所有；未经书面许可，不得复制、转载、摘编、转售或用于训练任何模型 / 商业系统。
 - **免责声明**：本作品按「现状」（AS IS）提供，不提供任何明示或暗示担保；使用风险由使用者自行承担，因使用所致任何损失作者不承担责任。
+
+---
+
+## License & attribution
+**分层许可（务必并读；代码许可不覆盖文档与理论文本）**
+
+| 层 | 载体 | 许可 |
+|---|---|---|
+| 代码 | 本包无独立代码文件（纯文档/理论件） | — |
+| 文档与理论文本 | 本 `SKILL.md`、`README.md`、其中「理论依据」段与一切理论表述 | **不在 MIT 覆盖范围内**：保留所有权利（All rights reserved） |
+
+> 即：**代码可依 MIT 使用与再分发；文档与理论文本不因代码许可而默认可自由再发布。**
+
+```
+© 2026 赵兴华 / Steven Zhao·China (ORCID 0009-0001-0512-1237). All rights reserved.
+理论署名 (attribution) : LGD（Lifecycle Governance Doctrine / 全程治理论）— SynomosAI initiative
+名称状态 (name status)  : "SynomosAI" / "MedXpert" — 未申请实体注册、未申请商标注册
+                        (not a registered legal entity; no trademark registered)
+生产参考部署 (production reference, self-reported) : MedXpert
+                    ← 非认证、非背书、非监管认可（not a certification or endorsement）
+代码许可 (code license) : uibc-core = Apache-2.0 (see repo LICENSE)
+                    本文本与理论表述不在 Apache-2.0 覆盖范围内
+引用格式 (cite as)      : uibc-core/CITATION.cff · concept DOI 10.5281/zenodo.22821834
+首次公开锚 (first public): 2026-09-17 13:31:45 UTC (commit cb6f11b)
+                    外锚 (external anchor): Sigstore Rekor logIndex 2883389783
+```
+（上列为《LGD 对外表述规范》§3.2 统一块，**整体复制、未删改**；发布/重提前须照最新版本复核。）
+
+**本包补充（包级许可事实）**：本包无独立代码文件（纯文档与理论文本件），整体**保留所有权利（All Rights Reserved）**；不适用任何代码许可（含 MIT / Apache-2.0）。

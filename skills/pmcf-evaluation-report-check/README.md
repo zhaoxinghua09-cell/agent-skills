@@ -1,7 +1,7 @@
 # pmcf-evaluation-report-check · PMCF 评价报告完整性检查器
 
 > Zero-dependency deterministic CLI screener for medical-device compliance.
-> **Decision support only — NOT legal/regulatory advice. Always verify against official texts.**
+> **Decision support only — NOT legal/regulatory advice. Always verify against official texts.** Text verified: 2026-09-26.
 
 ## Why
 
@@ -12,6 +12,9 @@
 Screens `pmcf-evaluation-report-check` against public rule sources: **MDR (EU) 2017/745 Annex XIV Part B + Art 86 / MDCG 2020-7、2020-8**.
 Outputs deterministic JSON IR with `rc` (0 = ok / 1 = ok with warnings / 2 = insufficient input),
 `error_code`, and GB 45438-2025 AIGC metadata. No network, no API key, no third-party packages.
+
+- **Insufficient input → strict presumption**: missing report sections and the IIb-implant period ambiguity (annual PSUR vs biennial) are both spelled out in `warnings` (`rc=1`) — never silently outputs the lenient period.
+- Measured: `--device_class IIa` + all six sections `yes` → rc=0; `--device_class IIb` alone → rc=1; `--device_class I` → rc=2 (invalid enum).
 
 ## Run it (Python 3.8+)
 
@@ -26,6 +29,9 @@ python pmcf-evaluation-report-check.py --json <your args...>
 - Theory anchor: `TH-MED-008` (LGD · registry / evidence / gate)
 - Published by an AI-assisted studio; the institution bears responsibility for the output.
 - Online (Chinese): https://medxpert.cn/knowledge/
+
+## License & attribution
+**Layered licence** — `pmcf-evaluation-report-check.py` = **MIT**; this `README.md` / `SKILL.md` and the theory text therein are **not covered by MIT** (all rights reserved). Code (.py) is MIT; the SKILL.md and its theory text are outside the MIT scope.
 
 ## Family
 

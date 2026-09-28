@@ -5,7 +5,7 @@
 """
 import argparse, json, sys
 
-META = {"slug": "originality-check", "version": "1.0.0", "args": [{"name": "submission_hash", "help": "作品指纹", "required": False}, {"name": "known_hashes", "help": "历史/公开库指纹 JSON 列表", "required": False}]}
+META = {"slug": "originality-check", "version": "1.1.0", "args": [{"name": "submission_hash", "help": "作品指纹（必填，缺失时报错 rc=2）", "required": False}, {"name": "known_hashes", "help": "历史/公开库指纹 JSON 字符串列表（缺省按空库从严告警）", "required": False}]}
 
 class GateError(Exception):
     pass
@@ -27,16 +27,27 @@ def classify_originality(args):
     try:
         corpus = json.loads(known) if isinstance(known, str) else known
     except Exception:
-        corpus = []
+        # 指纹库 JSON 非法时直接判非法，不静默按空库输出「无重复」的宽松结论
+        raise GateError("known_hashes 须为合法 JSON 字符串列表（如 [\"sha256:aaa111\"]）")
+    if not isinstance(corpus, list) or not all(isinstance(h, str) for h in corpus):
+        raise GateError("known_hashes 须为字符串列表（如 [\"sha256:aaa111\"]）")
+    warnings = []
+    if not corpus:
+        # 从严推定：指纹库为空时查重无对照，「无重复」结论不可靠，明示告警
+        warnings.append(
+            "known_hashes 为空（未提供对照指纹库）：本输出「无重复」不可靠，"
+            "请提供历史/公开库指纹后复核；不静默按原创通过处理。")
     exact = sub_hash in corpus
     sim = 0.0
     if not exact and corpus:
         sim = max(_sim(sub_hash, h) for h in corpus)
     is_dup = exact or sim >= 0.85
     matches = [h for h in corpus if h == sub_hash or _sim(sub_hash, h) >= 0.85]
+    if is_dup:
+        warnings.append("命中高相似作品，建议人工复核原创性")
     return {"similarity": round(sim, 3) if not exact else 1.0, "is_duplicate": is_dup,
             "exact_match": exact, "matches": matches[:5],
-            "warnings": ["命中高相似作品，建议人工复核原创性"] if is_dup else [],
+            "warnings": warnings,
             "notes": ["相似度为示意算法，正式查重须用 MinHash/SimHash + 人工判定", "最终原创性裁定归组委会"],
             "evidence": ["UIBC 原创性规范"]}
 
@@ -55,10 +66,12 @@ def main():
     p.add_argument("--json", action="store_true", help="输出 JSON IR（默认）")
     ns = p.parse_args()
     argnames = [a["name"] for a in META["args"]]
-    AIGC = {"standard": "GB45438-2025", "is_generated": False, "generator": META["slug"] + "@SynomosAI",
-             "content_type": "decision_support_output", "disclaimer": "决策支持非权威结论，须人工复核"}
+    AIGC = {"standard": "GB 45438-2025", "is_generated": True, "generator": META["slug"] + "@SynomosAI",
+            "content_type": "decision_support_output",
+            "label_note": "标识口径待核：输出由确定性规则代码计算，规则文本为 AI 辅助撰写",
+            "disclaimer": "决策支持非权威结论，须人工复核"}
     if ns.demo:
-        demos = [{"submission_hash": "sha256:aaa111", "known_hashes": "[\"sha256:aaa111\",\"sha256:bbb222\"]"}, {"submission_hash": "sha256:new999", "known_hashes": "[\"sha256:aaa111\",\"sha256:bbb222\"]"}]
+        demos = [{"submission_hash": "sha256:aaa111", "known_hashes": "[\"sha256:aaa111\",\"sha256:bbb222\"]"}, {"submission_hash": "sha256:new999", "known_hashes": "[\"sha256:aaa111\",\"sha256:bbb222\"]"}, {"submission_hash": "sha256:new999"}]
         allok = True
         out_list = []
         for d in demos:
