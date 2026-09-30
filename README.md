@@ -5,6 +5,9 @@
 [![skills.sh](https://img.shields.io/badge/skills.sh-Compatible-blue)](https://www.skills.sh/gh/zhaoxinghua09-cell/agent-skills)
 
 # agent-skills · AI Agent 治理技能标准库
+
+> **层级定位**：**Agent 集成层（Integration）** — 把 LGD/UIBC 治理技能装入通用 Agent 技能生态（skills.sh 兼容）。词汇表与全景见 [XLGD 伞总览](https://github.com/zhaoxinghua09-cell/xlgd#readme)。
+
 ## 许可说明 · License Notice
 
 - **权利状态（分层许可）**：**代码**（仓内 `.py` 等源码文件）以 **MIT 许可** 发布，可依该许可证条款自由使用、修改与再分发；**理论文本**（各技能 `SKILL.md`、`README.md` 的文本内容、方法论、规范件，以及本仓 `README.md` / `TRADEMARK.md` / `CODE_OF_CONDUCT.md`）**不在 MIT 覆盖范围内，保留所有权利（All rights reserved）**。
@@ -15,7 +18,7 @@
   不构成对法人实体或商标权的任何主张。
 - **完整条款**：见仓库根目录 [LICENSE](LICENSE)（含范围声明）。
 - **变更留痕**：本仓 README 曾声明「理论 CC BY 4.0」；自 **2026-09-28** 起改为「**保留所有权利**」（依据《LGD 对外表述规范》v1.2 §3.2 分层许可表）。此变更仅约束变更后状态；变更前已按 CC BY 4.0 公开的历史版本，其授权状态以彼时快照为准。
-- **联系**：zhaoxinghua06@126.com ｜ ORCID 0009-0001-0512-1237
+- **联系**：zhaoxinghua09@gmail.com ｜ ORCID 0009-0001-0512-1237
 
 ---
 
