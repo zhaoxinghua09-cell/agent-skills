@@ -1,5 +1,7 @@
 # AI 内容披露生成器 / AI Content Discloser
 
+[![LGD](https://img.shields.io/badge/LGD-Governance-blue)](https://github.com/zhaoxinghua09-cell/lgd-theory)
+
 One-click compliance disclosure for AI-involved content (full/assisted/mixed): explicit statement (CN/EN) + implicit metadata labels + platform tips, aligned with China's AI Content Labeling Measures and EU AI Act Art.50.
 
 **Pain point**: People don't know how to label AI content: regulators require explicit + implicit labels; missing them risks takedowns, and hand-writing disclosures is slow and inconsistent.

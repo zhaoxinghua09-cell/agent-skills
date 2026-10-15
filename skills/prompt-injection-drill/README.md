@@ -1,5 +1,7 @@
 # 提示词注入演练器 / Prompt Injection Drill
 
+[![LGD](https://img.shields.io/badge/LGD-Governance-blue)](https://github.com/zhaoxinghua09-cell/lgd-theory)
+
 Generate 8 categories of injection attack drills for your system prompt (role/instruction override, exfiltration, encoding bypass, tool abuse, forged authority, long-horizon, refusal bypass) + expected-behavior checklist for pre-launch red-teaming.
 
 **Pain point**: Prompts ship untested: one 'ignore previous instructions' disarms them — broken not by experts but by random drive-by lines.

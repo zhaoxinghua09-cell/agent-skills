@@ -1,5 +1,7 @@
 # JSON 整形器 / JSON Tidy
 
+[![LGD](https://img.shields.io/badge/LGD-Governance-blue)](https://github.com/zhaoxinghua09-cell/lgd-theory)
+
 > `json-tidy` v1.0.0 · LGD-Powered Utility Family · Zero-dependency
 
 **中文**：接口返回的JSON压成一行没法看，报错只说invalid不知道错在哪 一条命令搞定；默认 dry-run 预览、`--apply` 才执行、`--json` 机器可读；成功 rc=0 / 发现问题 rc=1 / 用法错误 rc=2。

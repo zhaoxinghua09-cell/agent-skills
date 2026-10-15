@@ -1,5 +1,7 @@
 # LGD 三律闭环认证（有籍→有证→有门禁）· lgd-certify
 
+[![LGD](https://img.shields.io/badge/LGD-Governance-blue)](https://github.com/zhaoxinghua09-cell/lgd-theory)
+
 > LGD 旗舰执行器。市场**唯一**把「有籍护照签发 → 有证证据链 → 有门禁签发 → 可挂载徽章」做成闭环的 CLI。
 
 ## 三命令闭环

@@ -1,5 +1,7 @@
 # 智能体紧急制动卡 / Agent Kill Switch
 
+[![LGD](https://img.shields.io/badge/LGD-Governance-blue)](https://github.com/zhaoxinghua09-cell/lgd-theory)
+
 Before deploying an agent, issue a kill-switch card: stop conditions, revoke actions, owner, recovery; --check validates completeness (rc=1 blocks launch).
 
 **Pain point**: By the time an agent goes rogue nobody knows how to stop it — no stop conditions, no revoke steps, no owner.

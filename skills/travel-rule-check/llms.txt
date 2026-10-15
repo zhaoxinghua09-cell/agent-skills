@@ -1,0 +1,13 @@
+# travel-rule-check
+
+> 本文件是 AI 可读的技能索引（llms.txt 惯例）。AI 代理优先读 `SKILL.md`。
+
+## 关键文件
+
+- [SKILL.md](SKILL.md)：主说明书（frontmatter + 触发条件 + 执行步骤）
+- [AGENTS.md](AGENTS.md)：AI 代理说明书
+- [README.md](README.md)：人类总览（如存在）
+
+## 一句话定位
+
+travel-rule-check — LGD 三律在链上资产 / VASP 旅行规则（FATF）域的纵深合规工具（零依赖）：VASP 转账收发方 KYC（姓名+账号/地址+地理）超阈强制校验，对 AI 系统/数据做可执行合规校验。

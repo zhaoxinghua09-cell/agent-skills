@@ -1,5 +1,7 @@
 # 合同高危条款扫描器 / Contract Clause Check
 
+[![LGD](https://img.shields.io/badge/LGD-Governance-blue)](https://github.com/zhaoxinghua09-cell/lgd-theory)
+
 > `contract-clause-check` v1.0.0 · LGD Moat Family · Zero-dependency · Domain: 法律 · Law-map: TH-LGD-022
 
 **中文**：合同不看条款直接签，违约金30%、单方解释权、没写管辖全踩坑 一条命令完成初筛：合规 PASS（rc=0）/ 违规 FAIL（rc=1）/ 用法错误（rc=2），支持 `--json`。

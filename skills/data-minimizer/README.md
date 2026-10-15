@@ -1,5 +1,7 @@
 # 给AI前脱敏器 / Data Minimizer
 
+[![LGD](https://img.shields.io/badge/LGD-Governance-blue)](https://github.com/zhaoxinghua09-cell/lgd-theory)
+
 Mask phone/email/ID/long numbers/custom names before handing text to any AI; outputs masked text + a masking report.
 
 **Pain point**: You want AI to process text with real customer/colleague info but fear feeding PII to third parties; hand-masking is slow and leaky.

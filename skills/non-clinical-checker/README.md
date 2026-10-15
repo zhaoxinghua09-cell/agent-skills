@@ -1,5 +1,7 @@
 # non-clinical-checker · 医疗器械非临床研究判定器
 
+[![LGD](https://img.shields.io/badge/LGD-Governance-blue)](https://github.com/zhaoxinghua09-cell/lgd-theory)
+
 > AI-assisted decision-support CLI. NOT legal advice, **not a compliance proof** — verify against official texts. Text verified: 2026-09-26.
 
 ## What it does

@@ -1,5 +1,7 @@
 # LGD 三律合规自检器（凡自治之物）· lgd-three-laws-auditor
 
+[![LGD](https://img.shields.io/badge/LGD-Governance-blue)](https://github.com/zhaoxinghua09-cell/lgd-theory)
+
 > LGD 全程治理论 · 由 SynomosAI 提出，并在受监管行业全生命周期治理实践中完成实证。
 > **凡自治之物：有籍、有证、有门禁。** 本工具是这套治理思想的「定义器」——把三律做成可自评的标准 rubric。
 

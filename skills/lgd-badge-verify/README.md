@@ -1,5 +1,7 @@
 # LGD 徽章验真器 / LGD Badge Verifier
 
+[![LGD](https://img.shields.io/badge/LGD-Governance-blue)](https://github.com/zhaoxinghua09-cell/lgd-theory)
+
 Verify a badge certificate: recompute fingerprint (anti-tamper) + evidence hash format + registry cross-check (serial exists & not revoked).
 
 **Pain point**: Issuance without verification is forgeable: the loop lacked reverse checking and the trust chain broke.

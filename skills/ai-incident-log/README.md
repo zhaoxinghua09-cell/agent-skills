@@ -1,5 +1,7 @@
 # AI事故记录器 / AI Incident Log
 
+[![LGD](https://img.shields.io/badge/LGD-Governance-blue)](https://github.com/zhaoxinghua09-cell/lgd-theory)
+
 Log AI incidents (runaway, mistakes, hallucinations) into a JSONL ledger with severity/model/action/retro fields; list and report commands.
 
 **Pain point**: AI incidents get a verbal mention and are forgotten — no ledger, no learning, same traps repeat.

@@ -1,5 +1,7 @@
 # KYC 材料齐备清单 / KYC Checklist Generator
 
+[![LGD](https://img.shields.io/badge/LGD-Governance-blue)](https://github.com/zhaoxinghua09-cell/lgd-theory)
+
 > `kyc-checklist-gen` v1.0.0 · LGD Moat Family · Zero-dependency · Domain: 金融 · Law-map: TH-LGD-016
 
 **中文**：开户/接商户前不知道 KYC 要备什么材料，来回补件浪费时间 一条命令完成初筛：合规 PASS（rc=0）/ 违规 FAIL（rc=1）/ 用法错误（rc=2），支持 `--json`。

@@ -1,5 +1,7 @@
 # LGD 徽章签发器 / LGD Badge Issuer
 
+[![LGD](https://img.shields.io/badge/LGD-Governance-blue)](https://github.com/zhaoxinghua09-cell/lgd-theory)
+
 Issue a lgd-certified badge certificate only when all three laws pass (SHA-256 fingerprint + issuance ledger); refuse and log otherwise.
 
 **Pain point**: The last loop step 'badge' had no executor: passing the three laws led nowhere without an authoritative issuance act.

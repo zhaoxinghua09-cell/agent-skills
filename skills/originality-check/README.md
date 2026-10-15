@@ -1,12 +1,14 @@
 # originality-check · 赛事作品原创性查重器
 
+[![LGD](https://img.shields.io/badge/LGD-Governance-blue)](https://github.com/zhaoxinghua09-cell/lgd-theory)
+
 > AI-assisted decision-support CLI for UIBC contest operations. NOT final adjudication — verify with organizing committee. Text verified: 2026-09-26.
 
 ## What it does
 Checks **submission originality** by fingerprint comparison against a known-hashes corpus, per **UIBC 原创性规范 + 学术不端界定** (rule source pending manual verification; latest UIBC charter prevails).
 
 - **Insufficient input → strict presumption**: an empty/missing `known_hashes` corpus makes any "no duplicate" verdict **unreliable** — the tool states this in `warnings` (`rc=1`) instead of silently passing as original. Malformed `known_hashes` JSON → `rc=2`.
-- Similarity is a placeholder algorithm (prefix comparison); real screening needs MinHash/SimHash + human review (noted in output `notes`).
+- Similarity is a simple algorithm (prefix comparison); real screening needs MinHash/SimHash + human review (noted in output `notes`).
 
 ## Install & run (zero-dependency, Python 3.8+)
 ```bash

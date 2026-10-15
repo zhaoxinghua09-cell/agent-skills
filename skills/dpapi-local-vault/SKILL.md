@@ -38,7 +38,7 @@ risk_rationale: "门禁批量补丁默认 medium（Steven 2026-09-28 令：我�
 - 极高密级且担心"同账号被拖" → DPAPI 仅防其他用户/其他机，同账号可读，应上主口令保险库。
 
 ## 用法
-默认保险库目录：`~/.ucvault_local`（即 `C:\Users\<你>\.ucvault_local`）。
+默认保险库目录：`~/.ucvault_local`（即 `~/.skills/<skill-dir><你>\.ucvault_local`）。
 
 ### 推荐入口：key_drop.py（密值不进命令行、不进历史）
 `~/.ucvault_local/tools/key_drop.py`。三种模式，都不把密值写进命令行参数：

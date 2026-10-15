@@ -1,5 +1,7 @@
 # import-export-router · 医疗器械进出口路径判定器
 
+[![LGD](https://img.shields.io/badge/LGD-Governance-blue)](https://github.com/zhaoxinghua09-cell/lgd-theory)
+
 > AI-assisted decision-support CLI. NOT legal advice — verify against official texts. Text verified: 2026-09-26.
 
 ## What it does

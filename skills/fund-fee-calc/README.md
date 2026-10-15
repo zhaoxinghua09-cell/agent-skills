@@ -1,5 +1,7 @@
 # 资管费率净收益试算器 / Fund Fee & Net Return Calc
 
+[![LGD](https://img.shields.io/badge/LGD-Governance-blue)](https://github.com/zhaoxinghua09-cell/lgd-theory)
+
 > `fund-fee-calc` v1.0.0 · LGD Moat Family · Zero-dependency · Domain: 金融 · Law-map: TH-LGD-018
 
 **中文**：买产品只看收益率不看费率，宣传页说保本就信——资管新规明令禁止 一条命令完成初筛：合规 PASS（rc=0）/ 违规 FAIL（rc=1）/ 用法错误（rc=2），支持 `--json`。

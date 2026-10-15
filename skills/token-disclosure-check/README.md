@@ -1,5 +1,7 @@
 # 代币信息披露检查器 / Token Disclosure Check
 
+[![LGD](https://img.shields.io/badge/LGD-Governance-blue)](https://github.com/zhaoxinghua09-cell/lgd-theory)
+
 > `token-disclosure-check` v1.0.0 · LGD Moat Family · Zero-dependency · Domain: 区块链 · Law-map: TH-LGD-020
 
 **中文**：项目方披露缺斤少两还暗带保证收益话术，接不住监管也坑持有人 一条命令完成初筛：合规 PASS（rc=0）/ 违规 FAIL（rc=1）/ 用法错误（rc=2），支持 `--json`。

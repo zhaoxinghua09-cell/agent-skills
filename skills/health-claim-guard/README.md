@@ -1,5 +1,7 @@
 # 健康宣称合规扫描 / Health Claim Guard
 
+[![LGD](https://img.shields.io/badge/LGD-Governance-blue)](https://github.com/zhaoxinghua09-cell/lgd-theory)
+
 > `health-claim-guard` v1.0.0 · LGD Moat Family · Zero-dependency · Domain: 医疗健康 · Law-map: TH-LGD-023
 
 **中文**：带货文案随手写根治、有效率99%，广告法罚款动辄数十万 一条命令完成初筛：合规 PASS（rc=0）/ 违规 FAIL（rc=1）/ 用法错误（rc=2），支持 `--json`。

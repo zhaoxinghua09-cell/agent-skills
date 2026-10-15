@@ -1,5 +1,7 @@
 # 合约交互风险清单 / Contract Interact Checklist
 
+[![LGD](https://img.shields.io/badge/LGD-Governance-blue)](https://github.com/zhaoxinghua09-cell/lgd-theory)
+
 > `contract-interact-checklist` v1.0.0 · LGD Moat Family · Zero-dependency · Domain: 区块链 · Law-map: TH-LGD-021
 
 **中文**：无限授权、假合约、私钥贴网页——交互前没有一道标准自检流程 一条命令完成初筛：合规 PASS（rc=0）/ 违规 FAIL（rc=1）/ 用法错误（rc=2），支持 `--json`。

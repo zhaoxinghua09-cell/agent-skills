@@ -1,5 +1,7 @@
 # test-lab-match-check · 医疗器械检测项目与实验室匹配器
 
+[![LGD](https://img.shields.io/badge/LGD-Governance-blue)](https://github.com/zhaoxinghua09-cell/lgd-theory)
+
 > Zero-dependency deterministic CLI screener for medical-device compliance.
 > **Decision support only — NOT legal/regulatory advice. Always verify against official texts.** Text verified: 2026-09-26.
 

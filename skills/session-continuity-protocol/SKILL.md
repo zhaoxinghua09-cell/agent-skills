@@ -50,7 +50,7 @@ GitHub 上 agent 记忆的基准结论（memory-systems 技能 + LoCoMo 基准�
 
 ### Step 1 · 读全局总索引
 ```
-Read <你的工作区根>/_ACTIVE_PROJECTS.md   # Windows 例：D:/<你的工作区文件夹>/_ACTIVE_PROJECTS.md
+Read <你的工作区根>/_ACTIVE_PROJECTS.md   # Windows 例：~/.skills/<skill-dir><你的工作区文件夹>/_ACTIVE_PROJECTS.md
 ```
 拿到：当前活跃项目清单、RACI、各项目阻塞状态、最近交接点。这是「现在手头有哪些事」的总览。
 

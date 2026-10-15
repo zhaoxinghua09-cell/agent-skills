@@ -1,5 +1,7 @@
 # 智能体登机牌 / Agent Boarding Pass
 
+[![LGD](https://img.shields.io/badge/LGD-Governance-blue)](https://github.com/zhaoxinghua09-cell/lgd-theory)
+
 Issue a verifiable 'boarding pass' for any AI agent: identity + evidence hash + permission allowlist + TTL, SHA-256 anti-tamper; one command to verify (fingerprint recompute + expiry check). Paste it into system prompts, repos or tickets.
 
 **Pain point**: Onboarding an AI agent into a team leaves 'who is it, on what evidence, allowed what, until when' unverifiable — verbal agreements can't be checked and leave no audit trail.

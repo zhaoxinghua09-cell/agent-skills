@@ -1,5 +1,7 @@
 # AI 产出有籍登记器（LGD-I 有籍）· agent-output-registry
 
+[![LGD](https://img.shields.io/badge/LGD-Governance-blue)](https://github.com/zhaoxinghua09-cell/lgd-theory)
+
 > LGD-I 有籍 · 凡造必登。给每条 AI 产出发一张「籍」（户口），可溯源、可证完整性、可查归属。
 
 ## 用法

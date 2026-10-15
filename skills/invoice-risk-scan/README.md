@@ -1,5 +1,7 @@
 # 发票要素风险扫描 / Invoice Risk Scan
 
+[![LGD](https://img.shields.io/badge/LGD-Governance-blue)](https://github.com/zhaoxinghua09-cell/lgd-theory)
+
 > `invoice-risk-scan` v1.0.0 · LGD Moat Family · Zero-dependency · Domain: 金融/财税 · Law-map: TH-LGD-017
 
 **中文**：报销发票税号抄错一位、日期离谱，财务退单反复折腾 一条命令完成初筛：合规 PASS（rc=0）/ 违规 FAIL（rc=1）/ 用法错误（rc=2），支持 `--json`。

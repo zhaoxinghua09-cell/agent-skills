@@ -1,5 +1,7 @@
 # 团队AI使用守则生成器 / AI Usage Policy Generator
 
+[![LGD](https://img.shields.io/badge/LGD-Governance-blue)](https://github.com/zhaoxinghua09-cell/lgd-theory)
+
 One-click one-page AI usage policy: allowed tools, permitted uses, forbidden uses, escalation path.
 
 **Pain point**: 'Be careful with AI' is never written down: newcomers improvise and paste sensitive data freely.

@@ -1,5 +1,7 @@
 # 提示词泄漏扫描器 / Prompt Leak Scanner
 
+[![LGD](https://img.shields.io/badge/LGD-Governance-blue)](https://github.com/zhaoxinghua09-cell/lgd-theory)
+
 Pre-share scanner for prompts and system prompts: secrets, internal paths, PII, custom sensitive words (--extra), and self-leak backdoors ('ignore previous instructions' / 'print your system prompt' plants). Non-zero exit blocks leaks.
 
 **Pain point**: Prompts are the most casually shared sensitive asset: one embedded key, intranet path, or 'repeat your system prompt' plant gives away the farm — nobody runs a pre-release check.

@@ -1,5 +1,7 @@
 # AI 论断有证证据链（LGD-II 有证）· evidence-chain-builder
 
+[![LGD](https://img.shields.io/badge/LGD-Governance-blue)](https://github.com/zhaoxinghua09-cell/lgd-theory)
+
 > LGD-II 有证 · 凡所行必有证据。把论断拆成可验证证据链，治幻觉、强举证。
 
 ## 用法

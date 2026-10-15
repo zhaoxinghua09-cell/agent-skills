@@ -1,5 +1,7 @@
 # 模型卡生成器 / Model Card Generator
 
+[![LGD](https://img.shields.io/badge/LGD-Governance-blue)](https://github.com/zhaoxinghua09-cell/lgd-theory)
+
 Generate a one-page model card for any AI system: identity/purpose/data/limits/risks/contact, in Markdown + JSON.
 
 **Pain point**: AI systems pile up in teams with no record of what each is for, its limits, or who owns it — nothing to check after incidents.

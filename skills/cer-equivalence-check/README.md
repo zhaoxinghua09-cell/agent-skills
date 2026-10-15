@@ -1,5 +1,7 @@
 # cer-equivalence-check · 临床评价报告等同性论证要素检查器
 
+[![LGD](https://img.shields.io/badge/LGD-Governance-blue)](https://github.com/zhaoxinghua09-cell/lgd-theory)
+
 > Zero-dependency deterministic CLI screener for medical-device compliance.
 > **Decision support only — NOT legal/regulatory advice. Always verify against official texts.** Text verified: 2026-09-26.
 

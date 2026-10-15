@@ -1,5 +1,7 @@
 # AI供应商尽调清单 / AI Vendor Checklist
 
+[![LGD](https://img.shields.io/badge/LGD-Governance-blue)](https://github.com/zhaoxinghua09-cell/lgd-theory)
+
 10-item AI procurement due-diligence checklist (data ownership, training opt-out, retention, certs, incident SLA, subprocessors, export, model card, audit, exit); --template and --score modes.
 
 **Pain point**: Vendors are chosen off slideware: is your data training their model, who reports incidents, can you exit with your data — asked too late, after signing.

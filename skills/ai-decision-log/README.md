@@ -1,5 +1,7 @@
 # AI决策留痕器 / AI Decision Log
 
+[![LGD](https://img.shields.io/badge/LGD-Governance-blue)](https://github.com/zhaoxinghua09-cell/lgd-theory)
+
 One-command traceability for AI-assisted decisions: decision/model/evidence/human reviewer/time in JSONL; report shows model usage and human-review coverage, flagging unreviewed calls.
 
 **Pain point**: After a failure you retrace 'who let the AI decide this' — without a log, retrospectives run on memory.

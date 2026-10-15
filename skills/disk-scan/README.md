@@ -1,5 +1,7 @@
 # 磁盘占用扫描 / Disk Usage Scan
 
+[![LGD](https://img.shields.io/badge/LGD-Governance-blue)](https://github.com/zhaoxinghua09-cell/lgd-theory)
+
 > `disk-scan` v1.0.0 · LGD-Powered Utility Family · Zero-dependency
 
 **中文**：盘满了不知道谁吃的空间，资源管理器算半天还看不清 一条命令搞定；默认 dry-run 预览、`--apply` 才执行、`--json` 机器可读；成功 rc=0 / 发现问题 rc=1 / 用法错误 rc=2。

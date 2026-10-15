@@ -1,5 +1,7 @@
 # 引用覆盖率检查器 / Citation Coverage Check
 
+[![LGD](https://img.shields.io/badge/LGD-Governance-blue)](https://github.com/zhaoxinghua09-cell/lgd-theory)
+
 Scan sentences containing numbers/dates/claims, measure the share with source markers (据/来源/source/link); below threshold rc=1 with a per-sentence gap list.
 
 **Pain point**: AI-generated reports look professional, but nobody checks which numbers have sources — coverage makes the gap visible.

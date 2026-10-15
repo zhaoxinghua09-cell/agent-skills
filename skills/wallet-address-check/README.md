@@ -1,5 +1,7 @@
 # 链上地址格式校验器 / Wallet Address Check
 
+[![LGD](https://img.shields.io/badge/LGD-Governance-blue)](https://github.com/zhaoxinghua09-cell/lgd-theory)
+
 > `wallet-address-check` v1.0.0 · LGD Moat Family · Zero-dependency · Domain: 区块链 · Law-map: TH-LGD-019
 
 **中文**：转账手滑地址粘错链/抄错位，资产直接归零——先过一道格式门 一条命令完成初筛：合规 PASS（rc=0）/ 违规 FAIL（rc=1）/ 用法错误（rc=2），支持 `--json`。

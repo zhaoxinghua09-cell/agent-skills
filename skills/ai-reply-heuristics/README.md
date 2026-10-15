@@ -1,5 +1,7 @@
 # AI痕迹启发式检查器 / AI Reply Heuristics
 
+[![LGD](https://img.shields.io/badge/LGD-Governance-blue)](https://github.com/zhaoxinghua09-cell/lgd-theory)
+
 Heuristic AI-trace score (0-100) from cliche density, em-dash frequency, sentence-length uniformity, parallelism; three bands, clearly labeled heuristic-only.
 
 **Pain point**: You receive text that might be AI-written: trusting it blindly is risky, doubting everything is unfair — you need a hint, not a verdict.
