@@ -3,7 +3,7 @@ name: ai-brain-learning-memory-pro
 title: AI记忆工程实战版
 display_name: AI记忆工程实战版
 display_name_en: AI Memory Engineering Pro
-description: "ai-brain-learning-memory 的进阶工程版，面向 AI 开发者 / 认知科学爱好者 / agent 架构师。在基础版（概念+例子+速查）之上往工程化推一步：三层记忆的参考实现（Python）、与 agent-memory 工具集成、评测电池 memory_eval_battery.py 的跑法与 6 维解读、OWASP ASI06 记忆投毒防御的代码落地、复习四节点的自动化 rrule 配置、认知科学证据→工程决策映射。建议先读基础版再读本版。触发词：大脑学习记忆进阶、记忆系统实现、memory system design、记忆架构代码、agent-memory 集成、记忆评测电池、记忆投毒防御、ASI06、间隔重复实现、遗忘曲线代码、记忆溯源、reference implementation、学习记忆工程版、brain memory pro。"
+description: "ai-brain-learning-memory 的进阶工程版，面向 AI 开发者与 agent 架构师：三层记忆参考实现（Python）、与 agent-memory 工具集成、评测电池 memory_eval_battery.py 跑法、OWASP ASI06 记忆投毒防御代码落地、复习 rrule 自动化。建议先读基础版。触发词：记忆系统实现、agent-memory 集成、记忆评测电池、记忆投毒防御、ASI06、参考实现、brain memory pro。"
 description_zh: "ai-brain-learning-memory 的进阶工程版，面向 AI 开发者 / 认知科学爱好者 / agent 架构师。在基础版（概念+例子+速查）之上往工程化推一步：三层记忆的参考实现（Python）、与 agent-memory 工具集成、评测电池 memory_eval_battery.py 的跑法与 6 维解读、OWASP ASI06 记忆投毒防御的代码落地、复习四节点的自动化 rrule 配置、认知科学证据→工程决策映射。建议先读基础版再读本版。触发词：大脑学习记忆进阶、记忆系统实现、memory system design、记忆架构代码、agent-memory 集成、记忆评测电池、记忆投毒防御、ASI06、间隔重复实现、遗忘曲线代码、记忆溯源、reference implementation、学习记忆工程版、brain memory pro。"
 description_en: "Advanced engineering version of ai-brain-learning-memory. Aimed at AI developers, cognitive-science enthusiasts, and agent architects. Pushes beyond the basic version (concepts + examples + cheatsheet) into engineering-grade depth: three-tier memory reference implementation (Python), integration with the agent-memory tool, how to run memory_eval_battery.py and interpret its 6 dimensions, code-level defense against OWASP ASI06 memory poisoning, automated rrule config for the four review nodes, and cognitive-science evidence → engineering decision mapping. Recommend reading the basic version first."
 version: 1.0.0
@@ -11,6 +11,8 @@ agent_created: true
 author: 诺声(Logos)@SynomosAI
 copyright: SynomosAI
 license: MIT
+compatibility: Cross-platform; zero external dependencies (stdlib only)
+metadata: {dependencies: "none"}
 license_scope: 代码（.py 文件）MIT；本 SKILL.md 与其中理论文本不在 MIT 覆盖范围内（见文末「License & attribution」）
 allowed-tools: Read, Glob, Grep, Bash, Write, WebFetch, WebSearch, Task
 category: AI学习方法论

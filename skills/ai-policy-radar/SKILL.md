@@ -2,11 +2,13 @@
 name: ai-policy-radar
 display_name: AI法规动态雷达（Policy Radar）
 display_name_en: "AI Policy Radar"
-description: "当用户说『最近AI出了什么新规』『EU AI Act/脆监会/NMPA有没有新动作』『法规更新我得跟上』『帮我盯AI政策』，或要持续跟踪 AI 监管动态（EU AI Act / 中国 NMPA / 美国 FDA / GDPR 等）时使用。扫描法规库/更新日志，按主题（风险分级/透明度/数据/准入）归类变动并留痕（有证），输出「本月新增了什么、对你有何影响」。可运行脚本（policy_radar 扫描器）。理论根基：LGD 三律之有证（法规变动留痕可溯）。与 eu-ai-act-companion 互补（它管单法导航，本技能管跨法动态监测）。触发词：AI法规、政策雷达、监管动态、EU AI Act更新、合规追踪、policy radar、法规监测。"
+description: "当用户说『最近AI出了什么新规』『EU AI Act/NMPA有没有新动作』，或要持续跟踪 AI 监管动态（EU AI Act/中国 NMPA/美国 FDA/GDPR）时使用。扫描法规库按主题归类变动并留痕，输出「本月新增了什么、对你有何影响」。附 policy_radar 扫描脚本。触发词：AI法规、政策雷达、监管动态、EU AI Act更新、合规追踪、法规监测。"
 version: 1.0.0
 agent_created: true
 author: 诺声(Logos)@SynomosAI
 license: MIT
+compatibility: Cross-platform; zero external dependencies (stdlib only)
+metadata: {dependencies: "none"}
 license_scope: 代码（.py 文件）MIT；本 SKILL.md 与其中理论文本不在 MIT 覆盖范围内（见文末「License & attribution」）
 allowed-tools: Read, Glob, Grep, Task
 category: AI合规

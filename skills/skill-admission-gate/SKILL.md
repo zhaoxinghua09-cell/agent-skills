@@ -5,9 +5,11 @@ displayName: "skill-admission-gate"
 category: "lgd-theory"
 compliance_review: "待核验：上架三铁律 ①国家/国际合规 ②AI特别友好 ③理念文化传播+强IP；发布前由 skill-release-gate 审查"
 name: skill-admission-gate
-description: 技能上架安全闸门——一个技能/插件在安装或上架前，先跑确定性安全审查：查破坏性命令、远程执行、数据外泄、提示注入、隐蔽行为、混淆载荷与作用域越界，产出「分级发现 + 闸门判定 + 包指纹证据」。当需要审查第三方 skill、安装来源不明的技能、给自研技能做发布前安检、做供应链安全评估、或需要出具"该包未被篡改且已评估风险"的证据时调用。核心三件事：①按规则集扫全部文件并分级（BLOCK/WARN）②支持"已接受风险"声明（.admission-allow.json，须署名留痕）③输出包指纹与文件哈希作为"有证"产物。触发词：技能安全、审查 skill、安装前检查、恶意技能、skill 安全扫描、上架闸门、供应链安全、这个技能安全吗、第三方技能、能不能装、木马、后门、提示注入。
+description: "技能上架安全闸门：技能/插件安装或上架前先跑确定性安全审查——破坏性命令、远程执行、数据外泄、提示注入、隐蔽行为、作用域越界，产出分级发现+闸门判定+包指纹证据；支持已接受风险声明与文件哈希留痕。当要审查第三方 skill、发布前安检、供应链安全评估时使用。触发词：技能安全、审查skill、安装前检查、恶意技能、上架闸门、供应链安全、这个技能安全吗。"
 version: 1.0.0
 license: MIT
+compatibility: Cross-platform; zero external dependencies (stdlib only)
+metadata: {dependencies: "none"}
 license_scope: 代码（.py 文件）MIT；本 SKILL.md 与其中理论文本不在 MIT 覆盖范围内（见文末「License & attribution」）
 allowed-tools: Read, Glob, Grep, Bash, Write, WebFetch
 agent_created: true

@@ -8,6 +8,8 @@ display_name: 医疗器械不良事件报告路径判定器
 title: 医疗器械不良事件报告路径判定器
 author: 诺康(SynomosAI)
 license: MIT
+compatibility: Cross-platform; zero external dependencies (stdlib only)
+metadata: {dependencies: "none"}
 allowed-tools: Read, Glob, Grep, Bash, Write, WebFetch
 license_scope: 代码（.py 文件）MIT；本 SKILL.md 与其中理论文本不在 MIT 覆盖范围内（见文末「License & attribution」）
 description: 医疗器械不良事件报告路径判定器——基于官方规则源的零依赖决策支持工具，JSON IR 输出，覆盖TH-MED-002域（医疗器械全链路）。
