@@ -9,6 +9,8 @@ version: '1.1.0'
 agent_created: true
 author: 潘布达 (Buda Pan) @SynomosAI
 license: MIT
+compatibility: Cross-platform; zero external dependencies (stdlib only)
+metadata: {dependencies: "none"}
 license_scope: 代码（.py 文件）MIT；本 SKILL.md 与其中理论文本不在 MIT 覆盖范围内（见文末「License & attribution」）
 allowed-tools: Read, Glob, Grep, Write, Edit, WebFetch, WebSearch
 category: AI工程

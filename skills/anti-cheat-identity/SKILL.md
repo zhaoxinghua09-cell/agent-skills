@@ -8,6 +8,8 @@ display_name: 赛事反作弊身份核验器
 title: 赛事反作弊身份核验器
 author: 诺卫(SynomosAI)
 license: MIT
+compatibility: Cross-platform; zero external dependencies (stdlib only)
+metadata: {dependencies: "none"}
 allowed-tools: Read, Glob, Grep, Bash, Write, WebFetch
 license_scope: 代码（.py 文件）MIT；本 SKILL.md 与其中理论文本不在 MIT 覆盖范围内（见文末「License & attribution」）
 description: 赛事反作弊身份核验器——基于 UIBC 赛事规范的零依赖决策支持工具，JSON IR 输出，覆盖TH-EVT-004域。

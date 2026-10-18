@@ -9,6 +9,8 @@ title: 电子证据四性审查判定器
 author: 诺律(SynomosAI)
 author_note: '"SynomosAI" / "MedXpert" — 未申请实体注册、未申请商标注册（not a registered legal entity; no trademark registered）'
 license: MIT
+compatibility: Cross-platform; zero external dependencies (stdlib only)
+metadata: {dependencies: "none"}
 allowed-tools: Read, Glob, Grep, Bash, Write, Edit, WebFetch
 license_scope: 代码（.py 文件）MIT；本 SKILL.md 与其中理论文本不在 MIT 覆盖范围内（见文末「License & attribution」）
 description: 电子证据四性审查判定器——基于官方规则源的零依赖决策支持工具，JSON IR 输出，覆盖TH-LAW-001域。
