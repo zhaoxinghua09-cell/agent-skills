@@ -4,7 +4,11 @@ import argparse
 import json
 import sys
 
-META = {"slug": "udi-db-submission-check", "version": "1.0.0", "args": [{"name": "market", "help": "目标市场: cn/us/eu（必填）"}, {"name": "is_registered", "help": "境内是否已取得注册证/备案: yes/no"}, {"name": "has_di", "help": "是否已分配 DI: yes/no"}, {"name": "has_pi", "help": "是否已分配 PI（生产标识）: yes/no"}, {"name": "reusable", "help": "是否可重复使用: yes/no"}, {"name": "implant", "help": "是否植入类: yes/no"}, {"name": "sterile", "help": "是否无菌: yes/no"}]}
+META = {"slug": "udi-db-submission-check", "version": "1.0.2", "args": [{"name": "market", "help": "目标市场: cn/us/eu（必填）"}, {"name": "is_registered", "help": "境内是否已取得注册证/备案: yes/no"}, {"name": "has_di", "help": "是否已分配 DI: yes/no"}, {"name": "has_pi", "help": "是否已分配 PI（生产标识）: yes/no"}, {"name": "reusable", "help": "是否可重复使用: yes/no"}, {"name": "implant", "help": "是否植入类: yes/no"}, {"name": "sterile", "help": "是否无菌: yes/no"}]}
+
+# 规则核验日期：EU 日期已按官方源复核（欧盟委员会决定 (EU) 2025/2371 + EUDAMED 过渡期时间表 + 总览页）。
+# 与 SKILL.md「文本核验日期」、README「Text verified」同源同值；复核后同步更新。
+RULES_VERIFIED_ON = "2026-10-29"
 
 
 class GateError(Exception):
@@ -27,6 +31,18 @@ def check_udi_submission(args):
     sterile = (args.get("sterile") or "").lower()
     registered = (args.get("is_registered") or "").lower()
 
+    # v1.0.2 从严化：未识别枚举值一律按缺失处理并显式警告（不静默、不臆测）
+    _ENUM_OK = ("yes", "true", "no", "false")
+    _enums = {"is_registered": registered, "has_di": has_di, "has_pi": has_pi,
+              "reusable": reusable, "implant": implant, "sterile": sterile}
+    _unknown = [k for k, v in _enums.items() if v and v not in _ENUM_OK]
+    for _k in _unknown:
+        _enums[_k] = ""
+    registered, has_di, has_pi, reusable, implant, sterile = (
+        _enums[k] for k in ("is_registered", "has_di", "has_pi", "reusable", "implant", "sterile"))
+    _enum_warn = ("枚举值无法识别，按缺失从严处理（请使用 yes/no/true/false）："
+                  + "、".join("--" + k for k in _unknown)) if _unknown else None
+
     db, timing, issuer = "", "", ""
     fields = ["器械标识（DI）", "器械名称", "标签人/注册人", "型号规格", "生产日期与失效日期（如适用）"]
     if market == "cn":
@@ -41,7 +57,7 @@ def check_udi_submission(args):
         fields += ["Device Description", "Labeler DUNS", "是否植入 / 是否单次使用 / 是否无菌（GUDID 指示项）"]
     else:
         db = "EU EUDAMED（European Database on Medical Devices）"
-        timing = "EUDAMED 各模块分阶段强制生效，具体义务以欧盟委员会最新公告为准（Art 27/29）"
+        timing = "EUDAMED 首批四模块（Actor、UDI/Dev、NB&CRF、MS）已于 2026-05-28 起强制使用；在强制使用日前已投放市场的存量/法规器械，须在 2026-11-28 前完成 UDI/Dev 模块登记；其余义务以欧盟委员会最新公告为准（Art 27/29）"
         issuer = "GS1 / HIBCC / ICCBBA（issued entity）"
         fields += ["Basic UDI-DI", "SRN（单一注册号）", "器械风险等级"]
 
@@ -49,6 +65,11 @@ def check_udi_submission(args):
         fields.append("无菌指示项（须与标签申报一致）")
 
     warns = []
+    if _enum_warn:
+        warns.append(_enum_warn)
+    if "reusable" in _unknown or "implant" in _unknown:
+        warns.append("可重复使用/植入属性无法确认（枚举值未识别，已按缺失从严处理）——"
+                     "若实际为可重复使用或植入类而缺失 PI（生产标识），属高风险缺口，请确认后重跑")
     if has_di in ("no", "false", ""):
         warns.append("缺失 DI（器械标识）——DI 为数据库提交的基础字段，未就绪即无法提交")
     need_pi = (reusable in ("yes", "true") or implant in ("yes", "true"))
@@ -65,6 +86,8 @@ def check_udi_submission(args):
         "数据库维护是持续义务，非一次性提交",
         "发码机构须为法规认可机构，自编码不被接受（除非法规另有规定）",
     ]
+    if market == "eu":
+        oblig.append("存量/法规器械的 UDI/Dev 登记截止为 2026-11-28（欧盟委员会 EUDAMED 过渡期时间表）")
     notes = [
         "本判定为「提交义务与控制项」清单，不代替数据库账号操作指引",
         "各辖区实施范围与过渡期以官方最新公告为准",
@@ -103,12 +126,24 @@ def main():
             try:
                 res = _call(dict(d))
                 rc = 1 if (res.get("warnings") or []) else 0
-                print(json.dumps({"tool": META["slug"], "input": d, "result": res,
-                                  "rc": rc, "error_code": None}, ensure_ascii=False))
+                print(json.dumps({"tool": META["slug"], "version": META["version"], "input": d, "result": res,
+                                  "rc": rc, "error_code": None,
+                                  "rules_verified_on": RULES_VERIFIED_ON,
+                                  "aigc_mark": {"standard": "GB 45438-2025", "is_generated": True,
+                                                "generator": META["slug"] + "@MedXpert",
+                                                "content_type": "decision_support_output",
+                                                "disclaimer": "决策支持非权威结论，须人工复核；以官方最新文件为准"}},
+                                 ensure_ascii=False))
             except GateError as e:
                 ok = False
-                print(json.dumps({"tool": META["slug"], "input": d, "errors": [str(e)],
-                                  "rc": 2, "error_code": e.code}, ensure_ascii=False))
+                print(json.dumps({"tool": META["slug"], "version": META["version"], "input": d, "errors": [str(e)],
+                                  "rc": 2, "error_code": e.code,
+                                  "rules_verified_on": RULES_VERIFIED_ON,
+                                  "aigc_mark": {"standard": "GB 45438-2025", "is_generated": True,
+                                                "generator": META["slug"] + "@MedXpert",
+                                                "content_type": "decision_support_output",
+                                                "disclaimer": "决策支持非权威结论，须人工复核；以官方最新文件为准"}},
+                                 ensure_ascii=False))
         sys.exit(0 if ok else 2)
 
     args = {k: getattr(ns, k) for k in names}
@@ -119,12 +154,14 @@ def main():
         res = _call(args)
     except GateError as e:
         print(json.dumps({"tool": META["slug"], "version": META["version"], "input": args,
-                          "errors": [str(e)], "rc": 2, "error_code": e.code},
+                          "errors": [str(e)], "rc": 2, "error_code": e.code,
+                          "rules_verified_on": RULES_VERIFIED_ON},
                          ensure_ascii=False, indent=2))
         sys.exit(2)
     rc = 1 if (res.get("warnings") or []) else 0
     ir = {"tool": META["slug"], "version": META["version"], "input": args,
           "result": res, "rc": rc, "error_code": None,
+          "rules_verified_on": RULES_VERIFIED_ON,
           "aigc_mark": {"standard": "GB 45438-2025", "is_generated": True,
                         "generator": META["slug"] + "@MedXpert",
                         "content_type": "decision_support_output",

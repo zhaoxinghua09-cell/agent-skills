@@ -1,0 +1,6 @@
+# AI Readiness Fix Instructions
+asset: skills/udi-db-submission-check（仓库相对路径）
+scanned: 2026-10-16
+verdict: PASS
+findings:
+- none

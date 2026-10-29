@@ -5,21 +5,22 @@ title: UDI 数据库提交合规判定器
 displayName: UDI 数据库提交合规判定器
 display_name: UDI 数据库提交合规判定器
 display_name_en: UDI Database Submission Compliance Checker
-version: 1.0.0
+version: 1.0.2
+homepage: https://zhaoxinghua09-cell.github.io/lgd-skills-index/
 license: MIT
 compatibility: Cross-platform; zero external dependencies (stdlib only)
 metadata: {dependencies: "none"}
 allowed-tools: Read, Glob, Grep, Bash, Write, WebFetch
 license_scope: 代码（.py 文件）MIT；本 SKILL.md 与其中理论文本不在 MIT 覆盖范围内（见文末「License & attribution」）
-author: 注册老炮@MedXpert
+author: SynomosAI (LGD initiative)
 copyright: MedXpert
 category: 医疗器械合规
 platforms: [WorkBuddy, QClaw, ima, Claude Code, Cursor]
 tags: ["医疗器械","医械合规","UDI 数据库提交合规判定器","判定器","TH-MED-007","决策支持"]
-description: "UDI 码串格式对了，但该传哪个库、什么时候传、必填哪些字段，没人一次说清；漏传或漏维护，上市即违规。（零依赖 CLI · 确定性 JSON IR · rc=0/1/2 · --demo 自带案例）"
+description: "UDI 码串格式对了，但该传哪个库、什么时候传、必填哪些字段，没人一次说清；漏传或漏维护，上市即违规。（零依赖 CLI · 确定性 JSON IR · rc=0/1/2 · --demo 自带案例） 适用场景：当需要UDI 数据库提交合规判定器能力时使用本技能；触发词：医疗器械、医械合规、UDI 数据库提交合规判定器、判定器、TH-MED-007。"
 description_en: "Deterministic zero-dependency CLI screener for medical-device compliance (udi-db-submission-check). JSON IR output, rc=0/1/2, demo case included. Decision support only — always verify against official texts."
 agent_created: true
-verified_links: "规则源条款号已逐条标注；包内全部外链（含徽章）于 2026-09-12 逐条 HTTP 探测核验，11/11 可达"
+verified_links: "规则源条款号已逐条标注；包内全部外链（含徽章）于 2026-10-29 逐条 HTTP 探测核验，13/13 可达（GitHub 网页端经 API 复核 public=true）"
 description_zh: "UDI 码串格式对了，但该传哪个库、什么时候传、必填哪些字段，没人一次说清；漏传或漏维护，上市即违规。（零依赖 CLI · 确定性 JSON IR · rc=0/1/2 · --demo 自带案例）"
 classification:
   internal: ["主轴1 医械合规咨询"]
@@ -28,7 +29,30 @@ classification:
   iso_25010: ["Functional suitability"]
 risk_tier: medium
 risk_rationale: "门禁批量补丁默认 medium（Steven 2026-09-28 令：我们的 skill 设计为中等风险）：调用 API/读写文件/本地执行，最小权限，密钥走 Secret；若实际涉对外代执行(push/发布/发送/上架)须人工复评，改 high 并走 Steven 批准。"
+ai_protocol: true
+
+lineage: ["LGD-有籍"]
 ---
+> 凡自治之物 · LGD 治理学 · 创造术家族 ｜ 评测协议：[skill-quality-gate](../skill-quality-gate/SKILL.md)
+
+## 何时用
+
+- 当用户需要UDI 数据库提交合规判定器相关能力时。
+- 触发词：医疗器械、医械合规、UDI 数据库提交合规判定器、判定器、TH-MED-007、决策支持。
+
+## 用法
+
+调用方式与参数详见正文「## 四、用法」节。
+执行步骤见正文「## 七、家族合集（按注册全流程）」节。
+入口脚本（在技能目录下执行）：udi-db-submission-check.py。
+
+## 流程
+
+1. 触发：识别UDI 数据库提交合规判定器相关任务（见「何时用」）。
+2. 执行：按「用法」运行udi-db-submission-check.py。
+3. 校验：核对脚本输出/退出码是否符合预期。
+4. 交付：向用户呈现结果/产物。
+
 ![LGD-aligned MED 医疗](https://medxpert.cn/badge/directions/svg/lgd-aligned-med-cn.svg)
 ![LGD 有籍 Registered](https://medxpert.cn/badge/laws/svg/lgd-registered-cn.svg)
 ![LGD 有证 Evidenced](https://medxpert.cn/badge/laws/svg/lgd-evidenced-cn.svg)
@@ -38,12 +62,18 @@ risk_rationale: "门禁批量补丁默认 medium（Steven 2026-09-28 令：我�
 # UDI 数据库提交合规判定器
 
 > ⚠️ **免责声明**：本工具由 AI 辅助生成，输出为**决策支持**，不构成医疗器械注册、合规或法律意见。输出请人工复核，正式结论须以主管部门决定与官方最新文件为准。
-> 文本核验日期：2026-09-26 · 条款文本以官方最新发布为准
+> 文本核验日期：2026-10-29 · 条款文本以官方最新发布为准（EU 硬日期已于当日按欧盟委员会决定 (EU) 2025/2371 及 EUDAMED 过渡期时间表复核）
 
 > 🌐 **在线版与家族合集**
 > - 医械注册知识库（免费公开层）：https://medxpert.cn/knowledge/
 > - 技能索引页：https://medxpert.cn/skills/
 > - 官网首页：https://medxpert.cn/
+
+## 证据与安全声明
+
+- 证据：TBD（暂无评测/徽章链接；产生后在此更新实际链接）
+- 版本：1.0.2
+- 安全：未做独立安全扫描（TBD），结论待补；补全前不作推荐背书。
 
 ## 一、痛点
 
@@ -63,8 +93,8 @@ UDI 码串格式对了，但该传哪个库、什么时候传、必填哪些字�
 | 项 | 说明 |
 |---|---|
 | 规则源 | `NMPA《医疗器械唯一标识系统规则》/ FDA 21 CFR 830 + GUDID / EU MDR Art 27-29 + EUDAMED` |
-| 输出 | JSON IR（`result` + `rc` + `error_code` + `aigc_mark`） |
-| 错误码 | `E_INPUT_MISSING` 参数不足 / `E_ENUM_INVALID` 枚举非法 / `E_RUNTIME` 其他 |
+| 输出 | JSON IR（`result` + `rc` + `error_code` + `rules_verified_on` + `aigc_mark`） |
+| 错误码 | `E_ENUM_INVALID` market 非法或缺失 / `E_RUNTIME` 其他 |
 | 退出码 | `rc=0` 判定完成；`rc=1` 完成但带风险提示；`rc=2` 输入不足或非法 |
 
 ## 四、用法
@@ -77,12 +107,12 @@ python udi-db-submission-check.py --json <你的参数...>        # 正式判定
 可用参数：`--market / --is_registered / --has_di / --has_pi / --reusable / --implant / --sterile`
 
 ## 四A、真机输出（实跑节选）
-> 实跑命令 `python udi-db-submission-check.py --market cn --has_di yes --sterile yes`（2026-09-26，Python 3.13.12）。仅调整 JSON 缩进便于阅读，**字段与字段值逐字未改**（完整原文见做齐报告）。
+> 实跑命令 `python udi-db-submission-check.py --json --market cn --has_di yes --sterile yes`（2026-10-29，Python 3.13.14）。仅调整 JSON 缩进便于阅读，**字段与字段值逐字未改**（完整原文见做齐报告）。
 
 ```json
 {
   "tool": "udi-db-submission-check",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "input": {"market": "cn", "is_registered": null, "has_di": "yes", "has_pi": null,
             "reusable": null, "implant": null, "sterile": "yes"},
   "result": {
@@ -103,6 +133,7 @@ python udi-db-submission-check.py --json <你的参数...>        # 正式判定
   },
   "rc": 1,
   "error_code": null,
+  "rules_verified_on": "2026-10-29",
   "aigc_mark": {"standard": "GB 45438-2025", "is_generated": true, "generator": "udi-db-submission-check@MedXpert",
                 "content_type": "decision_support_output", "disclaimer": "决策支持非权威结论，须人工复核；以官方最新文件为准"}
 }
@@ -114,7 +145,7 @@ python udi-db-submission-check.py --json <你的参数...>        # 正式判定
 ## 五、能力边界（请务必阅读）
 
 - 只做**规则判定**，不做法律意见、不出具证明；结论须人工复核，最终以监管机构认定为准。
-- **输入不足时从严提示**：DI/PI 缺失、cn 场景注册状态未确认等均在 `warnings` 中明示（`rc=1`），不静默按「可提交」输出。
+- **输入不足时从严提示**：DI/PI 缺失、cn 场景注册状态未确认等均在 `warnings` 中明示（`rc=1`），不静默按「可提交」输出；**未识别的枚举值同样按缺失从严处理并显式警告**（v1.0.2）。
 - 不覆盖特殊情形（创新器械、药械组合、边界产品、纳米材料等），此类须走官方界定程序。
 - 规则版本会变；**条款号已给出，请以官方最新文本核对**。
 - 输出为起始清单，**不替代产品技术要求、适用标准清单与专业评价者判断**。

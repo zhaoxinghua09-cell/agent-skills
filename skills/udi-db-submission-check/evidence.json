@@ -1,0 +1,38 @@
+{
+  "schema": "evidence-1.0",
+  "slug": "udi-db-submission-check",
+  "updated": "2026-10-29",
+  "executable": {
+    "entry_point": "udi-db-submission-check.py（零依赖单文件 CLI，Python 3.8+，仅标准库 argparse/json/sys）",
+    "runtime": "python udi-db-submission-check.py --demo / --json <args>",
+    "verified": true,
+    "verdict": "PASS",
+    "note": "2026-10-29 发布前审查三轮独立实跑：①冒烟（--demo 3 案例 rc=0/1/2）②红队 8 项边界/注入/rc 语义全过（evidence/redteam_report_v101_20261029.md）③外人零上下文全量复现 PASS 4/5 星（evidence/outsider_report_v101_20261029.md）。遗留 1 项判定逻辑问题（枚举未识别值静默放行）记录于 PRE_RELEASE_REVIEW_v1.0.1.md §5，待终核后走 v1.0.2。"
+  },
+  "eval": {
+    "report_path": "AI_READINESS_REPORT.md",
+    "report_conclusion": "达标（0 项 S1+，2026-10-16 静态评测）",
+    "radar_1to5": {
+      "功能性": 5.0,
+      "易用性": 5.0,
+      "可维护性": 5.0,
+      "可移植性": 5.0,
+      "安全性": 5.0,
+      "可靠性": 5.0,
+      "兼容性": 5.0,
+      "AI友好": 5.0
+    },
+    "batch_eval_id": null
+  },
+  "demo": {
+    "dir": "demo/",
+    "runnable": true,
+    "entry": "python udi-db-submission-check.py --demo（内置 cn/us/eu 三冒烟案例，rc=0/1/2 各一）"
+  },
+  "evidence_sources": [
+    "AI_READINESS_REPORT.md（专业评测号，2026-10-16，整改版，静态）",
+    "evidence/redteam_report_v101_20261029.md（红队独立席，全实跑）",
+    "evidence/outsider_report_v101_20261029.md（外人零上下文独立席，全实跑+独立网络核验）",
+    "PRE_RELEASE_REVIEW_v1.0.1.md（发布前审查聚合，2026-10-29）"
+  ]
+}

@@ -2,8 +2,10 @@
 
 [![LGD](https://img.shields.io/badge/LGD-Governance-blue)](https://github.com/zhaoxinghua09-cell/lgd-theory)
 
+![udi-db-submission-check overview](assets/overview.svg)
+
 > Zero-dependency deterministic CLI screener for medical-device compliance.
-> **Decision support only — NOT legal/regulatory advice. Always verify against official texts.** Text verified: 2026-09-26.
+> **Decision support only — NOT legal/regulatory advice. Always verify against official texts.** Text verified: 2026-10-29 (EU hard dates re-checked against Commission Decision (EU) 2025/2371 and the EC EUDAMED transitional timetable).
 
 ## Why
 
@@ -17,6 +19,8 @@ Outputs deterministic JSON IR with `rc` (0 = ok / 1 = ok with warnings / 2 = ins
 
 - **Insufficient input → strict presumption**: missing DI/PI and an unconfirmed CN registration status are flagged in `warnings` (`rc=1`) — never silently treated as "submittable".
 - `--sterile yes` adds the sterile-indicator field to `core_fields` (must match the label).
+- **EU hard dates** (verified 2026-10-29): the first four EUDAMED modules (Actor, UDI/Dev, NB&CRF, MS) have been mandatory since **2026-05-28**; legacy/Regulation devices placed on the market before that date must be registered in the UDI/Dev module by **2026-11-28** (EC EUDAMED transitional timetable; per Commission Decision (EU) 2025/2371, OJEU 2025-11-27). MDR-native devices still follow the regular Art 29 timing.
+- Every JSON output carries `rules_verified_on` (same level as `rc`), sourced from the single constant `RULES_VERIFIED_ON` in the script — same value as the "Text verified" line above.
 - Measured: full CN args → rc=0; `--market us --has_di yes --reusable yes` → rc=1 (PI missing); `--market jp` → rc=2.
 
 ## Run it (Python 3.8+)
@@ -76,3 +80,20 @@ python udi-db-submission-check.py --json <your args...>
 | 上市后·召回 | `recall-decision-checker` | 存量 |
 | 标签与说明书 | `label-compliance-checker` | 存量 |
 | 进出口路径 | `import-export-router` | 存量 |
+
+---
+## About LGD Governance
+
+This skill package is part of the **agent-skills** library by **SynomosAI** under the **LGD — Lifecycle Governance Doctrine (全程治理论)** research line, a civil-society governance-engineering framework for AI systems (an independent research initiative, not a registered company, standard, or provider of legal, regulatory, or medical advice).
+
+Its core proposition is the **Three Laws of self-governing things**: **registered (有籍) · evidenced (有证) · gated (有门禁)** — every self-governing thing must hold a verifiable identity, produce auditable evidence across its full lifecycle, and pass explicit gates before consequential actions.
+
+Byline: **XLGD · SynomosAI** (the formal identifier is LGD). Skill index: https://zhaoxinghua09-cell.github.io/lgd-skills-index/ · Theory stack: https://github.com/zhaoxinghua09-cell/lgd-theory
+
+## 关于 LGD 治理体系
+
+本技能包隶属于 **SynomosAI** 出品的 **agent-skills** 技能库，归属 **LGD（Lifecycle Governance Doctrine，全程治理论）** 研究线——面向 AI 系统的民间治理工程研究框架（独立研究倡议，非注册公司、非标准，亦非法律、监管或医疗建议提供方）。
+
+其核心命题是「自洽事物的三律」：**有籍 · 有证 · 有门禁**（registered · evidenced · gated）——每一自洽事物必须持有可核验的身份、在全生命周期内产出可审计的证据，并在高影响动作前通过明确门禁。
+
+作者署名口径：**XLGD · SynomosAI**（正式标识为 LGD）。技能索引：https://zhaoxinghua09-cell.github.io/lgd-skills-index/ · 理论栈：https://github.com/zhaoxinghua09-cell/lgd-theory
