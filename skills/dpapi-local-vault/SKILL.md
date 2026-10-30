@@ -19,12 +19,12 @@ display_name: 本地 DPAPI 免口令凭据库（Windows）
 description_zh: "用 Windows DPAPI 把密钥/口令加密存到本机、仅当前用户可解、明文不落盘、带权限锁与泄漏标注的可复用凭据保管 skill。适合\"当前 Windows 账号即信任边界\"的本地保管场景。"
 description_en: "Store secrets locally encrypted with Windows DPAPI: current-user-only decryption, no plaintext on disk, permission lock and leak annotation for trusted-boundary local vaulting."
 classification:
-  internal: ["主轴7 组织治理与安全"]
+  internal: []
   skillhub: ["security-compliance"]
   clawhub: ["development"]
   iso_25010: ["Security"]
 risk_tier: medium
-risk_rationale: "门禁批量补丁默认 medium（Steven 2026-09-28 令：我们的 skill 设计为中等风险）：调用 API/读写文件/本地执行，最小权限，密钥走 Secret；若实际涉对外代执行(push/发布/发送/上架)须人工复评，改 high 并走 Steven 批准。"
+risk_rationale: "门禁批量补丁默认 medium：调用 API/读写文件/本地执行，最小权限，密钥走 Secret；若实际涉对外代执行(push/发布/发送/上架)须人工复评，改 high 并走所有者批准。"
 ---
 # 本地 DPAPI 免口令凭据库（Windows）
 
@@ -140,7 +140,7 @@ python get_secret.py tencent_cos --raw       # 只输出裸值（脚本/管道�
 > 即：**代码可依 MIT 使用与再分发；文档与理论文本不因代码许可而默认可自由再发布。**
 
 ```
-© 2026 赵兴华 / Steven Zhao·China (ORCID 0009-0001-0512-1237). All rights reserved.
+© 2026 SynomosAI. All rights reserved.
 理论署名 (attribution) : LGD（Lifecycle Governance Doctrine / 全程治理论）— SynomosAI initiative
 名称状态 (name status)  : "SynomosAI" / "MedXpert" — 未申请实体注册、未申请商标注册
                         (not a registered legal entity; no trademark registered)
