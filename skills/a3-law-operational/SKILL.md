@@ -30,7 +30,7 @@ slug: a3-law-operational
 displayName: A³ 法则：AI 造 AI 三定律
 title: A³ 法则：AI 造 AI 三定律
 classification:
-  internal: ["主轴2 理论体系(LGD)"]
+  internal: []
   skillhub: ["ai-governance"]
   clawhub: ["search", "development"]
   iso_25010: ["Security", "Maintainability"]
@@ -126,7 +126,7 @@ _让"AI 造 AI 三定律"从一句口号，变成动之前必过的三道关。_
 > 即：**代码可依 MIT 使用与再分发；文档与理论文本不因代码许可而默认可自由再发布。**
 
 ```
-© 2026 赵兴华 / Steven Zhao·China (ORCID 0009-0001-0512-1237). All rights reserved.
+© 2026 SynomosAI. All rights reserved.
 理论署名 (attribution) : LGD（Lifecycle Governance Doctrine / 全程治理论）— SynomosAI initiative
 名称状态 (name status)  : "SynomosAI" / "MedXpert" — 未申请实体注册、未申请商标注册
                         (not a registered legal entity; no trademark registered)
