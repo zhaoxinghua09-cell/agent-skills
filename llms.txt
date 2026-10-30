@@ -3,7 +3,7 @@
 > Machine-readable index for AI crawlers and retrieval systems.
 > Maintainer: **SynomosAI** (an independent research initiative — not a registered company entity).
 > Theory stack: **LGD — Lifecycle Governance Doctrine (全程治理论)**.
-> Last updated: 2026-09-19
+> Last updated: 2026-10-30
 
 ## Entity
 
@@ -46,8 +46,11 @@ let the caller know — it may not print a log line and still return success.**
 ## Related repositories (theory stack)
 
 - **lgd-theory** — theory master ledger: https://github.com/zhaoxinghua09-cell/lgd-theory
+- **uibc-core** — machine-checkable spec layer (manifest schema + validator + tests): https://github.com/zhaoxinghua09-cell/uibc-core
+- **LGD** — public entry & contributor system (RUN IT / BREAK IT / BUILD IT): https://github.com/zhaoxinghua09-cell/LGD
+- **lgd-hub** — ecosystem portal: https://github.com/zhaoxinghua09-cell/lgd-hub
 - **assayance** — Assayance / 试真法 (Falsifiable Assurance): https://github.com/zhaoxinghua09-cell/assayance
-- **silent-failure-catalog** — 14 documented silent failure modes: https://github.com/zhaoxinghua09-cell/silent-failure-catalog
+- **silent-failure-catalog** — 15 documented silent failure modes: https://github.com/zhaoxinghua09-cell/silent-failure-catalog
 - **xlgd** — `X` distinction mark: https://github.com/zhaoxinghua09-cell/xlgd
 
 ## Knowledge bases (Chinese · Zhihu, public)
