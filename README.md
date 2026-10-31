@@ -68,13 +68,13 @@ cp -r agent-skills/skills/<skill-name> ~/.claude/skills/   # Claude Code 示例
 | WorkBuddy | 连接器 → 本地技能目录导入 |
 | 其他 Agent | 任何支持 SKILL.md 规范的目录均可，直接拷入 |
 
-> 已为部分技能（当前 39/109）的 SKILL.md 附「安装与使用矩阵」小节，含该技能的运行示例；其余技能的用法见各自 SKILL.md 正文。
+> 已为部分技能（实测截至 2026-10-31 为 39/109）的 SKILL.md 附「安装与使用矩阵」小节，含该技能的运行示例；其余技能的用法见各自 SKILL.md 正文。
 
 ---
 
-**EN** — AI-agent skills built on the **LGD Three Laws** (registered · evidenced · gated). Each is standalone, zero-dependency, and ships a runnable script. Published to SkillPie + GitHub.
+**EN** — AI-agent skills built on the **LGD Three Laws** (registered · evidenced · gated). Skills are designed to be standalone and zero-dependency; what each ships varies — see its SKILL.md for specifics. Published to SkillPie + GitHub.
 
-**中文** — 基于 **LGD 三律（有籍·有证·有门禁）** 的 AI 智能体技能集。每个独立、零依赖、附可运行脚本。已上架 SkillPie 与 GitHub。
+**中文** — 基于 **LGD 三律（有籍·有证·有门禁）** 的 AI 智能体技能集。技能设计为独立、零依赖；各技能交付物以其 SKILL.md 为准。已上架 SkillPie 与 GitHub。
 
 ## 🔥 通用爆款（2026-09-08 新增）
 
