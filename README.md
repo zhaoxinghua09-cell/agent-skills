@@ -68,7 +68,7 @@ cp -r agent-skills/skills/<skill-name> ~/.claude/skills/   # Claude Code 示例
 | WorkBuddy | 连接器 → 本地技能目录导入 |
 | 其他 Agent | 任何支持 SKILL.md 规范的目录均可，直接拷入 |
 
-> 每个技能目录内 SKILL.md 亦附「安装与使用矩阵」小节，含该技能的运行示例。
+> 已为部分技能（当前 39/109）的 SKILL.md 附「安装与使用矩阵」小节，含该技能的运行示例；其余技能的用法见各自 SKILL.md 正文。
 
 ---
 
