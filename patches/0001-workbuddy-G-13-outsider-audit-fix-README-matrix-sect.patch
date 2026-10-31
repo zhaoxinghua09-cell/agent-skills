@@ -1,0 +1,26 @@
+From 911d008a1107a4ab7be7cea2d8b4f7e88de9a5bc Mon Sep 17 00:00:00 2001
+From: zhaoxinghua09-cell <zhaoxinghua09-cell@users.noreply.github.com>
+Date: Sat, 31 Oct 2026 08:44:13 +0800
+Subject: [PATCH] workbuddy | G-13 outsider audit fix: README matrix-section
+ claim aligned to measured 39/109 (F-06)
+
+---
+ README.md | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/README.md b/README.md
+index 8a8e101..c071ce0 100644
+--- a/README.md
++++ b/README.md
+@@ -68,7 +68,7 @@ cp -r agent-skills/skills/<skill-name> ~/.claude/skills/   # Claude Code 示例
+ | WorkBuddy | 连接器 → 本地技能目录导入 |
+ | 其他 Agent | 任何支持 SKILL.md 规范的目录均可，直接拷入 |
+ 
+-> 每个技能目录内 SKILL.md 亦附「安装与使用矩阵」小节，含该技能的运行示例。
++> 已为部分技能（当前 39/109）的 SKILL.md 附「安装与使用矩阵」小节，含该技能的运行示例；其余技能的用法见各自 SKILL.md 正文。
+ 
+ ---
+ 
+-- 
+2.55.0.windows.3
+
