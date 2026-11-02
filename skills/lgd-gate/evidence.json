@@ -1,0 +1,75 @@
+{
+  "skill": "lgd-gate",
+  "scanned_at": "2026-11-02T22:48:16+08:00",
+  "skills_root": "D:\\Workbuddy\\05-工具\\agent-skills\\skills",
+  "total": 8,
+  "live": 4,
+  "ecosystem": 4,
+  "error": 0,
+  "nodes": [
+    {
+      "slug": "skill-quality-gate",
+      "status": "LIVE",
+      "rc": 0,
+      "when": "技能入库前质量门：结构/文档/安全/生态兼容五维评分，未过拦截",
+      "out": "质量门判定 + 阻断项",
+      "note": "rc=0"
+    },
+    {
+      "slug": "publish-quality-gate",
+      "status": "LIVE",
+      "rc": 0,
+      "when": "对外发布前发布门：四层扫描（密钥/注入/合规/完整性），阻断放行",
+      "out": "发布门判定；任一阻断项则拦",
+      "note": "rc=0"
+    },
+    {
+      "slug": "skill-admission-gate",
+      "status": "LIVE",
+      "rc": 0,
+      "when": "新技能申请入库的准入门：admit / conditional / reject",
+      "out": "准入判定 + 理由",
+      "note": "rc=0"
+    },
+    {
+      "slug": "publish-review-gate",
+      "status": "ECOSYSTEM",
+      "rc": null,
+      "when": "发布前人工 + 自动评审门：checklist 覆盖",
+      "out": "评审判定 + checklist 覆盖",
+      "note": "活动工作集无目录 → openclaw plugins install clawhub:publish-review-gate"
+    },
+    {
+      "slug": "release-gate-check",
+      "status": "ECOSYSTEM",
+      "rc": null,
+      "when": "发布时 release 前置校验：发布就绪清单 pass/fail",
+      "out": "就绪清单 pass/fail",
+      "note": "活动工作集无目录 → openclaw plugins install clawhub:release-gate-check"
+    },
+    {
+      "slug": "skill-release-gate",
+      "status": "ECOSYSTEM",
+      "rc": null,
+      "when": "技能包发布时的发布门：阻断放行",
+      "out": "发布门判定；阻断项则拦",
+      "note": "活动工作集无目录 → openclaw plugins install clawhub:skill-release-gate"
+    },
+    {
+      "slug": "human-oversight-gate",
+      "status": "ECOSYSTEM",
+      "rc": null,
+      "when": "高风险动作人工监督门：approver 决策记录",
+      "out": "监督决策记录 + approver",
+      "note": "活动工作集无目录 → openclaw plugins install clawhub:human-oversight-gate"
+    },
+    {
+      "slug": "gate-policy-generator",
+      "status": "LIVE",
+      "rc": 0,
+      "when": "为新风险类生成门禁策略文档",
+      "out": "生成的门禁策略文档",
+      "note": "rc=0"
+    }
+  ]
+}
