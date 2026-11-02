@@ -116,3 +116,8 @@ Real excerpt (`python evid-four-check.py --type 聊天记录 --has_signature no 
 
 ---
 诺律@LAW 域首席发声人 · TH-LAW-001 · SynomosAI（AI 辅助生成，非自然人）
+
+---
+
+🛡️ **Part of [GovernanceOS](https://github.com/zhaoxinghua09-cell/governanceos)** — the 24-node AI-agent governance lifecycle (SPEC → PLAN → GATE → AUDIT → EVO): red-team, injection shield, leak scan, hard gates, LGD three-law badges.
+One-command install: `openclaw plugins install clawhub:governanceos`

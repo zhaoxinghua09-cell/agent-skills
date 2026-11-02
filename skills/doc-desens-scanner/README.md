@@ -58,3 +58,8 @@ Theoretical root: **LGD Three Laws** — evidenced. Pairs with `release-gate`.
 引用格式 (cite as)      : 本资产无 DOI
 ```
 （上列为《LGD 对外表述规范》§3.2 统一块，**整体复制、未删改**；发布/重提前须照最新版本复核。）
+
+---
+
+🛡️ **Part of [GovernanceOS](https://github.com/zhaoxinghua09-cell/governanceos)** — the 24-node AI-agent governance lifecycle (SPEC → PLAN → GATE → AUDIT → EVO): red-team, injection shield, leak scan, hard gates, LGD three-law badges.
+One-command install: `openclaw plugins install clawhub:governanceos`

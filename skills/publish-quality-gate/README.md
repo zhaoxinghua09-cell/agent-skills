@@ -17,3 +17,8 @@
 - `LICENSE` / `LICENSE.md` — 许可声明
 
 <!-- 生成：2026-10-15 · agent-skills 骨架批量升级 -->
+
+---
+
+🛡️ **Part of [GovernanceOS](https://github.com/zhaoxinghua09-cell/governanceos)** — the 24-node AI-agent governance lifecycle (SPEC → PLAN → GATE → AUDIT → EVO): red-team, injection shield, leak scan, hard gates, LGD three-law badges.
+One-command install: `openclaw plugins install clawhub:governanceos`
