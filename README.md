@@ -17,7 +17,7 @@
 
 - **权利状态（分层许可）**：**代码**（仓内 `.py` 等源码文件）以 **MIT 许可** 发布，可依该许可证条款自由使用、修改与再分发；**理论文本**（各技能 `SKILL.md`、`README.md` 的文本内容、方法论、规范件，以及本仓 `README.md` / `TRADEMARK.md` / `CODE_OF_CONDUCT.md`）**不在 MIT 覆盖范围内，保留所有权利（All rights reserved）**。
 - **引用建议**：引用时请标注仓库名与原文链接 `https://github.com/zhaoxinghua09-cell/agent-skills`
-  与权利人「赵兴华 / Steven Zhao·China」。
+  与权利人：© 2026 赵兴华 / Steven Zhao (ORCID 0009-0001-0512-1237). All rights reserved.
 - **品牌状态限定**：MedXpert、SynomosAI、LGD 等为相关项目标识，
   **均未申请实体注册、未申请商标注册**；出现仅作来源标识，
   不构成对法人实体或商标权的任何主张。
@@ -304,7 +304,9 @@ Every skill carries the same governance spine — **registered** (sources record
 
 ## License
 
-Code: MIT. **Theory texts: All rights reserved.** © 2026 赵兴华 / Steven Zhao·China (ORCID 0009-0001-0512-1237).
+代码许可 (code license) : MIT (see LICENSE)
+© 2026 赵兴华 / Steven Zhao (ORCID 0009-0001-0512-1237). All rights reserved.
+理论文本与方法论不在代码许可覆盖范围内。
 
 > **开源 ≠ 放弃品牌**：代码按 MIT 自由使用，但**项目名称、铸词、徽章与"官方"标识的使用权归 SynomosAI**。
 > 你可以自由 fork、商用、二次开发并如实说明来源；但**不得声称"官方认证"或暗示官方背书**。
