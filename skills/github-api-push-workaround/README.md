@@ -17,3 +17,7 @@ git 推 GitHub/Gitee/AtomGit 的根因化排查与推送模板：401=凭据问�
 - `LICENSE` / `LICENSE.md` — 许可声明
 
 <!-- 生成：2026-10-15 · agent-skills 骨架批量升级 -->
+
+---
+
+🌐 Part of the **LGD agent-skills ecosystem** — 110+ governed skills indexed at [lgd-skills-index](https://github.com/zhaoxinghua09-cell/lgd-skills-index) · Governance hub: [GovernanceOS](https://github.com/zhaoxinghua09-cell/governanceos) · One-command install: `openclaw plugins install clawhub:governanceos`

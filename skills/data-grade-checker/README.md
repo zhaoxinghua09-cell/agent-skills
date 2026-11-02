@@ -98,3 +98,7 @@ Real excerpt (`--demo` case 2, values verbatim):
 | BIO 生物 | hgrac-route-checker | 诺康 |
 | FIN 金融 | fin-ai-classifier | 诺丰 |
 | LAW 法律 | evid-four-check | 诺律 |
+
+---
+
+🌐 Part of the **LGD agent-skills ecosystem** — 110+ governed skills indexed at [lgd-skills-index](https://github.com/zhaoxinghua09-cell/lgd-skills-index) · Governance hub: [GovernanceOS](https://github.com/zhaoxinghua09-cell/governanceos) · One-command install: `openclaw plugins install clawhub:governanceos`

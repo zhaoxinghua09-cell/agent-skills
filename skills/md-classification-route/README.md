@@ -75,3 +75,7 @@ python md-classification-route.py --json <your args...>
 | 上市后·召回 | `recall-decision-checker` | 存量 |
 | 标签与说明书 | `label-compliance-checker` | 存量 |
 | 进出口路径 | `import-export-router` | 存量 |
+
+---
+
+🌐 Part of the **LGD agent-skills ecosystem** — 110+ governed skills indexed at [lgd-skills-index](https://github.com/zhaoxinghua09-cell/lgd-skills-index) · Governance hub: [GovernanceOS](https://github.com/zhaoxinghua09-cell/governanceos) · One-command install: `openclaw plugins install clawhub:governanceos`

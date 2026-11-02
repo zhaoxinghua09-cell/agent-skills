@@ -75,3 +75,7 @@ Real excerpt (`--demo`, case 3; `spec` folded; other values verbatim):
 引用格式 (cite as)      : 本资产无 DOI
 ```
 （上列为《LGD 对外表述规范》§3.2 统一块，**整体复制、未删改**；发布/重提前须照最新版本复核。）
+
+---
+
+🌐 Part of the **LGD agent-skills ecosystem** — 110+ governed skills indexed at [lgd-skills-index](https://github.com/zhaoxinghua09-cell/lgd-skills-index) · Governance hub: [GovernanceOS](https://github.com/zhaoxinghua09-cell/governanceos) · One-command install: `openclaw plugins install clawhub:governanceos`

@@ -95,3 +95,7 @@ Real excerpt (`--demo` case 1, values verbatim):
 | 评审打分 | judging-rubric-grader | 诺律 |
 | 反作弊/身份核验 | anti-cheat-identity | 诺卫 |
 | 作品查重 | originality-check | 诺源 |
+
+---
+
+🌐 Part of the **LGD agent-skills ecosystem** — 110+ governed skills indexed at [lgd-skills-index](https://github.com/zhaoxinghua09-cell/lgd-skills-index) · Governance hub: [GovernanceOS](https://github.com/zhaoxinghua09-cell/governanceos) · One-command install: `openclaw plugins install clawhub:governanceos`

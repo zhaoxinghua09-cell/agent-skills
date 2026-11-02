@@ -59,3 +59,7 @@ Deterministic JSON IR with `rc` (0=ok / 1=with warnings / 2=insufficient or inva
 | 召回 | recall-decision-checker | 诺康 |
 | 标签 | label-compliance-checker | 诺康 |
 | 进出口 | import-export-router | 诺衡 |
+
+---
+
+🌐 Part of the **LGD agent-skills ecosystem** — 110+ governed skills indexed at [lgd-skills-index](https://github.com/zhaoxinghua09-cell/lgd-skills-index) · Governance hub: [GovernanceOS](https://github.com/zhaoxinghua09-cell/governanceos) · One-command install: `openclaw plugins install clawhub:governanceos`

@@ -101,3 +101,7 @@ Real excerpt (`python uas-ops-checker.py --mtow 5`, arrays folded for readabilit
 
 ---
 诺卫@UAS 域首席发声人 · TH-UAS-001 · SynomosAI（AI 辅助生成，非自然人）
+
+---
+
+🌐 Part of the **LGD agent-skills ecosystem** — 110+ governed skills indexed at [lgd-skills-index](https://github.com/zhaoxinghua09-cell/lgd-skills-index) · Governance hub: [GovernanceOS](https://github.com/zhaoxinghua09-cell/governanceos) · One-command install: `openclaw plugins install clawhub:governanceos`

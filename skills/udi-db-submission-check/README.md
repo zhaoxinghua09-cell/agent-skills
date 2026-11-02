@@ -97,3 +97,7 @@ Byline: **XLGD · SynomosAI** (the formal identifier is LGD). Skill index: https
 其核心命题是「自洽事物的三律」：**有籍 · 有证 · 有门禁**（registered · evidenced · gated）——每一自洽事物必须持有可核验的身份、在全生命周期内产出可审计的证据，并在高影响动作前通过明确门禁。
 
 作者署名口径：**XLGD · SynomosAI**（正式标识为 LGD）。技能索引：https://zhaoxinghua09-cell.github.io/lgd-skills-index/ · 理论栈：https://github.com/zhaoxinghua09-cell/lgd-theory
+
+---
+
+🌐 Part of the **LGD agent-skills ecosystem** — 110+ governed skills indexed at [lgd-skills-index](https://github.com/zhaoxinghua09-cell/lgd-skills-index) · Governance hub: [GovernanceOS](https://github.com/zhaoxinghua09-cell/governanceos) · One-command install: `openclaw plugins install clawhub:governanceos`
