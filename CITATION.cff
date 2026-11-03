@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 title: "agent-skills · AI Agent Governance Skill Library"
-message: "If you use this software, please cite it using these metadata. MIT applies to code files only; theory texts (SKILL.md / methodology / specifications) are all rights reserved."
+message: "If you use this software, please cite it using these metadata. Layered licence: code files MIT; theory texts (SKILL.md / methodology / specifications) CC BY 4.0."
 type: software
 authors:
   - family-names: Zhao

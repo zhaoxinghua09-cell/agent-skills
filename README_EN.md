@@ -11,7 +11,7 @@
 
 <div align="center">
 
-[![License: Code MIT · Theory ARR](https://img.shields.io/badge/License-Code%20MIT%20%C2%B7%20Theory%20ARR-blue.svg)](LICENSE)
+[![License: Code MIT · Theory CC BY 4.0](https://img.shields.io/badge/License-Code%20MIT%20%C2%B7%20Theory%20CC%20BY%204.0-blue.svg)](LICENSE)
 [![Skills](https://img.shields.io/badge/skills-109-14B8A6)](README.md#-lgd-护城河系列)
 [![Zero-dependency](https://img.shields.io/badge/zero--dependency-stdlib%20only-0B1F3A)](#)
 
@@ -68,7 +68,7 @@ ORCID [0009-0001-0512-1237](https://orcid.org/0009-0001-0512-1237)) — **no reg
 | Core proposition | Three laws: registered · evidenced · gated |
 | Maintainer | Steven Zhao (independent researcher) |
 | Theory ledger | https://github.com/zhaoxinghua09-cell/lgd-theory |
-| License | Code: MIT · Theory texts: all rights reserved (theory is linked, not relicensed by this repo) |
+| License | Code: MIT · Theory texts (this repo's own text): CC BY 4.0. Linked theory repositories keep their own terms; this licence does not relicense them. |
 | Citation | Zhao, S. (2026). agent-skills. SynomosAI. See CITATION files |
 
 ## Related projects
@@ -78,4 +78,4 @@ ORCID [0009-0001-0512-1237](https://orcid.org/0009-0001-0512-1237)) — **no reg
 - [medxpert.cn](https://medxpert.cn) — medical-device compliance knowledge hub (MedXpert line, same maintainer, personal project)
 
 ---
-*© 2026 Steven Zhao / Zhao Xinghua · China. Code under MIT; linked theory texts retain all rights of their statement. Brands SynomosAI / MedXpert: no registered entity, no registered trademark.*
+*© 2026 Steven Zhao / Zhao Xinghua · China. Code under MIT; this document's text under CC BY 4.0. Linked theory repositories keep their own terms.

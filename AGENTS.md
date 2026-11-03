@@ -17,7 +17,7 @@ You are an expert contributor to the **agent-skills** standard library: you main
 - **定位**：Agent 集成层（Integration）——把 LGD/UIBC 治理技能装入通用 Agent 技能生态，`skills.sh` 兼容（`npx skills add zhaoxinghua09-cell/agent-skills -g`）。
 - **内容**：`skills/*/SKILL.md`（109+ 个技能，frontmatter 规范 + 何时用/用法/流程三节）；docs（规范件）；scripts（工具）；release（发布物）；teams（协作）；llms.txt（AI 索引）。
 - **技术栈**：Markdown（SKILL.md）+ YAML frontmatter（agentskills.io 规范级字段）+ Python 3.x stdlib（scripts，零外部依赖）。无锁文件、无依赖清单。
-- **许可分层**：代码（.py）MIT；理论文本（SKILL.md/README 文本）保留所有权利——**未经批准不得复制理论文本段落**。
+- **许可分层**：代码（.py）MIT；理论文本（SKILL.md/README 文本）CC BY 4.0——可复制、转载与演绎，须保留署名；改动许可口径本身仍需先经批准。
 - **关键文件**：`README.md`（入口）、`skills/`（技能本体）、`index.jsonld`（技能图谱）、`llms.txt`（AI 索引）、`CHANGELOG.md`（变更留痕）、`LICENSE`（分层许可）。
 
 ## 2. Commands / 可执行命令
@@ -45,7 +45,7 @@ python -m unittest discover tests -v          # 技能工具自测
 | `skills/<skill-name>/SKILL.md` | 技能本体：frontmatter（name/description/license/compatibility/metadata）+ 何时用/用法/流程三节。**一个目录 = 一个技能** |
 | `skills/<skill-name>/<脚本>.py` | 技能配套工具：stdlib only，带 `--selftest` 时必须在 CI 通过 |
 | `scripts/` | 仓级工具（validate 等）：不可依赖第三方库 |
-| `docs/` | 规范件与说明：理论文本，ARR，只可引用不可复制 |
+| `docs/` | 规范件与说明：理论文本，CC BY 4.0，可引用可转载（须保留署名）|
 | `release/` | 发布产物：由发布流程生成，禁止手改 |
 | `teams/` | 团队/协作文档 |
 | `llms.txt` | AI 索引：新增技能后必须同步（若含条目列表） |
@@ -84,7 +84,7 @@ metadata: {dependencies: "none"}
 | 级别 | 内容 |
 |---|---|
 | ✅ **Always** | 跑 validate 后再提交；新技能遵循 frontmatter 规范与三节结构；CHANGELOG 同步；许可证声明原样保留 |
-| ⚠️ **Ask first** | 修改理论文本段落（ARR 范围）；改动 LICENSE / TRADEMARK / CODE_OF_CONDUCT；删除或重命名技能目录；改 validate.yml 的通过门槛 |
+| ⚠️ **Ask first** | 修改理论文本段落（CC BY 4.0 范围）；改动 LICENSE / TRADEMARK / CODE_OF_CONDUCT；删除或重命名技能目录；改 validate.yml 的通过门槛 |
 | 🚫 **Never** | 提交任何密钥/token（仓库内零凭据）；把技能正文塞进 README 复制粘贴；添加第三方依赖（stdlib only）；伪造 frontmatter 必填字段；改写他人技能的描述而不留痕 |
 
 ## Definition of done / 完成定义

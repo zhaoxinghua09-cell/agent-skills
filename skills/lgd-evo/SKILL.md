@@ -9,7 +9,7 @@ display_name_en: LGD Evolution Hub
 agent_created: true
 author: XLGD · 诺声(Logos)@SynomosAI
 license: MIT
-license_scope: 代码（.py 文件）MIT；本 SKILL.md 与其中理论文本不在 MIT 覆盖范围内（见文末「License & attribution」）
+license_scope: 代码（.py 文件）MIT；本 SKILL.md 与其中理论文本按 CC BY 4.0 授权（见文末「License & attribution」）
 allowed-tools: Read, Glob, Grep, Bash, Write, WebFetch
 category: AI 治理
 platforms: [claude-code, codebuddy, workbuddy, openai-agents]

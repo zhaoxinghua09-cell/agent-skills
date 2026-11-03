@@ -1,10 +1,13 @@
-> **范围声明（Scope notice · 2026-09-28）**
+> **范围声明（Scope notice · 2026-11-03 修订）**
 >
 > 本 MIT 许可**仅适用于本包内的 `.py` 代码文件**。
 > 本包 `SKILL.md` / `README.md` / `ATTESTATION.md` 及其中**理论文本、方法论与一切理论表述**
-> **不在 MIT 覆盖范围内**：保留所有权利（All rights reserved）。
-> 「依 MIT 用代码」与「自由再发布理论文本」是两项**不同**的许可。
+> **不在 MIT 覆盖范围内**，改按 **CC BY 4.0** 授权
+> （Creative Commons Attribution 4.0 International, https://creativecommons.org/licenses/by/4.0/）：
+> 可复制、转载、翻译、演绎与商用，须保留署名并标明是否修改。
+> 即：**代码依 MIT 用**；**理论文本依 CC BY 4.0 用**——两者是不同许可，但都不是"保留所有权利"。
 > 完整分层声明与权属统一块（《LGD 对外表述规范》§3.2）见本包 `SKILL.md` 文末「License & attribution」段。
+> 许可口径变更留痕：～2026-09-28 为 CC BY 4.0；2026-09-28 至 2026-11-03 为「保留所有权利」；2026-11-03 起恢复 CC BY 4.0。
 >
 > 以下 MIT 许可正文**原样未改**。
 

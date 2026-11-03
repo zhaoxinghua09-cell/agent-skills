@@ -1,15 +1,31 @@
-范围声明（Scope notice）— 2026-09-28
+范围声明（Scope notice）— 2026-11-03 修订（上一版 2026-09-28）
 
 本仓库采用**分层许可**，请务必区分：
 
   · 代码（仓内 `.py` 等源码文件）              → MIT License（正文见下）
-  · 理论文本 / 方法论 / 规范件 / 一切理论表述   → **不在 MIT 许可覆盖范围内，保留所有权利
-    （含各技能 SKILL.md 与 README.md 的文本、本仓 README.md、TRADEMARK.md、CODE_OF_CONDUCT.md）**
-    （All rights reserved）
+  · 理论文本 / 方法论 / 规范件 / 一切理论表述   → CC BY 4.0
+    （含各技能 SKILL.md 与 README.md 的文本、本仓 README.md、TRADEMARK.md、CODE_OF_CONDUCT.md）
+    Creative Commons Attribution 4.0 International
+    https://creativecommons.org/licenses/by/4.0/
 
-变更留痕：本仓曾声明「理论 CC BY 4.0」；自 2026-09-28 起改为「保留所有权利」（依据《LGD 对外表述规范》
-v1.2 §3.2 分层许可表）。此变更仅约束变更后状态；变更前已按 CC BY 4.0 公开的历史版本，其授权状态以
-彼时快照为准。
+即：代码按 MIT 使用与再分发；理论文本可按 CC BY 4.0 复制、转载、翻译、演绎与商用，
+唯一义务是保留署名（CREDIT）与许可声明，并标明是否做过修改。
+
+署名口径（attribution）：赵兴华 / Steven Zhao·China · ORCID 0009-0001-0512-1237
+
+变更留痕（完整保留，不改写历史）：
+
+  · ～2026-09-28          理论文本按 CC BY 4.0 发布。
+  · 2026-09-28 起        理论文本改为「保留所有权利」（All rights reserved），
+                         依据《LGD 对外表述规范》v1.2 §3.2 分层许可表。
+  · 2026-11-03 起        理论文本恢复为 CC BY 4.0。理由：参与国际标准组织与公开
+                         可信评估时，文本须可被第三方自由引用、复算与再分发，
+                         否则核验链不成立。
+
+  每个区间的授权状态以该区间内发布的快照为准；本文件不追溯变更已发布版本的授权。
+
+CC BY 4.0 完整法律文本（Deed 与 Legal Code）以上方 creativecommons.org 链接为准；
+本仓不内嵌全文，以避免许可文本被转述而产生版本漂移。
 
 --------------------------------------------------------------------------------
 

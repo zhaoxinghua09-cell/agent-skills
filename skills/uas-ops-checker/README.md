@@ -71,10 +71,10 @@ Real excerpt (`python uas-ops-checker.py --mtow 5`, arrays folded for readabilit
 | Layer | Carrier | Licence |
 |---|---|---|
 | Code | `uas-ops-checker.py` | **MIT** |
-| Docs & theory text | this `README.md`, `SKILL.md`, the 「理论依据」 section and all theory wording | **Not covered by MIT**: all rights reserved |
+| Docs & theory text | this `README.md`, `SKILL.md`, the 「理论依据」 section and all theory wording | **Not covered by MIT**: licensed under CC BY 4.0 |
 
 ```
-© 2026 赵兴华 / Steven Zhao·China (ORCID 0009-0001-0512-1237). All rights reserved.
+© 2026 赵兴华 / Steven Zhao·China (ORCID 0009-0001-0512-1237). Theory texts licensed under CC BY 4.0.
 理论署名 (attribution) : LGD（Lifecycle Governance Doctrine / 全程治理论）— SynomosAI initiative
 名称状态 (name status)  : "SynomosAI" / "MedXpert" — 未申请实体注册、未申请商标注册
                         (not a registered legal entity; no trademark registered)
@@ -87,7 +87,7 @@ Real excerpt (`python uas-ops-checker.py --mtow 5`, arrays folded for readabilit
                     外锚 (external anchor): Sigstore Rekor logIndex 2883389783
 ```
 （上列为《LGD 对外表述规范》§3.2 统一块，**整体复制、未删改**。）
-**本包补充**：`uas-ops-checker.py` = MIT；本 `README.md` / `SKILL.md` 及其中理论文本不在任何代码许可覆盖范围内。
+**本包补充**：`uas-ops-checker.py` = MIT；本 `README.md` / `SKILL.md` 及其中理论文本按 CC BY 4.0 授权。
 
 ## 家族合集
 | 域 | 工具 | 大使 | 目录 |

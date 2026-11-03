@@ -11,7 +11,7 @@ author: 潘布达 (Buda Pan) @SynomosAI
 license: MIT
 compatibility: Cross-platform; zero external dependencies (stdlib only)
 metadata: {dependencies: "none"}
-license_scope: 代码（.py 文件）MIT；本 SKILL.md 与其中理论文本不在 MIT 覆盖范围内（见文末「License & attribution」）
+license_scope: 代码（.py 文件）MIT；本 SKILL.md 与其中理论文本按 CC BY 4.0 授权（见文末「License & attribution」）
 allowed-tools: Read, Glob, Grep, Write, Edit, WebFetch
 category: AI治理
 platforms: [windows, macos, linux]
@@ -45,7 +45,7 @@ risk_rationale: "门禁批量补丁默认 medium：调用 API/读写文件/本�
 
 > **品牌归属**：本技能隶属 **LGD「凡自治之物」** 治理理论线，采用**终版头像**（3D 金属红环 + 藏青盾 + LGD 字标 + 三律横杠 + 下弧铭文"有籍·有证·有门禁"，新魏体，1536×1536，永久定版）。
 > 同步挂载官方徽记「三律之盾」[lgd-shield-color.svg](lgd-shield-color.svg)（徽章程序 v1.0 · 母本 = LGD 项目号头像 B 系统化）。
-> 头像与徽记 © SynomosAI 2026；理论文本保留所有权利（DOI 10.5281/zenodo.22456647）。参照声明须回链：[LGD-theory](https://github.com/zhaoxinghua09-cell/lgd-theory）。
+> 头像与徽记 © SynomosAI 2026；理论文本 CC BY 4.0（DOI 10.5281/zenodo.22456647）。参照声明须回链：[LGD-theory](https://github.com/zhaoxinghua09-cell/lgd-theory）。
 
 # A³ 法则操作化 (a3-law-operational)
 
@@ -121,21 +121,21 @@ _让"AI 造 AI 三定律"从一句口号，变成动之前必过的三道关。_
 | 层 | 载体 | 许可 |
 |---|---|---|
 | 代码 | 本包无独立代码文件（纯文档/理论件） | — |
-| 文档与理论文本 | 本 `SKILL.md`、`README.md`、其中「理论依据」段与一切理论表述 | **不在 MIT 覆盖范围内**：保留所有权利（All rights reserved） |
+| 文档与理论文本 | 本 `SKILL.md`、`README.md`、其中「理论依据」段与一切理论表述 | **不在 MIT 覆盖范围内**：按 **CC BY 4.0** 授权（须保留署名） |
 
-> 即：**代码可依 MIT 使用与再分发；文档与理论文本不因代码许可而默认可自由再发布。**
+> 即：**代码可依 MIT 使用与再分发；文档与理论文本依 CC BY 4.0 使用，可复制、转载与演绎，须保留署名。**
 
 ```
-© 2026 SynomosAI. All rights reserved.
+© 2026 SynomosAI. Theory texts licensed under CC BY 4.0.
 理论署名 (attribution) : LGD（Lifecycle Governance Doctrine / 全程治理论）— SynomosAI initiative
 名称状态 (name status)  : "SynomosAI" / "MedXpert" — 未申请实体注册、未申请商标注册
                         (not a registered legal entity; no trademark registered)
 生产参考部署 (production reference, self-reported) : MedXpert
                     ← 非认证、非背书、非监管认可（not a certification or endorsement）
 代码许可 (code license) : 本包未附 LICENSE 文件（许可待定）
-                    本文本与理论表述不在任何代码许可覆盖范围内
+                    本文本与理论表述不在任何代码许可覆盖范围内，按 CC BY 4.0 授权（须保留署名）
 引用格式 (cite as)      : 本资产无 DOI
 ```
 （上列为《LGD 对外表述规范》§3.2 统一块，**整体复制、未删改**；发布/重提前须照最新版本复核。）
 
-**本包补充（包级许可事实）**：本包无独立代码文件（纯文档与理论文本件），整体**保留所有权利（All Rights Reserved）**；不适用任何代码许可（含 MIT / Apache-2.0）。
+**本包补充（包级许可事实）**：本包无独立代码文件（纯文档与理论文本件），整体按 **CC BY 4.0** 授权（须保留署名）；不适用任何代码许可（含 MIT / Apache-2.0）。

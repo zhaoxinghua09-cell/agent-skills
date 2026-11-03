@@ -8,7 +8,7 @@ copyright: SynomosAI
 license: MIT
 compatibility: Cross-platform; zero external dependencies (stdlib only)
 metadata: {dependencies: "none"}
-license_scope: 代码（.py 文件）MIT；本 SKILL.md 与其中理论文本不在 MIT 覆盖范围内（见文末「License & attribution」）
+license_scope: 代码（.py 文件）MIT；本 SKILL.md 与其中理论文本按 CC BY 4.0 授权（见文末「License & attribution」）
 allowed-tools: Read, Glob, Grep, Bash, Write, Edit
 category: 办公效率
 platforms: [WorkBuddy, QClaw, ima, Claude Code, Cursor]
@@ -248,7 +248,7 @@ python scripts/check_release.py <发布目录> <目标名>
 ## 版权与许可
 
 - © 2026 注册老炮 (MedXpert)。原创整理，采用 MIT 协议（详见随包 LICENSE.md）；软件依 LICENSE 使用，零数据收集。
-- **知识版权声明**：本作品汇集的方法论、对比分析、结构化知识与合成内容，其编排与原创表达归 注册老炮 (MedXpert) 所有；未经书面许可，不得复制、转载、摘编、转售或用于训练任何模型 / 商业系统。
+- **知识版权声明**：本作品汇集的方法论、对比分析、结构化知识与合成内容，其编排与原创表达归 注册老炮 (MedXpert) 所有；按 CC BY 4.0 可复制、转载、摘编、演绎与商用，须保留署名并标明是否修改；亦可用于模型训练。
 - **免责声明**：本作品按「现状」（AS IS）提供，不提供任何明示或暗示担保；使用风险由使用者自行承担，因使用所致任何损失作者不承担责任。
 
 ---
@@ -259,21 +259,21 @@ python scripts/check_release.py <发布目录> <目标名>
 | 层 | 载体 | 许可 |
 |---|---|---|
 | 代码 | `check_release.py` | **MIT** |
-| 文档与理论文本 | 本 `SKILL.md`、`README.md`、其中「理论依据」段与一切理论表述 | **不在 MIT 覆盖范围内**：保留所有权利（All rights reserved） |
+| 文档与理论文本 | 本 `SKILL.md`、`README.md`、其中「理论依据」段与一切理论表述 | **不在 MIT 覆盖范围内**：按 **CC BY 4.0** 授权（须保留署名） |
 
-> 即：**代码可依 MIT 使用与再分发；文档与理论文本不因代码许可而默认可自由再发布。**
+> 即：**代码可依 MIT 使用与再分发；文档与理论文本依 CC BY 4.0 使用，可复制、转载与演绎，须保留署名。**
 
 ```
-© 2026 赵兴华 / Steven Zhao·China (ORCID 0009-0001-0512-1237). All rights reserved.
+© 2026 赵兴华 / Steven Zhao·China (ORCID 0009-0001-0512-1237). Theory texts licensed under CC BY 4.0.
 理论署名 (attribution) : LGD（Lifecycle Governance Doctrine / 全程治理论）— SynomosAI initiative
 名称状态 (name status)  : "SynomosAI" / "MedXpert" — 未申请实体注册、未申请商标注册
                         (not a registered legal entity; no trademark registered)
 生产参考部署 (production reference, self-reported) : MedXpert
                     ← 非认证、非背书、非监管认可（not a certification or endorsement）
 代码许可 (code license) : 本包 = MIT (see LICENSE)
-                    本文本与理论表述不在任何代码许可覆盖范围内
+                    本文本与理论表述不在任何代码许可覆盖范围内，按 CC BY 4.0 授权（须保留署名）
 引用格式 (cite as)      : 本资产无 DOI
 ```
 （上列为《LGD 对外表述规范》§3.2 统一块，**整体复制、未删改**；发布/重提前须照最新版本复核。）
 
-**本包补充（包级许可事实）**：本包代码文件 `check_release.py` = **MIT**；本 `SKILL.md` / `README.md` 及其中的理论文本**不在任何代码许可（含 MIT / Apache-2.0）覆盖范围内**。
+**本包补充（包级许可事实）**：本包代码文件 `check_release.py` = **MIT**；本 `SKILL.md` / `README.md` 及其中的理论文本**不在任何代码许可（含 MIT / Apache-2.0）覆盖范围内**，按 **CC BY 4.0** 授权（须保留署名）。

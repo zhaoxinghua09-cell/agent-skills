@@ -20,4 +20,4 @@ python scripts/lgd_audit_dispatcher.py --verify --json-out evidence.json
 
 `openclaw plugins install clawhub:governanceos` (GovernanceOS wires this hub into the full SPEC → PLAN → GATE → AUDIT → EVO lifecycle).
 
-License: MIT (code) / all rights reserved (methodology text).
+License: MIT (code) / CC BY 4.0 (methodology text).
