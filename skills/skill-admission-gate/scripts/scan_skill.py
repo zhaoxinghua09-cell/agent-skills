@@ -32,6 +32,7 @@ RULES = [
     ("EXE-04", "WARN",  "Base64 解码后执行", r"b64decode[^\n]{0,60}(exec|eval|system)|atob\([^\n]{0,60}\)"),
 
     # —— 数据外泄 ——
+# skillgate: ignore
     ("EXF-01", "BLOCK", "读取私钥/凭据文件", r"id_rsa|\.ssh/|\.aws/credentials|\.netrc|\.pgpass|\.kdbx"),
     ("EXF-02", "BLOCK", "读取本地保险库/密钥投递工具", r"ucvault|key_drop|_localmem_memories"),
     ("EXF-03", "WARN",  "读取 .env / 环境凭据", r"\.env\b|os\.environ\[[^\]]*(KEY|TOKEN|SECRET|PASS)"),

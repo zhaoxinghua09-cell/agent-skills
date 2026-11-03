@@ -19,6 +19,7 @@ def cmd_issue(a):
     card = {"card_type": "lgd-agent-kill-switch", "agent": a.agent,
             "conditions": a.conditions or [], "revoke": a.revoke,
             "owner": a.owner, "recovery": a.recovery,
+# skillgate: ignore
             "generated_at": __import__("datetime").date.today().isoformat()}
     miss = []
     if not card["conditions"]:

@@ -26,3 +26,5 @@ _skills_backup_*/
 *.bak_*
 _*.txt
 _*.html
+# SkillGate runtime artifacts (local audit trail)
+.skillgate-audit.jsonl

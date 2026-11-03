@@ -1,0 +1,10 @@
+# agent-skills 聚合仓扫描配置
+# 红队演练技能与团队文档故意包含注入/越狱模式示例（教学与对抗测试用途），
+# 扫描时排除，避免误报；其余技能目录保持全量扫描。
+paths:
+  exclude:
+    - "skills/agent-redteam-kit/**"
+    - "skills/prompt-injection-drill/**"
+    - "skills/prompt-injection-shield/**"
+    - "skills/prompt-leak-scanner/**"
+    - "teams/**"

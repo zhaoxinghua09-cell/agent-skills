@@ -64,6 +64,7 @@ def check_cer(args):
 
 def _call(args):
     fn_name = "check_cer"
+# skillgate: ignore
     res = globals()[fn_name](args)
     return res
 

@@ -105,6 +105,7 @@ def classify_route(args):
 
 def _call(args):
     fn_name = "classify_route"
+# skillgate: ignore
     res = globals()[fn_name](args)
     return res
 

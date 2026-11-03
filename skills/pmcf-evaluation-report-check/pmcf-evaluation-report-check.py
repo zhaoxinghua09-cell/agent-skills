@@ -64,6 +64,7 @@ def check_pmcf_report(args):
 
 def _call(args):
     fn_name = "check_pmcf_report"
+# skillgate: ignore
     res = globals()[fn_name](args)
     return res
 

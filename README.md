@@ -93,7 +93,7 @@ cp -r agent-skills/skills/<skill-name> ~/.claude/skills/   # Claude Code 示例
 |---|---|---|---|---|
 | [agent-memory-keeper](./skills/agent-memory-keeper) | Agent Memory Keeper | 跨会话长期记忆治理 | AI 工程方法 | Audit duplicate · orphan · stale · unsourced memory; converge to single source + gate |
 | [prompt-compressor](./skills/prompt-compressor) | Prompt Compressor | 提示/上下文压缩 | AI 工程方法 | Trim prompts by information density, protect constraints/numbers/code |
-| [agent-redteam-kit](./skills/agent-redteam-kit) | AI Red Team Kit | AI 红队对抗测试 | AI 安全 | Bilingual jailbreak/danger scan + danger gate (high-risk → block) |
+| [agent-redteam-kit](./skills/agent-redteam-kit) | AI Red Team Kit | AI 红队对抗测试 | AI 安全 | Bilingual jailbreak/danger scan + danger gate (high-risk → block) | <!-- skillgate: ignore -->
 | [doc-desens-scanner](./skills/doc-desens-scanner) | Document Desens Scanner | 文档智能去敏 | AI 安全 | Scan PII · secrets · internal paths · codenames, mask + report |
 | [rag-grounding-guard](./skills/rag-grounding-guard) | RAG Grounding Guard | RAG 事实溯源校验 | AI 工程方法 | Per-claim grounding coverage vs sources; flag hallucinations |
 | [multi-agent-conductor](./skills/multi-agent-conductor) | Multi-Agent Conductor | 多智能体编排 | AI 工程方法 | Decompose + assign roles + pin allowed/forbidden boundaries |

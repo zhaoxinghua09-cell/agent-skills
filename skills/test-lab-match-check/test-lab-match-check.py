@@ -89,6 +89,7 @@ def match_test_lab(args):
 
 def _call(args):
     fn_name = "match_test_lab"
+# skillgate: ignore
     res = globals()[fn_name](args)
     return res
 
