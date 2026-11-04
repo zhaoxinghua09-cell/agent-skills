@@ -14,6 +14,7 @@ AI 团队「复盘→固化」进化飞轮。当某席数字员工完成一单�
 - `SKILL.md` — 主说明书
 - `AGENTS.md` — AI 代理说明书
 - `llms.txt` — AI 可读索引
+- `scripts/evolution_check.py` — 能力卡进化记录检查器（2026-11-04 新增，代码 MIT）
 - `LICENSE` / `LICENSE.md` — 许可声明
 
 <!-- 生成：2026-10-15 · agent-skills 骨架批量升级 -->

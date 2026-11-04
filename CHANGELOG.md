@@ -12,6 +12,11 @@
 
 - 20 个技能的脚本新增 `--selftest` 自检（临时夹具跑真实检查逻辑，断言「应过/应拦」两类判定，零第三方依赖）：`clin-eval-route-picker`、`contract-clause-check`、`contract-interact-checklist`、`csv-slice`、`data-export-check`、`data-minimizer`、`data-rights-guard`、`dir-organizer`、`disk-scan`、`doc-desens-scanner`、`dpapi-local-vault`、`dup-finder`、`eu-ai-act-companion`、`eval-bench-builder`、`evidence-chain-builder`、`evidence-chain-check`、`fact-check-guard`、`fin-reg-calc`、`fund-fee-calc`、`gov-disclosure-check`。普通调用行为不变（自检为纯附加）。注：`dpapi-local-vault` 的 DPAPI 加解密为 Windows 原语，非 Windows 平台自检以可逆测试封套替身该原语，存储/取回的解析、信封、标注与隐藏逻辑均实跑，自检输出中明示未实跑部分。
 
+### 新增（技能库优化 · agent-evolution 转实跑，2026-11-04，仓主批准）
+
+- `agent-evolution` 新增真实检查器 `scripts/evolution_check.py`（零依赖）：校验本技能流程第 5 步的回写产物——能力卡「进化记录」栏 / 进化日志的条目格式（`[YYYY-MM-DD] 沉淀：<目标> — <升级说明>`）、日期真实性与不晚于今天、同席去重与日期不递减、能力卡「进化记录」栏与席位标识的结构校验；`--selftest` 14 条断言（合规须过 + 坏日期/缺段/未来日期/重复/乱序/缺栏/空席位须拦，临时夹具）。SKILL.md 版本 1.1.0 → 1.2.0 并新增「配套检查器」节。随之 `lgd-evo --verify` 的唯一节点由 DOC-ONLY 转为真实 LIVE（LIVE=1，rc=0），空心枢纽自此有实跑节点。
+- `agent-evolution` 许可事实修订（同日，仓主批准）：SKILL.md 文末「本包补充（包级许可事实）」原称「本包无独立代码文件……不适用任何代码许可」，因新增上述代码已失实，修订为：文档与理论文本 CC BY 4.0 不变，新增代码按本仓代码层惯例 MIT；分层许可表「代码」行同步更新。§3.2 统一块系整体照录未删改，其中修订前状态的行以修订后的本包补充为准。技能 AGENTS.md 同步加修订注。
+
 ### 修复
 
 - `lgd-evo` 中枢 `--verify` 诚实化：唯一节点 `agent-evolution` 为纯文档技能（无可运行脚本），原实现报 `LIVE=0 / ERROR=0` 且退出码 0，呈「零实跑的全绿」。现分级为 `DOC-ONLY`（NOT VERIFIED，未实跑、未验证），`LIVE=0` 时打印 `HOLLOW` 警告并以退出码 1 收尾；`--json-out` 证据新增 `doc_only` 与 `hollow` 字段。

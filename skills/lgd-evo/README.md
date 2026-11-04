@@ -4,7 +4,7 @@ Thin dispatcher for the **EVO** phase of [GovernanceOS](https://github.com/zhaox
 
 ## Nodes (1)
 
-`agent-evolution` — self-improvement loop spec (registered/evidenced; doc-only state, no executable yet — graded DOC-ONLY / NOT VERIFIED by `--verify`).
+`agent-evolution` — self-improvement loop (registered/evidenced; since 2026-11-04 ships a runnable checker `scripts/evolution_check.py` for its capability-card evolution records — graded LIVE by `--verify` when the probe runs it clean).
 
 ## Usage
 

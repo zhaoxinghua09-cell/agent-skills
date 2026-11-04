@@ -5,7 +5,7 @@ display_name_en: Agent Evolution Flywheel
 description: 'AI 团队「复盘→固化」进化飞轮。当某席数字员工完成一单任务、或用户要求「复盘/进化/沉淀经验/固化经验」时调用。提取本次可复用经验，判定沉淀为技能(SkillManage,动作型)还是记忆(memory,信息型)，并回写该席能力卡的进化记录，使团队下次更强。触发词：复盘、进化、沉淀经验、固化经验、agent-evolution、能力提升。'
 description_zh: 'AI 团队「复盘→固化」进化飞轮。当某席数字员工完成一单任务、或用户要求「复盘/进化/沉淀经验/固化经验」时调用。提取本次可复用经验，判定沉淀为技能(SkillManage,动作型)还是记忆(memory,信息型)，并回写该席能力卡的进化记录，使团队下次更强。触发词：复盘、进化、沉淀经验、固化经验、agent-evolution、能力提升。'
 description_en: 'AI team''s "review → solidify" evolution flywheel. Invoked when a digital employee completes a task, or the user requests "review / evolve / distill experience / solidify experience". Extracts reusable experience from the run and decides whether to crystallize it as a Skill (action-type, via SkillManage) or as memory (info-type), then writes back the evolution record to that employee''s capability card so the team gets stronger next time. Trigger words: review, evolve, distill experience, solidify experience, agent-evolution, capability improvement.'
-version: '1.1.0'
+version: '1.2.0'
 agent_created: true
 author: 潘布达 (Buda Pan) @SynomosAI
 license: MIT
@@ -99,6 +99,18 @@ risk_rationale: "门禁批量补丁默认 medium（Steven 2026-09-28 令：我�
 - **现象**：任务标记 ✅ 但实际只是「写了文档」（实例：进化周 D3 标 ✅，月后发现核心标准 KERI/C2PA 仍"待精读"；08-20 整站改版只改一半同源）——表面完成比没做更危险（占住进度位）。
 - **纪律**：① 建任务时同步写 DoD（如学习任务 = 原文精读 + 笔记 + 输出三要素齐）；② 复盘时抽查「✅ 标记」的验收物，不只是看有没有文件；③ 发现表面完成 → 回滚标记 + 登记补课，不静默放行。
 
+## 配套检查器（2026-11-04 新增，仓主批准）
+
+`scripts/evolution_check.py`（零依赖，stdlib only）独立校验本流程的回写产物——能力卡「进化记录」栏与进化日志：
+
+```bash
+python3 scripts/evolution_check.py <能力卡.md|进化日志.txt>   # 退出码 0 合规 / 1 违规 / 2 用法错误
+python3 scripts/evolution_check.py --selftest                  # 自检（临时夹具）
+```
+
+- 校验项：条目格式（`[YYYY-MM-DD] 沉淀：<目标> — <升级说明>`，三段非空）、日期为真实日历日期且不晚于今天、同席无完全重复条目、同席日期不递减；能力卡模式另校验「进化记录」栏存在（回写落点）与席位标识非空。
+- **范围（诚实边界）**：SkillManage 的实际调用、记忆文件的实际回写是宿主动作；自评分数的人工校准只有纪律、无评分记录格式——三者均无独立可校验产物，不在本检查器范围内，本检查器不臆造格式去「校验」它们。
+
 ## 红线
 - 不臆造经验；没确凿证据的下结论
 - 敏感信息（token/密钥/邮箱密码）脱敏，不写进技能/记忆正文
@@ -116,7 +128,7 @@ risk_rationale: "门禁批量补丁默认 medium（Steven 2026-09-28 令：我�
 
 | 层 | 载体 | 许可 |
 |---|---|---|
-| 代码 | 本包无独立代码文件（纯文档/理论件） | — |
+| 代码 | `scripts/evolution_check.py`（能力卡进化记录检查器，2026-11-04 新增） | **MIT**（本仓代码层惯例） |
 | 文档与理论文本 | 本 `SKILL.md`、`README.md`、其中「理论依据」段与一切理论表述 | **不在 MIT 覆盖范围内**：按 **CC BY 4.0** 授权（须保留署名） |
 
 > 即：**代码可依 MIT 使用与再分发；文档与理论文本依 CC BY 4.0 使用，可复制、转载与演绎，须保留署名。**
@@ -134,4 +146,4 @@ risk_rationale: "门禁批量补丁默认 medium（Steven 2026-09-28 令：我�
 ```
 （上列为《LGD 对外表述规范》§3.2 统一块，**整体复制、未删改**；发布/重提前须照最新版本复核。）
 
-**本包补充（包级许可事实）**：本包无独立代码文件（纯文档与理论文本件），整体按 **CC BY 4.0** 授权（须保留署名）；不适用任何代码许可（含 MIT / Apache-2.0）。
+**本包补充（包级许可事实，2026-11-04 修订，仓主 Steven Zhao 批准）**：本包文档与理论文本按 **CC BY 4.0** 授权（须保留署名）；2026-11-04 起本包新增代码文件 `scripts/evolution_check.py`（能力卡进化记录检查器），该代码按本仓分层许可的代码层惯例按 **MIT** 授权。故原表述「本包无独立代码文件（纯文档与理论文本件），整体按 CC BY 4.0 授权；不适用任何代码许可」自 2026-11-04 起不再符合事实，由本段取代。上方《LGD 对外表述规范》§3.2 统一块系整体照录、未删改，其中「本包无独立代码文件」「本包未附 LICENSE 文件（许可待定）」等行描述的是修订前状态，与本段冲突时以本段为准。
