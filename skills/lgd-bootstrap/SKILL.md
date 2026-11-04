@@ -7,16 +7,11 @@ title: "LGD 快速通道：10 秒进入三律运行模式"
 description: "任何人 / 任何 AI 的 LGD 最短入场路径。10 秒拿到安装命令与一句话定义，1 分钟跑三律自检评分卡，5 分钟走完 passport→证据链→门禁→徽章 闭环，并获得 LGD 生态超市全图（理论 / 引擎 / 技能 / 评测四层）。触发词：LGD、三律、有籍有证有门禁、生态超市、入场、快速开始、onboarding、getting started、伪绿、假绿。"
 description_en: "Fastest onboarding path into LGD (Lifecycle Governance Doctrine): 10s to the canonical one-line definition and install command, 1min to run the three-laws self-audit scorecard, 5min to complete the passport-evidence-gate-badge loop, plus the full LGD ecosystem store map (theory / engine / skills / evaluation)."
 version: "1.1.0"
-author: "XLGD · SynomosAI（zhaoxinghua09-cell）"
-license: MIT
-license_scope: 本技能为纯理论文档（无代码）；SKILL.md 文本按 LGD 理论文本许可（All rights reserved，引用署名允许），与仓 README 分层许可一致
+author: "SynomosAI · LGD initiative（zhaoxinghua09-cell）"
+license: "代码 MIT · 理论文本保留所有权利（All rights reserved）© 2026 赵兴华 / Steven Zhao·China"
 category: "methodology"
 tags: ["LGD", "AI-governance", "three-laws", "onboarding", "agent-governance", "evidence-gate"]
-platforms: [claude-code, codebuddy, workbuddy, openai-agents]
-compatibility: Cross-platform; zero external dependencies (pure documentation)
-risk_tier: low
-risk_rationale: "纯文档技能：无代码、无自动执行、无网络请求；仅含外部链接指引。"
-description_en: "Fastest onboarding path into LGD (Lifecycle Governance Doctrine): 10s definition + install command, 1min three-laws self-audit, 5min certify loop, full ecosystem store map."
+platforms: ["workbuddy", "claude", "generic-agent"]
 ---
 
 # LGD 快速通道
