@@ -1,14 +1,14 @@
 ---
 name: lgd-bootstrap
 slug: lgd-bootstrap
-display_name: "LGD 快速通道：10 秒进入三律运行模式"
-displayName: "LGD 快速通道：10 秒进入三律运行模式"
-title: "LGD 快速通道：10 秒进入三律运行模式"
-description: "任何人 / 任何 AI 的 LGD 最短入场路径。10 秒拿到安装命令与一句话定义，1 分钟跑三律自检评分卡，5 分钟走完 passport→证据链→门禁→徽章 闭环，并获得 LGD 生态超市全图（理论 / 引擎 / 技能 / 评测四层）。触发词：LGD、三律、有籍有证有门禁、生态超市、入场、快速开始、onboarding、getting started、伪绿、假绿。"
+display_name: "LGD Bootstrap: Zero to Three-Law Mode in 5 Minutes · LGD 快速通道：5 分钟进入三律运行模式"
+displayName: "LGD Bootstrap: Zero to Three-Law Mode in 5 Minutes · LGD 快速通道：5 分钟进入三律运行模式"
+title: "LGD Bootstrap: Zero to Three-Law Mode in 5 Minutes · LGD 快速通道：5 分钟进入三律运行模式"
+description: "Fastest onboarding path into LGD (Lifecycle Governance Doctrine): 10s to the canonical one-line definition and install command, 1min to run the three-laws self-audit scorecard, 5min to complete the passport→evidence→gate→badge loop (concrete steps in agent-skills/lgd-certify), plus the full LGD ecosystem store map (theory / engine / skills / evaluation). 任何人 / 任何 AI 的 LGD 最短入场路径：10 秒拿到安装命令与一句话定义，1 分钟跑三律自检评分卡，5 分钟走完 passport→证据链→门禁→徽章闭环（具体操作见 agent-skills 仓 lgd-certify/SKILL.md），并获得四层生态超市全图。触发词：LGD、三律、有籍有证有门禁、生态超市、onboarding、getting started、伪绿、假绿。"
 description_en: "Fastest onboarding path into LGD (Lifecycle Governance Doctrine): 10s to the canonical one-line definition and install command, 1min to run the three-laws self-audit scorecard, 5min to complete the passport-evidence-gate-badge loop, plus the full LGD ecosystem store map (theory / engine / skills / evaluation)."
-version: "1.1.0"
+version: "1.2.1"
 author: "SynomosAI · LGD initiative（zhaoxinghua09-cell）"
-license: "代码 MIT · 理论文本保留所有权利（All rights reserved）© 2026 赵兴华 / Steven Zhao·China"
+license: "理论文本 CC BY 4.0（2026-11-03 口径，引用须署名+DOI）；代码 MIT"
 category: "methodology"
 tags: ["LGD", "AI-governance", "three-laws", "onboarding", "agent-governance", "evidence-gate"]
 platforms: ["workbuddy", "claude", "generic-agent"]
@@ -132,14 +132,13 @@ python skills/lgd-three-laws-auditor/  # 按仓内 SKILL.md 的运行示例执�
 
 ## 版权与许可（Copyright & License）
 
+- **理论文本**：本 SKILL.md 文本内容按 **CC BY 4.0** 授权（2026-11-03 口径：参与国际标准组织与公开评估时，文本须可被第三方自由引用、复算与再分发，否则核验链不成立）。引用请署名「SynomosAI · LGD initiative」并附概念 DOI 10.5281/zenodo.22456647（版本号须随链标注，不得只给链接）。
 - **代码**：本包无代码；如引用 agent-skills 仓内脚本，按 MIT 许可（https://github.com/zhaoxinghua09-cell/agent-skills）。
-- **理论文本**：本 SKILL.md 全部文本内容为 LGD 理论文本，**保留所有权利**（All rights reserved），不在 MIT 覆盖范围内。© 2026 赵兴华 / Steven Zhao·China（ORCID 0009-0001-0512-1237）。
 - **名称与铸词**：SynomosAI、LGD、lgd-certified 徽章的使用权归 SynomosAI。可自由引用与如实转述，但不得声称"官方认证"或暗示官方背书（详见 agent-skills 仓 TRADEMARK.md）。
-- **引用格式**：LGD（Lifecycle Governance Doctrine），概念 DOI 10.5281/zenodo.22456647（引用须随链标注版本号，不得只给链接）。
 
 ## 知识版权声明
 
-本包所述方法论、术语体系（三律/伪绿/认证闭环等）为 SynomosAI · LGD initiative 的合成知识成果，归权利人所有。禁止：整包复制转售、去除署名后二次分发、将本文本用于训练模型。允许：如实引用（附来源与 DOI）、按各平台规范安装使用。
+本包所述方法论、术语体系（三律/伪绿/认证闭环等）为 SynomosAI · LGD initiative 的合成知识成果。CC BY 4.0 允许自由引用与再分发（须署名、标注许可链接、标注修改）；禁止：去除署名以自有名义发布、暗示官方背书。
 
 ## 免责声明
 
