@@ -6,8 +6,81 @@ def sha_of(path, full):
         h.update(f.read(65536) if not full else f.read())
     return h.hexdigest()
 
+
+def run_selftest():
+    """自检：临时目录内跑真实 sha_of()/main()——同内容文件须成一组重复且未删时
+    rc=1（须拦）；--apply 须删多余保留首个 rc=0、无重复目录须 rc=0（须过）。
+    只用临时目录。"""
+    import contextlib, io, tempfile
+    passed = failed = 0
+
+    def check(name, cond):
+        nonlocal passed, failed
+        if cond:
+            passed += 1
+        else:
+            failed += 1
+            print("  [FAIL] " + name)
+
+    def call_main(argv):
+        old = sys.argv
+        sys.argv = ["dup_finder.py"] + argv
+        buf = io.StringIO()
+        code = 0
+        try:
+            with contextlib.redirect_stdout(buf), contextlib.redirect_stderr(io.StringIO()):
+                main()
+        except SystemExit as e:
+            code = e.code if isinstance(e.code, int) else 1
+        finally:
+            sys.argv = old
+        return code, buf.getvalue()
+
+    def fixture(td):
+        data = b"hello-lgd" * 100
+        sub = os.path.join(td, "sub")
+        os.makedirs(sub)
+        for p in (os.path.join(td, "a.txt"), os.path.join(td, "b.txt"),
+                  os.path.join(sub, "d.txt")):
+            with open(p, "wb") as f:
+                f.write(data)
+        with open(os.path.join(td, "c.txt"), "wb") as f:
+            f.write(b"unique-content")
+        return data
+
+    with tempfile.TemporaryDirectory() as td:
+        data = fixture(td)
+        check("sha_of 同内容同哈希、异内容异哈希",
+              sha_of(os.path.join(td, "a.txt"), True)
+              == sha_of(os.path.join(td, "b.txt"), True)
+              != sha_of(os.path.join(td, "c.txt"), True))
+        code, out = call_main(["--dir", td, "--json"])
+        d = json.loads(out)
+        check("报告模式：一组 3 份重复、waste=2 份、rc=1",
+              code == 1 and d["groups"] == 1 and len(d["detail"][0]) == 3
+              and d["waste_bytes"] == 2 * len(data) and d["removed"] == 0)
+    with tempfile.TemporaryDirectory() as td:
+        fixture(td)
+        code, out = call_main(["--dir", td, "--apply", "--json"])
+        d = json.loads(out)
+        left = [p for p in (os.path.join(td, "a.txt"), os.path.join(td, "b.txt"),
+                            os.path.join(td, "sub", "d.txt")) if os.path.isfile(p)]
+        check("--apply 删 2 留 1 且 rc=0",
+              code == 0 and d["removed"] == 2 and len(left) == 1)
+    with tempfile.TemporaryDirectory() as td:
+        with open(os.path.join(td, "only.txt"), "wb") as f:
+            f.write(b"single")
+        code, out = call_main(["--dir", td, "--json"])
+        d = json.loads(out)
+        check("无重复目录 rc=0 且 groups=0", code == 0 and d["groups"] == 0)
+    print(f"SELFTEST: {passed} passed, {failed} failed — {'PASS' if failed == 0 else 'FAIL'}")
+    return 0 if failed == 0 else 1
+
 def main():
+    if "--selftest" in sys.argv[1:]:
+        sys.exit(run_selftest())
     ap = argparse.ArgumentParser(description="dup-finder · 重复文件查找（默认只报告，--apply 删多余）")
+    ap.add_argument("--selftest", action="store_true", help="自检（临时夹具，不触碰真实文件）")
     ap.add_argument("--dir", required=True)
     ap.add_argument("--min-size", type=int, default=0, help="忽略小于该KB的文件")
     ap.add_argument("--apply", action="store_true", help="删除每组重复（保留首个）")

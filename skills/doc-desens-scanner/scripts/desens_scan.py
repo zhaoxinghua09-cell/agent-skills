@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """去敏扫描器：扫 PII/密钥/内部路径/内部项目代号，打码并输出脱敏清单。零依赖。"""
-import argparse, json, pathlib, re
+import argparse, json, pathlib, re, sys
 
 RULES = [
     ("手机号", re.compile(r"1[3-9]\d{9}")),
@@ -37,8 +37,56 @@ def mask_text(text, hits, mask):
         out = out[:pos] + mask + out[pos + len(frag):]
     return out
 
+
+def run_selftest():
+    """自检：跑真实 scan()/mask_text()/main()——手机号/邮箱/密钥须被命中并打码
+    （须拦）；干净文本须零命中且 main 报告「未发现敏感项」（须过）。
+    只用内置夹具文本。"""
+    import contextlib, io
+    passed = failed = 0
+
+    def check(name, cond):
+        nonlocal passed, failed
+        if cond:
+            passed += 1
+        else:
+            failed += 1
+            print("  [FAIL] " + name)
+
+    def call_main(argv):
+        old = sys.argv
+        sys.argv = ["desens_scan.py"] + argv
+        buf = io.StringIO()
+        code = 0
+        try:
+            with contextlib.redirect_stdout(buf), contextlib.redirect_stderr(io.StringIO()):
+                main()
+        except SystemExit as e:
+            code = e.code if isinstance(e.code, int) else 1
+        finally:
+            sys.argv = old
+        return code, buf.getvalue()
+
+    hits = scan("联系电话 13812345678，邮箱 a@b.com")
+    types = {n for n, _, _ in hits}
+    check("手机号与邮箱被命中", "手机号" in types and "邮箱" in types)
+    hits2 = scan("配置 api_key=SECRETVALUE123 泄露")
+    check("密钥模式被命中", any(n == "密钥" for n, _, _ in hits2))
+    probe = "电话 13812345678 备用"
+    masked = mask_text(probe, scan(probe), "***")
+    check("打码后原文消失且其余文本保留",
+          "13812345678" not in masked and "备用" in masked and "***" in masked)
+    check("干净文本零命中", scan("这是一段普通的工作总结，没有敏感信息") == [])
+    code, out = call_main(["--text", "这是一段普通的工作总结"])
+    check("main 干净文本报告未发现", code == 0 and "未发现敏感项" in out)
+    print(f"SELFTEST: {passed} passed, {failed} failed — {'PASS' if failed == 0 else 'FAIL'}")
+    return 0 if failed == 0 else 1
+
 def main():
+    if "--selftest" in sys.argv[1:]:
+        sys.exit(run_selftest())
     ap = argparse.ArgumentParser()
+    ap.add_argument("--selftest", action="store_true", help="自检（临时夹具，不触碰真实文件）")
     g = ap.add_mutually_exclusive_group(required=True)
     g.add_argument("--text")
     g.add_argument("--file")

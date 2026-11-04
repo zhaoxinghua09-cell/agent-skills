@@ -81,8 +81,61 @@ def route_eu(a, warns):
     return {"market": "EU MDR", "route": route, "basis": basis, "evidence": evidence, "notes": warns}
 
 
+
+def run_selftest():
+    """自检：跑真实 main() 判定树——I 类豁免/目录免临床/同品种/EU III 类临床调查
+    四条路径须命中（须过）；缺分类与 WET 冲突两类入参错误须被结构化拦下 rc=1（须拦）。
+    不读外部文件。"""
+    import contextlib, io
+    passed = failed = 0
+
+    def check(name, cond):
+        nonlocal passed, failed
+        if cond:
+            passed += 1
+        else:
+            failed += 1
+            print("  [FAIL] " + name)
+
+    def run(argv):
+        old = sys.argv
+        sys.argv = ["clin_eval_route_picker.py"] + argv
+        buf = io.StringIO()
+        code = 0
+        try:
+            with contextlib.redirect_stdout(buf), contextlib.redirect_stderr(io.StringIO()):
+                main()
+        except SystemExit as e:
+            code = e.code if isinstance(e.code, int) else 1
+        finally:
+            sys.argv = old
+        return code, buf.getvalue()
+
+    code, out = run(["--market", "nmpa", "--nmpa-class", "I", "--json"])
+    r = json.loads(out)["routes"][0]
+    check("NMPA I 类→无需临床评价 rc=0", code == 0 and "无需临床评价" in r["route"])
+    code, out = run(["--market", "nmpa", "--nmpa-class", "II", "--in-catalog", "yes", "--json"])
+    r = json.loads(out)["routes"][0]
+    check("NMPA II 类+目录内→免临床评价路径", code == 0 and "免临床评价路径" in r["route"])
+    code, out = run(["--market", "nmpa", "--nmpa-class", "III", "--in-catalog", "no",
+                     "--eq-data", "yes", "--json"])
+    r = json.loads(out)["routes"][0]
+    check("NMPA III 类+同品种数据→同品种路径", code == 0 and "同品种临床评价路径" in r["route"])
+    code, out = run(["--market", "eu", "--eu-class", "III", "--json"])
+    r = json.loads(out)["routes"][0]
+    check("EU III 类→临床调查为主路径", code == 0 and "临床调查为主路径" in r["route"])
+    code, out = run(["--market", "nmpa"])
+    check("缺分类→CE_E_MISSING rc=1", code == 1 and "CE_E_MISSING" in out)
+    code, out = run(["--market", "eu", "--eu-class", "III", "--wet", "yes"])
+    check("WET 与 III 类冲突→CE_E_CONFLICT rc=1", code == 1 and "CE_E_CONFLICT" in out)
+    print(f"SELFTEST: {passed} passed, {failed} failed — {'PASS' if failed == 0 else 'FAIL'}")
+    return 0 if failed == 0 else 1
+
 def main():
+    if "--selftest" in sys.argv[1:]:
+        sys.exit(run_selftest())
     ap = argparse.ArgumentParser(prog="clin_eval_route_picker", description="临床评价路径确定性选择器（NMPA/EU MDR）")
+    ap.add_argument("--selftest", action="store_true", help="自检（临时夹具，不触碰真实文件）")
     ap.add_argument("--market", choices=["nmpa", "eu", "both"], default="nmpa")
     ap.add_argument("--nmpa-class", choices=["I", "II", "III", "unknown"], default="unknown")
     ap.add_argument("--eu-class", choices=["I", "IIa", "IIb", "III", "unknown"], default="unknown")

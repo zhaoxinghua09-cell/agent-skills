@@ -44,8 +44,62 @@ def run(text, names):
     return text, counts
 
 
+
+def run_selftest():
+    """自检：跑真实 run()/main() 脱敏——手机号/邮箱/人名/证件号须被打码且计数对
+    （须过原样保留干净文本、须拦敏感原文）；证件号不得被长号规则二次误吞。
+    只用内置夹具文本。注：模块级 run() 即本技能脱敏逻辑，自检的主入口驱动改名 call_main。"""
+    import contextlib, io
+    passed = failed = 0
+
+    def check(name, cond):
+        nonlocal passed, failed
+        if cond:
+            passed += 1
+        else:
+            failed += 1
+            print("  [FAIL] " + name)
+
+    def call_main(argv):
+        old = sys.argv
+        sys.argv = ["data_minimizer.py"] + argv
+        buf = io.StringIO()
+        code = 0
+        try:
+            with contextlib.redirect_stdout(buf), contextlib.redirect_stderr(io.StringIO()):
+                main()
+        except SystemExit as e:
+            code = e.code if isinstance(e.code, int) else 1
+        finally:
+            sys.argv = old
+        return code, buf.getvalue()
+
+    masked, counts = run("联系张三 13812345678，邮箱 zhang@example.com", ["张三"])
+    check("手机号打码且计数=1",
+          "138****78" in masked and "13812345678" not in masked and counts.get("phone") == 1)
+    check("邮箱打码且计数=1",
+          "〔邮箱〕" in masked and "zhang@example.com" not in masked and counts.get("email") == 1)
+    check("人名打码且计数=1",
+          "〔人名〕" in masked and "张三" not in masked and counts.get("name") == 1)
+    masked2, counts2 = run("证件号 110101199001011234 登记", [])
+    check("证件号打码计数=1 且不被长号误吞",
+          counts2.get("idcard") == 1 and counts2.get("longnum", 0) == 0
+          and "110101199001011234" not in masked2)
+    masked3, counts3 = run("普通文本，没有任何敏感信息", [])
+    check("干净文本原样通过且零命中",
+          masked3 == "普通文本，没有任何敏感信息" and all(v == 0 for v in counts3.values()))
+    code, out = call_main(["--text", "电话 13812345678", "--json"])
+    d = json.loads(out)
+    check("main --json 与 run() 结果一致",
+          code == 0 and "138****78" in d["masked_text"] and d["counts"].get("phone") == 1)
+    print(f"SELFTEST: {passed} passed, {failed} failed — {'PASS' if failed == 0 else 'FAIL'}")
+    return 0 if failed == 0 else 1
+
 def main():
+    if "--selftest" in sys.argv[1:]:
+        sys.exit(run_selftest())
     ap = argparse.ArgumentParser(description="给AI前脱敏器 · 发给 AI 前先脱敏")
+    ap.add_argument("--selftest", action="store_true", help="自检（临时夹具，不触碰真实文件）")
     src = ap.add_mutually_exclusive_group(required=True)
     src.add_argument("--file", help="输入文件")
     src.add_argument("--text", help="输入文本（内联 / @文件 / 纯路径）")

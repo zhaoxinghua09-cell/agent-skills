@@ -17,8 +17,66 @@ def cat_of(ext):
             return cat
     return "其他"
 
+
+def run_selftest():
+    """自检：临时目录内跑真实 cat_of()/main()——后缀分类须正确、预览模式只计划
+    不动盘（须过）；--apply 须真移动到分类目录，目录不存在须 rc=2（须拦）。
+    只用临时目录。"""
+    import contextlib, io, tempfile
+    passed = failed = 0
+
+    def check(name, cond):
+        nonlocal passed, failed
+        if cond:
+            passed += 1
+        else:
+            failed += 1
+            print("  [FAIL] " + name)
+
+    def call_main(argv):
+        old = sys.argv
+        sys.argv = ["dir_organizer.py"] + argv
+        buf = io.StringIO()
+        code = 0
+        try:
+            with contextlib.redirect_stdout(buf), contextlib.redirect_stderr(io.StringIO()):
+                main()
+        except SystemExit as e:
+            code = e.code if isinstance(e.code, int) else 1
+        finally:
+            sys.argv = old
+        return code, buf.getvalue()
+
+    check("cat_of 后缀分类",
+          cat_of(".jpg") == "图片" and cat_of(".py") == "代码" and cat_of(".xyz") == "其他")
+    with tempfile.TemporaryDirectory() as td:
+        for fn in ("a.jpg", "b.pdf", "c.zzz"):
+            with open(os.path.join(td, fn), "wb") as f:
+                f.write(b"x")
+        code, out = call_main(["--dir", td, "--json"])
+        d = json.loads(out)
+        plan = {p["file"]: p["to"] for p in d["plan"]}
+        check("预览模式计划正确且不动盘",
+              code == 0 and d["mode"] == "dry-run" and d["moved"] == 0
+              and plan == {"a.jpg": "图片", "b.pdf": "文档", "c.zzz": "其他"}
+              and os.path.isfile(os.path.join(td, "a.jpg")))
+        code, out = call_main(["--dir", td, "--apply", "--json"])
+        d = json.loads(out)
+        check("--apply 真移动到分类目录",
+              code == 0 and d["moved"] == 3
+              and os.path.isfile(os.path.join(td, "图片", "a.jpg"))
+              and os.path.isfile(os.path.join(td, "文档", "b.pdf"))
+              and os.path.isfile(os.path.join(td, "其他", "c.zzz")))
+    code, _ = call_main(["--dir", "/nonexistent-dir-xyz-123"])
+    check("目录不存在 rc=2", code == 2)
+    print(f"SELFTEST: {passed} passed, {failed} failed — {'PASS' if failed == 0 else 'FAIL'}")
+    return 0 if failed == 0 else 1
+
 def main():
+    if "--selftest" in sys.argv[1:]:
+        sys.exit(run_selftest())
     ap = argparse.ArgumentParser(description="dir-organizer · 按类型整理目录（默认预览，--apply 才移动）")
+    ap.add_argument("--selftest", action="store_true", help="自检（临时夹具，不触碰真实文件）")
     ap.add_argument("--dir", required=True)
     ap.add_argument("--apply", action="store_true", help="执行移动（缺省只预览）")
     ap.add_argument("--json", action="store_true")

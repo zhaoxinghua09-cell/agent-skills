@@ -8,7 +8,7 @@
   python eu_ai_act_nav.py --use "招聘简历筛选AI" --role provider
   python eu_ai_act_nav.py --use "客服聊天机器人" --role deployer
 """
-import argparse
+import argparse, sys
 
 # 禁止类关键词
 BANNED = ["社会评分", "social scoring", "实时远程生物识别", "realtime biometric", "潜意识操纵", "subliminal"]
@@ -51,8 +51,57 @@ def classify(use: str):
     return "minimal", "最小风险：基本无强制义务，建议自愿守约"
 
 
+
+def run_selftest():
+    """自检：跑真实 classify()/main() 风险判定——禁止/高/有限/最小四级须各命中
+    对应用例（须过类与须拦类兼具：禁止类与高风险不得漏判）；空用例须被
+    argparse 拦下 rc=2。只用内置夹具文本。"""
+    import contextlib, io
+    passed = failed = 0
+
+    def check(name, cond):
+        nonlocal passed, failed
+        if cond:
+            passed += 1
+        else:
+            failed += 1
+            print("  [FAIL] " + name)
+
+    def call_main(argv):
+        old = sys.argv
+        sys.argv = ["eu_ai_act_nav.py"] + argv
+        buf = io.StringIO()
+        code = 0
+        try:
+            with contextlib.redirect_stdout(buf), contextlib.redirect_stderr(io.StringIO()):
+                main()
+        except SystemExit as e:
+            code = e.code if isinstance(e.code, int) else 1
+        finally:
+            sys.argv = old
+        return code, buf.getvalue()
+
+    lvl, _ = classify("社会评分系统")
+    check("社会评分→禁止类 unacceptable", lvl == "unacceptable")
+    lvl, _ = classify("招聘简历筛选AI")
+    check("招聘筛选→高风险 high", lvl == "high")
+    lvl, _ = classify("客服聊天机器人")
+    check("聊天机器人→有限风险 limited", lvl == "limited")
+    lvl, _ = classify("天气播报助手")
+    check("天气播报→最小风险 minimal", lvl == "minimal")
+    code, out = call_main(["--use", "医疗诊断辅助软件", "--role", "provider"])
+    check("main 高风险用例输出 high 与提供方义务",
+          code == 0 and "risk level = high" in out and "合格评定" in out)
+    code, _ = call_main(["--use", "  "])
+    check("空用例→argparse 拦下 rc=2", code == 2)
+    print(f"SELFTEST: {passed} passed, {failed} failed — {'PASS' if failed == 0 else 'FAIL'}")
+    return 0 if failed == 0 else 1
+
 def main():
+    if "--selftest" in sys.argv[1:]:
+        sys.exit(run_selftest())
     ap = argparse.ArgumentParser()
+    ap.add_argument("--selftest", action="store_true", help="自检（临时夹具，不触碰真实文件）")
     ap.add_argument("--use", required=True, help="用例描述")
     ap.add_argument("--role", default="provider", help="provider/deployer/importer/distributor")
     args = ap.parse_args()

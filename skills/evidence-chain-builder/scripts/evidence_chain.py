@@ -66,8 +66,59 @@ def fmt(claim, parsed, score, unsupported, src):
     return "\n".join(L)
 
 
+
+def run_selftest():
+    """自检：跑真实 parse_evidence()/build()/main()——全可验证证据须 score=100
+    （须过）；仅不可验证证据须 score=0 并标未支撑（须拦）；混合证据 50 分边界
+    须不标未支撑。只用内置夹具。"""
+    import contextlib, io
+    passed = failed = 0
+
+    def check(name, cond):
+        nonlocal passed, failed
+        if cond:
+            passed += 1
+        else:
+            failed += 1
+            print("  [FAIL] " + name)
+
+    def call_main(argv):
+        old = sys.argv
+        sys.argv = ["evidence_chain.py"] + argv
+        buf = io.StringIO()
+        code = 0
+        try:
+            with contextlib.redirect_stdout(buf), contextlib.redirect_stderr(io.StringIO()):
+                main()
+        except SystemExit as e:
+            code = e.code if isinstance(e.code, int) else 1
+        finally:
+            sys.argv = old
+        return code, buf.getvalue()
+
+    e = parse_evidence("2024年报@official:统计局")
+    check("解析 @official:来源",
+          e == {"text": "2024年报", "type": "official", "source": "统计局"})
+    e = parse_evidence("某人口头说法")
+    check("无标记默认 assertion", e["type"] == "assertion" and e["source"] == "")
+    parsed, score, unsup = build("论断X", ["证据一@official:统计局", "证据二@data:数据库"])
+    check("全可验证证据→score=100 不标未支撑",
+          score == 100 and unsup is False and len(parsed) == 2)
+    parsed, score, unsup = build("论断X", ["内部备忘@internal:项目组"])
+    check("仅不可验证证据→score=0 标未支撑", score == 0 and unsup is True)
+    code, out = call_main(["--claim", "论断X", "--evidences",
+                           "e1@official:s1||e2@assertion", "--json"])
+    d = json.loads(out)
+    check("main 混合证据→score=50 边界不标未支撑",
+          code == 0 and d["score"] == 50 and d["unsupported"] is False)
+    print(f"SELFTEST: {passed} passed, {failed} failed — {'PASS' if failed == 0 else 'FAIL'}")
+    return 0 if failed == 0 else 1
+
 def main():
+    if "--selftest" in sys.argv[1:]:
+        sys.exit(run_selftest())
     ap = argparse.ArgumentParser(description="AI 论断有证证据链（LGD-II）")
+    ap.add_argument("--selftest", action="store_true", help="自检（临时夹具，不触碰真实文件）")
     ap.add_argument("--claim", help="待证论断")
     ap.add_argument("--evidences", nargs="+", help="证据（可多条，或用 || 分隔）；可带 @类型:来源 后缀")
     ap.add_argument("--from", dest="from_file", help="JSON：{claim, evidences:[{text,source,type}]}")

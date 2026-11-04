@@ -10,8 +10,61 @@ def dir_size(path):
                 pass
     return total
 
+
+def run_selftest():
+    """自检：临时目录树上跑真实 dir_size()/main()——递归求和与 Top 文件/目录
+    须与夹具字节数一致（须过）；目录不存在须 rc=2（须拦）。只用临时目录。"""
+    import contextlib, io, tempfile
+    passed = failed = 0
+
+    def check(name, cond):
+        nonlocal passed, failed
+        if cond:
+            passed += 1
+        else:
+            failed += 1
+            print("  [FAIL] " + name)
+
+    def call_main(argv):
+        old = sys.argv
+        sys.argv = ["disk_scan.py"] + argv
+        buf = io.StringIO()
+        code = 0
+        try:
+            with contextlib.redirect_stdout(buf), contextlib.redirect_stderr(io.StringIO()):
+                main()
+        except SystemExit as e:
+            code = e.code if isinstance(e.code, int) else 1
+        finally:
+            sys.argv = old
+        return code, buf.getvalue()
+
+    with tempfile.TemporaryDirectory() as td:
+        sub = os.path.join(td, "sub")
+        os.makedirs(sub)
+        with open(os.path.join(td, "f1.bin"), "wb") as f:
+            f.write(b"x" * 1000)
+        with open(os.path.join(sub, "f2.bin"), "wb") as f:
+            f.write(b"y" * 2000)
+        check("dir_size 递归求和=3000", dir_size(td) == 3000)
+        code, out = call_main(["--dir", td, "--json"])
+        d = json.loads(out)
+        check("main total_bytes=3000 且最大文件为 sub/f2.bin",
+              code == 0 and d["total_bytes"] == 3000
+              and d["top_files"][0]["bytes"] == 2000
+              and d["top_files"][0]["path"].endswith("f2.bin"))
+        check("top_dirs 含 sub=2000",
+              any(x["path"] == "sub" and x["bytes"] == 2000 for x in d["top_dirs"]))
+    code, _ = call_main(["--dir", "/nonexistent-dir-xyz-123"])
+    check("目录不存在 rc=2", code == 2)
+    print(f"SELFTEST: {passed} passed, {failed} failed — {'PASS' if failed == 0 else 'FAIL'}")
+    return 0 if failed == 0 else 1
+
 def main():
+    if "--selftest" in sys.argv[1:]:
+        sys.exit(run_selftest())
     ap = argparse.ArgumentParser(description="disk-scan · 目录占用扫描（只读不删）")
+    ap.add_argument("--selftest", action="store_true", help="自检（临时夹具，不触碰真实文件）")
     ap.add_argument("--dir", required=True)
     ap.add_argument("--top", type=int, default=15)
     ap.add_argument("--json", action="store_true")

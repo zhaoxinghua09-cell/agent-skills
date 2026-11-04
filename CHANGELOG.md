@@ -8,6 +8,10 @@
 
 - 20 个技能的脚本新增 `--selftest` 自检（临时夹具跑真实检查逻辑，断言「应过/应拦」两类判定，零第三方依赖）：`agent-boarding-pass`、`agent-kill-switch`、`agent-loop-guard`、`agent-memory-keeper`、`agent-output-registry`、`agent-redteam-kit`、`agent-trace-audit`、`ai-brain-learning-memory-pro`、`ai-content-discloser`、`ai-cost-cutter`、`ai-decision-log`、`ai-incident-log`、`ai-policy-radar`、`ai-reply-heuristics`、`ai-usage-policy`、`ai-vendor-checklist`、`aml-sentinel`、`batch-renamer`、`bias-auditor`、`citation-coverage-check`。普通调用行为不变（自检为纯附加）。
 
+### 新增（技能库优化 · 第二批，2026-11-04）
+
+- 20 个技能的脚本新增 `--selftest` 自检（临时夹具跑真实检查逻辑，断言「应过/应拦」两类判定，零第三方依赖）：`clin-eval-route-picker`、`contract-clause-check`、`contract-interact-checklist`、`csv-slice`、`data-export-check`、`data-minimizer`、`data-rights-guard`、`dir-organizer`、`disk-scan`、`doc-desens-scanner`、`dpapi-local-vault`、`dup-finder`、`eu-ai-act-companion`、`eval-bench-builder`、`evidence-chain-builder`、`evidence-chain-check`、`fact-check-guard`、`fin-reg-calc`、`fund-fee-calc`、`gov-disclosure-check`。普通调用行为不变（自检为纯附加）。注：`dpapi-local-vault` 的 DPAPI 加解密为 Windows 原语，非 Windows 平台自检以可逆测试封套替身该原语，存储/取回的解析、信封、标注与隐藏逻辑均实跑，自检输出中明示未实跑部分。
+
 ### 修复
 
 - `lgd-evo` 中枢 `--verify` 诚实化：唯一节点 `agent-evolution` 为纯文档技能（无可运行脚本），原实现报 `LIVE=0 / ERROR=0` 且退出码 0，呈「零实跑的全绿」。现分级为 `DOC-ONLY`（NOT VERIFIED，未实跑、未验证），`LIVE=0` 时打印 `HOLLOW` 警告并以退出码 1 收尾；`--json-out` 证据新增 `doc_only` 与 `hollow` 字段。

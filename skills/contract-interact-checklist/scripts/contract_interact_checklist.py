@@ -4,8 +4,55 @@ ITEMS = ["已阅读合约源码或第三方审计报告", "确认目标地址与
          "明确approve授权额度（拒绝无限授权）", "知悉授权可随时撤销及撤销Gas成本",
          "私钥/助记词离线保管，绝不输入任何网页", "大额操作先小额试交互"]
 
+
+def run_selftest():
+    """自检：跑真实 main() 清单判定——六项全完成+限额授权须 PASS rc=0（须过）；
+    缺项与无限授权须 FAIL rc=1（须拦）。只用内置夹具。"""
+    import contextlib, io
+    passed = failed = 0
+
+    def check(name, cond):
+        nonlocal passed, failed
+        if cond:
+            passed += 1
+        else:
+            failed += 1
+            print("  [FAIL] " + name)
+
+    def run(argv):
+        old = sys.argv
+        sys.argv = ["contract_interact_checklist.py"] + argv
+        buf = io.StringIO()
+        code = 0
+        try:
+            with contextlib.redirect_stdout(buf), contextlib.redirect_stderr(io.StringIO()):
+                main()
+        except SystemExit as e:
+            code = e.code if isinstance(e.code, int) else 1
+        finally:
+            sys.argv = old
+        return code, buf.getvalue()
+
+    code, out = run(["--have", "1,2,3,4,5,6", "--approve", "limited", "--json"])
+    d = json.loads(out)
+    check("六项全完成+限额授权→PASS rc=0",
+          code == 0 and d["pass"] is True and d["missing_no"] == [])
+    code, out = run(["--have", "1,2", "--json"])
+    d = json.loads(out)
+    check("仅完成两项→FAIL rc=1 且缺项为 3,4,5,6",
+          code == 1 and d["missing_no"] == [3, 4, 5, 6])
+    code, out = run(["--have", "1,2,3,4,5,6", "--approve", "unlimited", "--json"])
+    d = json.loads(out)
+    check("无限授权→FAIL rc=1",
+          code == 1 and any("无限授权" in p for p in d["problems"]))
+    print(f"SELFTEST: {passed} passed, {failed} failed — {'PASS' if failed == 0 else 'FAIL'}")
+    return 0 if failed == 0 else 1
+
 def main():
+    if "--selftest" in sys.argv[1:]:
+        sys.exit(run_selftest())
     ap = argparse.ArgumentParser(description="contract-interact-checklist · 智能合约交互前风险清单（零依赖）")
+    ap.add_argument("--selftest", action="store_true", help="自检（临时夹具，不触碰真实文件）")
     ap.add_argument("--have", help="已完成项编号，逗号分隔，如 1,2,3")
     ap.add_argument("--approve", choices=["limited", "unlimited"], default=None)
     ap.add_argument("--json", action="store_true")

@@ -1,7 +1,66 @@
 import argparse, csv, json, sys
 
+
+def run_selftest():
+    """自检：临时 CSV 上跑真实 main()——计数/条件筛选/去重/取列四种切片须正确（须过）；
+    空文件与缺失文件须分别以 rc=1/rc=2 拦下（须拦）。只用临时目录。"""
+    import contextlib, io, os, tempfile
+    passed = failed = 0
+
+    def check(name, cond):
+        nonlocal passed, failed
+        if cond:
+            passed += 1
+        else:
+            failed += 1
+            print("  [FAIL] " + name)
+
+    def run(argv):
+        old = sys.argv
+        sys.argv = ["csv_slice.py"] + argv
+        buf = io.StringIO()
+        code = 0
+        try:
+            with contextlib.redirect_stdout(buf), contextlib.redirect_stderr(io.StringIO()):
+                main()
+        except SystemExit as e:
+            code = e.code if isinstance(e.code, int) else 1
+        finally:
+            sys.argv = old
+        return code, buf.getvalue()
+
+    with tempfile.TemporaryDirectory() as td:
+        fp = os.path.join(td, "t.csv")
+        with open(fp, "w", encoding="utf-8", newline="") as f:
+            f.write("姓名,城市,分数\n张三,北京,90\n李四,上海,80\n张三,北京,90\n王五,北京,70\n")
+        code, out = run(["--file", fp, "--json"])
+        d = json.loads(out)
+        check("全量读取 total=4", code == 0 and d["total"] == 4)
+        code, out = run(["--file", fp, "--where", "2=北京", "--json"])
+        d = json.loads(out)
+        check("条件筛选 城市=北京 → 3 行", code == 0 and d["total"] == 3)
+        code, out = run(["--file", fp, "--where", "2=北京", "--dedup", "--json"])
+        d = json.loads(out)
+        check("筛选+去重 → 2 行且 removed=1",
+              code == 0 and d["total"] == 2 and d["dedup_removed"] == 1)
+        code, out = run(["--file", fp, "--cols", "1,3", "--head", "1", "--json"])
+        d = json.loads(out)
+        check("取列 1,3 + head 1 → 表头与首行正确",
+              code == 0 and d["header"] == ["姓名", "分数"] and d["rows"] == [["张三", "90"]])
+        ep = os.path.join(td, "empty.csv")
+        open(ep, "w").close()
+        code, _ = run(["--file", ep])
+        check("空文件 rc=1", code == 1)
+        code, _ = run(["--file", os.path.join(td, "nope.csv")])
+        check("文件不存在 rc=2", code == 2)
+    print(f"SELFTEST: {passed} passed, {failed} failed — {'PASS' if failed == 0 else 'FAIL'}")
+    return 0 if failed == 0 else 1
+
 def main():
+    if "--selftest" in sys.argv[1:]:
+        sys.exit(run_selftest())
     ap = argparse.ArgumentParser(description="csv-slice · CSV 快速查看/筛选/去重（零依赖）")
+    ap.add_argument("--selftest", action="store_true", help="自检（临时夹具，不触碰真实文件）")
     ap.add_argument("--file", required=True)
     ap.add_argument("--head", type=int, help="只看前N行")
     ap.add_argument("--cols", help="只取这些列（序号从1起，逗号分隔，如 1,3）")

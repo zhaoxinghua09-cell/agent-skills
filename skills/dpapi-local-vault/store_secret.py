@@ -36,8 +36,87 @@ def unprotect(cipher: bytes) -> bytes:
 DEFAULT_VAULT = os.path.expanduser("~/.ucvault_local")
 
 
+
+def run_selftest():
+    """自检：临时保险库目录内跑真实 main() 存储流程——双行输入（id/key）落盘 +
+    meta 标注 + 回环校验须 STORED_OK（须过）；空输入须 MISSING_INPUT rc=2（须拦）；
+    --exposed 须标 EXPOSED_PENDING_ROTATION。
+    平台说明：DPAPI 加解密是 Windows 原语（ctypes.windll），本机非 Windows 无法实跑；
+    非 Windows 时仅在自检内以可逆测试封套替身 protect/unprotect，stdin 解析、落盘
+    信封、meta 标注、回环校验等其余逻辑均为真实代码；Windows 上则直接实跑真实
+    DPAPI 回环。未实跑部分：DPAPI 原语本身（非 Windows 时）。"""
+    import contextlib, io, tempfile
+    passed = failed = 0
+
+    def check(name, cond):
+        nonlocal passed, failed
+        if cond:
+            passed += 1
+        else:
+            failed += 1
+            print("  [FAIL] " + name)
+
+    check("DATA_BLOB 封送长度正确", _blob(b"abc").cbData == 3)
+    on_windows = sys.platform.startswith("win")
+    real_protect, real_unprotect = protect, unprotect
+    if not on_windows:
+        def fake_protect(plain):
+            return base64.b64encode(plain[::-1])
+
+        def fake_unprotect(cipher):
+            return base64.b64decode(cipher)[::-1]
+
+        globals()["protect"] = fake_protect
+        globals()["unprotect"] = fake_unprotect
+    try:
+        def call(argv, stdin_text):
+            old_argv, old_stdin = sys.argv, sys.stdin
+            sys.argv = ["store_secret.py"] + argv
+            sys.stdin = io.StringIO(stdin_text)
+            buf = io.StringIO()
+            code = 0
+            try:
+                with contextlib.redirect_stdout(buf):
+                    main()
+            except SystemExit as e:
+                code = e.code if isinstance(e.code, int) else 1
+            finally:
+                sys.argv, sys.stdin = old_argv, old_stdin
+            return code, buf.getvalue()
+
+        with tempfile.TemporaryDirectory() as td:
+            code, out = call(["tok1", "--vault-dir", td], "myid\nmykey\n")
+            enc = os.path.join(td, "tok1.enc")
+            with open(os.path.join(td, "tok1.meta.json"), encoding="utf-8") as f:
+                meta = json.load(f)
+            check("双行凭据存储 STORED_OK 且落盘",
+                  code == 0 and "STORED_OK" in out and os.path.isfile(enc))
+            check("meta 标注 status=OK/exposed=False",
+                  meta["status"] == "OK" and meta["exposed"] is False
+                  and meta["label"] == "tok1")
+            code, out = call(["tok2", "--vault-dir", td, "--exposed",
+                              "--exposed-where", "chat"], "onlyvalue")
+            with open(os.path.join(td, "tok2.meta.json"), encoding="utf-8") as f:
+                meta2 = json.load(f)
+            check("单行值 + --exposed → EXPOSED_PENDING_ROTATION",
+                  code == 0 and "STORED_OK" in out
+                  and meta2["status"] == "EXPOSED_PENDING_ROTATION")
+            code, out = call(["tok3", "--vault-dir", td], "")
+            check("空输入 MISSING_INPUT rc=2", code == 2 and "MISSING_INPUT" in out)
+    finally:
+        globals()["protect"] = real_protect
+        globals()["unprotect"] = real_unprotect
+    if not on_windows:
+        print("  [NOTE] 非 Windows：DPAPI 原语未实跑（测试封套替代）；"
+              "存储/解析/meta/回环逻辑已实跑")
+    print(f"SELFTEST: {passed} passed, {failed} failed — {'PASS' if failed == 0 else 'FAIL'}")
+    return 0 if failed == 0 else 1
+
 def main():
+    if "--selftest" in sys.argv[1:]:
+        sys.exit(run_selftest())
     ap = argparse.ArgumentParser(description="用 Windows DPAPI 把凭据加密存到本机（免口令，仅当前用户可解）")
+    ap.add_argument("--selftest", action="store_true", help="自检（临时夹具，不触碰真实文件）")
     ap.add_argument("label", help="凭据标签，如 tencent_cos")
     ap.add_argument("--scope", default="secret", help="密级/作用域说明")
     ap.add_argument("--notes", default="", help="备注（用途/作用域）")

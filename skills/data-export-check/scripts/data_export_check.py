@@ -8,8 +8,54 @@ ITEMS = [
     "留存出境记录与接收方合规承诺",
 ]
 
+
+def run_selftest():
+    """自检：跑真实 main() 出境义务判定——五项全完成须 PASS rc=0（须过）；
+    部分缺项与全缺须 FAIL rc=1 且缺项编号准确（须拦）。只用内置夹具。"""
+    import contextlib, io
+    passed = failed = 0
+
+    def check(name, cond):
+        nonlocal passed, failed
+        if cond:
+            passed += 1
+        else:
+            failed += 1
+            print("  [FAIL] " + name)
+
+    def run(argv):
+        old = sys.argv
+        sys.argv = ["data_export_check.py"] + argv
+        buf = io.StringIO()
+        code = 0
+        try:
+            with contextlib.redirect_stdout(buf), contextlib.redirect_stderr(io.StringIO()):
+                main()
+        except SystemExit as e:
+            code = e.code if isinstance(e.code, int) else 1
+        finally:
+            sys.argv = old
+        return code, buf.getvalue()
+
+    code, out = run(["--have", "1,2,3,4,5", "--json"])
+    d = json.loads(out)
+    check("五项全完成→PASS rc=0",
+          code == 0 and d["pass"] is True and d["missing_no"] == [])
+    code, out = run(["--have", "1,3", "--json"])
+    d = json.loads(out)
+    check("缺 2,4,5→FAIL rc=1", code == 1 and d["missing_no"] == [2, 4, 5])
+    code, out = run(["--json"])
+    d = json.loads(out)
+    check("未完成任何项→FAIL rc=1 且全缺",
+          code == 1 and d["missing_no"] == [1, 2, 3, 4, 5])
+    print(f"SELFTEST: {passed} passed, {failed} failed — {'PASS' if failed == 0 else 'FAIL'}")
+    return 0 if failed == 0 else 1
+
 def main():
+    if "--selftest" in sys.argv[1:]:
+        sys.exit(run_selftest())
     ap = argparse.ArgumentParser(description="data-export-check · 数据出境合规自检（零依赖）")
+    ap.add_argument("--selftest", action="store_true", help="自检（临时夹具，不触碰真实文件）")
     ap.add_argument("--have", help="已完成项编号，逗号分隔，如 1,2,3")
     ap.add_argument("--json", action="store_true")
     a = ap.parse_args()
