@@ -1,0 +1,19 @@
+{
+  "title": "agent-skills: LGD-aligned AI governance skill collection",
+  "description": "Reusable agent skills for standards participation and pre-publication gate enforcement.",
+  "upload_type": "software",
+  "access_right": "open",
+  "license": "mit",
+  "creators": [
+    {
+      "name": "LGD Contributors"
+    }
+  ],
+  "keywords": [
+    "AI governance",
+    "standards",
+    "agent-skills",
+    "LGD"
+  ],
+  "version": "draft"
+}
