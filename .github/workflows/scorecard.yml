@@ -29,7 +29,7 @@ jobs:
         # （只有 v2.4.x），故 2026-09-25 11:12Z／11:18Z 本仓首跑两次
         # 均卡在 "Set up job" 失败（action 引用解析不了，runner 未起）。
         # 与 uibc-core 同一修法（该仓 run#1 同因 v2 失败，SHA 固定后双绿）。
-        uses: ossf/scorecard-action@2d1146689b8cda280b9bc96326124645441f03bc
+        uses: ossf/scorecard-action@fa7117db83c52d787ae5a89f350999701505d78e
         with:
           results_file: results.sarif
           results_format: sarif
