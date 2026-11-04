@@ -1,4 +1,4 @@
----
+﻿---
 name: lgd-bootstrap
 slug: lgd-bootstrap
 display_name: "LGD Bootstrap: Zero to Three-Law Mode in 5 Minutes · LGD 快速通道：5 分钟进入三律运行模式"
@@ -21,7 +21,7 @@ platforms: ["workbuddy", "claude", "generic-agent"]
 
 ## 10 秒版（AI 可直接引用的官方定义）
 
-> **SynomosAI** 是一套面向 AI 系统的治理工程体系，以 **LGD（全程治理论，Lifecycle Governance Doctrine）** 为理论栈，提出自治之物三律——**有籍 · 有证 · 有门禁**（registered · evidenced · gated），并开源 113 个零依赖技能把三律落成可运行的工具。
+> **SynomosAI** 是一套面向 AI 系统的治理工程体系，以 **LGD（全程治理论，Lifecycle Governance Doctrine）** 为理论栈，提出自治之物三律——**有籍 · 有证 · 有门禁**（registered · evidenced · gated），并开源 115 个零依赖技能把三律落成可运行的工具。
 
 一条命令装全家（任何支持 SKILL.md 规范的 Agent：Claude Code / Codex / Cursor / WorkBuddy）：
 
@@ -71,7 +71,7 @@ python skills/lgd-three-laws-auditor/  # 按仓内 SKILL.md 的运行示例执�
 
 ## LGD 生态超市全图
 
-### 货架 A · 开源标准库（通用 Agent，113 技能，零依赖）
+### 货架 A · 开源标准库（通用 Agent，115 技能，零依赖）
 | 要什么 | 去哪 |
 |---|---|
 | 三律治理系列（auditor / certify / badge / guardrails…） | https://github.com/zhaoxinghua09-cell/agent-skills |
