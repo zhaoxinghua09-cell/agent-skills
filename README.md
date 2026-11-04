@@ -141,6 +141,7 @@ cp -r agent-skills/skills/<skill-name> ~/.claude/skills/   # Claude Code 示例
 | [travel-rule-check](./skills/travel-rule-check) | Travel-Rule Check | 旅行规则校验 | 跨域·CRYPT 纵深 | VASP 转账收发方 KYC（姓名+账号/地址+地理）超阈强制校验 |
 | [lgd-badge-issuer](./skills/lgd-badge-issuer) | LGD Badge Issuer | 徽章签发器 | 闭环·徽章 | 三律全过才签发 lgd-certified 证书（SHA-256 指纹+签发台账），未过拒绝留痕 |
 | [lgd-badge-verify](./skills/lgd-badge-verify) | LGD Badge Verifier | 徽章验真器 | 闭环·徽章 | 验证书三重校验：指纹重算防篡改+证据哈希+台账对账（未吊销/未伪造） |
+lgd-bootstrap LGD Bootstrap LGD快速入场 快速开始 10s 定义+一条安装命令 → 1min 三律自检评分卡 → 5min 认证闭环；四层生态超市地图（理论/技能/引擎/评测）——新用户从任意入口 5 分钟进入 LGD 运行模式
 | [ai-content-discloser](./skills/ai-content-discloser) | AI Content Discloser | AI 内容披露生成器 | 广谱·有证 | AI 参与（全生成/辅助/混合）内容一键生成合规披露声明（显式中/EN+隐式元数据+平台贴法），依据《AI生成合成内容标识办法》/EU AI Act Art.50 |
 | [agent-boarding-pass](./skills/agent-boarding-pass) | Agent Boarding Pass | 智能体登机牌 | 广谱·三律便携 | 给任何智能体签发可验证『登机牌』：身份+证据哈希+权限白名单+有效期，SHA-256 防篡改，一条命令验真；缺律拒发 |
 | [prompt-leak-scanner](./skills/prompt-leak-scanner) | Prompt Leak Scanner | 提示词泄漏扫描器 | 广谱·有门禁 | 提示词发布前扫五类风险：密钥/内网路径/PII/自定义敏感词/自我泄漏后门，高风险 rc=1 拦下 |
