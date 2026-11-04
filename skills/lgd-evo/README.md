@@ -4,7 +4,7 @@ Thin dispatcher for the **EVO** phase of [GovernanceOS](https://github.com/zhaox
 
 ## Nodes (1)
 
-`agent-evolution` — self-improvement loop spec (registered/evidenced; doc-only PRESENT state, no executable yet — honesty-graded by `--verify`).
+`agent-evolution` — self-improvement loop spec (registered/evidenced; doc-only state, no executable yet — graded DOC-ONLY / NOT VERIFIED by `--verify`).
 
 ## Usage
 
@@ -14,7 +14,7 @@ python scripts/lgd_evo.py --route agent-evolution
 python scripts/lgd_evo.py --verify --json-out evidence.json
 ```
 
-`--verify` honestly grades each node: **LIVE** (script runs rc=0) / **PRESENT** (dir exists, doc-only) / **ECOSYSTEM** (install via `openclaw plugins install clawhub:<slug>`) / **ERROR**.
+`--verify` honestly grades each node: **LIVE** (script runs rc=0) / **DOC-ONLY** (dir exists, no runnable script → NOT VERIFIED: present on disk, never executed or validated) / **ECOSYSTEM** (install via `openclaw plugins install clawhub:<slug>`) / **ERROR**. Hollow-hub rule: if no node is LIVE, `--verify` prints a `HOLLOW` warning and exits rc=1 — a hub that verified zero runnable nodes never reports green.
 
 ## Install
 

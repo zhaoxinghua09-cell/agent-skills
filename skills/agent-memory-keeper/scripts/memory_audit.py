@@ -42,8 +42,66 @@ def parse_md(p):
         "file": p.name,
     }]
 
+def run_selftest():
+    """自检：临时目录写 JSONL 夹具，跑真实 main() 并断言审计判定——
+    干净条目零问题（须过）；重复/陈旧/无来源/无归属条目被逐类标出（须拦）。"""
+    import contextlib, io, tempfile
+    passed = failed = 0
+
+    def check(name, cond):
+        nonlocal passed, failed
+        if cond:
+            passed += 1
+        else:
+            failed += 1
+            print("  [FAIL] " + name)
+
+    def run(path):
+        old = sys.argv
+        sys.argv = ["memory_audit.py", "--file", str(path), "--json"]
+        buf = io.StringIO()
+        try:
+            with contextlib.redirect_stdout(buf):
+                main()
+        finally:
+            sys.argv = old
+        return json.loads(buf.getvalue())
+
+    today = datetime.now(timezone.utc).isoformat(timespec="seconds")
+    with tempfile.TemporaryDirectory() as td:
+        td = pathlib.Path(td)
+        clean = td / "clean.jsonl"
+        clean.write_text(json.dumps(
+            {"title": "Alpha", "source": "doc", "updated": today, "category": "ops"},
+            ensure_ascii=False) + "\n", encoding="utf-8")
+        r = run(clean)
+        check("干净条目→零问题", r["entries"] == 1 and r["issues"] == [])
+        dirty = td / "dirty.jsonl"
+        rows = [
+            {"title": "Alpha", "source": "doc", "updated": today, "category": "ops"},
+            {"title": "Alpha", "source": "doc", "updated": today, "category": "ops"},
+            {"title": "Old", "source": "doc", "updated": "2020-01-01T00:00:00+00:00",
+             "category": "ops"},
+            {"title": "NoSrc", "updated": today, "category": ""},
+        ]
+        dirty.write_text("\n".join(json.dumps(x, ensure_ascii=False) for x in rows) + "\n",
+                         encoding="utf-8")
+        r = run(dirty)
+        kinds = [i[0] for i in r["issues"]]
+        check("条目计数=4", r["entries"] == 4)
+        check("重复被标出", any(k == "重复" for k in kinds))
+        check("陈旧被标出", any(k.startswith("陈旧") for k in kinds))
+        check("无籍(无来源)被标出", "无籍(无来源)" in kinds)
+        check("孤儿(无归属)被标出", "孤儿(无归属)" in kinds)
+    print(f"SELFTEST: {passed} passed, {failed} failed — {'PASS' if failed == 0 else 'FAIL'}")
+    return 0 if failed == 0 else 1
+
+
 def main():
+    if "--selftest" in sys.argv[1:]:
+        sys.exit(run_selftest())
     ap = argparse.ArgumentParser()
+    ap.add_argument("--selftest", action="store_true", help="自检（临时夹具，不触碰真实文件）")
     g = ap.add_mutually_exclusive_group(required=True)
     g.add_argument("--dir")
     g.add_argument("--file")

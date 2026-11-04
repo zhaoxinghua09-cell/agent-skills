@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """偏见审计：扫群体泛化/刻板归因/单边视角，标信号 + 去偏建议。零依赖。"""
-import argparse, json, pathlib, re
+import argparse, json, pathlib, re, sys
 
 GENERIC = ["都适合", "都不适合", "天生", "本来就该", "普遍不如", "普遍更强",
            "naturally", "born to"]
@@ -35,8 +35,47 @@ def audit(text):
         findings.append(("无显著信号", "", "未发现明显群体泛化/刻板归因"))
     return findings
 
+def run_selftest():
+    """自检：跑真实 audit()/main() 并断言偏见判定——
+    中性文本无显著信号（须过）；群体泛化+刻板归因+地域刻板文本被逐类标出（须拦）。"""
+    import contextlib, io
+    passed = failed = 0
+
+    def check(name, cond):
+        nonlocal passed, failed
+        if cond:
+            passed += 1
+        else:
+            failed += 1
+            print("  [FAIL] " + name)
+
+    fs = audit("这位工程师完成了项目复盘，报告写得很细致。")
+    check("中性文本→无显著信号", len(fs) == 1 and fs[0][0] == "无显著信号")
+    fs = audit("女生天生都适合做沟通工作。")
+    types = {t for t, _, _ in fs}
+    check("泛化+刻板归因被标出", {"群体泛化", "刻板归因"} <= types)
+    fs = audit("北方人都很能吃辣。")
+    check("地域刻板被标出", any(t == "地域刻板" for t, _, _ in fs))
+    old = sys.argv
+    sys.argv = ["bias_audit.py", "--text", "女生天生都适合做沟通工作。", "--json"]
+    buf = io.StringIO()
+    try:
+        with contextlib.redirect_stdout(buf):
+            main()
+    finally:
+        sys.argv = old
+    r = json.loads(buf.getvalue())
+    check("main --json 输出含刻板归因",
+          any(f["type"] == "刻板归因" for f in r["findings"]))
+    print(f"SELFTEST: {passed} passed, {failed} failed — {'PASS' if failed == 0 else 'FAIL'}")
+    return 0 if failed == 0 else 1
+
+
 def main():
+    if "--selftest" in sys.argv[1:]:
+        sys.exit(run_selftest())
     ap = argparse.ArgumentParser()
+    ap.add_argument("--selftest", action="store_true", help="自检（内置文本夹具，不读外部文件）")
     g = ap.add_mutually_exclusive_group(required=True)
     g.add_argument("--text")
     g.add_argument("--file")

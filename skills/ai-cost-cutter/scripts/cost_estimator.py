@@ -14,15 +14,55 @@
 
 单价单位：每 1K token 美元（与主流 API 计价一致）。
 """
-import argparse
+import argparse, sys
 
 
 def per_call_cost(avg_in, avg_out, pin, pout):
     return (avg_in / 1000.0) * pin + (avg_out / 1000.0) * pout
 
 
+def run_selftest():
+    """自检：跑真实 per_call_cost()/main() 并断言四档成本算术——
+    默认参数下基线/A/B/C 金额与手算一致（须过）；本地单价畸高时节省率被钳制为 0（须拦）。"""
+    import contextlib, io
+    passed = failed = 0
+
+    def check(name, cond):
+        nonlocal passed, failed
+        if cond:
+            passed += 1
+        else:
+            failed += 1
+            print("  [FAIL] " + name)
+
+    def run(argv):
+        old = sys.argv
+        sys.argv = ["cost_estimator.py"] + argv
+        buf = io.StringIO()
+        try:
+            with contextlib.redirect_stdout(buf):
+                main()
+        finally:
+            sys.argv = old
+        return buf.getvalue()
+
+    check("per_call_cost 手算一致",
+          abs(per_call_cost(1000, 500, 0.01, 0.02) - 0.02) < 1e-9)
+    out = run(["--calls", "10000"])
+    check("默认参数四档金额 120.00/86.40/43.20/7.20",
+          all(x in out for x in ("120.00", "86.40", "43.20", "7.20")))
+    check("默认参数最高可省 94.0%", "94.0%" in out)
+    out = run(["--calls", "10000", "--price-local", "1.0"])
+    check("本地单价畸高→节省率钳制为 0.0%", "最高可省：0.0%" in out)
+    print(f"SELFTEST: {passed} passed, {failed} failed — {'PASS' if failed == 0 else 'FAIL'}")
+    return 0 if failed == 0 else 1
+
+
 def main():
+    if "--selftest" in sys.argv[1:]:
+        sys.exit(run_selftest())
     ap = argparse.ArgumentParser()
+    ap.add_argument("--selftest", action="store_true", help="自检（内置参数夹具，不写文件）")
     ap.add_argument("--calls", type=int, required=True, help="月调用次数")
     ap.add_argument("--avg-in", type=int, default=800, help="平均输入 token")
     ap.add_argument("--avg-out", type=int, default=400, help="平均输出 token")

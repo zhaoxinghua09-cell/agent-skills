@@ -25,8 +25,55 @@ ITEMS = [
 ]
 
 
+def run_selftest():
+    """自检：跑真实 main() 并断言尽调门——满分达标 rc=0（须过）、
+    0.7 分低于阈值 rc=1 且缺项编号正确（须拦）、项数不对 rc=2（须拦）、模板含全 10 项（须过）。"""
+    import contextlib, io
+    passed = failed = 0
+
+    def check(name, cond):
+        nonlocal passed, failed
+        if cond:
+            passed += 1
+        else:
+            failed += 1
+            print("  [FAIL] " + name)
+
+    def run(argv):
+        old = sys.argv
+        sys.argv = ["ai_vendor_checklist.py"] + argv
+        buf = io.StringIO()
+        code = 0
+        try:
+            with contextlib.redirect_stdout(buf), contextlib.redirect_stderr(io.StringIO()):
+                main()
+        except SystemExit as e:
+            code = e.code if isinstance(e.code, int) else 1
+        finally:
+            sys.argv = old
+        return code, buf.getvalue()
+
+    code, out = run(["--score", ",".join(["1"] * 10), "--json"])
+    r = json.loads(out) if code == 0 else {}
+    check("满分达标 rc=0", code == 0 and r.get("pass") is True and r.get("score") == 1.0)
+    code, out = run(["--score", "1,1,0,1,1,0,1,1,0,1", "--json"])
+    r = json.loads(out)
+    check("0.7 分被拦 rc=1 且缺项=3/6/9",
+          code == 1 and r.get("pass") is False and r.get("missed_items") == ["3", "6", "9"])
+    code, _ = run(["--score", "1,1,1"])
+    check("项数不对 rc=2", code == 2)
+    code, out = run(["--template", "--vendor", "XX智能"])
+    check("模板含供应商名与全 10 项",
+          code == 0 and "XX智能" in out and ITEMS[0][:12] in out and ITEMS[9][:12] in out)
+    print(f"SELFTEST: {passed} passed, {failed} failed — {'PASS' if failed == 0 else 'FAIL'}")
+    return 0 if failed == 0 else 1
+
+
 def main():
+    if "--selftest" in sys.argv[1:]:
+        sys.exit(run_selftest())
     ap = argparse.ArgumentParser(description="AI供应商尽调清单 · 签约前 10 问")
+    ap.add_argument("--selftest", action="store_true", help="自检（内置打分夹具，不写文件）")
     g = ap.add_mutually_exclusive_group(required=True)
     g.add_argument("--template", action="store_true", help="输出清单模板")
     g.add_argument("--score", help="按 10 项顺序打分，如 1,1,0,...（0/1）")

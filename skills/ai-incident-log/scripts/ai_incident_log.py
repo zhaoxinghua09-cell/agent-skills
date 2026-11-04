@@ -20,8 +20,62 @@ def load(path):
     return [json.loads(l) for l in path.read_text(encoding="utf-8").splitlines() if l.strip()]
 
 
+def run_selftest():
+    """自检：临时台账上跑真实 main()——事故入账且严重度标签正确（须过）、
+    未填处置的事故被 report 计入待复盘（须拦）。"""
+    import contextlib, io, tempfile
+    passed = failed = 0
+
+    def check(name, cond):
+        nonlocal passed, failed
+        if cond:
+            passed += 1
+        else:
+            failed += 1
+            print("  [FAIL] " + name)
+
+    def run(argv):
+        old = sys.argv
+        sys.argv = ["ai_incident_log.py"] + argv
+        buf = io.StringIO()
+        code = 0
+        try:
+            with contextlib.redirect_stdout(buf), contextlib.redirect_stderr(io.StringIO()):
+                main()
+        except SystemExit as e:
+            code = e.code if isinstance(e.code, int) else 1
+        finally:
+            sys.argv = old
+        return code, buf.getvalue()
+
+    with tempfile.TemporaryDirectory() as td:
+        f = str(pathlib.Path(td) / "incidents.jsonl")
+        code, out = run(["--add", "bot 把内部报价发给客户", "--severity", "3",
+                         "--model", "kefu-bot", "--file", f])
+        recs = load(pathlib.Path(f))
+        check("高严重度事故入账 rc=0 且标签正确",
+              code == 0 and len(recs) == 1
+              and recs[0]["severity_label"] == SEV[3] and "已入账 #1" in out)
+        code, _ = run(["--add", "小范围幻觉引用", "--severity", "1",
+                       "--model", "kefu-bot", "--action", "已改提示词", "--file", f])
+        check("带处置事故入账 rc=0", code == 0 and len(load(pathlib.Path(f))) == 2)
+        code, out = run(["--report", "--file", f, "--json"])
+        rep = json.loads(out) if code == 0 else {}
+        check("report 待复盘计数=1（首条未填处置）",
+              rep.get("total") == 2 and rep.get("pending_review") == 1
+              and rep.get("by_severity", {}).get(SEV[3]) == 1)
+        code, out = run(["--list", "--file", f])
+        check("list 含两条事故描述",
+              code == 0 and "内部报价" in out and "幻觉引用" in out)
+    print(f"SELFTEST: {passed} passed, {failed} failed — {'PASS' if failed == 0 else 'FAIL'}")
+    return 0 if failed == 0 else 1
+
+
 def main():
+    if "--selftest" in sys.argv[1:]:
+        sys.exit(run_selftest())
     ap = argparse.ArgumentParser(description="AI事故记录器 · 事故台账")
+    ap.add_argument("--selftest", action="store_true", help="自检（临时夹具台账，不触碰真实文件）")
     g = ap.add_mutually_exclusive_group(required=True)
     g.add_argument("--add", help="事故描述")
     g.add_argument("--list", action="store_true")

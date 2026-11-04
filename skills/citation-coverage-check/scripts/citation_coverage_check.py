@@ -15,8 +15,53 @@ HAS_NUM = re.compile(r"(\d+(\.\d+)?%?|\d{4}年|\d+月\d+日)")
 HAS_SRC = re.compile(r"(据|来源|source|参考|文献|《[^》]{2,40}》|https?://)", re.I)
 
 
+def run_selftest():
+    """自检：跑真实 main() 并断言覆盖率判定——
+    论断全带来源→覆盖率 1.0 通过（须过）；论断无来源→覆盖率 0 且 rc=1（须拦）；无论断句→免检通过（须过）。"""
+    import contextlib, io
+    passed = failed = 0
+
+    def check(name, cond):
+        nonlocal passed, failed
+        if cond:
+            passed += 1
+        else:
+            failed += 1
+            print("  [FAIL] " + name)
+
+    def run(text):
+        old = sys.argv
+        sys.argv = ["citation_coverage_check.py", "--text", text, "--json"]
+        buf = io.StringIO()
+        code = 0
+        try:
+            with contextlib.redirect_stdout(buf):
+                main()
+        except SystemExit as e:
+            code = e.code if isinstance(e.code, int) else 1
+        finally:
+            sys.argv = old
+        return code, json.loads(buf.getvalue())
+
+    code, r = run("据国家统计局数据，2025年GDP增长5%。来源：新华社报道，失业率为5.1%。")
+    check("全带来源→覆盖率 1.0 rc=0",
+          code == 0 and r["claims"] == 2 and r["coverage"] == 1.0 and r["pass"] is True)
+    code, r = run("公司营收增长了38%，用户突破200万。")
+    check("无来源论断→覆盖率 0 rc=1 且列缺口",
+          code == 1 and r["coverage"] == 0.0 and r["pass"] is False
+          and len(r["uncovered"]) == 1)
+    code, r = run("今天天气不错，大家一起去公园散步聊天。")
+    check("无论断句→免检通过 rc=0",
+          code == 0 and r["claims"] == 0 and r["pass"] is True)
+    print(f"SELFTEST: {passed} passed, {failed} failed — {'PASS' if failed == 0 else 'FAIL'}")
+    return 0 if failed == 0 else 1
+
+
 def main():
+    if "--selftest" in sys.argv[1:]:
+        sys.exit(run_selftest())
     ap = argparse.ArgumentParser(description="引用覆盖率检查器 · 论断要带出处")
+    ap.add_argument("--selftest", action="store_true", help="自检（内置文本夹具，不读外部文件）")
     src = ap.add_mutually_exclusive_group(required=True)
     src.add_argument("--file", help="文件")
     src.add_argument("--text", help="文本（内联 / @文件 / 纯路径）")

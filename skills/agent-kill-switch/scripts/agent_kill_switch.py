@@ -65,8 +65,57 @@ def cmd_check(a):
     sys.exit(0 if ok else 1)
 
 
+def run_selftest():
+    """自检：临时目录内跑真实 cmd_issue()/cmd_check()——完整卡生成+校验（须过）、
+    缺项生成被拦（须拦）、缺项卡校验不过（须拦）。不触碰真实文件。"""
+    import contextlib, io, tempfile
+    passed = failed = 0
+
+    def check(name, cond):
+        nonlocal passed, failed
+        if cond:
+            passed += 1
+        else:
+            failed += 1
+            print("  [FAIL] " + name)
+
+    def call(fn, **kw):
+        buf = io.StringIO()
+        code = 0
+        try:
+            with contextlib.redirect_stdout(buf):
+                fn(argparse.Namespace(**kw))
+        except SystemExit as e:
+            code = e.code if isinstance(e.code, int) else 1
+        return code, buf.getvalue()
+
+    with tempfile.TemporaryDirectory() as td:
+        outp = str(pathlib.Path(td) / "card.json")
+        code, _ = call(cmd_issue, agent="selftest-bot", conditions=["连续5次报错"],
+                       revoke="撤 API key", owner="运维-测试", recovery="人工确认后重启",
+                       out=outp, json=False)
+        check("完整制动卡生成 rc=0 且落盘", code == 0 and pathlib.Path(outp).is_file())
+        code, out = call(cmd_check, check=outp, json=True)
+        check("完整卡校验通过 rc=0", code == 0 and json.loads(out).get("check_ok") is True)
+        code, _ = call(cmd_issue, agent="selftest-bot", conditions=[], revoke="",
+                       owner="", recovery="人工确认后重启",
+                       out=str(pathlib.Path(td) / "bad.json"), json=False)
+        check("缺条件/断权/责任人→生成被拦 rc=1", code == 1)
+        badp = pathlib.Path(td) / "incomplete.json"
+        badp.write_text(json.dumps({"card_type": "lgd-agent-kill-switch",
+                                    "agent": "x", "conditions": ["c"]}),
+                        encoding="utf-8")
+        code, out = call(cmd_check, check=str(badp), json=True)
+        check("缺项卡校验不过 rc=1", code == 1 and json.loads(out).get("check_ok") is False)
+    print(f"SELFTEST: {passed} passed, {failed} failed — {'PASS' if failed == 0 else 'FAIL'}")
+    return 0 if failed == 0 else 1
+
+
 def main():
+    if "--selftest" in sys.argv[1:]:
+        sys.exit(run_selftest())
     ap = argparse.ArgumentParser(description="智能体紧急制动卡 · 先想好怎么停")
+    ap.add_argument("--selftest", action="store_true", help="自检（临时夹具，不触碰真实文件）")
     g = ap.add_mutually_exclusive_group(required=True)
     g.add_argument("--agent", help="生成：智能体名")
     g.add_argument("--check", help="校验：制动卡 JSON（内联/@文件/纯路径）")

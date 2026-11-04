@@ -116,8 +116,69 @@ def cmd_report():
         print(f"{r['id']}  {r['ts']}  {r['model']} v{r['version']}  {r.get('issuer','')}  {r.get('summary','')}")
 
 
+def run_selftest():
+    """自检：临时目录内跑真实 add/verify/lookup 子命令——
+    登记落账+原样验真（须过）、篡改后验真失败（须拦）、未知籍号报错（须拦）。"""
+    import contextlib, io, tempfile
+    passed = failed = 0
+
+    def check(name, cond):
+        nonlocal passed, failed
+        if cond:
+            passed += 1
+        else:
+            failed += 1
+            print("  [FAIL] " + name)
+
+    def run(argv):
+        old = sys.argv
+        sys.argv = ["output_registry.py"] + argv
+        buf = io.StringIO()
+        code = 0
+        try:
+            with contextlib.redirect_stdout(buf):
+                main()
+        except SystemExit as e:
+            code = e.code if isinstance(e.code, int) else 1
+        finally:
+            sys.argv = old
+        return code, buf.getvalue()
+
+    text = "selftest registered output"
+    rid = "LGD-REG-" + sha256_text(text)[7:15]
+    cwd = os.getcwd()
+    with tempfile.TemporaryDirectory() as td:
+        os.chdir(td)
+        try:
+            code, out = run(["add", "--out", text, "--model", "m1", "--version", "1.0",
+                             "--prompt", "p1", "--issuer", "qa"])
+            check("add 登记成功且台账落盘",
+                  code == 0 and rid in out
+                  and os.path.exists(os.path.join("registry", "registry.jsonl")))
+            outp = os.path.join(td, "out.txt")
+            with open(outp, "w", encoding="utf-8") as f:
+                f.write(text)
+            code, out = run(["verify", "--id", rid, "--out", outp])
+            check("原样产出验真通过", code == 0 and "有籍成立" in out)
+            with open(outp, "a", encoding="utf-8") as f:
+                f.write("tampered")
+            code, _ = run(["verify", "--id", rid, "--out", outp])
+            check("篡改后验真失败 rc=1", code == 1)
+            code, _ = run(["verify", "--id", "LGD-REG-00000000", "--out", outp])
+            check("未知籍号 rc=2", code == 2)
+            code, out = run(["lookup", "--id", rid])
+            check("lookup 查到归属记录", code == 0 and '"m1"' in out)
+        finally:
+            os.chdir(cwd)
+    print(f"SELFTEST: {passed} passed, {failed} failed — {'PASS' if failed == 0 else 'FAIL'}")
+    return 0 if failed == 0 else 1
+
+
 def main():
+    if "--selftest" in sys.argv[1:]:
+        sys.exit(run_selftest())
     ap = argparse.ArgumentParser(description="AI 产出有籍登记器（LGD-I）")
+    ap.add_argument("--selftest", action="store_true", help="自检（临时夹具，不触碰真实文件）")
     sub = ap.add_subparsers(dest="cmd")
     pa = sub.add_parser("add"); pa.add_argument("--out", required=True); pa.add_argument("--model")
     pa.add_argument("--version"); pa.add_argument("--prompt", default=""); pa.add_argument("--issuer")

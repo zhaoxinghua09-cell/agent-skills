@@ -6,8 +6,10 @@ lgd_evo.py — LGD 演化中枢（meta 薄分发器 · EVO 阶段）
 薄分发器：只按 slug 路由到 EVO 阶段的具体子技能，不搬运、不重实现任何子技能代码。
 
 诚实纪律：
-  --verify 以"活动工作集实探"为准，把节点分级为 LIVE / ECOSYSTEM / ERROR，
-  绝不伪称"全绿"或"已实跑"。--verify 仅以 --help 只读探针方式读取子技能元信息，
+  --verify 以"活动工作集实探"为准，把节点分级为 LIVE / DOC-ONLY / ECOSYSTEM / ERROR，
+  绝不伪称"全绿"或"已实跑"。doc-only 节点（目录在、无可运行脚本）记 DOC-ONLY，
+  即 NOT VERIFIED（未实跑、未验证）；当 LIVE=0 时打印 HOLLOW 警告且退出码为 1，
+  零实跑绝不报全绿。--verify 仅以 --help 只读探针方式读取子技能元信息，
   不做任何演化写动作、不对外写。
 
 用法：
@@ -57,9 +59,9 @@ def verify():
         else:
             script = find_script(slug)
             if script is None:
-                status = "PRESENT"
+                status = "DOC-ONLY"
                 rc = None
-                note = "目录在但无可运行脚本（spec/doc-only，未实跑拦截）"
+                note = "目录在但无可运行脚本（spec/doc-only）→ NOT VERIFIED（未实跑、未验证）"
             else:
                 try:
                     r = subprocess.run([sys.executable, script, "--help"],
@@ -103,28 +105,33 @@ def main():
     if args.verify:
         rows = verify()
         live = sum(1 for r in rows if r["status"] == "LIVE")
-        present = sum(1 for r in rows if r["status"] == "PRESENT")
+        doconly = sum(1 for r in rows if r["status"] == "DOC-ONLY")
         eco = sum(1 for r in rows if r["status"] == "ECOSYSTEM")
         err = sum(1 for r in rows if r["status"] == "ERROR")
+        hollow = live == 0
         print("LGD 演化中枢 可用性探测（skills-root=%s）：" % SKILLS_ROOT)
         print("=" * 78)
         for r in rows:
             print("  [%-10s] %-24s %s" % (r["status"], r["slug"], r["note"]))
         print("=" * 78)
-        print("LIVE=%d  PRESENT(目录在·无脚本)=%d  ECOSYSTEM(生态/备份层)=%d  ERROR=%d"
-              % (live, present, eco, err))
+        print("LIVE=%d  DOC-ONLY(目录在·未验证)=%d  ECOSYSTEM(生态/备份层)=%d  ERROR=%d"
+              % (live, doconly, eco, err))
+        if hollow:
+            print("⚠ HOLLOW: LIVE=0 —— 没有任何节点被实跑验证，本次探测不构成「全绿」；"
+                  "doc-only 节点按未验证计（退出码 1）。")
         data = {
             "skill": "lgd-evo",
             "scanned_at": datetime.datetime.now().astimezone().isoformat(timespec="seconds"),
             "skills_root": SKILLS_ROOT,
-            "total": len(rows), "live": live, "ecosystem": eco, "error": err,
+            "total": len(rows), "live": live, "doc_only": doconly,
+            "ecosystem": eco, "error": err, "hollow": hollow,
             "nodes": rows,
         }
         if args.json_out:
             open(args.json_out, "w", encoding="utf-8").write(
                 json.dumps(data, ensure_ascii=False, indent=2))
             print("evidence.json -> %s" % args.json_out)
-        return 1 if err else 0
+        return 1 if (err or hollow) else 0
 
     if args.route:
         for slug, when, out in NODES:

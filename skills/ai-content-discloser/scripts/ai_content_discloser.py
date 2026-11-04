@@ -28,8 +28,55 @@ PLATFORMS = {
 }
 
 
+def run_selftest():
+    """自检：跑真实 main() 并断言披露生成——full 级标 ai_generated=true（须过）、
+    assisted 级标 false 且英文措辞对应（须过）、非法 --ai-level 被参数门拦下（须拦）。"""
+    import contextlib, io
+    passed = failed = 0
+
+    def check(name, cond):
+        nonlocal passed, failed
+        if cond:
+            passed += 1
+        else:
+            failed += 1
+            print("  [FAIL] " + name)
+
+    def run(argv):
+        old = sys.argv
+        sys.argv = ["ai_content_discloser.py"] + argv
+        buf = io.StringIO()
+        code = 0
+        try:
+            with contextlib.redirect_stdout(buf), contextlib.redirect_stderr(io.StringIO()):
+                main()
+        except SystemExit as e:
+            code = e.code if isinstance(e.code, int) else 1
+        finally:
+            sys.argv = old
+        return code, buf.getvalue()
+
+    code, out = run(["--type", "article", "--ai-level", "full", "--json"])
+    r = json.loads(out) if code == 0 else {}
+    check("full 级披露生成 rc=0 且 ai_generated=true",
+          code == 0 and r.get("implicit_metadata", {}).get("ai_generated") is True
+          and "全生成" in r.get("explicit_zh", ""))
+    code, out = run(["--type", "image", "--ai-level", "assisted", "--json"])
+    r = json.loads(out) if code == 0 else {}
+    check("assisted 级 ai_generated=false 且措辞对应",
+          code == 0 and r.get("implicit_metadata", {}).get("ai_generated") is False
+          and "AI-assisted" in r.get("explicit_en", ""))
+    code, _ = run(["--type", "article", "--ai-level", "bogus", "--json"])
+    check("非法 ai-level 被参数门拦下 rc=2", code == 2)
+    print(f"SELFTEST: {passed} passed, {failed} failed — {'PASS' if failed == 0 else 'FAIL'}")
+    return 0 if failed == 0 else 1
+
+
 def main():
+    if "--selftest" in sys.argv[1:]:
+        sys.exit(run_selftest())
     ap = argparse.ArgumentParser(description="AI 内容披露生成器 · 合规披露一键生成")
+    ap.add_argument("--selftest", action="store_true", help="自检（内置参数夹具，不写文件）")
     ap.add_argument("--type", required=True, choices=TYPES, help="内容类型")
     ap.add_argument("--ai-level", required=True, choices=list(LEVELS), help="AI 参与度")
     ap.add_argument("--brand", default="", help="署名/品牌（可选）")

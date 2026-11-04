@@ -17,8 +17,59 @@ def load(p):
     return [json.loads(l) for l in p.read_text(encoding="utf-8").splitlines() if l.strip()]
 
 
+def run_selftest():
+    """自检：临时台账上跑真实 main()——带人审留痕落账（须过）、
+    无人审决策被 report 标出（须拦）、--add 缺 --decision 被拦（须拦）。"""
+    import contextlib, io, tempfile
+    passed = failed = 0
+
+    def check(name, cond):
+        nonlocal passed, failed
+        if cond:
+            passed += 1
+        else:
+            failed += 1
+            print("  [FAIL] " + name)
+
+    def run(argv):
+        old = sys.argv
+        sys.argv = ["ai_decision_log.py"] + argv
+        buf = io.StringIO()
+        code = 0
+        try:
+            with contextlib.redirect_stdout(buf), contextlib.redirect_stderr(io.StringIO()):
+                main()
+        except SystemExit as e:
+            code = e.code if isinstance(e.code, int) else 1
+        finally:
+            sys.argv = old
+        return code, buf.getvalue()
+
+    with tempfile.TemporaryDirectory() as td:
+        f = str(pathlib.Path(td) / "decisions.jsonl")
+        code, _ = run(["--add", "--decision", "驳回该供应商", "--model", "glm-x",
+                       "--evidence", "dd_report", "--reviewer", "张三", "--file", f])
+        recs = load(pathlib.Path(f))
+        check("带人审留痕落账 rc=0",
+              code == 0 and len(recs) == 1 and recs[0]["reviewer"] == "张三"
+              and recs[0]["decision"] == "驳回该供应商")
+        code, _ = run(["--add", "--decision", "采用方案B", "--model", "glm-x", "--file", f])
+        check("无人审留痕落账 rc=0", code == 0 and len(load(pathlib.Path(f))) == 2)
+        code, out = run(["--report", "--file", f, "--json"])
+        rep = json.loads(out) if code == 0 else {}
+        check("report 标出无人审决策",
+              rep.get("total") == 2 and rep.get("unreviewed") == ["采用方案B"])
+        code, _ = run(["--add", "--file", f])
+        check("--add 缺 --decision 被拦 rc=2", code == 2)
+    print(f"SELFTEST: {passed} passed, {failed} failed — {'PASS' if failed == 0 else 'FAIL'}")
+    return 0 if failed == 0 else 1
+
+
 def main():
+    if "--selftest" in sys.argv[1:]:
+        sys.exit(run_selftest())
     ap = argparse.ArgumentParser(description="AI决策留痕器 · 决策留痕")
+    ap.add_argument("--selftest", action="store_true", help="自检（临时夹具台账，不触碰真实文件）")
     g = ap.add_mutually_exclusive_group(required=True)
     g.add_argument("--add", action="store_true", help="追加一条决策")
     g.add_argument("--list", action="store_true")

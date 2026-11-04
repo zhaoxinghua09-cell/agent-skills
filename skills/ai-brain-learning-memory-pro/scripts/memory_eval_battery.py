@@ -132,8 +132,63 @@ def score_security(all_text, files):
     return max(0, min(5, score))
 
 
+def run_selftest():
+    """自检：临时目录建好/坏两套记忆根，跑真实 main() 并断言 6 维评分——
+    带溯源无敏感的系统 T/S/E 满分（须过）；明文敏感词落盘 T/S 被重扣（须拦）。"""
+    import contextlib, io, tempfile
+    passed = failed = 0
+
+    def check(name, cond):
+        nonlocal passed, failed
+        if cond:
+            passed += 1
+        else:
+            failed += 1
+            print("  [FAIL] " + name)
+
+    def run(root, outp):
+        old = sys.argv
+        sys.argv = ["memory_eval_battery.py", "--root", str(root), "--out", str(outp)]
+        try:
+            with contextlib.redirect_stdout(io.StringIO()), \
+                    contextlib.redirect_stderr(io.StringIO()):
+                main()
+        finally:
+            sys.argv = old
+        data = json.loads(Path(outp).read_text(encoding="utf-8"))
+        return {k.split("·")[0]: v for k, v in data["scores"].items()}, data["overall"]
+
+    with tempfile.TemporaryDirectory() as td:
+        td = Path(td)
+        good = td / "good"
+        good.mkdir()
+        (good / "MEMORY.md").write_text(
+            "# 记忆\n<!-- src=manual ts=2026-11-04 -->\n跨会话复用要点：记住这个流程，"
+            "外部输入须先核实再写入。\n", encoding="utf-8")
+        (good / "2026-11-04.md").write_text("# 当日日志\n完成评测。\n", encoding="utf-8")
+        gs, goverall = run(good, td / "good.json")
+        check("好系统 T=5（无敏感+有溯源）", gs["T"] == 5)
+        check("好系统 S=5", gs["S"] == 5)
+        check("好系统 E=5（语义+情节可提取）", gs["E"] == 5)
+        bad = td / "bad"
+        bad.mkdir()
+        (bad / "MEMORY.md").write_text(
+            "# 记忆\npassword = hunter2 直接明文存着。\n", encoding="utf-8")
+        bs, boverall = run(bad, td / "bad.json")
+        check("明文敏感落盘 T 被扣至 2", bs["T"] == 2)
+        check("明文敏感落盘 S 被扣至 0", bs["S"] == 0)
+        check("坏系统总分低于好系统", boverall < goverall)
+        es, _ = run(td / "missing", td / "empty.json")
+        check("空系统 E=0", es["E"] == 0)
+    print(f"SELFTEST: {passed} passed, {failed} failed — {'PASS' if failed == 0 else 'FAIL'}")
+    return 0 if failed == 0 else 1
+
+
 def main():
+    if "--selftest" in sys.argv[1:]:
+        sys.exit(run_selftest())
     ap = argparse.ArgumentParser(description="AI 记忆系统 6 维评测电池")
+    ap.add_argument("--selftest", action="store_true", help="自检（临时夹具，不触碰真实文件）")
     ap.add_argument("--root", required=True, help="记忆根目录")
     ap.add_argument("--out", default=None, help="输出 JSON 路径")
     args = ap.parse_args()

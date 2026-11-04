@@ -2,6 +2,16 @@
 
 本仓库所有值得注意的变更都会记录在此文件。格式参考 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)，版本号遵循 [语义化版本](https://semver.org/lang/zh-CN/)。
 
+## [Unreleased]
+
+### 新增（技能库优化 · 第一批，2026-11-04）
+
+- 20 个技能的脚本新增 `--selftest` 自检（临时夹具跑真实检查逻辑，断言「应过/应拦」两类判定，零第三方依赖）：`agent-boarding-pass`、`agent-kill-switch`、`agent-loop-guard`、`agent-memory-keeper`、`agent-output-registry`、`agent-redteam-kit`、`agent-trace-audit`、`ai-brain-learning-memory-pro`、`ai-content-discloser`、`ai-cost-cutter`、`ai-decision-log`、`ai-incident-log`、`ai-policy-radar`、`ai-reply-heuristics`、`ai-usage-policy`、`ai-vendor-checklist`、`aml-sentinel`、`batch-renamer`、`bias-auditor`、`citation-coverage-check`。普通调用行为不变（自检为纯附加）。
+
+### 修复
+
+- `lgd-evo` 中枢 `--verify` 诚实化：唯一节点 `agent-evolution` 为纯文档技能（无可运行脚本），原实现报 `LIVE=0 / ERROR=0` 且退出码 0，呈「零实跑的全绿」。现分级为 `DOC-ONLY`（NOT VERIFIED，未实跑、未验证），`LIVE=0` 时打印 `HOLLOW` 警告并以退出码 1 收尾；`--json-out` 证据新增 `doc_only` 与 `hollow` 字段。
+
 ## [1.0.0] — 2026-09-11
 
 ### 首次正式发布

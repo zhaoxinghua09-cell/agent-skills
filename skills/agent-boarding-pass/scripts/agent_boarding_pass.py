@@ -117,8 +117,58 @@ def verify(a):
     sys.exit(0 if ok else 1)
 
 
+def run_selftest():
+    """自检：临时目录内跑真实 issue()/verify()——三律齐备签发+验真（须过）、
+    缺 l3 证据拒签（须拦）、篡改指纹验真失败（须拦）。不触碰真实文件。"""
+    import contextlib, io, tempfile
+    passed = failed = 0
+
+    def check(name, cond):
+        nonlocal passed, failed
+        if cond:
+            passed += 1
+        else:
+            failed += 1
+            print("  [FAIL] " + name)
+
+    def call(fn, **kw):
+        buf = io.StringIO()
+        code = 0
+        try:
+            with contextlib.redirect_stdout(buf):
+                fn(argparse.Namespace(**kw))
+        except SystemExit as e:
+            code = e.code if isinstance(e.code, int) else 1
+        return code, buf.getvalue()
+
+    with tempfile.TemporaryDirectory() as td:
+        outp = str(pathlib.Path(td) / "pass.json")
+        full = ["l1-registered=id.json", "l2-evidence=chain.jsonl", "l3-gate=gate.json"]
+        code, out = call(issue, agent="selftest-bot", evidence=full, allow=["search"],
+                         ttl=24, out=outp, json=True)
+        check("三律齐备→签发 rc=0 且 issued=true",
+              code == 0 and pathlib.Path(outp).is_file()
+              and json.loads(out).get("issued") is True)
+        code, out = call(verify, verify=outp, json=True)
+        check("新牌验真通过 rc=0", code == 0 and json.loads(out).get("verified") is True)
+        code, out = call(issue, agent="selftest-bot", evidence=full[:2],
+                         allow=[], ttl=24, out=str(pathlib.Path(td) / "x.json"), json=True)
+        check("缺 l3 证据→拒签 rc=1", code == 1 and json.loads(out).get("issued") is False)
+        card = json.loads(pathlib.Path(outp).read_text(encoding="utf-8"))
+        card["agent"] = "tampered-bot"
+        tp = pathlib.Path(td) / "tampered.json"
+        tp.write_text(json.dumps(card, ensure_ascii=False), encoding="utf-8")
+        code, out = call(verify, verify=str(tp), json=True)
+        check("篡改内容→验真失败 rc=1", code == 1 and json.loads(out).get("verified") is False)
+    print(f"SELFTEST: {passed} passed, {failed} failed — {'PASS' if failed == 0 else 'FAIL'}")
+    return 0 if failed == 0 else 1
+
+
 def main():
+    if "--selftest" in sys.argv[1:]:
+        sys.exit(run_selftest())
     ap = argparse.ArgumentParser(description="智能体登机牌 · 智能体三律便携证件")
+    ap.add_argument("--selftest", action="store_true", help="自检（临时夹具，不触碰真实文件）")
     sub = ap.add_mutually_exclusive_group(required=True)
     sub.add_argument("--agent", help="签发：智能体标识")
     sub.add_argument("--verify", help="验真：登机牌 JSON（内联 / @文件 / 纯路径）")

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """失控循环护栏：读动作轨迹，监测 步数超限/重复动作/无进展，给熔断建议+诊断。零依赖。"""
-import argparse, json, pathlib, re
+import argparse, json, pathlib, re, sys
 
 def parse_trace(p):
     rows = []
@@ -13,8 +13,57 @@ def parse_trace(p):
             rows.append((int(m.group(1)), m.group(2), m.group(3).strip()))
     return rows
 
+def run_selftest():
+    """自检：临时目录写四种轨迹，跑真实 main() 并断言风险判定——
+    健康轨迹=低、步数超限=高、连续重复=高、同工具无进展=中。"""
+    import contextlib, io, tempfile
+    passed = failed = 0
+
+    def check(name, cond):
+        nonlocal passed, failed
+        if cond:
+            passed += 1
+        else:
+            failed += 1
+            print("  [FAIL] " + name)
+
+    def run(trace_path):
+        old = sys.argv
+        sys.argv = ["loop_guard.py", "--trace", str(trace_path), "--json"]
+        buf = io.StringIO()
+        try:
+            with contextlib.redirect_stdout(buf):
+                main()
+        finally:
+            sys.argv = old
+        return json.loads(buf.getvalue())
+
+    with tempfile.TemporaryDirectory() as td:
+        td = pathlib.Path(td)
+
+        def trace(name, lines):
+            p = td / name
+            p.write_text("\n".join(lines) + "\n", encoding="utf-8")
+            return p
+
+        r = run(trace("ok.txt", ["1 search a", "2 read b", "3 write c"]))
+        check("健康轨迹→低风险", r["steps"] == 3 and r["risk"] == "低")
+        r = run(trace("long.txt", [f"{i} tool{i} arg{i}" for i in range(1, 36)]))
+        check("35 步超上限→高风险", r["steps"] == 35 and r["risk"] == "高")
+        r = run(trace("repeat.txt", ["1 search a", "2 read b", "3 click same",
+                                     "4 click same", "5 click same"]))
+        check("尾部连续重复同动作→高风险", r["risk"] == "高" and "重复" in r["diagnosis"])
+        r = run(trace("spin.txt", [f"{i} poll status-{i}" for i in range(1, 7)]))
+        check("近 6 步同工具无进展→中风险", r["risk"] == "中")
+    print(f"SELFTEST: {passed} passed, {failed} failed — {'PASS' if failed == 0 else 'FAIL'}")
+    return 0 if failed == 0 else 1
+
+
 def main():
+    if "--selftest" in sys.argv[1:]:
+        sys.exit(run_selftest())
     ap = argparse.ArgumentParser()
+    ap.add_argument("--selftest", action="store_true", help="自检（临时夹具，不触碰真实文件）")
     ap.add_argument("--trace", required=True)
     ap.add_argument("--max-steps", type=int, default=30)
     ap.add_argument("--repeat", type=int, default=3)
