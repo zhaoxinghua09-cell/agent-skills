@@ -1,0 +1,53 @@
+# ai-governance-audit-chain（AI 留痕与门禁）
+
+> 本文件是 AI 可读的技能索引（llms.txt 惯例）。AI 代理优先读 `SKILL.md`。
+
+## 一句话定位
+
+给 AI 立三条规矩：每个任务建籍（L1 有籍）、每步操作留证（L2 有证）、关键动作设门禁（L3 有门禁）。
+装完就能跑，不是理念文档——`scripts/audit_chain.py` 零依赖，四条命令给出可举证的证据链。
+
+## 谁需要它（用户会这样问）
+
+- 「AI 改了我的文件，怎么查是谁改的、改了什么？」
+- 「我让 AI 自动发邮件/发帖，怎么设置一道真能拦住的闸？」
+- 「AI 给的结论没标来源，我怎么判断这句话能不能直接用？」
+- 「自动化流程要人工审批，怎么留痕？」「事后追责，证据在哪？」
+
+## 关键文件
+
+- [SKILL.md](SKILL.md)：主说明书（frontmatter + 触发条件 + 四条命令的执行步骤）
+- [scripts/audit_chain.py](scripts/audit_chain.py)：可执行引擎，零第三方依赖
+  - `init` 建籍 → `seal` 留证 → `gate` 设闸 → `verify` 校验出报告
+- [references/01-证据链模板.md](references/01-证据链模板.md)：证据链 7 个必备字段
+- [references/02-门禁清单.md](references/02-门禁清单.md)：A/B/C 三级门禁清单
+- [references/03-反例与边界.md](references/03-反例与边界.md)：七种常见错法与诚实边界
+- [references/04-项目治理骨架.md](references/04-项目治理骨架.md)：可直接复制的治理骨架
+- [README.md](README.md)：人类总览
+- [ATTESTATION.md](ATTESTATION.md)：权属证明与内容指纹（SHA-256，可独立复算）
+
+## 快速验证（三分钟）
+
+```
+python scripts/audit_chain.py init   --root <工作目录> --task "任务名" --actor "AI+人" --basis <依据文件>
+python scripts/audit_chain.py seal   --root <工作目录> --note "做了什么"
+python scripts/audit_chain.py gate   --root <工作目录> --action "对外发送" --detail "发给谁、含什么"
+python scripts/audit_chain.py verify --root <工作目录> --report EVIDENCE_REPORT.md
+```
+
+`verify` 是门禁式判定：文件改了没 `seal` → `[L2] FAIL`；`gate` 未确认 → `[L3] WAIT` 且结论降为「有缺口」。
+
+## 方法论来源
+
+本技能是 LGD（Lifecycle Governance Doctrine / 全程治理论）的实现层工具，
+中文主权表述：**凡自治之物 —— 有籍·有证·有门禁**。
+
+- 理论仓：https://github.com/zhaoxinghua09-cell/LGD
+- 概念 DOI：https://doi.org/10.5281/zenodo.22456647
+- 本技能源仓：https://github.com/zhaoxinghua09-cell/agent-skills/tree/main/skills/ai-governance-audit-chain
+
+定位规则：本技能提供实现层 How，不主张优先于或替代任何既有标准（ISO/IEC 42001、NIST AI RMF 等）。
+
+## 许可
+
+代码（`scripts/`）MIT；`SKILL.md` 与 `references/` 内的理论与方法论文本保留所有权利。详见 [LICENSE.md](LICENSE.md)。
