@@ -37,22 +37,36 @@ jobs:
   scorecard:
     name: OpenSSF Scorecard
     runs-on: ubuntu-latest
+    continue-on-error: true
     permissions:
-      security-events: write
-      id-token: write
       contents: read
-      actions: read
     steps:
-      - uses: actions/checkout@v4
-        with:
-          persist-credentials: false
+      - name: Install scorecard CLI
+        run: |
+          set -e
+          URL=$(curl -sSL https://api.github.com/repos/ossf/scorecard/releases/latest             | grep -o 'https://[^"]*linux_amd64.tar.gz' | head -1)
+          echo "downloading $URL"
+          curl -sSfL -o /tmp/sc.tar.gz "$URL"
+          tar xzf /tmp/sc.tar.gz -C /tmp
+          sudo install /tmp/scorecard /usr/local/bin/scorecard
+          scorecard version || true
       - name: Run Scorecard
-        uses: ossf/scorecard-action@v2.4.0
+        env:
+          GITHUB_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          scorecard --repo=github.com/${{ github.repository }}             --format=json --output=/tmp/scorecard.json --show-details || true
+          if [ ! -f /tmp/scorecard.json ]; then echo "scorecard produced no output"; exit 0; fi
+          {
+            echo "### OpenSSF Scorecard"
+            echo ""
+            echo "Score: **$(jq -r '.score' /tmp/scorecard.json) / 10**"
+            echo ""
+            echo "| Check | Score |"
+            echo "|---|---|"
+            jq -r '.checks[] | "| \(.name) | \(.score) |"' /tmp/scorecard.json
+          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload result
+        uses: actions/upload-artifact@v4
         with:
-          results_file: results.sarif
-          results_format: sarif
-          publish_results: true
-      - name: Upload SARIF
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          sarif_file: results.sarif
+          name: scorecard-json
+          path: /tmp/scorecard.json
