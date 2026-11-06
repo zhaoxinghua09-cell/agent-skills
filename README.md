@@ -1,5 +1,3 @@
-[![Auto Eval: LGD + OpenSSF](https://github.com/zhaoxinghua09-cell/agent-skills/actions/workflows/auto-eval.yml/badge.svg)](https://github.com/zhaoxinghua09-cell/agent-skills/actions/workflows/auto-eval.yml)
-
 <div align="center">
 
 > Every self-governing thing must be registered, evidenced, gated — LGD · https://zhaoxinghua09-cell.github.io/lgd-hub/
