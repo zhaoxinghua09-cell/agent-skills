@@ -1,0 +1,58 @@
+name: Auto Eval (LGD + OpenSSF)
+
+on:
+  push:
+    branches: [main, master]
+  schedule:
+    - cron: '0 2 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write
+  id-token: write
+
+jobs:
+  lgd:
+    name: LGD self-evaluation
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - id: lgd
+        uses: LGD-Eval/lgd-gate@main
+        continue-on-error: true
+        with:
+          path: .
+          threshold: '60'
+      - name: Write summary
+        if: always()
+        run: |
+          echo "### LGD Trust Score" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "Score: **${{ steps.lgd.outputs.score }}/100**" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "Engine: [LGD-Eval/lgd-gate](https://github.com/LGD-Eval/lgd-gate) -- same algorithm as the lgd-eval CLI." >> "$GITHUB_STEP_SUMMARY"
+
+  scorecard:
+    name: OpenSSF Scorecard
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      id-token: write
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Run Scorecard
+        uses: ossf/scorecard-action@v2.4.0
+        with:
+          results_file: results.sarif
+          results_format: sarif
+          publish_results: true
+      - name: Upload SARIF
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: results.sarif
