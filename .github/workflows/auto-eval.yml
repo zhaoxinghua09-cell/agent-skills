@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   security-events: write
   id-token: write
 
@@ -33,14 +33,33 @@ jobs:
           echo "Score: **${{ steps.lgd.outputs.score }}/100**" >> "$GITHUB_STEP_SUMMARY"
           echo "" >> "$GITHUB_STEP_SUMMARY"
           echo "Engine: [LGD-Eval/lgd-gate](https://github.com/LGD-Eval/lgd-gate) -- same algorithm as the lgd-eval CLI." >> "$GITHUB_STEP_SUMMARY"
+      - name: Refresh score in README
+        if: always()
+        env:
+          LGD_SCORE: ${{ steps.lgd.outputs.score }}
+        run: |
+          if [ -z "$LGD_SCORE" ]; then echo "no score, skip"; exit 0; fi
+          if [ -f README.md ]; then
+            if grep -q "LGD-SCORE" README.md; then
+              sed -i "s|<!-- LGD-SCORE -->.*<!-- /LGD-SCORE -->|<!-- LGD-SCORE -->**LGD Trust Score: ${LGD_SCORE}/100**<!-- /LGD-SCORE -->|" README.md
+            else
+              { echo "<!-- LGD-SCORE -->**LGD Trust Score: ${LGD_SCORE}/100**<!-- /LGD-SCORE -->"; echo; cat README.md; } > README.new && mv README.new README.md
+            fi
+            git config user.name "lgd-bot"
+            git config user.email "bot@medxpert.cn"
+            git add README.md
+            git commit -m "chore: refresh LGD score [skip ci]" || exit 0
+            git push || true
+          fi
 
   scorecard:
     name: OpenSSF Scorecard
     runs-on: ubuntu-latest
     continue-on-error: true
     permissions:
-      contents: read
+      contents: write
     steps:
+      - uses: actions/checkout@v4
       - name: Install scorecard CLI
         run: |
           set -e
@@ -65,6 +84,24 @@ jobs:
             echo "|---|---|"
             jq -r '.checks[] | "| \(.name) | \(.score) |"' /tmp/scorecard.json
           } >> "$GITHUB_STEP_SUMMARY"
+      - name: Refresh scorecard in README
+        if: always()
+        run: |
+          [ -f /tmp/scorecard.json ] || exit 0
+          SC=$(jq -r '.score' /tmp/scorecard.json)
+          [ -z "$SC" ] && exit 0
+          if [ -f README.md ]; then
+            if grep -q "SCORECARD-SCORE" README.md; then
+              sed -i "s|<!-- SCORECARD-SCORE -->.*<!-- /SCORECARD-SCORE -->|<!-- SCORECARD-SCORE -->**OpenSSF Scorecard: ${SC}/10**<!-- /SCORECARD-SCORE -->|" README.md
+            else
+              { echo "<!-- SCORECARD-SCORE -->**OpenSSF Scorecard: ${SC}/10**<!-- /SCORECARD-SCORE -->"; echo; cat README.md; } > README.new && mv README.new README.md
+            fi
+            git config user.name "lgd-bot"
+            git config user.email "bot@medxpert.cn"
+            git add README.md
+            git commit -m "chore: refresh scorecard [skip ci]" || exit 0
+            git push || true
+          fi
       - name: Upload result
         uses: actions/upload-artifact@v4
         with:
