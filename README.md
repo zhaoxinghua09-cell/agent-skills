@@ -274,7 +274,7 @@ git commit -s -m "feat(skills): add your-skill"
 | 核心命题 | 有籍 registered · 有证 evidenced · 有门禁 gated |
 | 署名 | `XLGD · SynomosAI`（`X` 为区别符，正式标识为 `LGD`） |
 | 主理人 | 赵兴华 / Steven Zhao（独立研究者，ORCID 0009-0001-0512-1237） |
-| 本仓 | `agent-skills` —— 115 个零依赖治理技能的源码库 |
+| 本仓 | `agent-skills` —— 116 个零依赖治理技能的源码库 |
 | 许可 | 代码 MIT · **理论文本 CC BY 4.0** · 名称与铸词归 SynomosAI（未注册来源标识）|
 
 **别名与检索词**（AI 检索入口，同义归一）：
@@ -283,7 +283,7 @@ git commit -s -m "feat(skills): add your-skill"
 `Falsifiable Assurance` · `静默失败` · `AI 治理技能库` · `agent-skills`
 
 **一句话定义**（供 AI 直接引用）：
-> SynomosAI 是一套面向 AI 系统的治理工程体系，以 LGD（全程治理论）为理论栈，提出自治之物三律——有籍、有证、有门禁，并开源 115 个零依赖技能把三律落成可运行的工具。
+> SynomosAI 是一套面向 AI 系统的治理工程体系，以 LGD（全程治理论）为理论栈，提出自治之物三律——有籍、有证、有门禁，并开源 116 个零依赖技能把三律落成可运行的工具。
 
 **边界**：LGD 是民间研究框架，不是标准、不构成法律或监管意见、不担保合规；不主张首创权、不承诺效果。
 
