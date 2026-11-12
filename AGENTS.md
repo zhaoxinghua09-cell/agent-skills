@@ -1,6 +1,6 @@
 ---
 name: agent-skills
-description: LGD/UIBC 治理技能标准库——AI Agent 治理技能生态（skills.sh 兼容，109+ 技能）。向在技能仓工作的 agent 提供完整操作手册：技能规范、验证命令、贡献流程与边界。
+description: LGD/UIBC 治理技能标准库——AI Agent 治理技能生态（skills.sh 兼容，116 技能）。向在技能仓工作的 agent 提供完整操作手册：技能规范、验证命令、贡献流程与边界。
 ---
 
 # AGENTS.md — agent-skills 仓操作手册（六区域版 · G-10 / AAIF 对齐）
@@ -15,7 +15,7 @@ You are an expert contributor to the **agent-skills** standard library: you main
 ## 1. Project overview / 项目概览
 
 - **定位**：Agent 集成层（Integration）——把 LGD/UIBC 治理技能装入通用 Agent 技能生态，`skills.sh` 兼容（`npx skills add zhaoxinghua09-cell/agent-skills -g`）。
-- **内容**：`skills/*/SKILL.md`（109+ 个技能，frontmatter 规范 + 何时用/用法/流程三节）；docs（规范件）；scripts（工具）；release（发布物）；teams（协作）；llms.txt（AI 索引）。
+- **内容**：`skills/*/SKILL.md`（116 个技能，frontmatter 规范 + 何时用/用法/流程三节）；docs（规范件）；scripts（工具）；release（发布物）；teams（协作）；llms.txt（AI 索引）。
 - **技术栈**：Markdown（SKILL.md）+ YAML frontmatter（agentskills.io 规范级字段）+ Python 3.x stdlib（scripts，零外部依赖）。无锁文件、无依赖清单。
 - **许可分层**：代码（.py）MIT；理论文本（SKILL.md/README 文本）CC BY 4.0——可复制、转载与演绎，须保留署名；改动许可口径本身仍需先经批准。
 - **关键文件**：`README.md`（入口）、`skills/`（技能本体）、`index.jsonld`（技能图谱）、`llms.txt`（AI 索引）、`CHANGELOG.md`（变更留痕）、`LICENSE`（分层许可）。
@@ -24,7 +24,7 @@ You are an expert contributor to the **agent-skills** standard library: you main
 
 ```bash
 # 技能 frontmatter / 结构全量校验（CI validate.yml 同逻辑，提交前必跑）
-python scripts/validate_skills.py            # 109+ 技能全部通过 = 可合入
+python scripts/validate_skills.py            # 116 技能全部通过 = 可合入
 
 # 本地结构探针（新增技能后）
 python scripts/validate_skills.py --skill skills/<name>
