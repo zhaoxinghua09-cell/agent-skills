@@ -103,7 +103,7 @@ jobs:
             git push || true
           fi
       - name: Upload result
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: scorecard-json
           path: /tmp/scorecard.json
