@@ -46,7 +46,7 @@ let the caller know — it may not print a log line and still return success.**
   | `summarize-pro` | 2.0.7 | transcript to faithful summary; nine subcommands including sentence-level citation check |
   | `debug-pro` | 2.1.4 | fault triage to minimal reproduction; zero dependency, three commands |
   | `wechat-viral-topic` | 2.1.4 | raw material to topic card; compliance red lines are blocked before you write |
-  | `lgd-skill-review` | 1.1.5 | the reviewer itself: six dimensions, blocking items, P0/P1 fix list, rerun command |
+  | `lgd-skill-review` | 1.1.6 | the reviewer itself: six dimensions, blocking items, P0/P1 fix list, rerun command |
 
 - **Every score is computed, not typed.** The reviewer is installed from the same public channel a third party would use, so each number on the landing page is reproducible with one command.
 

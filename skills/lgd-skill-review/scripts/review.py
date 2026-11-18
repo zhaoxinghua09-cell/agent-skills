@@ -452,6 +452,19 @@ def token_report(root, files):
     }
 
 
+def grade_reading(s_pct, y_pct):
+    """把两个正交分数翻译成一句人能用的判读，而不是让读者自己算。"""
+    if s_pct >= 90 and y_pct >= 85:
+        return "结构与语义双强：可交付、可复现，且有增量，适合当范本"
+    if s_pct >= 90 and y_pct < 70:
+        return "结构完备但语义薄：能跑能测，内容却多是模型已知的，像脚手架不像专家"
+    if s_pct < 70 and y_pct >= 70:
+        return "语义有料但交付不完整：有真判断，缺测试/分层/复跑入口，装上容易踩坑"
+    if s_pct < 70 and y_pct < 70:
+        return "两制皆弱：既不可交付，也无可复用增量"
+    return "两制都在中段：能用，但结构有缺口、内容密度也一般"
+
+
 def eight_report(root, fm, files):
     """八维对照报告（对齐公开的 120 分制口径），不参与本引擎六维计分。
 
@@ -775,9 +788,24 @@ def main():
     files = walk(root_abs)
     fm = frontmatter(read(os.path.join(root_abs, "SKILL.md")) or "")
 
+    # ---- 双制汇总：结构分（六维 100）与语义分（八维 120）是两类正交判断，不混算 ----
+    # 结构分问：能不能交付、能不能复现、有没有互链与许可。
+    # 语义分问：有没有增量知识、流程是否成体系、规则是否可判断。
+    # 二者可以背离：结构完美而语义空洞，或洞见很深而无测试——都不该被压成一个数。
+    er_sum = eight_report(root_abs, fm, files)
+    gap_flag = ""
+    s_pct = d["pct"]
+    y_pct = er_sum["pct"]
+    if abs(s_pct - y_pct) >= 20:
+        gap_flag = "  ← 背离 %.0f 分，两制结论不一致，需看专项说明" % abs(s_pct - y_pct)
+    print("\n双制判分（两个正交结论，不混算）")
+    print("  结构制 %3d/100（%.0f%%） %s" % (d["total"], s_pct, d["verdict"]))
+    print("  语义制 %3d/120（%.0f%%） %s" % (er_sum["total"], y_pct, er_sum["grade"]))
+    print("  判读：%s%s" % (grade_reading(s_pct, y_pct), gap_flag))
+
     if a.eight:
-        er = eight_report(root_abs, fm, files)
-        print("\n八维对照（对齐公开 120 分制，不参与本引擎计分）")
+        er = er_sum
+        print("\n语义制明细（对齐公开 120 分制）")
         for c in er["rows"]:
             print("  %-2s %-34s %2d/%-3d %s" %
                   (c["id"], c["name"], c["score"], c["max"], c["note"]))
