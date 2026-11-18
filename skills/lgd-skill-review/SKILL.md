@@ -7,7 +7,7 @@ display_name_en: Skill Reviewer
 slug: lgd-skill-review
 author: 诺声(Logos)@SynomosAI
 copyright: SynomosAI
-version: 1.1.2
+version: 1.1.3
 license: MIT
 description: "Use when reviewing, auditing or scoring any AI skill package, or when a skill was rejected and you need to know why. A six-dimension, evidence-based reviewer: it scores structure, declared-vs-implemented consistency, reproducibility, hygiene/sanitization, AI discoverability and licensing on a weighted 100-point scale, then emits a prioritized fix list (P0 blocking / P1 improvement) and a rerun command. Designed to close the loop: review -> fix -> re-review, so an agent can improve its own skill autonomously. Every point is traceable to a specific file and finding; no impression scoring. Detects the industry's most common defect: documentation promising a command or flag that the script never implements. Zero dependency, standard library only, offline. Triggers: review my skill, audit skill quality, why is my skill rejected, skill checklist, score this skill, improve my SKILL.md, skill package gate."
 description_zh: "技能体检 / 评测 / 打分 / 为什么被拒 —— 对任意 AI 技能包做 6 维加权评测（结构 / 声明一致 / 可复跑 / 去敏安全 / AI 可发现 / 许可署名），输出 100 分总分、阻断项、P0/P1 整改清单与复测命令，形成「评测→整改→复测」闭环。每一分都能指到具体文件与具体缺陷，不做印象打分；最常抓到的行业通病是「文档承诺了脚本没实现的命令或参数」"
@@ -27,22 +27,14 @@ display_name_zh: 技能评测官
 
 ## Triggers（触发词）
 
-用户说这些话时用本技能——中英双语，口语与书面都覆盖：
+| 场景 | 用户会这么说 |
+|---|---|
+| 中文口语 | 帮我评一下这个技能 / 给我打个分 / 技能体检 / 技能质检 / 能不能上架 / 上架前检查一遍 / 为什么被拒 / 怎么改才能过 / 给份整改清单 / 改完再复核 / 复测一下 / 有没有泄露密钥 / 结构有没有问题 / 文档写的命令脚本都有吗 |
+| 中文术语 | 评审 skill / 测评 skill / skill 评分 / 技能审查 / 质量门禁 / 发布核验 / 上架检查 / 稳定性测试 / skill benchmark / repo audit / publish check |
+| English | review my skill / audit this skill package / score this skill / is it releasable / why was my skill rejected / skill quality check / give me a fix list / does the doc match the script / skill vetting |
+| 间接场景 | 拿到别人的包想知道值不值得装；刚改完想确认没改坏；按我们的标准看 |
 
-**中文口语**
-「帮我评一下这个技能」「给我这个技能打个分」「技能体检」「技能质检」「这个技能能不能上架」「上架前帮我检查一遍」「我的技能为什么被拒了」「被拒了怎么办」「SKILL.md 哪里不行」「怎么改才能过」「给我一份整改清单」「按清单改完再复核一遍」「复测一下」「这个包有没有泄露密钥」「包的结构有没有问题」「文档写的命令脚本里都有吗」「全库体检一遍」「这批技能整体怎么样」「我改完了，确认没改坏」
-
-**中文术语**
-评审 skill、测评 skill、skill 评分、技能审查、质量门禁、发布核验、发布确认、上架检查、稳定性测试、skill benchmark、repo audit、publish check、verify publish、改进技能、完善技能、验证修复意见
-
-**English**
-「review my skill」「audit this skill package」「score this skill」「is this skill releasable」「why was my skill rejected」「skill quality check」「give me a fix list」「check my skill package before publishing」「does the doc match the script」「review loop」「skill vetting」
-
-**间接场景**
-用户拿到别人的技能包想知道「值不值得装」；用户刚改完一个技能想「确认没改坏」；用户说「按你们的标准看」。
-
-**不用本技能**：评测一段文字/一篇文章（那是写作评审）、评测一个模型回答质量（那是评测集）、
-评测商业方案（那是尽调）。
+**Not for**：评测一段文字（那是写作评审）、评测模型回答质量（那是评测集）、评测商业方案（那是尽调）。
 
 ## 为什么值得用（与同类工具的差别）
 

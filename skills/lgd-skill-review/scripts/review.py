@@ -388,8 +388,26 @@ def token_report(root, files):
 
     blocks = re.findall(r'```[\s\S]*?```', body)
     code_lines = sum(len(b.splitlines()) for b in blocks) or 0
-    step_lines = len(re.findall(r'(?m)^\s*(?:\d+\.\s|[-*]\s+\S)', body))
+    step_lines = len(re.findall(r'(?m)^\s*(?:\d+\.\s|[-*]\s+\S|第[一二三四五六七八九十]步|Step\s+\d)', body))
     rule_lines = len(re.findall(r'(?:必须|禁止|不得|务必|切勿|MUST|NEVER)', body))
+
+    # 说明性行：逐行判定，排除代码块内、步骤句、规则句、表格行。
+    # 早先用 "100 - 示例 - 步骤 - 规则" 反推，因一行可能同时命中多类而重复扣减，
+    # 会把说明性系统性高估（实测虚高 25 个百分点），故改为直接统计。
+    nar_lines, in_code = 0, False
+    for ln in body.splitlines():
+        if ln.strip().startswith("```"):
+            in_code = not in_code
+            continue
+        if not ln.strip() or in_code:
+            continue
+        if ln.strip().startswith("|"):
+            continue
+        if re.match(r'^\s*(?:\d+\.\s|[-*]\s+\S|第[一二三四五六七八九十]步|Step\s+\d)', ln):
+            continue
+        if re.search(r'(必须|禁止|不得|务必|切勿|MUST|NEVER)', ln):
+            continue
+        nar_lines += 1
 
     fillers = [(f, body.count(f)) for f in FILLERS if body.count(f)]
     dup, seen = [], {}
@@ -413,7 +431,7 @@ def token_report(root, files):
         "chars": len(body), "lines": n, "est_tokens": est,
         "example_pct": pct(code_lines), "action_pct": pct(step_lines),
         "rule_pct": pct(rule_lines),
-        "narration_pct": round(max(0.0, 100 - pct(code_lines) - pct(step_lines) - pct(rule_lines)), 1),
+        "narration_pct": pct(nar_lines),
         "fillers": [{"text": f, "count": c} for f, c in fillers],
         "duplicates": dup[:5],
         "advice": adv,
