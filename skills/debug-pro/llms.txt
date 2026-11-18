@@ -1,0 +1,34 @@
+# debug-pro
+
+> A language-agnostic 7-step debugging protocol with a runnable toolchain that turns 'I reproduced it' into checkable evidence.
+
+## When to use
+
+- 这个报错怎么查  →  triage 日志分诊
+- 改完还是报错，下一步查什么  →  7 步协议第 3 步最小化
+- 怎么写一个能复现的说明  →  reprocheck 五要素判分
+- 我这环境有问题，怎么描述  →  envsnap 环境快照（自动剔密钥）
+- 是代码问题还是环境问题  →  分层定位
+- debug this stack trace and find the root cause  →  same
+
+## When NOT to use
+
+- 直接替用户改生产代码
+- 安全漏洞利用细节
+- 性能压测方案设计
+
+## Entrypoints
+
+- cli: `python tools/debughunt.py triage --file <log>`
+- verify: `python tools/debughunt.py reprocheck --file <report>`
+- gate: `python tests/run_golden.py`
+- review: `python scripts/review.py <this_dir> --run`
+
+## Ecosystem
+
+- Author: 诺声(Logos)@SynomosAI (LGD / SynomosAI)
+- Theory anchor: 三律：有籍（可追溯）/ 有证（可核验）/ 有门禁（可拦截）
+
+- summarize-pro — 故障复盘会需要出纪要
+- wechat-viral-topic — 要把踩坑经历写成对外内容
+- lgd-skill-review — 要评测技能包并拿整改清单

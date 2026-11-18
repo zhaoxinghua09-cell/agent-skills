@@ -1,0 +1,22 @@
+{
+ "schema": "lgd-chain/1.0",
+ "from": "debug-pro",
+ "handoff": [
+  {
+   "when": "需要把故障复盘做成可核验的纪要",
+   "to": "summarize-pro",
+   "handoff": "把排障过程记录交给它，要求每个时间点与结论都能追回原句"
+  },
+  {
+   "when": "要证明这套定位流程本身达标",
+   "to": "lgd-skill-review",
+   "handoff": "`--type debug --run`，重点看「证据纪律/复现分级/失败样例」三项"
+  },
+  {
+   "when": "定位过程暴露了内容层面的合规风险",
+   "to": "wechat-viral-topic",
+   "handoff": "把要对外说明的措辞交给它，先过红线再写"
+  }
+ ],
+ "note": "收尾时按 when 条件把活交给 to，并递上 handoff 里点名的材料；不递空话。"
+}

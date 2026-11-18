@@ -1,0 +1,22 @@
+{
+ "schema": "lgd-chain/1.0",
+ "from": "summarize-pro",
+ "handoff": [
+  {
+   "when": "纪要里的待办是代码/线上故障相关",
+   "to": "debug-pro",
+   "handoff": "把该条待办原文与相关报错一起交给 debug-pro，要「定位到层 + 复现分级」，不要它猜原因"
+  },
+  {
+   "when": "纪要里出现内容/选题类任务",
+   "to": "wechat-viral-topic",
+   "handoff": "把该任务原句交给它，要「候选 + 标题 + 红线」三段，可直接开写"
+  },
+  {
+   "when": "要把这份纪要的质量变成可复跑的验收",
+   "to": "lgd-skill-review",
+   "handoff": "把生成纪要的技能目录交给它，`--type meeting --run`，看「来源适配/证据溯源/黄金集」是否齐备"
+  }
+ ],
+ "note": "收尾时按 when 条件把活交给 to，并递上 handoff 里点名的材料；不递空话。"
+}

@@ -1,5 +1,5 @@
 {
- "note": "黄金集：每条 = 输入片段 + 期望的机器可判结果。run_golden.py 逐条断言，全部通过才算达标。 v2.0.2 增补 G11–G14：结论强度（firm/soft）与承诺强度（committed/intent）分级；条件句不列待办；标题行不入句子流。",
+ "note": "黄金集：每条 = 输入片段 + 期望的机器可判结果。run_golden.py 逐条断言，全部通过才算达标。 v2.0.2 增补 G11–G14：结论强度（firm/soft）与承诺强度（committed/intent）分级；条件句不列待办；标题行不入句子流。 v2.0.4 增补 G15–G18：日期归一（追加锚点不改原文）／中性措辞／确定性渲染四视图／相对日期进入抽取。 G19–G20：范围否定不生成未来任务／部门责任不映射个人。 G21–G22：来源折行／HTML 自包含。",
  "cases": [
   {
    "id": "G01-minutes-basic",
@@ -148,6 +148,188 @@
     "todo_max": 2,
     "committed_min": 1,
     "selfcheck": "PASS"
+   }
+  },
+  {
+   "id": "G15-normdates-relative-with-anchor",
+   "kind": "normdates",
+   "input": "看板下周 3 上线，明天发初稿，月底验收，下个月 5 号复盘。",
+   "expect": {
+    "ref": "2026-11-18",
+    "count_min": 4,
+    "must_contain": [
+     "2026-11-25",
+     "2026-11-19",
+     "2026-11-30",
+     "2026-12-05"
+    ],
+    "must_keep": [
+     "下周 3",
+     "明天",
+     "月底"
+    ]
+   }
+  },
+  {
+   "id": "G16-neutral-sensitive-scene",
+   "kind": "neutral",
+   "input": "这次绩效不合格的要末位淘汰，那起事故的伤亡先不要外传。",
+   "expect": {
+    "mode": true,
+    "groups": [
+     "personnel",
+     "performance",
+     "incident"
+    ]
+   }
+  },
+  {
+   "id": "G17-render-executive-no-quote-no-table",
+   "kind": "render",
+   "facts": {
+    "chars": 120,
+    "lines": 6,
+    "dates": [
+     "下周 3",
+     "月底"
+    ],
+    "numbers": [
+     "2%"
+    ],
+    "speakers": [
+     "陈涛",
+     "周敏"
+    ],
+    "owners_hint": [],
+    "todo_sentences": [
+     "这次绩效不合格的要末位淘汰，另外那起事故的伤亡情况先别写进纪要。"
+    ],
+    "decision_sentences": [
+     "看板原定下周 3 上线，先按月底这个节点走。"
+    ],
+    "condition_sentences": [],
+    "decision_items": [
+     {
+      "text": "看板原定下周 3 上线，先按月底这个节点走。",
+      "strength": "provisional",
+      "superseded": false
+     }
+    ],
+    "commitment_items": [
+     {
+      "text": "下个月 5 号之前必须完成验收。",
+      "strength": "unstated"
+     }
+    ],
+    "strength_summary": {
+     "decisions": 1,
+     "commitments": 1,
+     "firm_decisions": 0,
+     "soft_decisions": 1,
+     "committed_owners": 0,
+     "unconfirmed_owners": 1,
+     "verdict": "needs_confirmation"
+    }
+   },
+   "expect": {
+    "view": "executive",
+    "not_contains": [
+     "|",
+     "原句：「"
+    ],
+    "must_contain": [
+     "管理层纪要",
+     "敏感场景提示",
+     "本场无已定"
+    ]
+   }
+  },
+  {
+   "id": "G18-relative-dates-in-extract",
+   "input": "陈涛：看板下周 3 上线，先按月底走。周敏：明天我发初稿。",
+   "expect": {
+    "format": "minutes",
+    "dates_min": 3
+   }
+  },
+  {
+   "id": "G19-scope-negate-not-future-task",
+   "kind": "commitments",
+   "input": "李强：本周不铺货，下周一再看排期。王倩：这一段先不做投放。",
+   "expect": {
+    "scope_negate_min": 2,
+    "committed_max": 0
+   }
+  },
+  {
+   "id": "G20-dept-owner-not-person",
+   "kind": "commitments",
+   "input": "陈涛：媒介跟一下这个选题的排期。法务那边确认下合同条款。",
+   "expect": {
+    "owner_scope_min": 2,
+    "committed_max": 0
+   }
+  },
+  {
+   "id": "G21-adapt-tencent-fold",
+   "kind": "adapt",
+   "path": "x.md",
+   "input": "# 会议主题：周会\n参会人：陈涛、周敏、李强\n陈涛 的发言 00:01:12\n看板原定下周 3 上线，先按月底这个节点走。\n周敏 的发言 00:03:40\n明天我发初稿。\n李强 的发言 00:06:05\n媒介跟一下这个选题的排期。\n",
+   "expect": {
+    "source": "tencent_meeting",
+    "speaker_lines_min": 3
+   }
+  },
+  {
+   "id": "G22-render-html-selfcontained",
+   "kind": "html",
+   "facts": {
+    "chars": 120,
+    "lines": 6,
+    "dates": [
+     "下周 3"
+    ],
+    "numbers": [],
+    "speakers": [
+     "陈涛"
+    ],
+    "owners_hint": [],
+    "todo_sentences": [],
+    "condition_sentences": [],
+    "decision_sentences": [],
+    "decision_items": [
+     {
+      "text": "看板定下周 3 上线。",
+      "strength": "firm",
+      "superseded": false
+     }
+    ],
+    "commitment_items": [
+     {
+      "text": "陈涛我来出初稿。",
+      "strength": "committed"
+     }
+    ],
+    "strength_summary": {
+     "decisions": 1,
+     "commitments": 1,
+     "firm_decisions": 1,
+     "soft_decisions": 0,
+     "committed_owners": 1,
+     "unconfirmed_owners": 0,
+     "verdict": "clean"
+    }
+   },
+   "expect": {
+    "view": "executive",
+    "must_contain": [
+     "<!DOCTYPE html>",
+     "<style>",
+     "管理层纪要"
+    ],
+    "not_contains": [
+     "<link rel=\"stylesheet\""
+    ]
    }
   }
  ]

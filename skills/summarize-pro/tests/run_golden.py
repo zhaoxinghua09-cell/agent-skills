@@ -43,7 +43,103 @@ def check(case):
                          % (len(bad["missing"]), exp.get("bad_missing_min", 0)))
         return (not fails), fails
 
-    text = case["input"]
+    text = case.get("input", "")
+    kind = case.get("kind", "extract")
+
+    # 脱敏类用例
+    if kind == "redact":
+        clean, rep = sp.redact_text(text, exp.get("terms", []))
+        if rep["total"] < exp.get("redacted_min", 0):
+            fails.append("脱敏 %d 处，期望 ≥%d（%s）"
+                         % (rep["total"], exp.get("redacted_min", 0), rep["counts"]))
+        for s in exp.get("not_contains", []):
+            if s in clean:
+                fails.append("脱敏后仍残留明文：%s" % s)
+        for s in exp.get("must_contain", []):
+            if s not in clean:
+                fails.append("脱敏后应保留：%s" % s)
+        return (not fails), fails
+
+    # 来源适配
+    if kind == "adapt":
+        res = sp.adapt_detect(case.get("path", "x.md"), text)
+        src = res["candidates"][0]["source"]
+        if src != exp.get("source"):
+            fails.append("来源识别 %s，期望 %s" % (src, exp.get("source")))
+        norm = sp.normalize_source(text, src)
+        n_spk = len(__import__("re").findall(r"(?m)^\S{1,12}\s*[:：]", norm))
+        if n_spk < exp.get("speaker_lines_min", 0):
+            fails.append("折行后说话人行 %d，期望 ≥%d" % (n_spk, exp.get("speaker_lines_min", 0)))
+        return (not fails), fails
+
+    # HTML 渲染自包含
+    if kind == "html":
+        body = sp.render_view(case["facts"], exp.get("view", "executive"))
+        html = sp.md_to_html(body, title="t")
+        for s in exp.get("must_contain", []):
+            if s not in html:
+                fails.append("HTML 缺：%s" % s)
+        for s in exp.get("not_contains", []):
+            if s in html:
+                fails.append("HTML 不该含：%s" % s)
+        return (not fails), fails
+
+    # 承诺分级（范围否定 / 部门归属）
+    if kind == "commitments":
+        items = sp.grade_commitments([s for s in text.split("。") if s.strip()])
+        neg = [i for i in items if i.get("evidence", "").startswith("范围否定")]
+        dept = [i for i in items if i.get("owner_scope")]
+        com = [i for i in items if i["strength"] == "committed"]
+        if len(neg) < exp.get("scope_negate_min", 0):
+            fails.append("范围否定识别 %d 条，期望 ≥%d" % (len(neg), exp.get("scope_negate_min", 0)))
+        if len(dept) < exp.get("owner_scope_min", 0):
+            fails.append("部门归属识别 %d 条，期望 ≥%d" % (len(dept), exp.get("owner_scope_min", 0)))
+        if len(com) > exp.get("committed_max", 99):
+            fails.append("误判 committed %d 条（应 ≤%d）" % (len(com), exp.get("committed_max", 99)))
+        return (not fails), fails
+
+    # 日期归一
+    if kind == "normdates":
+        new_text, rep = sp.norm_dates(text, exp.get("ref"))
+        if rep["count"] < exp.get("count_min", 1):
+            fails.append("归一 %d 处，期望 ≥%d" % (rep["count"], exp.get("count_min", 1)))
+        for s in exp.get("must_contain", []):
+            if s not in new_text:
+                fails.append("归一后缺：%s" % s)
+        for s in exp.get("must_keep", []):
+            if s not in new_text:
+                fails.append("原文被改写，丢了：%s（本工具只追加锚点）" % s)
+        return (not fails), fails
+
+    # 中性措辞
+    if kind == "neutral":
+        res = sp.neutral_scan(text)
+        if res["neutral_language_mode"] != exp.get("mode", True):
+            fails.append("neutral 期望 %s，实际 %s" % (exp.get("mode"), res["neutral_language_mode"]))
+        groups = {h["group"] for h in res["hits"]}
+        for g in exp.get("groups", []):
+            if g not in groups:
+                fails.append("未命中场景组：%s（实际 %s）" % (g, sorted(groups)))
+        return (not fails), fails
+
+    # 确定性渲染
+    if kind == "render":
+        body = sp.render_view(case["facts"], exp.get("view", "receipt"))
+        for s in exp.get("not_contains", []):
+            if s in body:
+                fails.append("渲染不该含：%s" % s)
+        for s in exp.get("must_contain", []):
+            if s not in body:
+                fails.append("渲染缺：%s" % s)
+        return (not fails), fails
+
+    # schema 校验类用例
+    if kind == "validate":
+        res = sp.validate_facts(case["facts"])
+        if res["verdict"] != exp.get("verdict"):
+            fails.append("validate 期望 %s，实际 %s（%s）"
+                         % (exp.get("verdict"), res["verdict"], res["problems"]))
+        return (not fails), fails
 
     # 期望业务失败（如原文过短）
     if exp.get("expect_error"):

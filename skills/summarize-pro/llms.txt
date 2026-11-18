@@ -1,0 +1,36 @@
+# summarize-pro
+
+> Turns a transcript, note or long text into a faithful summary in five format families, and grades what was actually decided and who actually took it.
+
+## When to use
+
+- 帮我把这个会整理成纪要  →  minutes 格式族 + extract
+- 这次会到底定了什么？谁负责？  →  minutes + 强度判读
+- 把这两个方案做成对比表  →  compare 格式族
+- 这件事的时间线理一下  →  timeline 格式族
+- 这篇长文给我 5 条要点  →  bullets 格式族
+- 你写的这些数字原文里有吗  →  citecheck 逐句溯源
+- 这份纪要能发给老板吗  →  strength_summary.verdict
+- summarize this meeting transcript into minutes  →  same
+
+## When NOT to use
+
+- 纯转写/语音识别（本技能不做 ASR）
+- 翻译成多语种版本
+- 替用户做决策判断
+
+## Entrypoints
+
+- cli: `python scripts/summarize_pro.py extract --file <src> --format minutes`
+- verify: `python scripts/summarize_pro.py citecheck --file <out> --source <src>`
+- gate: `python tests/run_golden.py`
+- review: `python scripts/review.py <this_dir> --run`
+
+## Ecosystem
+
+- Author: 诺声(Logos)@SynomosAI (LGD / SynomosAI)
+- Theory anchor: 三律：有籍（可追溯）/ 有证（可核验）/ 有门禁（可拦截）
+
+- debug-pro — 纪要里出现系统故障/报错需要定位
+- wechat-viral-topic — 要把会议结论改写成对外内容选题
+- lgd-skill-review — 要评测任意技能包质量并拿整改清单

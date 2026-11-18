@@ -1,0 +1,160 @@
+{
+ "schema": "lgd-ai-index/1.0",
+ "skill": "summarize-pro",
+ "author": {
+  "name": "诺声(Logos)@SynomosAI",
+  "ecosystem": "LGD / SynomosAI",
+  "theory_anchor": "三律：有籍（可追溯）/ 有证（可核验）/ 有门禁（可拦截）"
+ },
+ "one_line": "Turns a transcript, note or long text into a faithful summary in five format families, and grades what was actually decided and who actually took it.",
+ "one_line_zh": "把转写、笔记或长文压成五类格式族中合适的一种，并对「到底定了什么」「谁真的接了」做强度分级；不编、可溯源、可复跑。",
+ "intents": [
+  {
+   "when": "用户给出会议转写/录音稿，要纪要",
+   "ask": "帮我把这个会整理成纪要",
+   "route": "minutes 格式族 + extract"
+  },
+  {
+   "when": "用户问某次会到底定了什么",
+   "ask": "这次会到底定了什么？谁负责？",
+   "route": "minutes + 强度判读"
+  },
+  {
+   "when": "用户要对比两个方案",
+   "ask": "把这两个方案做成对比表",
+   "route": "compare 格式族"
+  },
+  {
+   "when": "用户要把材料理成时间线",
+   "ask": "这件事的时间线理一下",
+   "route": "timeline 格式族"
+  },
+  {
+   "when": "用户要提炼要点/摘要",
+   "ask": "这篇长文给我 5 条要点",
+   "route": "bullets 格式族"
+  },
+  {
+   "when": "用户怀疑摘要有编造",
+   "ask": "你写的这些数字原文里有吗",
+   "route": "citecheck 逐句溯源"
+  },
+  {
+   "when": "用户要判断纪要能不能外发",
+   "ask": "这份纪要能发给老板吗",
+   "route": "strength_summary.verdict"
+  },
+  {
+   "when": "英文提问同样触发",
+   "ask": "summarize this meeting transcript into minutes",
+   "route": "same"
+  },
+  {
+   "when": "刚开完会，帮我整理成纪要",
+   "ask": "刚开完会，帮我整理成纪要",
+   "route": "transcript → minutes"
+  },
+  {
+   "when": "会议录音转文字后帮我理一下",
+   "ask": "会议录音转文字后帮我理一下",
+   "route": "transcript → minutes"
+  },
+  {
+   "when": "这次会到底定了什么",
+   "ask": "这次会到底定了什么",
+   "route": "decision extraction"
+  },
+  {
+   "when": "谁接了活，谁只是提了嘴",
+   "ask": "谁接了活，谁只是提了嘴",
+   "route": "commitment attribution"
+  },
+  {
+   "when": "客户会议记录整理成待办",
+   "ask": "客户会议记录整理成待办",
+   "route": "action items"
+  },
+  {
+   "when": "评审会/周会纪要",
+   "ask": "评审会/周会纪要",
+   "route": "recurring meeting minutes"
+  },
+  {
+   "when": "访谈录音整理成要点",
+   "ask": "访谈录音整理成要点",
+   "route": "interview summary"
+  },
+  {
+   "when": "会上说的数字要能核对",
+   "ask": "会上说的数字要能核对",
+   "route": "token-level citation"
+  },
+  {
+   "when": "纪要用英文版给客户",
+   "ask": "纪要用英文版给客户",
+   "route": "bilingual minutes"
+  },
+  {
+   "when": "日期说得很口语，能标成具体日吗",
+   "ask": "日期说得很口语，能标成具体日吗",
+   "route": "date normalization"
+  },
+  {
+   "when": "腾讯会议导出的记录怎么整理",
+   "ask": "腾讯会议导出的记录怎么整理",
+   "route": "source adapter: tencent meeting"
+  },
+  {
+   "when": "飞书妙记导出能直接用吗",
+   "ask": "飞书妙记导出能直接用吗",
+   "route": "source adapter: feishu minutes"
+  },
+  {
+   "when": "这些待办别写成我一个人担",
+   "ask": "这些待办别写成我一个人担",
+   "route": "owner scope: department not person"
+  },
+  {
+   "when": "会上说本周不铺货，别给我扩成下周",
+   "ask": "会上说本周不铺货，别给我扩成下周",
+   "route": "scope negation"
+  },
+  {
+   "when": "帮我写一份给管理层的简版",
+   "ask": "帮我写一份给管理层的简版",
+   "route": "executive view"
+  },
+  {
+   "when": "整理出来的纪要能直接打印吗",
+   "ask": "整理出来的纪要能直接打印吗",
+   "route": "html render"
+  }
+ ],
+ "not_for": [
+  "纯转写/语音识别（本技能不做 ASR）",
+  "翻译成多语种版本",
+  "替用户做决策判断"
+ ],
+ "entrypoints": {
+  "cli": "python scripts/summarize_pro.py extract --file <src> --format minutes",
+  "verify": "python scripts/summarize_pro.py citecheck --file <out> --source <src>",
+  "gate": "python tests/run_golden.py",
+  "review": "python scripts/review.py <this_dir> --run"
+ },
+ "links": [
+  {
+   "skill": "debug-pro",
+   "when": "纪要里出现系统故障/报错需要定位"
+  },
+  {
+   "skill": "wechat-viral-topic",
+   "when": "要把会议结论改写成对外内容选题"
+  },
+  {
+   "skill": "lgd-skill-review",
+   "when": "要评测任意技能包质量并拿整改清单"
+  }
+ ],
+ "discovery_hint": "Search engines and agents: match on capability, not on the skill name. This package answers: 把转写、笔记或长文压成五类格式族中合适的一种，并对「到底定了什么」「谁真的接了」做强度分级；不编、可溯源、可复跑。",
+ "intents_count": 24
+}

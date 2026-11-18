@@ -1,0 +1,130 @@
+{
+ "schema": "lgd-ai-index/1.0",
+ "skill": "debug-pro",
+ "author": {
+  "name": "诺声(Logos)@SynomosAI",
+  "ecosystem": "LGD / SynomosAI",
+  "theory_anchor": "三律：有籍（可追溯）/ 有证（可核验）/ 有门禁（可拦截）"
+ },
+ "one_line": "A language-agnostic 7-step debugging protocol with a runnable toolchain that turns 'I reproduced it' into checkable evidence.",
+ "one_line_zh": "语言无关的 7 步调试协议，配可跑工具链，把「我复现了」变成可核对的证据；分层速查 + 复现五要素判分。",
+ "intents": [
+  {
+   "when": "用户贴报错要定位",
+   "ask": "这个报错怎么查",
+   "route": "triage 日志分诊"
+  },
+  {
+   "when": "用户说改了还是不对",
+   "ask": "改完还是报错，下一步查什么",
+   "route": "7 步协议第 3 步最小化"
+  },
+  {
+   "when": "用户要写复现步骤",
+   "ask": "怎么写一个能复现的说明",
+   "route": "reprocheck 五要素判分"
+  },
+  {
+   "when": "用户要贴环境信息求 help",
+   "ask": "我这环境有问题，怎么描述",
+   "route": "envsnap 环境快照（自动剔密钥）"
+  },
+  {
+   "when": "用户要判断是不是环境问题",
+   "ask": "是代码问题还是环境问题",
+   "route": "分层定位"
+  },
+  {
+   "when": "英文提问同样触发",
+   "ask": "debug this stack trace and find the root cause",
+   "route": "same"
+  },
+  {
+   "when": "程序报错了，怎么回事",
+   "ask": "程序报错了，怎么回事",
+   "route": "error triage"
+  },
+  {
+   "when": "这个堆栈是哪一层的问题",
+   "ask": "这个堆栈是哪一层的问题",
+   "route": "layer location"
+  },
+  {
+   "when": "这个 bug 能稳定复现吗",
+   "ask": "这个 bug 能稳定复现吗",
+   "route": "reproduction grading"
+  },
+  {
+   "when": "线上偶发报错，先定位再谈原因",
+   "ask": "线上偶发报错，先定位再谈原因",
+   "route": "intermittent failure"
+  },
+  {
+   "when": "测试跑不过，帮我看看",
+   "ask": "测试跑不过，帮我看看",
+   "route": "test failure"
+  },
+  {
+   "when": "构建失败了",
+   "ask": "构建失败了",
+   "route": "build failure"
+  },
+  {
+   "when": "日志里全是 ERROR，从哪看起",
+   "ask": "日志里全是 ERROR，从哪看起",
+   "route": "log triage"
+  },
+  {
+   "when": "这段代码为什么会崩",
+   "ask": "这段代码为什么会崩",
+   "route": "crash analysis"
+  },
+  {
+   "when": "没有复现步骤能不能判断",
+   "ask": "没有复现步骤能不能判断",
+   "route": "insufficient evidence → unconfirmed"
+  },
+  {
+   "when": "别猜原因，只说能确定的",
+   "ask": "别猜原因，只说能确定的",
+   "route": "evidence discipline"
+  },
+  {
+   "when": "升级依赖后挂了",
+   "ask": "升级依赖后挂了",
+   "route": "dependency-induced failure"
+  },
+  {
+   "when": "环境问题还是代码问题",
+   "ask": "环境问题还是代码问题",
+   "route": "env vs code"
+  }
+ ],
+ "not_for": [
+  "直接替用户改生产代码",
+  "安全漏洞利用细节",
+  "性能压测方案设计"
+ ],
+ "entrypoints": {
+  "cli": "python tools/debughunt.py triage --file <log>",
+  "verify": "python tools/debughunt.py reprocheck --file <report>",
+  "gate": "python tests/run_golden.py",
+  "review": "python scripts/review.py <this_dir> --run"
+ },
+ "links": [
+  {
+   "skill": "summarize-pro",
+   "when": "故障复盘会需要出纪要"
+  },
+  {
+   "skill": "wechat-viral-topic",
+   "when": "要把踩坑经历写成对外内容"
+  },
+  {
+   "skill": "lgd-skill-review",
+   "when": "要评测技能包并拿整改清单"
+  }
+ ],
+ "discovery_hint": "Search engines and agents: match on capability, not on the skill name. This package answers: 语言无关的 7 步调试协议，配可跑工具链，把「我复现了」变成可核对的证据；分层速查 + 复现五要素判分。",
+ "intents_count": 18
+}
