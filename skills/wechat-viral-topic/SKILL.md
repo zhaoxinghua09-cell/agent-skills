@@ -4,11 +4,11 @@ displayName: wechat-viral-topic
 slug: wechat-viral-topic
 author: 诺声(Logos)@SynomosAI
 copyright: 赵兴华 / Steven Zhao·China
-version: 2.1.3
+version: 2.1.4
 license: LicenseRef-AllRightsReserved
 license_scope: 理论文本保留所有权利（见文末「License」）；tools/*.py、tests/*.py、demo/*.py 等脚本文件单独以 MIT 许可提供，便于他人复跑与审计
 allowed-tools: Read, Glob, Grep, Edit, Bash
-description: "A topic-selection assistant for WeChat public accounts, short-video creators, comic authors and H5 planners that turns a raw trend into a defensible topic card. It extracts verifiable signals from source material (figures, time windows, platform fit, hashtags, conflict lines, reader pain points), screens drafts against compliance red lines (medical claims, absolute wording, income promises, incentivised sharing, unsourced assertions), and grades headlines for length, formula type and red-line risk. Ships a zero-dependency, offline, standard-library toolchain (scan / riskcheck / titlecheck) plus an 11-case golden set with a re-executable runner and a demo that proves both the block path and the no-false-positive path. Progressive disclosure: frameworks and checklists live in references/. Triggers: topic selection, viral topic, hot take, headline, WeChat article, 100k+ read."
+description: "A topic-selection assistant for WeChat public accounts, short-video creators, comic authors and H5 planners that turns a raw trend into a defensible topic card. It extracts verifiable signals from source material (figures, time windows, platform fit, hashtags, conflict lines, reader pain points), screens drafts against compliance red lines (medical claims, absolute wording, income promises, incentivised sharing, unsourced assertions), and grades headlines for length, formula type and red-line risk. Ships a zero-dependency, offline, standard-library toolchain (scan / riskcheck / titlecheck) plus an 11-case golden set with a re-executable runner and a demo that proves both the block path and the no-false-positive path. Progressive disclosure: frameworks and checklists live in references/. Triggers: topic selection, viral topic, hot take, headline, WeChat article, 100k+ read. Use when choosing a WeChat public-account or short-video topic, checking a title before publishing, or screening a draft for compliance risk."
 description_zh: 选题 / 爆款 / 10万+ / 公众号 —— 热点选题与爆款策划助手，面向公众号编辑、短视频博主、漫画作者、H5 策划，用于回答「这周写什么」「这个素材能不能爆」「热点怎么改成我的选题」这类问题；v2.1 附零依赖离线工具链（scan 素材信号抽取 / riskcheck 合规红线 / titlecheck 标题体检）与 11 条黄金集，把「这个选题能不能做」从感觉变成可核对的事实
 description_en: "A topic-selection assistant that turns a raw trend into a defensible topic card via verifiable signals, compliance red-line screening and headline grading, with a zero-dependency toolchain and an 11-case golden set."
 tags:

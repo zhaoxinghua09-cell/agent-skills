@@ -124,25 +124,25 @@ tbody tr:last-child td{border-bottom:none}
       <div class="row head"><div>PACKAGE</div><div>VERSION</div><div>SCORE</div><div>WHAT IT DOES</div></div>
       <div class="row">
         <div class="name">summarize-pro<small>会议纪要 / 逐字稿 → 忠实摘要</small></div>
-        <div class="v">2.0.6</div>
+        <div class="v">2.0.7</div>
         <div class="s">100<span>/100</span></div>
         <div class="d">9 个子命令：事实抽取、逐句溯源核对、格式自检、脱敏、日期归一、HTML 渲染、六类来源适配。22 条黄金用例。</div>
       </div>
       <div class="row">
         <div class="name">debug-pro<small>故障分诊 → 可复现的最小步骤</small></div>
-        <div class="v">2.1.3</div>
+        <div class="v">2.1.4</div>
         <div class="s">100<span>/100</span></div>
         <div class="d">零依赖三命令：日志分诊、环境快照（自动脱敏）、复现五要素打分。10 条黄金用例 + 真实报错日志演示。</div>
       </div>
       <div class="row">
         <div class="name">wechat-viral-topic<small>素材 → 选题卡，先过合规红线</small></div>
-        <div class="v">2.1.3</div>
+        <div class="v">2.1.4</div>
         <div class="s">100<span>/100</span></div>
         <div class="d">信号扫描出选题卡、合规红线扫描、标题体检。命中红线直接 BLOCK。11 条黄金用例。</div>
       </div>
       <div class="row">
         <div class="name">lgd-skill-review<small>评测器本体：给别人打分的那一个</small></div>
-        <div class="v">1.1.4</div>
+        <div class="v">1.1.5</div>
         <div class="s">100<span>/100</span></div>
         <div class="d">六维评分 + 阻断项 + P0/P1 整改清单 + 复跑命令；附加 Token 体检（说明性占比）与四视角独立评审。5 条自检、16→100 闭环演示。</div>
       </div>
@@ -160,14 +160,14 @@ tbody tr:last-child td{border-bottom:none}
     </div>
 
     <h2>Second ruler, same leader 换对手的尺子重排</h2>
-    <p class="lead">同一批包，用 skill-judge 的 8 维 / 120 分制再量一遍。上一轮我们在这把尺子下是 85 / 85 / 82 / 86（全 C/D），竞品 88 —— 落后。补渐进披露、再给每条硬规则补上理由后：</p>
+    <p class="lead">同一批包，用 skill-judge 的 8 维 / 120 分制再量一遍。上一轮我们在这把尺子下是 85 / 85 / 82 / 86（全 C/D），竞品 88 —— 落后。补渐进披露、给每条硬规则补上理由、description 写明触发条件后：</p>
     <table>
       <thead><tr><th>包</th><th>八维总分</th><th>档位</th><th>说明性占比</th></tr></thead>
       <tbody>
-        <tr><td>lgd-skill-review 1.1.4</td><td class="n">115</td><td>A</td><td>30%</td></tr>
-        <tr><td>summarize-pro 2.0.6</td><td class="n">110</td><td>A</td><td>32%</td></tr>
-        <tr><td>debug-pro 2.1.3</td><td class="n">110</td><td>A</td><td>32%</td></tr>
-        <tr><td>wechat-viral-topic 2.1.3</td><td class="n">108</td><td>A</td><td>31%</td></tr>
+        <tr><td>lgd-skill-review 1.1.5</td><td class="n">116</td><td>A</td><td>30%</td></tr>
+        <tr><td>summarize-pro 2.0.7</td><td class="n">115</td><td>A</td><td>32%</td></tr>
+        <tr><td>debug-pro 2.1.4</td><td class="n">115</td><td>A</td><td>32%</td></tr>
+        <tr><td>wechat-viral-topic 2.1.4</td><td class="n">113</td><td>A</td><td>31%</td></tr>
         <tr><td>skill-review-pro（竞品）</td><td class="n">88</td><td>C</td><td>25%</td></tr>
         <tr><td>meeting-decision-receipt（竞品）</td><td class="n">91</td><td>C</td><td>26%</td></tr>
       </tbody>
@@ -255,23 +255,23 @@ clawhub install @zhaoxinghua09-cell/wechat-viral-topic</pre>
 [
  {"@context":"https://schema.org","@type":"SoftwareApplication",
   "name":"lgd-skill-review","applicationCategory":"DeveloperApplication",
-  "operatingSystem":"Any","softwareVersion":"1.1.4",
+  "operatingSystem":"Any","softwareVersion":"1.1.5",
   "description":"Six-dimension evidence-based agent skill reviewer: structure, doc-to-code consistency, reproducibility, hygiene, discoverability, licensing. Emits blocking items, a P0/P1 fix list, and a rerun command; optional token-efficiency and four-perspective reports.",
   "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},
   "url":"https://zhaoxinghua09-cell.github.io/agent-skills/"},
  {"@context":"https://schema.org","@type":"SoftwareApplication",
   "name":"summarize-pro","applicationCategory":"ProductivityApplication",
-  "operatingSystem":"Any","softwareVersion":"2.0.6",
+  "operatingSystem":"Any","softwareVersion":"2.0.7",
   "description":"Faithful meeting-notes and transcript summarization with nine subcommands: fact extraction, sentence-level citation checking against the source, format self-check, redaction, date normalization, deterministic HTML rendering, and six-source adapters.",
   "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}},
  {"@context":"https://schema.org","@type":"SoftwareApplication",
   "name":"debug-pro","applicationCategory":"DeveloperApplication",
-  "operatingSystem":"Any","softwareVersion":"2.1.3",
+  "operatingSystem":"Any","softwareVersion":"2.1.4",
   "description":"Seven-step debugging protocol with a zero-dependency toolchain: log triage, redacted environment snapshot, and five-element reproduction scoring.",
   "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}},
  {"@context":"https://schema.org","@type":"SoftwareApplication",
   "name":"wechat-viral-topic","applicationCategory":"BusinessApplication",
-  "operatingSystem":"Any","softwareVersion":"2.1.3",
+  "operatingSystem":"Any","softwareVersion":"2.1.4",
   "description":"Turns raw material into a topic card through four questions, then blocks compliance red lines before you write: signal scan, risk check, title check.",
   "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
 ]
