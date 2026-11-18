@@ -370,6 +370,132 @@ def type_advice(root, fm, files, skill_type):
             "missing": missing}
 
 
+FILLERS = ["简单来说", "总的来说", "众所周知", "顾名思义", "需要注意的是",
+           "简单地说", "值得一提的是", "基本上来说", "很容易理解", "不难看出"]
+
+
+def token_report(root, files):
+    """Token 效率体检：不参与计分，只回答「有多少内容在讲 AI 已经知道的事」。
+
+    对应竞品 skill-judge 的 E:A:R 思路：示例 / 操作 / 规则 三类的占比，
+    剩余即为说明性内容（最容易变成对 AI 的废话）。
+    """
+    body = read(os.path.join(root, "SKILL.md")) or ""
+    lines = [x for x in body.splitlines() if x.strip()]
+    n = len(lines) or 1
+    cjk = len(re.findall(r'[\u4e00-\u9fff]', body))
+    est = cjk + (len(body) - cjk) // 4
+
+    blocks = re.findall(r'```[\s\S]*?```', body)
+    code_lines = sum(len(b.splitlines()) for b in blocks) or 0
+    step_lines = len(re.findall(r'(?m)^\s*(?:\d+\.\s|[-*]\s+\S)', body))
+    rule_lines = len(re.findall(r'(?:必须|禁止|不得|务必|切勿|MUST|NEVER)', body))
+
+    fillers = [(f, body.count(f)) for f in FILLERS if body.count(f)]
+    dup, seen = [], {}
+    for x in lines:
+        if len(x) > 40:
+            if x in seen:
+                dup.append(x[:38] + "…")
+            else:
+                seen[x] = 1
+
+    pct = lambda v: round(100.0 * v / n, 1)
+    adv = []
+    if fillers:
+        adv.append("删掉 %d 处填充语（%s），不损失信息" %
+                   (sum(c for _, c in fillers), "、".join(f for f, _ in fillers[:4])))
+    if dup:
+        adv.append("合并 %d 处重复段落" % len(dup))
+    if pct(code_lines) < 10:
+        adv.append("示例偏少（代码块仅占 %.0f%%），补一段可直接照抄的命令" % pct(code_lines))
+    return {
+        "chars": len(body), "lines": n, "est_tokens": est,
+        "example_pct": pct(code_lines), "action_pct": pct(step_lines),
+        "rule_pct": pct(rule_lines),
+        "narration_pct": round(max(0.0, 100 - pct(code_lines) - pct(step_lines) - pct(rule_lines)), 1),
+        "fillers": [{"text": f, "count": c} for f, c in fillers],
+        "duplicates": dup[:5],
+        "advice": adv,
+    }
+
+
+def multi_role(root, fm, files):
+    """四视角独立评审（spec / code / security / design），各给子分，不改总分。
+
+    对应竞品 agent-swarm-review 的思路：分视角独立打分，避免单一视角的偏差。
+    """
+    out = {}
+    body = read(os.path.join(root, "SKILL.md")) or ""
+    scripts = scripts_text(root)
+
+    # --- spec 规范
+    s, notes = 100, []
+    for k in ("name", "description", "version"):
+        if not (fm or {}).get(k):
+            s -= 30
+            notes.append("缺 %s" % k)
+    v = str((fm or {}).get("version", "")).strip('"\'')
+    if v and not re.match(r'^\d+\.\d+\.\d+$', v):
+        s -= 15
+        notes.append("version 非 SemVer：%s" % v)
+    out["spec"] = [max(0, s), notes]
+
+    # --- code 代码
+    py = [f for f in files if f.endswith(".py")]
+    s, notes = 100, []
+    bad = 0
+    for f in py:
+        try:
+            compile(read(os.path.join(root, f)), f, "exec")
+        except Exception as e:
+            bad += 1
+            notes.append("%s 无法解析（%s）" % (os.path.basename(f), type(e).__name__))
+    if py:
+        s = 100 - int(100.0 * bad / len(py) * 0.6)
+    for pat in ["eval(", "exec(", "os.system", "pickle.loads"]:
+        if pat in scripts:
+            s -= 12
+            notes.append("含高风险调用 %s" % pat)
+    if py and "argparse" not in scripts and "--" not in body:
+        s -= 10
+        notes.append("脚本无参数入口")
+    out["code"] = [max(0, s), notes[:5]]
+
+    # --- security 安全
+    s, notes = 100, []
+    for pat, label in SENSITIVE:
+        if re.search(pat, scripts) or re.search(pat, body):
+            s -= 25
+            notes.append("命中 %s" % label)
+    nets = re.findall(r'(?:requests\.|urllib|https?://)', scripts)
+    if nets:
+        s -= 15
+        notes.append("脚本含网络访问 %d 处，需说明必要性" % len(nets))
+    if re.search(r'rm\s+-rf|shutil\.rmtree|os\.remove', scripts):
+        s -= 20
+        notes.append("含删除操作，需确认有防护")
+    out["security"] = [max(0, s), notes[:5]]
+
+    # --- design 设计
+    s, notes = 100, []
+    if not re.search(r'何时使用|触发条件|Triggers|when to use', body, re.I):
+        s -= 30
+        notes.append("缺少「何时使用」")
+    if not re.search(r'不适用|不触发|不要用于|not for|when not', body, re.I):
+        s -= 20
+        notes.append("缺少「何时不用」的边界")
+    if "```" not in body:
+        s -= 25
+        notes.append("缺少可照抄的示例")
+    if not re.search(r'python\s+\S+\.py|clawhub install|powershell|bash', body, re.I):
+        s -= 15
+        notes.append("缺少可执行命令")
+    out["design"] = [max(0, s), notes]
+
+    return out
+
+
 def review(root, do_run=False, skill_type=None):
     skill_md_path = os.path.join(root, "SKILL.md")
     if not os.path.isfile(skill_md_path):
@@ -452,6 +578,10 @@ def main():
     ap.add_argument("--type", default=None,
                     choices=["auto", "meeting", "debug", "content", "reviewer", "general"],
                     help="技能类型策略（默认自动识别），只出建议不参与计分")
+    ap.add_argument("--token", action="store_true",
+                    help="附加 Token 效率体检（E:A:R 占比、填充语、重复段），不参与计分")
+    ap.add_argument("--multi-role", action="store_true",
+                    help="附加四视角独立评审（规范/代码/安全/设计），不参与计分")
     a = ap.parse_args()
 
     if not os.path.isdir(a.path):
@@ -487,6 +617,32 @@ def main():
         for x in d["actions"]:
             print("  [%s] %s" % (x["priority"], x["issue"]))
     print("\n复测：%s" % d["rerun"])
+
+    root_abs = os.path.abspath(a.path)
+    files = walk(root_abs)
+    fm = frontmatter(read(os.path.join(root_abs, "SKILL.md")) or "")
+
+    if a.token:
+        tr = token_report(root_abs, files)
+        print("\nToken 体检（不参与计分）")
+        print("  字符 %d · 估算约 %d token" % (tr["chars"], tr["est_tokens"]))
+        print("  E:A:R 近似 %d:%d:%d  （示例/操作/规则），说明性内容 %d%%" %
+              (tr["example_pct"], tr["action_pct"], tr["rule_pct"], tr["narration_pct"]))
+        if tr["fillers"]:
+            print("  填充语：" + "、".join("%s×%d" % (x["text"], x["count"]) for x in tr["fillers"]))
+        if tr["duplicates"]:
+            print("  重复段落 %d 处" % len(tr["duplicates"]))
+        for x in tr["advice"]:
+            print("  → " + x)
+
+    if a.multi_role:
+        mr = multi_role(root_abs, fm, files)
+        print("\n四视角独立评审（不参与计分）")
+        for k, label in (("spec", "规范"), ("code", "代码"),
+                         ("security", "安全"), ("design", "设计")):
+            score, notes = mr[k]
+            print("  %-9s %-4s %3d/100  %s" % (k, label, score, "；".join(notes) if notes else "无问题"))
+
     sys.exit(0 if d["verdict"] in ("PASS", "WARN") else 1)
 
 

@@ -7,7 +7,7 @@ display_name_en: Skill Reviewer
 slug: lgd-skill-review
 author: 诺声(Logos)@SynomosAI
 copyright: SynomosAI
-version: 1.0.0
+version: 1.1.0
 license: MIT
 description: "A six-dimension, evidence-based reviewer for any AI skill package. It scores structure, declared-vs-implemented consistency, reproducibility, hygiene/sanitization, AI discoverability and licensing on a weighted 100-point scale, then emits a prioritized fix list (P0 blocking / P1 improvement) and a rerun command. Designed to close the loop: review -> fix -> re-review, so an agent can improve its own skill autonomously. Every point is traceable to a specific file and finding; no impression scoring. Detects the industry's most common defect: documentation promising a command or flag that the script never implements. Zero dependency, standard library only, offline. Triggers: review my skill, audit skill quality, why is my skill rejected, skill checklist, score this skill, improve my SKILL.md, skill package gate."
 description_zh: "技能体检 / 评测 / 打分 / 为什么被拒 —— 对任意 AI 技能包做 6 维加权评测（结构 / 声明一致 / 可复跑 / 去敏安全 / AI 可发现 / 许可署名），输出 100 分总分、阻断项、P0/P1 整改清单与复测命令，形成「评测→整改→复测」闭环。每一分都能指到具体文件与具体缺陷，不做印象打分；最常抓到的行业通病是「文档承诺了脚本没实现的命令或参数」"
@@ -79,6 +79,13 @@ display_name_zh: 技能评测官
 
 指定类型：`--type meeting|debug|content|reviewer|general`；不指定则自动识别（两类关键词命中 ≥2 才判定，否则归 general）。
 
+## 什么时候不用（Not for）
+
+- **不评代码正确性**：只评交付结构与声明一致性，不做单元测试、不查业务逻辑对错。
+- **不做安全渗透**：只做敏感信息与危险调用的静态排查，不做漏洞利用验证。
+- **不替代人工评审**：输出的是证据化清单，不是终审结论；策略厚度、行业洞察需人判断。
+- **不适用于非技能目录**：普通代码仓库、文档集、数据目录请勿套用本评分体系。
+
 ## 怎么用
 
 ```bash
@@ -143,6 +150,19 @@ python scripts/review.py <技能目录> --run --type meeting
 - **不联网**：全部本地静态检查 + 本地实跑，不上传任何被评内容。
 - **降级**：`--run` 需要被测包有可执行测试；无测试时该维度按证据缺失计分并说明，不伪造通过。
 - **不替代人工终审**：分数是门禁的第一道闸，最终是否上架仍需人判断。
+
+## 硬规则清单（MUST / NEVER）
+
+1. **MUST** 每个扣分点都给出证据：文件 + 行号或规则名。
+2. **NEVER** 无证据扣分。
+3. **MUST** 输出复跑命令，让人能自己验一遍。
+4. **NEVER** 把建议写成阻断（阻断只给会直接导致失败的项）。
+5. **MUST** 阻断项优先于总分呈现。
+6. **NEVER** 因技能类型不同而改变同一条规则的口径。
+7. **MUST** 计分维度只认可验证事实，不认宣传词。
+8. **NEVER** 用「优秀」「专业」这类形容词替代证据。
+9. **MUST** 整改项标 P0/P1/P2 优先级。
+10. **NEVER** 隐藏局限：边界、未覆盖项、判定口径必须写在报告里。
 
 ## 治理与许可
 

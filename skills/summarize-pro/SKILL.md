@@ -4,10 +4,10 @@ displayName: summarize-pro
 slug: summarize-pro
 author: 诺声(Logos)@SynomosAI
 copyright: SynomosAI
-version: 2.0.4
+version: 2.0.5
 license: MIT
 description: "A faithful summarizer that picks one of five output format families (minutes / comparison / timeline / bullets / cards) by reader intent, then compresses under a strict no-hallucination discipline: nothing absent from the source, ambiguity flagged rather than resolved, every figure copied verbatim. Ships a zero-dependency, offline toolchain (extract / citecheck / selfcheck / redact / validate / normdates / neutral / render) plus an 22-case golden set, turning 'we do not fabricate' from a claim into a runnable assertion: citecheck traces each output sentence back to source tokens and lists anything untraceable, selfcheck asserts format-family completeness including mandatory strength labels, extract builds the skeleton and additionally grades decisions and commitments - every conclusion is labelled firm / provisional / proposal / conditional and every action item is labelled committed / named_unconfirmed / intent_only, so 'what was actually decided' and 'who actually took it' become checkable instead of assumed. Conditional clauses are kept out of the action table and markdown headings out of the sentence stream. Standard library only, no network, no replacement for human judgement. Also ships **deterministic rendering** (receipt / personal / executive / bundle views, top-3 per section), **relative-date anchoring** that appends an ISO date without rewriting the source sentence, and a **neutral-language check** for personnel / medical / legal / incident scenes. Fidelity is checkable: citecheck traces numbers to source, and the golden set re-runs with an exit code. Triggers: summarize, summary, meeting minutes, minutes of meeting, decision log, action items, comparison table, timeline, key points, digest."
-description_zh: "总结 / 摘要 / 会议纪要 / 对比表 / 时间线 —— 增强版内容总结技能，按读者用途从 5 大输出格式族（纪要/对比/时间线/要点/卡片）中选格式，配合忠实性纪律；v2.0.4 附零依赖本地工具链（事实线索抽取 / 骨架生成 / 逐句溯源校验 / 22 条黄金集），并新增「结论强度 + 承诺强度」分级：每条结论标注 已定/暂定/提案/条件，每条待办标注 明确接活/被点名未确认/仅表意向，让「到底定了什么」「谁真的接了」从猜测变成可核对；条件句不再混入待办表，标题行不再当作句子。用于回答「帮我出个会议纪要」「这次到底定了啥」「谁负责」这类问题；v2.0.4 增确定性渲染四视图（receipt/personal/executive/bundle，每区只显示前 3 条）、相对日期锚点（原文一字不改，只追加 ISO 括注）、敏感场景中性措辞检测 Also ships deterministic rendering (receipt / personal / executive / bundle views, top-3 per section), relative-date anchoring that appends an ISO date without rewriting the source sentence, and a neutral-language check for personnel / medical / legal / incident scenes."
+description_zh: "总结 / 摘要 / 会议纪要 / 对比表 / 时间线 —— 增强版内容总结技能，按读者用途从 5 大输出格式族（纪要/对比/时间线/要点/卡片）中选格式，配合忠实性纪律；v2.0.5 附零依赖本地工具链（事实线索抽取 / 骨架生成 / 逐句溯源校验 / 22 条黄金集），并新增「结论强度 + 承诺强度」分级：每条结论标注 已定/暂定/提案/条件，每条待办标注 明确接活/被点名未确认/仅表意向，让「到底定了什么」「谁真的接了」从猜测变成可核对；条件句不再混入待办表，标题行不再当作句子。用于回答「帮我出个会议纪要」「这次到底定了啥」「谁负责」这类问题；v2.0.5 增确定性渲染四视图（receipt/personal/executive/bundle，每区只显示前 3 条）、相对日期锚点（原文一字不改，只追加 ISO 括注）、敏感场景中性措辞检测 Also ships deterministic rendering (receipt / personal / executive / bundle views, top-3 per section), relative-date anchoring that appends an ISO date without rewriting the source sentence, and a neutral-language check for personnel / medical / legal / incident scenes."
 description_en: "A faithful summarizer that picks one of five output format families (minutes / comparison / timeline / bullets / cards) by reader intent, then compresses under a strict no-hallucination discipline: nothing absent from the source, ambiguity flagged rather than resolved, every figure copied verbatim. Ships a zero-dependency, offline toolchain (extract / citecheck / selfcheck / redact / validate / normdates / neutral / render) plus an 22-case golden set, turning 'we do not fabricate' from a claim into a runnable assertion: citecheck traces each output sentence back to source tokens and lists anything untraceable, selfcheck asserts format-family completeness including mandatory strength labels, extract builds the skeleton and additionally grades decisions and commitments - every conclusion is labelled firm / provisional / proposal / conditional and every action item is labelled committed / named_unconfirmed / intent_only, so 'what was actually decided' and 'who actually took it' become checkable instead of assumed. Conditional clauses are kept out of the action table and markdown headings out of the sentence stream. Standard library only, no network, no replacement for human judgement. Triggers: summarize, summary, meeting minutes, minutes of meeting, decision log, action items, comparison table, timeline, key points, digest. Also ships deterministic rendering (receipt / personal / executive / bundle views, top-3 per section), relative-date anchoring that appends an ISO date without rewriting the source sentence, and a neutral-language check for personnel / medical / legal / incident scenes."
 tags:
 - 总结
@@ -134,9 +134,17 @@ Run `python tests/run_golden.py` for the 10-case golden set (10/10 PASS locally)
 
 - 「帮我出个会议纪要」「把这份报告总结一下」「这两篇文档有什么区别」「按时间线梳理一下」「给我 3 条要点」。
 
+## 什么时候不用（Not for）
+
+- **不是**转录工具：不把音频/视频转成文字，请先用转写工具，再拿文本进来。
+- **不是**翻译工具：需要整篇翻译请用翻译技能；这里只做「中英对照摘要」。
+- **不是**写作工具：不代写全文、不扩写观点，只压缩既有内容且不得增补事实。
+- **不是**数据库：不做跨文档检索与长期存储，每次只处理你给的这一份（或几份）输入。
+- 输入本身为空、乱码、或与摘要目标无关（如纯代码仓库、纯图片），直接拒答并说明原因。
+
 ## 怎么让我按你要的格式来（自然语言指令）
 
-本技能是**纯文本规则包**，不提供命令行参数或可执行入口。要让输出落到你要的形态，直接用一句话说清这三件事即可：
+本技能以**纯文本规则**为主：文本类输出不需要命令行，直接按规则产出即可。需要机械抽取与溯源核对时，再用下方“可选本地工具链（v2.0）”，两者不冲突。
 
 | 你要控制的 | 这样说 | 例子 |
 |---|---|---|
@@ -168,6 +176,19 @@ python scripts/summarize_pro.py citecheck --file demo/expected_minutes.md --sour
 
 一键自证：`python demo/run_demo.py`（抽取 → 自检 → 溯源，并把数字故意改错，验证能抓出来）；`python tests/run_golden.py`（10 条黄金集，当前 10/10 PASS）。
 
+
+## 三条命令上手（复制即用）
+
+```bash
+# 1) 从原文抽事实并生成纪要骨架（产出 X.minutes.md + X.facts.json）
+python scripts/summarize_pro.py extract --file transcript.md --format minutes
+
+# 2) 核对你的成稿是否每句都有出处（列出不可溯源句）
+python scripts/summarize_pro.py citecheck --file out.md --source transcript.md
+
+# 3) 用 facts.json 确定性渲染，导出可打印 HTML
+python scripts/summarize_pro.py render --facts transcript.facts.json --view receipt --format html
+```
 
 ## 意图路由（优先于关键词）
 
@@ -263,7 +284,22 @@ AI 在决定是否启用本技能时，按以下关键词与场景路由；命�
 3. **数字锚定**：所有数字取自同一处原文位置，不做二次换算。
 4. **不确定项位置固定**：待确认清单统一放在末尾，不散落正文。
 
-## 决策与承诺的强度分级（v2.0.4）
+## 硬规则清单（MUST / NEVER）
+
+这 10 条不带条件，违反任一条即视为不合格输出：
+
+1. **MUST** 每个事实（数字、日期、人名、结论）都能在原文找到出处。
+2. **NEVER** 用推断补全原文没说的内容；缺的写「原文未提及」。
+3. **MUST** 保留原文的否定与条件（「未达成」「暂缓」「若…则…」不许删）。
+4. **NEVER** 把「建议」写成「决定」，把「计划」写成「已落实」。
+5. **MUST** 数字与单位原样搬运，不改写、不换算、不四舍五入。
+6. **NEVER** 合并不同主体的话——谁的待办就写谁，谁的承诺就署谁。
+7. **MUST** 输出前抽 3 条事实回原文核对一遍。
+8. **NEVER** 在摘要里新增原文没有的建议、评价或结论。
+9. **MUST** 篇幅超限时先删背景，保留结论、待办、风险。
+10. **NEVER** 对空输入、乱码或无关输入硬编内容，直接拒答并说明原因。
+
+## 决策与承诺的强度分级（v2.0.5）
 
 会议记录最常见的问题不是漏字，而是**把"提议"写成"已定"，把"我看看"写成"已接活"**。本技能对两件事分级，并把分级结果作为可断言项：
 
@@ -365,7 +401,7 @@ AI 在决定是否启用本技能时，按以下关键词与场景路由；命�
 | `tests/golden.json` + `tests/run_golden.py` | 10 条黄金集与跑分脚本 | 想自证当前版本能力时 |
 | `demo/` | 真实会议转写节选 + 人工理想纪要 + 一键演示 | 首次了解本技能怎么用 |
 
-## 确定性渲染与三个新子命令（v2.0.4）
+## 确定性渲染与三个新子命令（v2.0.5）
 
 竞品把「先生成 JSON、再确定性渲染」当成卖点。我们同样做，但加一条它没有的：**日期归一不替换原文，只追加锚点**，
 证据链因此不会断。

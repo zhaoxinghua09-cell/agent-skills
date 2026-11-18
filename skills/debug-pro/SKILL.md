@@ -4,7 +4,7 @@ displayName: debug-pro
 slug: debug-pro
 author: 诺声(Logos)@SynomosAI
 copyright: SynomosAI
-version: 2.1.0
+version: 2.1.1
 license: MIT
 description: "A language-agnostic 7-step debugging protocol (reproduce -> locate the layer -> minimize -> hypothesize -> verify -> fix -> regress) with a zero-dependency, offline toolchain that turns 'I reproduced it' into checkable evidence: triage extracts exception type, last stack frame, exit code, HTTP status and timestamps from raw logs; envsnap builds a paste-ready environment block with every key containing KEY/TOKEN/SECRET/PASS/CRED/AUTH/COOKIE redacted; reprocheck grades the five minimum elements of a reproduction report and names the missing ones. Ships a 10-case golden set with a re-executable runner, a real error-log demo, a layered symptom lookup, a 5-item pre-delivery self-check and degradation rules. Faithful by design: no unobserved cause is ever invented, and any claim lacking reproducible evidence is explicitly marked unconfirmed. Generic methodology tool - not a medical device, no clinical or efficacy claims. Triggers: debug, bug, error, exception, reproduce, root cause, minimal reproduction, regression, git bisect."
 description_zh: 调试 / bug 排查 / 代码报错 / 定位原因 —— 提供 7 步标准调试协议（复现→定位层→最小化→假设→验证→修复→回归）+ 分层速查 + 零依赖可跑工具链（triage 日志分诊 / envsnap 环境快照 / reprocheck 复现五要素检查）+ 10 条黄金集自检，把「我复现了」变成可核对的事实，用于回答「代码报错怎么查」「这个 bug 到底在哪」「改了还是不对怎么办」这类问题
@@ -120,6 +120,13 @@ Run `python tests/run_golden.py` for the 10-case golden set (10/10 PASS locally)
 ## 什么时候用
 
 - 「代码报错怎么查」「这个 bug 到底在哪」「改了还是不对」「线上偶发问题怎么定位」。
+
+## 什么时候不用（Not for）
+
+- **不是**性能调优工具：不做压测、火焰图、基准对比。先把故障定位清楚，再谈优化。
+- **不是**安全审计工具：不做漏洞扫描、渗透测试、依赖 CVE 排查。
+- **不是**生产环境执行器：不替你重启服务、回滚版本、删数据。只给步骤，动手由人决定。
+- **没有报错信息时**：先要日志或最小复现，不给「应该是某某问题」的猜测当结论。
 
 ## 七步流程
 
@@ -316,6 +323,19 @@ Install and cross-reference:
 | `lgd-skill-review` | 对任意技能包做 6 维评分，出整改清单，再复测 |
 
 生态锚：三律——有籍（可追溯）／有证（可核验）／有门禁（可拦截）。
+
+## 硬规则清单（MUST / NEVER）
+
+1. **MUST** 先复现再下结论；不能复现的，明确写「未复现」并说明尝试了什么。
+2. **NEVER** 把猜测写成结论；推测必须标注「推测」并给出验证方法。
+3. **MUST** 每条结论对应日志里的具体行或具体报错。
+4. **NEVER** 建议在生产环境直接执行破坏性命令（删库、强制回滚、清空缓存）。
+5. **MUST** 贴日志前先脱敏：KEY / TOKEN / 密码 / 内网 IP / 个人邮箱。
+6. **NEVER** 把「重启试试」当第一建议。
+7. **MUST** 一次只改一个变量，改完给出验证点。
+8. **NEVER** 声称修好而未给出验证证据。
+9. **MUST** 给出最小复现步骤（环境 + 触发动作 + 预期 vs 实际）。
+10. **NEVER** 跨层跳跃：先证明当前层有问题，再往下一层走。
 
 ## 治理与许可
 

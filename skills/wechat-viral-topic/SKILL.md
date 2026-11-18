@@ -4,7 +4,7 @@ displayName: wechat-viral-topic
 slug: wechat-viral-topic
 author: 诺声(Logos)@SynomosAI
 copyright: 赵兴华 / Steven Zhao·China
-version: 2.1.0
+version: 2.1.1
 license: LicenseRef-AllRightsReserved
 license_scope: 理论文本保留所有权利（见文末「License」）；tools/*.py、tests/*.py、demo/*.py 等脚本文件单独以 MIT 许可提供，便于他人复跑与审计
 allowed-tools: Read, Glob, Grep, Edit, Bash
@@ -122,6 +122,19 @@ Run `python tests/run_golden.py` for the 11-case golden set (11/11 PASS locally)
 **不用：** 已经定稿只要求润色排版（那是文案润色）；要刷量/刷数据/买量投放（违反纪律，拒绝）；要写广告法违禁词或医疗效果承诺（拒绝）。
 
 热点不是拿来追的，是拿来**改**的。直接复述热点没有差异点，改造成自己的选题才有胜率。改造前先过四问，四问全过才立项。
+
+## 硬规则清单（MUST / NEVER）
+
+1. **MUST** 数字带单位与时间窗口（「3 个月涨 2 倍」，不是「涨 2 倍」）。
+2. **NEVER** 编造阅读量、转发量、粉丝数等平台数据。
+3. **MUST** 医疗、疗效、收益类断言标注风险等级，命中红线一律 BLOCK。
+4. **NEVER** 承诺「必爆」「稳赚」「包上热门」。
+5. **MUST** 标题不过度承诺，不制造恐惧，不用绝对化表述。
+6. **NEVER** 引用未经核实的他人原话或截图。
+7. **MUST** 四问没有明确答案时不出选题卡，直接说明缺哪一问。
+8. **NEVER** 推荐已被平台判定违规的写法。
+9. **MUST** 区分「事实 / 观点 / 推测」，三者不混写。
+10. **NEVER** 为流量牺牲合规，也不把合规当创意的对立面。
 
 ## 四问清单
 
