@@ -4,11 +4,11 @@ displayName: summarize-pro
 slug: summarize-pro
 author: 诺声(Logos)@SynomosAI
 copyright: SynomosAI
-version: 2.0.1
+version: 2.0.2
 license: MIT
-description: "A faithful summarizer that picks one of five output format families (minutes / comparison / timeline / bullets / cards) by reader intent, then compresses under a strict no-hallucination discipline: nothing absent from the source, ambiguity flagged rather than resolved, every figure copied verbatim. Ships a zero-dependency, offline toolchain (extract / citecheck / selfcheck) plus a 10-case golden set, turning 'we do not fabricate' from a claim into a runnable assertion: citecheck traces each output sentence back to source tokens and lists anything untraceable, selfcheck asserts format-family completeness, extract builds the skeleton from date, figure, speaker, action, decision and conditional cues. Standard library only, no network, no replacement for human judgement. Triggers: summarize, summary, meeting minutes, minutes of meeting, comparison table, timeline, key points, digest."
-description_zh: 总结 / 摘要 / 会议纪要 / 对比表 / 时间线 —— 增强版内容总结技能，按读者用途从 5 大输出格式族（纪要/对比/时间线/要点/卡片）中选格式，配合忠实性纪律；v2.0 附零依赖本地工具链（事实线索抽取 / 骨架生成 / 逐句溯源校验 / 10 条黄金集），可把「不编造」从声明变成可跑断言，用于回答「帮我出个会议纪要」「两个方案做成对比表」「梳理成时间线」这类问题
-description_en: "A faithful summarizer that picks one of five output format families (minutes / comparison / timeline / bullets / cards) by reader intent, with strict no-hallucination discipline and a zero-dependency toolchain (extract / citecheck / selfcheck) plus a 10-case golden set."
+description: "A faithful summarizer that picks one of five output format families (minutes / comparison / timeline / bullets / cards) by reader intent, then compresses under a strict no-hallucination discipline: nothing absent from the source, ambiguity flagged rather than resolved, every figure copied verbatim. Ships a zero-dependency, offline toolchain (extract / citecheck / selfcheck) plus a 14-case golden set, turning 'we do not fabricate' from a claim into a runnable assertion: citecheck traces each output sentence back to source tokens and lists anything untraceable, selfcheck asserts format-family completeness including mandatory strength labels, extract builds the skeleton and additionally grades decisions and commitments - every conclusion is labelled firm / provisional / proposal / conditional and every action item is labelled committed / named_unconfirmed / intent_only, so 'what was actually decided' and 'who actually took it' become checkable instead of assumed. Conditional clauses are kept out of the action table and markdown headings out of the sentence stream. Standard library only, no network, no replacement for human judgement. Triggers: summarize, summary, meeting minutes, minutes of meeting, decision log, action items, comparison table, timeline, key points, digest."
+description_zh: "总结 / 摘要 / 会议纪要 / 对比表 / 时间线 —— 增强版内容总结技能，按读者用途从 5 大输出格式族（纪要/对比/时间线/要点/卡片）中选格式，配合忠实性纪律；v2.0.2 附零依赖本地工具链（事实线索抽取 / 骨架生成 / 逐句溯源校验 / 14 条黄金集），并新增「结论强度 + 承诺强度」分级：每条结论标注 已定/暂定/提案/条件，每条待办标注 明确接活/被点名未确认/仅表意向，让「到底定了什么」「谁真的接了」从猜测变成可核对；条件句不再混入待办表，标题行不再当作句子。用于回答「帮我出个会议纪要」「这次到底定了啥」「谁负责」这类问题"
+description_en: "A faithful summarizer that picks one of five output format families (minutes / comparison / timeline / bullets / cards) by reader intent, then compresses under a strict no-hallucination discipline: nothing absent from the source, ambiguity flagged rather than resolved, every figure copied verbatim. Ships a zero-dependency, offline toolchain (extract / citecheck / selfcheck) plus a 14-case golden set, turning 'we do not fabricate' from a claim into a runnable assertion: citecheck traces each output sentence back to source tokens and lists anything untraceable, selfcheck asserts format-family completeness including mandatory strength labels, extract builds the skeleton and additionally grades decisions and commitments - every conclusion is labelled firm / provisional / proposal / conditional and every action item is labelled committed / named_unconfirmed / intent_only, so 'what was actually decided' and 'who actually took it' become checkable instead of assumed. Conditional clauses are kept out of the action table and markdown headings out of the sentence stream. Standard library only, no network, no replacement for human judgement. Triggers: summarize, summary, meeting minutes, minutes of meeting, decision log, action items, comparison table, timeline, key points, digest."
 tags:
 - 总结
 - 摘要
@@ -233,6 +233,29 @@ AI 在决定是否启用本技能时，按以下关键词与场景路由；命�
 2. **术语与命名一致**：同一对象全程用同一称呼（首次出现可括注别名）。
 3. **数字锚定**：所有数字取自同一处原文位置，不做二次换算。
 4. **不确定项位置固定**：待确认清单统一放在末尾，不散落正文。
+
+## 决策与承诺的强度分级（v2.0.2）
+
+会议记录最常见的问题不是漏字，而是**把"提议"写成"已定"，把"我看看"写成"已接活"**。本技能对两件事分级，并把分级结果作为可断言项：
+
+| 维度 | 档位 | 判定依据（原文词面） |
+|---|---|---|
+| 结论强度 | `firm` 已定 | 决定 / 确定 / 定了 / 拍板 / 批准 / 同意 / 裁定 |
+| 结论强度 | `provisional` 暂定 | 暂定 / 暂时 / 临时 / 先按 / 初步 |
+| 结论强度 | `proposal` 提案 | 建议 / 提议 / 可以考虑 / 倾向 |
+| 结论强度 | `conditional` 条件 | 如果 / 若 / 一旦 / 前提是 / 除非 |
+| 承诺强度 | `committed` 明确接活 | 我来 / 我负责 / 由我 / 由某某出（写/发/做/负责） |
+| 承诺强度 | `named_unconfirmed` 被点名未确认 | 跟一下 / 对接 / 谁去 / 请某某支持 |
+| 承诺强度 | `intent_only` 仅表意向 | 我看看 / 考虑 / 想想 / 再说 / 尽量 |
+
+三条硬规则（由 `selfcheck` 断言，缺失即 FAIL）：
+
+1. 结论区必须带档位标注；待办区必须带承诺状态标注（区块确无内容时以「原文未提及」豁免）。
+2. **条件句不列待办**：把「如果超过 2% 就要回滚」写成任务，会误导执行；它只进条件区。
+3. **已定结论不重复进待办表**，同一句不能既当结论又当任务。
+
+工具链同时给出 `strength_summary`：已定/暂定条数、明确接活/未确认条数，以及 `verdict`（`clean` 或 `needs_confirmation`）。
+`needs_confirmation` 表示存在未定项或未确认责任——**这类纪要不应直接对外发布**，应先回会确认。
 
 ## 证据化摘要：把「不编」变成可核对的断言
 

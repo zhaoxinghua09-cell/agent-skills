@@ -40,9 +40,11 @@ DATE_PATTERNS = [
 ]
 NUM_PATTERN = r"(?<![\w-])\d+(?:\.\d+)?(?:%|％|万|亿|元|美元|人|天|小时|分钟|个|份|页|条|台|次|版)?"
 NEGOTIABLE = re.compile(r"要|需|必须|应当|负责|跟进|截止|前完成|待办|下一步|行动项|TODO"
-                        r"|出初稿|由我|我来|我来发|跟.{0,8}对接|对接|谁去|下次会|挂到")
+                        r"|出初稿|由我|我来|我来发|我发|我写|我出|我看看|回头说|再说"
+                        r"|跟.{0,8}对接|对接|谁去|下次会|挂到")
 DECISION = re.compile(r"决定|确定|定了|结论|批准|同意|一致认为|拍板|裁定"
-                      r"|改为|改到|写死|定为|释放|退回|不做|只做|先行|定\s*\d")
+                      r"|改为|改到|写死|定为|释放|退回|不做|只做|先行|定\s*\d"
+                      r"|建议|提议|暂定|暂时|先按|初步|可以考虑")
 CONDITION = re.compile(r"如果|若|一旦|在.{0,12}条件下|以.{0,12}为前提|前提是|除非")
 SPEAKER = re.compile(r"^\s*([\u4e00-\u9fa5A-Za-z][\u4e00-\u9fa5A-Za-z0-9·\.\-_]{1,11})\s*[:：]\s*")
 SPK_INLINE = re.compile(r"([\u4e00-\u9fa5A-Za-z][\u4e00-\u9fa5A-Za-z0-9·\.\-_]{1,7})[：:]")
@@ -120,9 +122,12 @@ def find_all(pattern, text):
 
 
 def speaker_sentences(text):
-    """返回 (说话人, 句子) 列表。说话人可出现在行首或句中「X：」，非人名词一律排除。"""
+    """返回 (说话人, 句子) 列表。说话人可出现在行首或句中「X：」，非人名词一律排除。
+    Markdown 标题行不计入句子流（否则「# 需求评审会转写」会被当成待办）。"""
     out = []
     for line in text.splitlines():
+        if line.lstrip().startswith("#"):
+            continue
         pos, cur = 0, None
         for m in SPK_INLINE.finditer(line):
             if not is_name(m.group(1)):
@@ -152,12 +157,18 @@ def extract_facts(text):
     todos, decisions, conditions, owners = [], [], [], []
     SELF_CLAIM = re.compile(r"我来|我负责|我跟|由我|我出|我发|我接")
     for who, s in speaker_sentences(text):
-        if NEGOTIABLE.search(s):
-            todos.append(s)
-        if DECISION.search(s):
-            decisions.append(s)
-        if CONDITION.search(s):
+        is_cond = bool(CONDITION.search(s))
+        is_dec = bool(DECISION.search(s))
+        if is_cond:
             conditions.append(s)
+        if is_cond and not is_dec:
+            # 条件句只归入「条件」区，不列成待办：把「如果超过 2% 就要回滚」列成任务会误导执行
+            pass
+        elif NEGOTIABLE.search(s) and not is_dec:
+            # 已定结论不再重复列入待办表，避免同一句既当结论又当任务
+            todos.append(s)
+        if is_dec:
+            decisions.append(s)
         for m in OWNER_HINT.finditer(s):
             if is_name(m.group(1)):
                 owners.append(m.group(1))
@@ -170,6 +181,8 @@ def extract_facts(text):
                 seen.add(x)
                 out.append(x)
         return out
+    decisions_graded = grade_decisions(decisions)
+    commitments_graded = grade_commitments(todos)
     return {
         "chars": len(text),
         "lines": len([l for l in text.splitlines() if l.strip()]),
@@ -180,6 +193,74 @@ def extract_facts(text):
         "todo_sentences": uniq(todos),
         "decision_sentences": uniq(decisions),
         "condition_sentences": uniq(conditions),
+        "decision_items": decisions_graded,
+        "commitment_items": commitments_graded,
+        "strength_summary": summarize_strength(decisions_graded, commitments_graded),
+    }
+
+
+# --- 结论强度 / 承诺强度分级（语义维度，可断言） ---
+DECISION_FIRM = re.compile(r"决定|确定|定了|拍板|批准|同意|裁定|通过|结论是|已经定")
+DECISION_PROVISIONAL = re.compile(r"暂定|暂时|临时|先按|初步|暂以|先这么")
+DECISION_PROPOSAL = re.compile(r"建议|提议|可以考虑|要不|是不是可以|倾向")
+DECISION_CONDITIONAL = re.compile(r"如果|若|一旦|前提是|除非|在.{0,12}条件下")
+
+COMMIT_COMMITTED = re.compile(r"我来|我负责|我跟|由我|我出|我发|我接|我盯|交给我|我这边"
+                              r"|由[\u4e00-\u9fa5A-Za-z]{1,8}(出|写|发|做|负责|跟进|主导)")
+COMMIT_NAMED = re.compile(r"跟一下|对接|谁去|让.{1,8}来|需要.{1,8}确认|由.{1,8}负责|请.{1,8}支持")
+COMMIT_INTENT = re.compile(r"我看看|我考虑|想想|再看|回头说|再说|有时间|尽量")
+
+
+def grade_decisions(sentences):
+    """把决策句分成四档：conditional > provisional > proposal > firm（按语义特异性）"""
+    out = []
+    for s in sentences:
+        if DECISION_CONDITIONAL.search(s):
+            level, why = "conditional", "含条件触发词"
+        elif DECISION_PROVISIONAL.search(s):
+            level, why = "provisional", "含暂定/临时/先按"
+        elif DECISION_PROPOSAL.search(s):
+            level, why = "proposal", "含建议/提议/可以考虑"
+        else:
+            level, why = "firm", "含决定/确定/拍板/批准"
+        out.append({"text": s, "strength": level, "evidence": why})
+    return out
+
+
+def grade_commitments(sentences):
+    """把待办句分成三档：intent_only > named_unconfirmed > committed"""
+    out = []
+    for s in sentences:
+        if COMMIT_INTENT.search(s) and not COMMIT_COMMITTED.search(s):
+            level, why = "intent_only", "仅表达意向（我看看/再说/尽量）"
+        elif COMMIT_COMMITTED.search(s):
+            level, why = "committed", "明确接活（我来/我负责/由我）"
+        elif COMMIT_NAMED.search(s):
+            level, why = "named_unconfirmed", "被点名但未明确确认"
+        else:
+            level, why = "unstated", "未标出责任人"
+        out.append({"text": s, "strength": level, "evidence": why})
+    return out
+
+
+def summarize_strength(decisions, commitments):
+    d, c = {}, {}
+    for it in decisions:
+        d[it["strength"]] = d.get(it["strength"], 0) + 1
+    for it in commitments:
+        c[it["strength"]] = c.get(it["strength"], 0) + 1
+    firm = d.get("firm", 0)
+    soft = d.get("provisional", 0) + d.get("proposal", 0) + d.get("conditional", 0)
+    commit = c.get("committed", 0)
+    unconfirmed = c.get("named_unconfirmed", 0) + c.get("intent_only", 0) + c.get("unstated", 0)
+    return {
+        "decisions": d,
+        "commitments": c,
+        "firm_decisions": firm,
+        "soft_decisions": soft,
+        "committed_owners": commit,
+        "unconfirmed_owners": unconfirmed,
+        "verdict": "clean" if (soft == 0 and unconfirmed == 0) else "needs_confirmation",
     }
 
 
@@ -198,6 +279,9 @@ SKELETONS = {
 | 事项 | 责任人 | 期限 |
 |---|---|---|
 {todos}
+
+## 强度判读
+{strength_box}
 
 ## 待确认 / 原文未提及
 {unknown}
@@ -234,11 +318,20 @@ SKELETONS = {
 def build_skeleton(fmt, facts):
     if fmt == "minutes":
         topics = "\n".join("- (待填) %s" % s[:40] for s in facts["speakers"][:6]) or "- (待填)"
-        dec = "\n".join("- %s" % s for s in facts["decision_sentences"][:8]) or "- 原文未提及"
-        todo = "\n".join("| %s | %s | %s |" % (s[:60], "待填", "原文未提及")
-                         for s in facts["todo_sentences"][:10]) or "| 原文未提及 | - | - |"
+        dec = "\n".join("- [%s] %s" % (it["strength"], it["text"])
+                        for it in facts["decision_items"][:8]) or "- 原文未提及"
+        todo = "\n".join("| [%s] %s | %s | %s |" % (it["strength"], it["text"][:56], "待填", "原文未提及")
+                         for it in facts["commitment_items"][:10]) or "| 原文未提及 | - | - |"
+        ss = facts["strength_summary"]
+        box = "\n".join([
+            "- 已定（firm）%d 条；暂定/提案/条件（soft）%d 条" % (ss["firm_decisions"], ss["soft_decisions"]),
+            "- 明确接活（committed）%d 条；被点名未确认或仅表意向 %d 条" % (ss["committed_owners"], ss["unconfirmed_owners"]),
+            "- 判读：%s" % ("全部为已定且责任明确" if ss["verdict"] == "clean"
+                          else "存在未定项或未确认责任，需在会后确认后再对外发布"),
+        ])
         unknown = "- 责任人/期限未在原文出现的，已标「原文未提及」，不补全"
-        return SKELETONS[fmt].format(topics=topics, decisions=dec, todos=todo, unknown=unknown)
+        return SKELETONS[fmt].format(topics=topics, decisions=dec, todos=todo,
+                                     strength_box=box, unknown=unknown)
     if fmt == "timeline":
         items = "\n".join("%d. %s（日期待核对）" % (i + 1, d) for i, d in enumerate(facts["dates"][:12]))
         return SKELETONS[fmt].format(items=items or "1. (待填)")
@@ -284,11 +377,21 @@ def citecheck(output_text, source_text):
 def selfcheck(output_text, fmt):
     problems = []
     if fmt == "minutes":
-        for need in ("## 议题", "## 结论", "## 待办", "## 待确认"):
+        for need in ("## 议题", "## 结论", "## 待办", "## 待确认", "## 强度判读"):
             if need not in output_text:
                 problems.append("缺少区块 %s" % need)
         if "| 事项 | 责任人 | 期限 |" not in output_text:
             problems.append("待办表缺表头（应为 事项/责任人/期限）")
+        # 强度标注是 v2.0.2 起的强制项：结论与待办都必须带语义档位
+        # （区块内确无内容、已标「原文未提及」时不强制，避免对空结论误报）
+        dec_block = output_text.split("## 结论", 1)[-1].split("## 待办", 1)[0]
+        if "原文未提及" not in dec_block and not re.search(
+                r"\[(firm|provisional|proposal|conditional)\]", dec_block):
+            problems.append("结论未标注语义档位（firm/provisional/proposal/conditional）")
+        todo_block = output_text.split("## 待办", 1)[-1].split("## 强度判读", 1)[0]
+        if "原文未提及" not in todo_block and not re.search(
+                r"\[(committed|named_unconfirmed|intent_only|unstated)\]", todo_block):
+            problems.append("待办未标注承诺状态（committed/named_unconfirmed/intent_only）")
     elif fmt == "compare":
         if output_text.count("|") < 4:
             problems.append("对比表结构不完整（需维度×对象两列以上）")

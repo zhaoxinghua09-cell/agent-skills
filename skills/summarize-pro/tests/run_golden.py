@@ -73,6 +73,26 @@ def check(case):
             if n not in joined:
                 fails.append("未抽到数字 %s（实得 %s）" % (n, facts["numbers"]))
 
+    # v2.0.2 起：结论强度 / 承诺强度（语义档位）断言
+    ss = facts.get("strength_summary", {})
+    if "firm_min" in exp and ss.get("firm_decisions", 0) < exp["firm_min"]:
+        fails.append("已定结论 %d 条，期望 ≥%d（实得分布 %s）"
+                     % (ss.get("firm_decisions", 0), exp["firm_min"], ss.get("decisions")))
+    if "soft_min" in exp and ss.get("soft_decisions", 0) < exp["soft_min"]:
+        fails.append("暂定/提案/条件结论 %d 条，期望 ≥%d（实得分布 %s）"
+                     % (ss.get("soft_decisions", 0), exp["soft_min"], ss.get("decisions")))
+    if "committed_min" in exp and ss.get("committed_owners", 0) < exp["committed_min"]:
+        fails.append("明确接活 %d 条，期望 ≥%d（实得分布 %s）"
+                     % (ss.get("committed_owners", 0), exp["committed_min"], ss.get("commitments")))
+    if "intent_min" in exp:
+        got = ss.get("commitments", {}).get("intent_only", 0)
+        if got < exp["intent_min"]:
+            fails.append("仅表意向 %d 条，期望 ≥%d（实得分布 %s）"
+                         % (got, exp["intent_min"], ss.get("commitments")))
+    if "todo_max" in exp and len(facts["todo_sentences"]) > exp["todo_max"]:
+        fails.append("待办句 %d 条，超过上限 %d（标题行/条件句/已定结论不应计入待办）"
+                     % (len(facts["todo_sentences"]), exp["todo_max"]))
+
     body = sp.build_skeleton(fmt, facts)
 
     if exp.get("skeleton_has_numbered_lines") and not __import__("re").search(r"^\d+\.\s", body, __import__("re").M):
