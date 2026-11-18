@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent Skill Review &amp; Deliverable Verification — LGD Skills | 技能评测与交付验证</title>
+<meta name="description" content="Six-dimension evidence-based skill review with runnable tests and demos. Verify a skill's structure, doc-to-code consistency, reproducibility, hygiene, discoverability and licensing — then fix, rerun and improve. 六维证据式技能评测：结构、声明一致性、可复现、卫生、可发现、许可，附整改清单与复跑命令。">
+<meta name="keywords" content="agent skill review, skill quality audit, skill evaluation, skill scoring, skill linter, AI agent skills, 技能评测, 技能体检, 技能打分, 技能质量, 技能整改, 技能审计, summarize meeting minutes skill, debug troubleshooting skill">
+<link rel="canonical" href="https://zhaoxinghua09-cell.github.io/agent-skills/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Agent Skill Review — six dimensions, runnable evidence">
+<meta property="og:description" content="Score a skill on structure, consistency, reproducibility, hygiene, discoverability and licensing. Get a blocking list, a P0/P1 fix list, and a rerun command.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="robots" content="index,follow">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
+<style>
+  :root{
+    --ink:#0F1419; --ink2:#161E26; --line:#26333D;
+    --paper:#E8E6E1; --mute:#94A3AD;
+    --amber:#D9A33C; --teal:#4A8C7F;
+    --mono:"IBM Plex Mono","SFMono-Regular",Menlo,monospace;
+    --sans:"Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{background:var(--ink);color:var(--paper);font-family:var(--sans);font-weight:400;
+       line-height:1.7;-webkit-font-smoothing:antialiased}
+  a{color:var(--amber);text-decoration:none;border-bottom:1px solid rgba(217,163,60,.35)}
+  a:hover{border-bottom-color:var(--amber)}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 28px}
+  code,kbd{font-family:var(--mono);font-size:.92em}
+
+  /* ---------- hero：唯一的大胆处 ---------- */
+  .hero{padding:88px 0 56px;border-bottom:1px solid var(--line)}
+  .hero .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--mute);
+    text-transform:none;margin:0 0 28px}
+  .shift{display:flex;align-items:baseline;gap:26px;flex-wrap:wrap;margin:0}
+  .shift .n{font-family:var(--mono);font-weight:600;letter-spacing:-.04em;
+    font-size:clamp(56px,11vw,132px);line-height:.9;margin:0}
+  .shift .from{color:#5B6A74;text-decoration:line-through;text-decoration-thickness:2px}
+  .shift .arrow{color:var(--mute);font-size:clamp(28px,4vw,48px);font-family:var(--mono)}
+  .shift .to{color:var(--amber)}
+  .hero h1{font-family:var(--mono);font-weight:500;font-size:clamp(19px,2.4vw,26px);
+    line-height:1.35;margin:30px 0 0;max-width:34ch;color:var(--paper)}
+  .hero .sub{margin:16px 0 0;color:var(--mute);max-width:62ch;font-size:15px}
+  .hero .facts{display:flex;gap:34px;flex-wrap:wrap;margin:34px 0 0;font-family:var(--mono);font-size:13px;color:var(--mute)}
+  .hero .facts b{display:block;color:var(--paper);font-size:15px;font-weight:500;margin-bottom:2px}
+
+  section{padding:64px 0;border-bottom:1px solid var(--line)}
+  h2{font-family:var(--mono);font-weight:500;font-size:clamp(17px,2vw,21px);margin:0 0 8px}
+  .lead{color:var(--mute);margin:0 0 34px;max-width:68ch;font-size:15px}
+
+  /* ---------- 包清单：细线，不用卡片套件 ---------- */
+  .pk{border-top:1px solid var(--line)}
+  .row{display:grid;grid-template-columns:1.3fr .8fr 1fr .9fr;gap:20px;
+       padding:20px 0;border-bottom:1px solid var(--line);align-items:start}
+  .row .name{font-family:var(--mono);font-size:15px;font-weight:500}
+  .row .name small{display:block;font-family:var(--sans);color:var(--mute);font-size:13px;font-weight:300;margin-top:4px}
+  .row .v{font-family:var(--mono);font-size:13px;color:var(--mute)}
+  .row .s{font-family:var(--mono);font-size:20px;color:var(--amber);font-weight:500}
+  .row .s span{font-size:12px;color:var(--mute);font-weight:400}
+  .row .d{font-size:13px;color:var(--mute)}
+  .head{color:var(--mute);font-family:var(--mono);font-size:11px;padding:10px 0;border-bottom:1px solid var(--line)}
+
+  /* ---------- 对比 ---------- */
+  #chart{width:100%;height:320px}
+  .note{font-size:13px;color:var(--mute);margin-top:18px;max-width:70ch}
+  .warn{border-left:2px solid var(--amber);padding-left:16px;margin:26px 0 0;font-size:14px;color:var(--paper)}
+  .warn b{color:var(--amber);font-weight:500}
+
+  /* ---------- 命令 ---------- */
+  pre{background:var(--ink2);border:1px solid var(--line);padding:18px 20px;overflow-x:auto;
+      font-family:var(--mono);font-size:13px;line-height:1.75;margin:0 0 14px}
+  pre .c{color:#5B6A74}
+  pre .k{color:var(--teal)}
+
+  .cols{display:grid;grid-template-columns:repeat(2,1fr);gap:40px}
+  @media(max-width:760px){
+    .cols{grid-template-columns:1fr;gap:28px}
+    .row{grid-template-columns:1fr 1fr;gap:12px}
+    .hero{padding:56px 0 40px}
+  }
+
+  .limit{font-size:14px;color:var(--mute);margin:0 0 12px;padding-left:18px;position:relative}
+  .limit:before{content:"—";position:absolute;left:0;color:var(--line)}
+  .limit b{color:var(--paper);font-weight:500}
+
+  footer{padding:44px 0 72px;font-size:13px;color:var(--mute)}
+  footer .mono{font-family:var(--mono)}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- ===== hero ===== -->
+  <header class="hero">
+    <p class="kicker">LGD SKILLS · EVIDENCE-BASED REVIEW</p>
+    <div class="shift">
+      <p class="n from">42</p>
+      <p class="arrow">→</p>
+      <p class="n to">100</p>
+    </div>
+    <h1>Same package. Same reviewer. Only the version changed.</h1>
+    <p class="sub">同一个包、同一个评测账号，只换了版本号，线下得分从 42 分跳到 100 分。让这个差值发生的不是宣传，是测试、demo、和文档与脚本逐条对账。</p>
+    <div class="facts">
+      <div><b>4</b>public skills 公开技能</div>
+      <div><b>6</b>dimensions 评测维度</div>
+      <div><b>0</b>blocking issues 阻断项</div>
+      <div><b>10–22</b>golden cases each 黄金用例</div>
+    </div>
+  </header>
+
+  <!-- ===== 四个包 ===== -->
+  <section>
+    <h2>What ships 交付内容</h2>
+    <p class="lead">每个技能都带可复跑的测试集、可运行的演示和明确的失败边界。分数由脚本算出，不是手填。</p>
+    <div class="pk">
+      <div class="row head"><div>PACKAGE</div><div>VERSION</div><div>SCORE</div><div>WHAT IT DOES</div></div>
+      <div class="row">
+        <div class="name">summarize-pro<small>会议纪要 / 逐字稿 → 忠实摘要</small></div>
+        <div class="v">2.0.5</div>
+        <div class="s">100<span>/100</span></div>
+        <div class="d">9 个子命令：事实抽取、逐句溯源核对、格式自检、脱敏、日期归一、HTML 渲染、六类来源适配。22 条黄金用例。</div>
+      </div>
+      <div class="row">
+        <div class="name">debug-pro<small>故障分诊 → 可复现的最小步骤</small></div>
+        <div class="v">2.1.1</div>
+        <div class="s">100<span>/100</span></div>
+        <div class="d">零依赖三命令：日志分诊、环境快照（自动脱敏）、复现五要素打分。10 条黄金用例 + 真实报错日志演示。</div>
+      </div>
+      <div class="row">
+        <div class="name">wechat-viral-topic<small>素材 → 选题卡，先过合规红线</small></div>
+        <div class="v">2.1.1</div>
+        <div class="s">100<span>/100</span></div>
+        <div class="d">信号扫描出选题卡、合规红线扫描、标题体检。命中红线直接 BLOCK。11 条黄金用例。</div>
+      </div>
+      <div class="row">
+        <div class="name">lgd-skill-review<small>评测器本体：给别人打分的那一个</small></div>
+        <div class="v">1.1.0</div>
+        <div class="s">100<span>/100</span></div>
+        <div class="d">六维评分 + 阻断项 + P0/P1 整改清单 + 复跑命令；附加 Token 体检（说明性占比）与四视角独立评审。5 条自检、16→100 闭环演示。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 同尺对比 ===== -->
+  <section>
+    <h2>One ruler, four candidates 同一把尺子</h2>
+    <p class="lead">以下分数由同一份代码算出：同一套权重、同一批阻断规则。竞品通过公开渠道安装后本地实跑。</p>
+    <div id="chart"></div>
+    <p class="note">横向为总分（满分 100）。两侧竞品均为公开安装后实测，未做任何调参。</p>
+    <div class="warn">
+      <b>这把尺子量的是「可验证交付」，不是「策略厚度」。</b>它给分给的是：有没有测试、文档参数与脚本对不对得上、有没有能跑的 demo、有没有互链与许可声明。它不给分给的是：语义规则多细、参考资料多深、行业洞察准不准。换成「策略覆盖度」这把尺子，排序可能翻转。
+    </div>
+  </section>
+
+  <!-- ===== 怎么用 ===== -->
+  <section>
+    <h2>Run it yourself 自己跑一遍</h2>
+    <p class="lead">三条命令，不装依赖、不发网络请求。装完就能给自己的技能打分，拿到整改清单，改完再跑一遍。</p>
+    <pre><span class="c"># install the reviewer</span>
+clawhub install @zhaoxinghua09-cell/lgd-skill-review
+
+<span class="c"># score a skill directory (add --run to actually execute its tests)</span>
+python scripts/review.py &lt;your-skill-dir&gt; --run
+
+<span class="c"># extra reports: narration ratio, four independent perspectives</span>
+python scripts/review.py &lt;your-skill-dir&gt; --token --multi-role</pre>
+    <p class="lead" style="margin-top:22px">其余三个技能同样一条命令安装：</p>
+    <pre>clawhub install @zhaoxinghua09-cell/summarize-pro
+clawhub install @zhaoxinghua09-cell/debug-pro
+clawhub install @zhaoxinghua09-cell/wechat-viral-topic</pre>
+  </section>
+
+  <!-- ===== 边界 ===== -->
+  <section>
+    <h2>Limits, stated plainly 边界，写在明处</h2>
+    <div class="cols">
+      <div>
+        <p class="limit"><b>不评业务逻辑正确性。</b>只查结构与声明一致性，不查结论对不对。</p>
+        <p class="limit"><b>不做安全渗透。</b>只做敏感信息与危险调用的静态排查。</p>
+        <p class="limit"><b>不替代人工评审。</b>输出的是证据化清单，不是终审结论。</p>
+      </div>
+      <div>
+        <p class="limit"><b>说明性内容仍占 55–64%。</b>四包中英双语各写一遍，压缩空间受限，这一项只是从「很差」改善到「中等」。</p>
+        <p class="limit"><b>评分口径是自研的。</b>不是第三方标准，只保证同一把尺子前后一致。</p>
+        <p class="limit"><b>可发现性刚起步。</b>页面本身就是在补这一课。</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p class="mono">LGD Skills · evidence over adjectives</p>
+    <p>四个技能均在 ClawHub 与 GitHub 公开可装；源码可读，测试可跑，结论可复核。<br>
+    页面不收集数据，不使用追踪脚本，不加载第三方统计。</p>
+  </footer>
+</div>
+
+<script src="https://fastly.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
+<script>
+(function(){
+  var el = document.getElementById('chart');
+  if(!el || !window.echarts) return;
+  var c = echarts.init(el, null, {renderer:'canvas'});
+  var names = ['lgd-skill-review','wechat-viral-topic','debug-pro','summarize-pro','skill-review-pro','meeting-decision-receipt','meeting-notes-oc'];
+  var vals  = [100,100,100,100,54,40,39];
+  var ours  = [1,1,1,1,0,0,0];
+  c.setOption({
+    backgroundColor:'transparent',
+    grid:{left:170,right:70,top:10,bottom:30},
+    xAxis:{type:'value',max:100,axisLine:{lineStyle:{color:'#26333D'}},
+      splitLine:{lineStyle:{color:'#1B252D'}},
+      axisLabel:{color:'#94A3AD',fontFamily:'IBM Plex Mono'}},
+    yAxis:{type:'category',data:names,
+      axisLine:{lineStyle:{color:'#26333D'}},
+      axisLabel:{color:'#E8E6E1',fontFamily:'IBM Plex Mono',fontSize:12}},
+    series:[{
+      type:'bar', barWidth:18,
+      data:vals.map(function(v,i){
+        return {value:v, itemStyle:{color: ours[i] ? '#D9A33C' : '#3E4C57'}};
+      }),
+      label:{show:true,position:'right',color:'#E8E6E1',fontFamily:'IBM Plex Mono',fontSize:12},
+      emphasis:{itemStyle:{color:'#E8C879'}}
+    }]
+  });
+  window.addEventListener('resize', function(){ c.resize(); });
+})();
+</script>
+
+<script type="application/ld+json">
+[
+ {"@context":"https://schema.org","@type":"SoftwareApplication",
+  "name":"lgd-skill-review","applicationCategory":"DeveloperApplication",
+  "operatingSystem":"Any","softwareVersion":"1.1.0",
+  "description":"Six-dimension evidence-based agent skill reviewer: structure, doc-to-code consistency, reproducibility, hygiene, discoverability, licensing. Emits blocking items, a P0/P1 fix list, and a rerun command; optional token-efficiency and four-perspective reports.",
+  "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},
+  "url":"https://zhaoxinghua09-cell.github.io/agent-skills/"},
+ {"@context":"https://schema.org","@type":"SoftwareApplication",
+  "name":"summarize-pro","applicationCategory":"ProductivityApplication",
+  "operatingSystem":"Any","softwareVersion":"2.0.5",
+  "description":"Faithful meeting-notes and transcript summarization with nine subcommands: fact extraction, sentence-level citation checking against the source, format self-check, redaction, date normalization, deterministic HTML rendering, and six-source adapters.",
+  "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}},
+ {"@context":"https://schema.org","@type":"SoftwareApplication",
+  "name":"debug-pro","applicationCategory":"DeveloperApplication",
+  "operatingSystem":"Any","softwareVersion":"2.1.1",
+  "description":"Seven-step debugging protocol with a zero-dependency toolchain: log triage, redacted environment snapshot, and five-element reproduction scoring.",
+  "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}},
+ {"@context":"https://schema.org","@type":"SoftwareApplication",
+  "name":"wechat-viral-topic","applicationCategory":"BusinessApplication",
+  "operatingSystem":"Any","softwareVersion":"2.1.1",
+  "description":"Turns raw material into a topic card through four questions, then blocks compliance red lines before you write: signal scan, risk check, title check.",
+  "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+]
+</script>
+
+</body>
+</html>
