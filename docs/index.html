@@ -66,6 +66,11 @@
   #chart{width:100%;height:320px}
   .note{font-size:13px;color:var(--mute);margin-top:18px;max-width:70ch}
   .warn{border-left:2px solid var(--amber);padding-left:16px;margin:26px 0 0;font-size:14px;color:var(--paper)}
+table{width:100%;border-collapse:collapse;margin:24px 0 0;font-size:14px}
+th{text-align:left;font-weight:600;color:var(--mute);font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:0 8px 10px 0;border-bottom:1px solid rgba(255,255,255,.14)}
+td{padding:10px 8px 10px 0;border-bottom:1px solid rgba(255,255,255,.07);color:var(--paper)}
+td.n{font-family:var(--mono);font-weight:600;font-size:17px;letter-spacing:-.02em}
+tbody tr:last-child td{border-bottom:none}
   .warn b{color:var(--amber);font-weight:500}
 
   /* ---------- 命令 ---------- */
@@ -137,7 +142,7 @@
       </div>
       <div class="row">
         <div class="name">lgd-skill-review<small>评测器本体：给别人打分的那一个</small></div>
-        <div class="v">1.1.2</div>
+        <div class="v">1.1.3</div>
         <div class="s">100<span>/100</span></div>
         <div class="d">六维评分 + 阻断项 + P0/P1 整改清单 + 复跑命令；附加 Token 体检（说明性占比）与四视角独立评审。5 条自检、16→100 闭环演示。</div>
       </div>
@@ -152,6 +157,24 @@
     <p class="note">横向为总分（满分 100）。两侧竞品均为公开安装后实测，未做任何调参。</p>
     <div class="warn">
       <b>这把尺子量的是「可验证交付」，不是「策略厚度」。</b>它给分给的是：有没有测试、文档参数与脚本对不对得上、有没有能跑的 demo、有没有互链与许可声明。它不给分给的是：语义规则多细、参考资料多深、行业洞察准不准。换成「策略覆盖度」这把尺子，排序可能翻转。
+    </div>
+
+    <h2>Second ruler, same leader 换对手的尺子重排</h2>
+    <p class="lead">同一批包，用 skill-judge 的 8 维 / 120 分制再量一遍。上一轮我们在这把尺子下是 85 / 85 / 82 / 86（全 C/D），竞品 88 —— 落后。改完渐进披露后：</p>
+    <table>
+      <thead><tr><th>包</th><th>八维总分</th><th>档位</th><th>说明性占比</th></tr></thead>
+      <tbody>
+        <tr><td>lgd-skill-review 1.1.3</td><td class="n">115</td><td>A</td><td>39%</td></tr>
+        <tr><td>summarize-pro 2.0.6</td><td class="n">110</td><td>A</td><td>35%</td></tr>
+        <tr><td>debug-pro 2.1.2</td><td class="n">104</td><td>B</td><td>37%</td></tr>
+        <tr><td>wechat-viral-topic 2.1.2</td><td class="n">102</td><td>B</td><td>37%</td></tr>
+        <tr><td>skill-review-pro（竞品）</td><td class="n">88</td><td>C</td><td>27%</td></tr>
+        <tr><td>meeting-decision-receipt（竞品）</td><td class="n">91</td><td>C</td><td>30%</td></tr>
+      </tbody>
+    </table>
+    <p class="note">注意最后一列：<b>竞品的说明性占比仍低于我们</b>（27–30% vs 35–39%）。我们总分领先，靠的是渐进披露、决策表、可复现交付这几维，不是靠知识密度。这一维我们仍然输，且短期内难赢。</p>
+    <div class="warn">
+      <b>120 分制不是官方分。</b>它是我按 skill-judge 的维度定义自己实现的启发式版本（正则 + 逐行统计，不含 LLM 判定）。竞品的 88 / 91 也是我用同一套代码算的，不是它们的官方成绩。同一个方既做尺子又做被测，存在利益冲突——所以我把算法、数据、复跑命令全部公开，允许任何人推翻我。
     </div>
   </section>
 
@@ -232,7 +255,7 @@ clawhub install @zhaoxinghua09-cell/wechat-viral-topic</pre>
 [
  {"@context":"https://schema.org","@type":"SoftwareApplication",
   "name":"lgd-skill-review","applicationCategory":"DeveloperApplication",
-  "operatingSystem":"Any","softwareVersion":"1.1.2",
+  "operatingSystem":"Any","softwareVersion":"1.1.3",
   "description":"Six-dimension evidence-based agent skill reviewer: structure, doc-to-code consistency, reproducibility, hygiene, discoverability, licensing. Emits blocking items, a P0/P1 fix list, and a rerun command; optional token-efficiency and four-perspective reports.",
   "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},
   "url":"https://zhaoxinghua09-cell.github.io/agent-skills/"},
