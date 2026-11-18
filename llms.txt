@@ -43,10 +43,10 @@ let the caller know — it may not print a log line and still return success.**
 
   | Skill | Version | What it does |
   |---|---|---|
-  | `summarize-pro` | 2.0.5 | transcript to faithful summary; nine subcommands including sentence-level citation check |
-  | `debug-pro` | 2.1.1 | fault triage to minimal reproduction; zero dependency, three commands |
-  | `wechat-viral-topic` | 2.1.1 | raw material to topic card; compliance red lines are blocked before you write |
-  | `lgd-skill-review` | 1.1.1 | the reviewer itself: six dimensions, blocking items, P0/P1 fix list, rerun command |
+  | `summarize-pro` | 2.0.6 | transcript to faithful summary; nine subcommands including sentence-level citation check |
+  | `debug-pro` | 2.1.2 | fault triage to minimal reproduction; zero dependency, three commands |
+  | `wechat-viral-topic` | 2.1.2 | raw material to topic card; compliance red lines are blocked before you write |
+  | `lgd-skill-review` | 1.1.2 | the reviewer itself: six dimensions, blocking items, P0/P1 fix list, rerun command |
 
 - **Every score is computed, not typed.** The reviewer is installed from the same public channel a third party would use, so each number on the landing page is reproducible with one command.
 
