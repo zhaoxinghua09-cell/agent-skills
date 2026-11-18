@@ -7,7 +7,7 @@ display_name_en: Skill Reviewer
 slug: lgd-skill-review
 author: 诺声(Logos)@SynomosAI
 copyright: SynomosAI
-version: 1.1.3
+version: 1.1.4
 license: MIT
 description: "Use when reviewing, auditing or scoring any AI skill package, or when a skill was rejected and you need to know why. A six-dimension, evidence-based reviewer: it scores structure, declared-vs-implemented consistency, reproducibility, hygiene/sanitization, AI discoverability and licensing on a weighted 100-point scale, then emits a prioritized fix list (P0 blocking / P1 improvement) and a rerun command. Designed to close the loop: review -> fix -> re-review, so an agent can improve its own skill autonomously. Every point is traceable to a specific file and finding; no impression scoring. Detects the industry's most common defect: documentation promising a command or flag that the script never implements. Zero dependency, standard library only, offline. Triggers: review my skill, audit skill quality, why is my skill rejected, skill checklist, score this skill, improve my SKILL.md, skill package gate."
 description_zh: "技能体检 / 评测 / 打分 / 为什么被拒 —— 对任意 AI 技能包做 6 维加权评测（结构 / 声明一致 / 可复跑 / 去敏安全 / AI 可发现 / 许可署名），输出 100 分总分、阻断项、P0/P1 整改清单与复测命令，形成「评测→整改→复测」闭环。每一分都能指到具体文件与具体缺陷，不做印象打分；最常抓到的行业通病是「文档承诺了脚本没实现的命令或参数」"

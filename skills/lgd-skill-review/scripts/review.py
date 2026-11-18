@@ -394,8 +394,22 @@ def token_report(root, files):
     # 说明性行：逐行判定，排除代码块内、步骤句、规则句、表格行。
     # 早先用 "100 - 示例 - 步骤 - 规则" 反推，因一行可能同时命中多类而重复扣减，
     # 会把说明性系统性高估（实测虚高 25 个百分点），故改为直接统计。
+    #
+    # 另外排除 YAML frontmatter：它是结构化元数据，已由 D4（规范合规）评分，
+    # 再计入 D1（知识增量）属同一内容重复惩罚；且 frontmatter 行数近乎固定，
+    # 包越小占比越高，会把小包不公平地压分。
+    all_lines = body.splitlines()
+    fm_lines = 0
+    if all_lines and all_lines[0].strip() == "---":
+        for i in range(1, len(all_lines)):
+            if all_lines[i].strip() == "---":
+                fm_lines = i + 1
+                break
+    body_lines = all_lines[fm_lines:]
+    n_body = len([x for x in body_lines if x.strip()]) or 1
+
     nar_lines, in_code = 0, False
-    for ln in body.splitlines():
+    for ln in body_lines:
         if ln.strip().startswith("```"):
             in_code = not in_code
             continue
@@ -431,7 +445,7 @@ def token_report(root, files):
         "chars": len(body), "lines": n, "est_tokens": est,
         "example_pct": pct(code_lines), "action_pct": pct(step_lines),
         "rule_pct": pct(rule_lines),
-        "narration_pct": pct(nar_lines),
+        "narration_pct": round(100.0 * nar_lines / n_body, 1),
         "fillers": [{"text": f, "count": c} for f, c in fillers],
         "duplicates": dup[:5],
         "advice": adv,

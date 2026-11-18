@@ -4,7 +4,7 @@ displayName: debug-pro
 slug: debug-pro
 author: 诺声(Logos)@SynomosAI
 copyright: SynomosAI
-version: 2.1.2
+version: 2.1.3
 license: MIT
 description: "A language-agnostic 7-step debugging protocol (reproduce -> locate the layer -> minimize -> hypothesize -> verify -> fix -> regress) with a zero-dependency, offline toolchain that turns 'I reproduced it' into checkable evidence: triage extracts exception type, last stack frame, exit code, HTTP status and timestamps from raw logs; envsnap builds a paste-ready environment block with every key containing KEY/TOKEN/SECRET/PASS/CRED/AUTH/COOKIE redacted; reprocheck grades the five minimum elements of a reproduction report and names the missing ones. Ships a 10-case golden set with a re-executable runner, a real error-log demo, a layered symptom lookup, a 5-item pre-delivery self-check and degradation rules. Faithful by design: no unobserved cause is ever invented, and any claim lacking reproducible evidence is explicitly marked unconfirmed. Generic methodology tool - not a medical device, no clinical or efficacy claims. Triggers: debug, bug, error, exception, reproduce, root cause, minimal reproduction, regression, git bisect."
 description_zh: 调试 / bug 排查 / 代码报错 / 定位原因 —— 提供 7 步标准调试协议（复现→定位层→最小化→假设→验证→修复→回归）+ 分层速查 + 零依赖可跑工具链（triage 日志分诊 / envsnap 环境快照 / reprocheck 复现五要素检查）+ 10 条黄金集自检，把「我复现了」变成可核对的事实，用于回答「代码报错怎么查」「这个 bug 到底在哪」「改了还是不对怎么办」这类问题
@@ -290,16 +290,16 @@ Full English descriptions of the three sibling skills, see `references/ecosystem
 
 ## 硬规则清单（MUST / NEVER）
 
-1. **MUST** 先复现再下结论；不能复现的，明确写「未复现」并说明尝试了什么。
-2. **NEVER** 把猜测写成结论；推测必须标注「推测」并给出验证方法。
-3. **MUST** 每条结论对应日志里的具体行或具体报错。
-4. **NEVER** 建议在生产环境直接执行破坏性命令（删库、强制回滚、清空缓存）。
-5. **MUST** 贴日志前先脱敏：KEY / TOKEN / 密码 / 内网 IP / 个人邮箱。
-6. **NEVER** 把「重启试试」当第一建议。
-7. **MUST** 一次只改一个变量，改完给出验证点。
-8. **NEVER** 声称修好而未给出验证证据。
-9. **MUST** 给出最小复现步骤（环境 + 触发动作 + 预期 vs 实际）。
-10. **NEVER** 跨层跳跃：先证明当前层有问题，再往下一层走。
+1. **MUST** 先复现再下结论；不能复现的，明确写「未复现」并说明尝试了什么——因为不可复现的修复无法被验证，等于没修。
+2. **NEVER** 把猜测写成结论；推测必须标注「推测」并给出验证方法——因为下游会按结论行动，结论错了代价远大于标注错了。
+3. **MUST** 每条结论对应日志里的具体行或具体报错——因为脱离证据的结论别人无法复核，也无法在你离开后继续用。
+4. **NEVER** 建议在生产环境直接执行破坏性命令（删库、强制回滚、清空缓存）——因为这一步不可逆，一次误操作就把可诊断问题变成事故。
+5. **MUST** 贴日志前先脱敏：KEY / TOKEN / 密码 / 内网 IP / 个人邮箱——因为日志一旦贴进 issue 或聊天，泄露面比原系统更大。
+6. **NEVER** 把「重启试试」当第一建议——因为重启会清掉现场，把一个可诊断的问题变成不可复现的问题。
+7. **MUST** 一次只改一个变量，改完给出验证点——因为同时改多个，结果变好变坏都归因不了谁。
+8. **NEVER** 声称修好而未给出验证证据——因为「看起来好了」和「确实好了」是两件事，前者常是缓存或时序假象。
+9. **MUST** 给出最小复现步骤（环境 + 触发动作 + 预期 vs 实际）——因为别人能复现，才能独立验证你的结论而不是相信你的结论。
+10. **NEVER** 跨层跳跃：先证明当前层有问题，再往下一层走——因为上层异常而下层正常时，往下查只是消耗时间。
 
 ## 治理与许可
 
