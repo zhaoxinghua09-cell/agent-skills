@@ -4,6 +4,14 @@
 
 ## [Unreleased]
 
+### 新增（技能 v2.0 工程化三件，2026-11-18）
+
+- `summarize-pro` 升级至 **2.0.1**：新增 `scripts/summarize_pro.py`，三个子命令 `extract`（抽日期/数字/说话人/待办/决策/条件句并生成骨架）、`citecheck`（逐句抽事实 token 回原文比对，输出不可溯源清单）、`selfcheck`（按格式族断言必备要素），统一 `{ok,error_id,data}` 输出与 S001–S006 错误码。10 条黄金集可复跑（日期混写、百分比、待办归属、决策、条件、过短拒答、时间线、要点条数、溯源正反控）；demo 基于 876 字真实需求评审转写，故意把 `1.8%` 改成 `1.2%`、`11月25日` 改成 `11月23日` 并由 `citecheck` 当场抓出。`docs/FORMATS.md` 为五格式族机器可校验口径，与代码断言同源。原 1.4.4 版中与实际实现不符的 CLI 参数已剔除。
+- `debug-pro` 升级至 **2.0.0**：新增 `tools/debughunt.py`，`triage`（异常类型/栈首帧 file:line:func/退出码/HTTP 状态/时间戳/路径/端口）、`envsnap`（含 KEY/TOKEN/SECRET/PASS/CRED/AUTH/COOKIE 的环境项强制剔除）、`reprocheck`（复现五要素判分），错误码 D001–D005；10 条黄金集 10/10 PASS；保留旧 `debug_check.py` 兼容。
+- `wechat-viral-topic` 升级至 **2.0.0**：新增 `tools/topicguard.py`，`scan`（数字带单位/时间窗口/平台/#话题#/冲突句/痛点句/读者原话 → 选题卡，无信号拒答 W004）、`riskcheck`（医疗声明/绝对化/收益承诺/诱导分享为 RED，无出处断言为 YELLOW，输出 BLOCK/WARN/PASS）、`titlecheck`（≤34 字、公式类型、红线检测），错误码 W001–W004；11 条黄金集 11/11 PASS；demo 证明四类红线全拦且干净稿不误杀。
+- 三者均零第三方依赖（纯标准库可跑），`description` 英文前置，中文置于 `description_zh`；脚本以 MIT 提供，理论文本保留原许可。
+
+
 ### 新增（技能库优化 · 第一批，2026-11-04）
 
 - 20 个技能的脚本新增 `--selftest` 自检（临时夹具跑真实检查逻辑，断言「应过/应拦」两类判定，零第三方依赖）：`agent-boarding-pass`、`agent-kill-switch`、`agent-loop-guard`、`agent-memory-keeper`、`agent-output-registry`、`agent-redteam-kit`、`agent-trace-audit`、`ai-brain-learning-memory-pro`、`ai-content-discloser`、`ai-cost-cutter`、`ai-decision-log`、`ai-incident-log`、`ai-policy-radar`、`ai-reply-heuristics`、`ai-usage-policy`、`ai-vendor-checklist`、`aml-sentinel`、`batch-renamer`、`bias-auditor`、`citation-coverage-check`。普通调用行为不变（自检为纯附加）。
