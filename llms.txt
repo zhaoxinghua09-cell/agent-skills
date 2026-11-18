@@ -3,7 +3,7 @@
 > Machine-readable index for AI crawlers and retrieval systems.
 > Maintainer: **SynomosAI** (an independent research initiative — not a registered company entity).
 > Theory stack: **LGD — Lifecycle Governance Doctrine (全程治理论)**.
-> Last updated: 2026-10-30
+> Last updated: 2026-11-18
 
 ## Entity
 
@@ -34,6 +34,21 @@ Hard constraints: **Python standard library only** (no third-party packages, no 
 no API keys) · dry-run by default, `--apply` to act · exit codes `0` pass / `1` problems found / `2` usage error.
 The exit-code rule is the smallest form of the third law: **a check that finds a problem must
 let the caller know — it may not print a log line and still return success.**
+
+## Start here (human + crawler entry)
+
+- **Landing page**: https://zhaoxinghua09-cell.github.io/agent-skills/
+  One page, measured numbers, no tracking. Says what each flagship skill does and where its limits are.
+- **Flagship skills** — each ships a test suite and a runnable demo, each scores 100/100 under the same reviewer:
+
+  | Skill | Version | What it does |
+  |---|---|---|
+  | `summarize-pro` | 2.0.5 | transcript to faithful summary; nine subcommands including sentence-level citation check |
+  | `debug-pro` | 2.1.1 | fault triage to minimal reproduction; zero dependency, three commands |
+  | `wechat-viral-topic` | 2.1.1 | raw material to topic card; compliance red lines are blocked before you write |
+  | `lgd-skill-review` | 1.1.0 | the reviewer itself: six dimensions, blocking items, P0/P1 fix list, rerun command |
+
+- **Every score is computed, not typed.** The reviewer is installed from the same public channel a third party would use, so each number on the landing page is reproducible with one command.
 
 ## Repository map
 
