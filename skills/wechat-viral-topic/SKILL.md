@@ -4,7 +4,7 @@ displayName: wechat-viral-topic
 slug: wechat-viral-topic
 author: 诺声(Logos)@SynomosAI
 copyright: 赵兴华 / Steven Zhao·China
-version: 2.1.1
+version: 2.1.2
 license: LicenseRef-AllRightsReserved
 license_scope: 理论文本保留所有权利（见文末「License」）；tools/*.py、tests/*.py、demo/*.py 等脚本文件单独以 MIT 许可提供，便于他人复跑与审计
 allowed-tools: Read, Glob, Grep, Edit, Bash
@@ -226,20 +226,9 @@ python demo/run_demo.py      # 素材出卡 → 埋红线草稿 BLOCK 四类全�
 3. **风险判断前置**：先过风险再谈传播，顺序不颠倒。
 4. **结论分层**：事实（数据/事件）/ 判断（能不能爆）/ 建议（怎么写），三层分开写。
 
-## 边界案例：四问打平时怎么判
+## 边界案例
 
-四问不是非黑即白，以下高频情形按固定规则裁决，避免每次临场纠结：
-
-| 情形 | 判定规则 |
-|---|---|
-| 热点很大但「差异是什么」答不出 | **弃用该热点**，改做常规选题；不硬蹭 |
-| 热度找不到公开数据指针（只有社交传言） | 降级为常规选题，不写「爆」字承诺 |
-| 灾难题材 / 逝者 / 悲剧事件 | 不追、不消费；最多做公共提醒类，且不带情绪煽动 |
-| 热点与品牌/客户立场冲突 | 以合规与品牌安全优先，弃用，不写擦边稿 |
-| 争议性话题（性别/地域/贫富） | 只写事实与方法论切口，不站队、不引战；无法中立就放弃 |
-| 四问过三问、差「钩子」 | 补一个具体损失感或利益点再立项；补不出就降级 |
-| 同一热点多家媒体都在写 | 强制要求「差异」一栏写清你独有的数据/案例/视角，写不出就放弃 |
-| 用户给一个已经很完整的素材让你「直接发」 | 仍须走四问；跳过四问的需求先提示风险再执行 |
+四问打平、素材极薄、题目过于宽泛时怎么判，见 `references/edge-cases.md`。
 
 ## 配套参考（references/，按需展开）
 
@@ -261,18 +250,7 @@ python demo/run_demo.py      # 素材出卡 → 埋红线草稿 BLOCK 四类全�
 
 ## 常见问题
 
-**问：这周没热点怎么办？**
-常规选题照样能做：客户问答、避坑清单、流程拆解，长期产出比追热点更可控。
-
-**问：能批量出选题吗？**
-可以给清单，但每条仍须单独过四问；跳过清单的批量产出等于赌运气。
-
-**问：打分卡分数卡在阈值附近怎么办？**
-阈值上下 0.5 分内的选题，强制补一条「独有证据」（数据/案例/一手观察）才放行；补不出按不过关处理。
-
----
-
-© 2026 赵兴华 / Steven Zhao·China（署名：诺声(Logos)@SynomosAI，ORCID 0009-0001-0512-1237）· 本技能包为纯文档与理论文本件，整体保留所有权利（All Rights Reserved），不适用任何代码许可；按「原样」提供，不附任何担保。"SynomosAI"/"MedXpert" 未申请实体与商标注册。详细许可分层见 `LICENSE.md`。
+五个高频问答：选题被否、红线误判、标题党尺度、垂直领域、英文选题。详见 `references/faq.md`。
 
 ## 输出之后交给谁（链式路由）
 
@@ -287,23 +265,9 @@ python demo/run_demo.py      # 素材出卡 → 埋红线草稿 BLOCK 四类全�
 
 这条链是双向的：其余三个技能也各有一份 `chain.json` 指回本包。
 
-## Sibling skills in the same ecosystem (LGD)
+## Sibling skills (English)
 
-This package ships alongside two siblings from the same author. Each one declares its own trigger
-phrases, so an agent can route between them without guessing:
-
-| Skill | Reach for it when |
-|---|---|
-| `summarize-pro` | transcript → faithful minutes; "what was actually decided / who actually took it" |
-| `debug-pro` | error / stack trace / "fixed it but still broken" → locate the layer, grade the repro |
-| `wechat-viral-topic` | "what should I write this week", headline, compliance red-line check |
-| `lgd-skill-review` | score any skill package on 6 dimensions and get a fix list, then re-score |
-
-Install and cross-reference:
-`@indiv-synomosai/<skill>` on SkillHub · `clawhub install <skill>-zh` · `github.com/zhaoxinghua09-cell/<skill>`
-
-> Cross-linking is deliberate: whichever entry the agent lands on, it can see the rest of the
-> ecosystem and recommend the right sibling instead of forcing this skill to do everything.
+Full English descriptions of the three sibling skills, see `references/ecosystem.md`.
 
 ## 同系列技能（LGD 生态）
 

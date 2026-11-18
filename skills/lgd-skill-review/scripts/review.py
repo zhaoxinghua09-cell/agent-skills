@@ -420,6 +420,125 @@ def token_report(root, files):
     }
 
 
+def eight_report(root, fm, files):
+    """八维对照报告（对齐公开的 120 分制口径），不参与本引擎六维计分。
+
+    存在意义：既能用别人的尺子量自己，也能用自己的尺子量别人。
+    D1 知识增量 20 / D2 思维模式与流程 15 / D3 反模式 15 / D4 规范合规 15 /
+    D5 渐进披露 15 / D6 自由度校准 15 / D7 模式识别 10 / D8 实用可用性 15。
+
+    注意：这是启发式近似（正则 + 行统计），不是 LLM 判定，结论只用于横向比较。
+    """
+    body = read(os.path.join(root, "SKILL.md")) or ""
+    lines = [x for x in body.splitlines() if x.strip()]
+    n = len(lines) or 1
+    tr = token_report(root, files)
+    nar = tr["narration_pct"]
+    scripts = scripts_text(root)
+    n_scripts = len([f for f in files if f.endswith((".py", ".js", ".sh"))])
+    refs = [f for f in files if "references/" in f.replace("\\", "/")]
+
+    rows = []
+
+    # D1 知识增量：说明性占比越低，真正为 AI 补充的专家知识越多
+    if nar <= 40:
+        d1 = 20
+    elif nar <= 55:
+        d1 = 15
+    elif nar <= 70:
+        d1 = 9
+    else:
+        d1 = 4
+    if re.search(r'(?m)^#+\s*(什么是|What is|Introduction|简介)', body, re.I):
+        d1 = max(0, d1 - 3)
+    rows.append(("D1", "Knowledge Delta 知识增量", d1, 20, "说明性 %d%%" % nar))
+
+    # D2 思维模式与流程：决策树 + 有序步骤 + 取舍理由
+    tree = 1 if re.search(r'(\|.*(如果|when|若|fallback|备选).*\|)|备选方案|Fallback', body, re.I) else 0
+    steps = len(re.findall(r'(?m)^\s*(?:第[一二三四五六七八九十]步|Step\s+\d)', body))
+    ordered = len(re.findall(r'(?m)^\s*\d+\.\s', body))
+    d2 = (6 if tree else 0) + \
+         (5 if (steps >= 2 or ordered >= 5) else (2 if ordered else 0)) + \
+         (4 if re.search(r'(为什么|因为|否则|权衡|trade-?off|代价)', body, re.I) else 0)
+    d2 = min(15, d2)
+    rows.append(("D2", "Mindset + Procedures 思维与流程", d2, 15,
+                 "决策树%d 有序步骤%d" % (tree, max(steps, ordered))))
+
+    # D3 反模式：NEVER 列表条数 + 是否带理由
+    nevers = len(re.findall(r'(?:NEVER|MUST NOT|禁止|不得|切勿|不要)', body))
+    reasoned = len(re.findall(
+        r'(?:NEVER|MUST NOT|禁止|不得|切勿|不要)[^\n]{0,90}(?:因为|否则|会导致|会漏|会被|就|一律)', body))
+    d3 = min(9, nevers) + min(6, reasoned * 2)
+    d3 = min(15, d3)
+    rows.append(("D3", "Anti-Pattern 反模式", d3, 15, "硬规则%d 带理由%d" % (nevers, reasoned)))
+
+    # D4 规范合规：frontmatter + description 的 WHAT/WHEN/关键词
+    req = ("name", "description", "version")
+    have = sum(1 for k in req if (fm or {}).get(k))
+    d4 = 6 if have == 3 else (3 if have >= 2 else 0)
+    desc = str((fm or {}).get("description", "") or "")
+    if re.search(r'(Use when|When user|当用户|适用于|用于)', desc, re.I):
+        d4 += 5
+    if len(desc) >= 60:
+        d4 += 4
+    d4 = min(15, d4)
+    rows.append(("D4", "Specification 规范合规", d4, 15, "字段%d/3 描述%d字" % (have, len(desc))))
+
+    # D5 渐进披露：正文短 + 有 references + 正文指向 references
+    d5 = 7 if n <= 200 else (4 if n <= 320 else 1)
+    d5 += min(4, len(refs))
+    if refs and re.search(r'references/', body):
+        d5 += 4
+    d5 = min(15, d5)
+    rows.append(("D5", "Progressive Disclosure 渐进披露", d5, 15,
+                 "正文%d行 分层%d个" % (n, len(refs))))
+
+    # D6 自由度校准：有脚本就必须写清参数与阈值；无脚本就必须给判断标准
+    d6 = 0
+    if n_scripts:
+        d6 += 8 if re.search(r'--[a-z]', body) else 3
+        d6 += 4 if re.search(r'(阈值|PASS|WARN|FAIL|判定|>=)', body) else 0
+    else:
+        d6 += 8 if re.search(r'(检查表|清单|checkbox|\[\s?\])', body) else 4
+        d6 += 4 if re.search(r'(评分|得分|标准|rubric)', body, re.I) else 0
+    d6 += 3 if re.search(r'(边界|限制|不适用|Not for|limitation)', body, re.I) else 0
+    d6 = min(15, d6)
+    rows.append(("D6", "Freedom Calibration 自由度校准", d6, 15,
+                 "脚本%d 参数声明%s" % (n_scripts, "有" if re.search(r'--[a-z]', body) else "无")))
+
+    # D7 模式识别：按正文规模落档，再看是否有层级结构
+    if n <= 60:
+        pat, cap = "Navigation/Mindset", 10
+    elif n <= 120:
+        pat, cap = "Mindset", 10
+    elif n <= 220:
+        pat, cap = "Philosophy/Process", 9
+    elif n <= 360:
+        pat, cap = "Process", 8
+    else:
+        pat, cap = "过长(>360行)", 5
+    d7 = cap if (re.search(r'(?m)^#\s', body) and re.search(r'(?m)^##\s', body)) else max(0, cap - 3)
+    rows.append(("D7", "Pattern Recognition 模式识别", min(10, d7), 10, pat))
+
+    # D8 实用可用性：可照抄的代码 + 边界 + 复测路径 + 失败处理
+    fences = body.count("```")
+    d8 = (6 if fences >= 2 else (3 if fences else 0))
+    d8 += 4 if re.search(r'(边界|限制|Not for|不做|不会)', body, re.I) else 0
+    d8 += 3 if re.search(r'(复测|复查|重跑|rerun|verify|核对)', body, re.I) else 0
+    d8 += 2 if re.search(r'(错误|error|异常|失败时)', body, re.I) else 0
+    d8 = min(15, d8)
+    rows.append(("D8", "Practical Usability 实用可用性", d8, 15,
+                 "代码块%d 边界%s" % (fences // 2, "有" if re.search(r'(边界|限制|Not for)', body, re.I) else "无")))
+
+    total = sum(r[2] for r in rows)
+    pct = round(100.0 * total / 120, 1)
+    grade = "A" if total >= 108 else "B" if total >= 96 else "C" if total >= 84 \
+        else "D" if total >= 72 else "F"
+    return {"rows": [{"id": r[0], "name": r[1], "score": r[2], "max": r[3], "note": r[4]}
+                     for r in rows],
+            "total": total, "pct": pct, "grade": grade}
+
+
 def multi_role(root, fm, files):
     """四视角独立评审（spec / code / security / design），各给子分，不改总分。
 
@@ -582,6 +701,8 @@ def main():
                     help="附加 Token 效率体检（E:A:R 占比、填充语、重复段），不参与计分")
     ap.add_argument("--multi-role", action="store_true",
                     help="附加四视角独立评审（规范/代码/安全/设计），不参与计分")
+    ap.add_argument("--eight", action="store_true",
+                    help="附加八维对照报告（对齐公开 120 分制口径），不参与计分")
     a = ap.parse_args()
 
     if not os.path.isdir(a.path):
@@ -621,6 +742,14 @@ def main():
     root_abs = os.path.abspath(a.path)
     files = walk(root_abs)
     fm = frontmatter(read(os.path.join(root_abs, "SKILL.md")) or "")
+
+    if a.eight:
+        er = eight_report(root_abs, fm, files)
+        print("\n八维对照（对齐公开 120 分制，不参与本引擎计分）")
+        for c in er["rows"]:
+            print("  %-2s %-34s %2d/%-3d %s" %
+                  (c["id"], c["name"], c["score"], c["max"], c["note"]))
+        print("  合计 %d/120（%.1f%%）  等价档位：%s" % (er["total"], er["pct"], er["grade"]))
 
     if a.token:
         tr = token_report(root_abs, files)

@@ -4,7 +4,7 @@ displayName: debug-pro
 slug: debug-pro
 author: 诺声(Logos)@SynomosAI
 copyright: SynomosAI
-version: 2.1.1
+version: 2.1.2
 license: MIT
 description: "A language-agnostic 7-step debugging protocol (reproduce -> locate the layer -> minimize -> hypothesize -> verify -> fix -> regress) with a zero-dependency, offline toolchain that turns 'I reproduced it' into checkable evidence: triage extracts exception type, last stack frame, exit code, HTTP status and timestamps from raw logs; envsnap builds a paste-ready environment block with every key containing KEY/TOKEN/SECRET/PASS/CRED/AUTH/COOKIE redacted; reprocheck grades the five minimum elements of a reproduction report and names the missing ones. Ships a 10-case golden set with a re-executable runner, a real error-log demo, a layered symptom lookup, a 5-item pre-delivery self-check and degradation rules. Faithful by design: no unobserved cause is ever invented, and any claim lacking reproducible evidence is explicitly marked unconfirmed. Generic methodology tool - not a medical device, no clinical or efficacy claims. Triggers: debug, bug, error, exception, reproduce, root cause, minimal reproduction, regression, git bisect."
 description_zh: 调试 / bug 排查 / 代码报错 / 定位原因 —— 提供 7 步标准调试协议（复现→定位层→最小化→假设→验证→修复→回归）+ 分层速查 + 零依赖可跑工具链（triage 日志分诊 / envsnap 环境快照 / reprocheck 复现五要素检查）+ 10 条黄金集自检，把「我复现了」变成可核对的事实，用于回答「代码报错怎么查」「这个 bug 到底在哪」「改了还是不对怎么办」这类问题
@@ -193,15 +193,7 @@ python tools/debug_check.py card        # 生成 bug 记录卡草稿
 
 ## Worked example
 
-**现象**：用户登录后偶尔跳回登录页。
-
-1. **复现**：同事反馈后连续登录 20 次，复现 3 次，都是在「记住我」勾选时。
-2. **定位层**：登录接口 200，但下次请求 cookie 没带上 → 数据/会话层。
-3. **最小化**：去掉其它中间件，只留鉴权，仍复现。
-4. **假设**：a) cookie 过期时间算错；b) 跨域被浏览器拦；c) HTTPS 下 Secure 属性丢了。
-5. **验证**：一次只看一条 → 发现响应头里 `Set-Cookie` 缺 `Secure`，HTTPS 下浏览器不保存 → 假设 c 成立。
-6. **修复**：在 cookie 配置里补 `Secure` 与 `SameSite=Lax`。
-7. **回归**：补一条用例「HTTPS 响应的 Set-Cookie 必须含 Secure」，修复前失败、修复后通过。
+一次真实报错的完整走查（日志 → 分诊 → 复现五要素），见 `references/worked-example.md`。
 
 ## 执行自检（交付前必过）
 
@@ -212,19 +204,9 @@ python tools/debug_check.py card        # 生成 bug 记录卡草稿
 5. **无副作用外溢**：不为绕过问题而放宽校验、吞异常、加 sleep。
 6. **机器可查**（v2.0 新增）：交付时附 `triage` 的分诊卡与 `reprocheck` 的判定结果——「你说复现了」有 `.triage.md`，「你步骤齐全」有 `PASS`。
 
-## 证据化调试：把「我复现了」变成可核对的事实
+## 证据化调试
 
-调试里最容易糊弄的一步是「我复现了」。把这句话换成三件可核对的东西：
-
-| 你要证明的 | 用哪条命令 | 交付物 |
-|---|---|---|
-| 我确实抓到了这个错误 | `triage --file 报错日志` | `.triage.md`：异常类型、栈首帧、退出码、HTTP 状态、时间戳 |
-| 我的复现步骤别人照着能做 | `reprocheck --file 步骤.md` | `PASS` 或 `FAIL` + 缺项（版本环境/操作或命令/输入/期望与实际/证据） |
-| 环境差异已排除 | `envsnap` | 环境块（自动剔除所有含 KEY/TOKEN/SECRET 的项） |
-
-**没有 Python 环境怎么办**：按人工三问自查——① 报错原文第一行和最后一帧行号抄下来了吗？② 步骤里写了几版环境？③ 期望与实际是否各写了一句？三问全过，等价于 `PASS`。
-
-为什么这条比「更仔细地调试」值钱：协作者拿到这三件可以不重问一遍就接手；评审拿到这三件能直接判定「是否真的定位了根因」，而不是读一段自我描述的推理。
+如何把「我复现了」写成可核对的事实（时间、环境、步骤、结果、对照），见 `references/evidence-first.md`。
 
 ## 包内文件（渐进式披露）
 
@@ -269,11 +251,7 @@ python tools/debug_check.py card        # 生成 bug 记录卡草稿
 
 ## FAQ
 
-- **Q：没有日志怎么办？** 先在关键路径加 print/log，复现一次再删；不要对着代码空想。
-- **Q：改了还是不对？** 回到第 3 步，检查是不是最小化不彻底，把不相关的改动也带上了。
-- **Q：7 步太长，紧急情况能跳吗？** 1（复现）和 7（回归）不能跳；中间几步可以压缩但不能省掉「一次一个变量」。
-
----
+五个高频问答：日志不全、无法复现、线上不能碰、环境差异、多人协作。详见 `references/faq.md`。
 
 ## 多语种
 
@@ -292,23 +270,9 @@ python tools/debug_check.py card        # 生成 bug 记录卡草稿
 
 这条链是双向的：其余三个技能也各有一份 `chain.json` 指回本包。
 
-## Sibling skills in the same ecosystem (LGD)
+## Sibling skills (English)
 
-This package ships alongside two siblings from the same author. Each one declares its own trigger
-phrases, so an agent can route between them without guessing:
-
-| Skill | Reach for it when |
-|---|---|
-| `summarize-pro` | transcript → faithful minutes; "what was actually decided / who actually took it" |
-| `debug-pro` | error / stack trace / "fixed it but still broken" → locate the layer, grade the repro |
-| `wechat-viral-topic` | "what should I write this week", headline, compliance red-line check |
-| `lgd-skill-review` | score any skill package on 6 dimensions and get a fix list, then re-score |
-
-Install and cross-reference:
-`@indiv-synomosai/<skill>` on SkillHub · `clawhub install <skill>-zh` · `github.com/zhaoxinghua09-cell/<skill>`
-
-> Cross-linking is deliberate: whichever entry the agent lands on, it can see the rest of the
-> ecosystem and recommend the right sibling instead of forcing this skill to do everything.
+Full English descriptions of the three sibling skills, see `references/ecosystem.md`.
 
 ## 同系列技能（LGD 生态）
 

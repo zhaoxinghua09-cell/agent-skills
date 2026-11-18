@@ -4,10 +4,10 @@ displayName: summarize-pro
 slug: summarize-pro
 author: 诺声(Logos)@SynomosAI
 copyright: SynomosAI
-version: 2.0.5
+version: 2.0.6
 license: MIT
 description: "A faithful summarizer that picks one of five output format families (minutes / comparison / timeline / bullets / cards) by reader intent, then compresses under a strict no-hallucination discipline: nothing absent from the source, ambiguity flagged rather than resolved, every figure copied verbatim. Ships a zero-dependency, offline toolchain (extract / citecheck / selfcheck / redact / validate / normdates / neutral / render) plus an 22-case golden set, turning 'we do not fabricate' from a claim into a runnable assertion: citecheck traces each output sentence back to source tokens and lists anything untraceable, selfcheck asserts format-family completeness including mandatory strength labels, extract builds the skeleton and additionally grades decisions and commitments - every conclusion is labelled firm / provisional / proposal / conditional and every action item is labelled committed / named_unconfirmed / intent_only, so 'what was actually decided' and 'who actually took it' become checkable instead of assumed. Conditional clauses are kept out of the action table and markdown headings out of the sentence stream. Standard library only, no network, no replacement for human judgement. Also ships **deterministic rendering** (receipt / personal / executive / bundle views, top-3 per section), **relative-date anchoring** that appends an ISO date without rewriting the source sentence, and a **neutral-language check** for personnel / medical / legal / incident scenes. Fidelity is checkable: citecheck traces numbers to source, and the golden set re-runs with an exit code. Triggers: summarize, summary, meeting minutes, minutes of meeting, decision log, action items, comparison table, timeline, key points, digest."
-description_zh: "总结 / 摘要 / 会议纪要 / 对比表 / 时间线 —— 增强版内容总结技能，按读者用途从 5 大输出格式族（纪要/对比/时间线/要点/卡片）中选格式，配合忠实性纪律；v2.0.5 附零依赖本地工具链（事实线索抽取 / 骨架生成 / 逐句溯源校验 / 22 条黄金集），并新增「结论强度 + 承诺强度」分级：每条结论标注 已定/暂定/提案/条件，每条待办标注 明确接活/被点名未确认/仅表意向，让「到底定了什么」「谁真的接了」从猜测变成可核对；条件句不再混入待办表，标题行不再当作句子。用于回答「帮我出个会议纪要」「这次到底定了啥」「谁负责」这类问题；v2.0.5 增确定性渲染四视图（receipt/personal/executive/bundle，每区只显示前 3 条）、相对日期锚点（原文一字不改，只追加 ISO 括注）、敏感场景中性措辞检测 Also ships deterministic rendering (receipt / personal / executive / bundle views, top-3 per section), relative-date anchoring that appends an ISO date without rewriting the source sentence, and a neutral-language check for personnel / medical / legal / incident scenes."
+description_zh: "总结 / 摘要 / 会议纪要 / 对比表 / 时间线 —— 增强版内容总结技能，按读者用途从 5 大输出格式族（纪要/对比/时间线/要点/卡片）中选格式，配合忠实性纪律；v2.0.6 附零依赖本地工具链（事实线索抽取 / 骨架生成 / 逐句溯源校验 / 22 条黄金集），并新增「结论强度 + 承诺强度」分级：每条结论标注 已定/暂定/提案/条件，每条待办标注 明确接活/被点名未确认/仅表意向，让「到底定了什么」「谁真的接了」从猜测变成可核对；条件句不再混入待办表，标题行不再当作句子。用于回答「帮我出个会议纪要」「这次到底定了啥」「谁负责」这类问题；v2.0.6 增确定性渲染四视图（receipt/personal/executive/bundle，每区只显示前 3 条）、相对日期锚点（原文一字不改，只追加 ISO 括注）、敏感场景中性措辞检测 Also ships deterministic rendering (receipt / personal / executive / bundle views, top-3 per section), relative-date anchoring that appends an ISO date without rewriting the source sentence, and a neutral-language check for personnel / medical / legal / incident scenes."
 description_en: "A faithful summarizer that picks one of five output format families (minutes / comparison / timeline / bullets / cards) by reader intent, then compresses under a strict no-hallucination discipline: nothing absent from the source, ambiguity flagged rather than resolved, every figure copied verbatim. Ships a zero-dependency, offline toolchain (extract / citecheck / selfcheck / redact / validate / normdates / neutral / render) plus an 22-case golden set, turning 'we do not fabricate' from a claim into a runnable assertion: citecheck traces each output sentence back to source tokens and lists anything untraceable, selfcheck asserts format-family completeness including mandatory strength labels, extract builds the skeleton and additionally grades decisions and commitments - every conclusion is labelled firm / provisional / proposal / conditional and every action item is labelled committed / named_unconfirmed / intent_only, so 'what was actually decided' and 'who actually took it' become checkable instead of assumed. Conditional clauses are kept out of the action table and markdown headings out of the sentence stream. Standard library only, no network, no replacement for human judgement. Triggers: summarize, summary, meeting minutes, minutes of meeting, decision log, action items, comparison table, timeline, key points, digest. Also ships deterministic rendering (receipt / personal / executive / bundle views, top-3 per section), relative-date anchoring that appends an ISO date without rewriting the source sentence, and a neutral-language check for personnel / medical / legal / incident scenes."
 tags:
 - 总结
@@ -299,7 +299,7 @@ AI 在决定是否启用本技能时，按以下关键词与场景路由；命�
 9. **MUST** 篇幅超限时先删背景，保留结论、待办、风险。
 10. **NEVER** 对空输入、乱码或无关输入硬编内容，直接拒答并说明原因。
 
-## 决策与承诺的强度分级（v2.0.5）
+## 决策与承诺的强度分级（v2.0.6）
 
 会议记录最常见的问题不是漏字，而是**把"提议"写成"已定"，把"我看看"写成"已接活"**。本技能对两件事分级，并把分级结果作为可断言项：
 
@@ -322,39 +322,13 @@ AI 在决定是否启用本技能时，按以下关键词与场景路由；命�
 工具链同时给出 `strength_summary`：已定/暂定条数、明确接活/未确认条数，以及 `verdict`（`clean` 或 `needs_confirmation`）。
 `needs_confirmation` 表示存在未定项或未确认责任——**这类纪要不应直接对外发布**，应先回会确认。
 
-## 证据化摘要：把「不编」变成可核对的断言
+## 证据化摘要与强度分级
 
-「忠实性纪律」不是态度，是可以逐句验的动作。两种做法，按有无工具选择：
+如何把「不编」做成可核对断言、以及决策与承诺的四级强度（事实/推断/建议/未知），见 `references/evidence-and-grading.md`。
 
-**有工具时（推荐用于对外交付、纪要归档、合同/通报类高风险场景）**
+## 输入 → 输出 示例
 
-1. 先 `extract` 拿到事实清单（日期/数字/说话人/待办/决策/条件）。
-2. Agent 写正式输出（不是工具生成的骨架，骨架只是脚手架）。
-3. `citecheck` 回原文核对：FAIL 就按清单逐条修——改回原文写法，或标「待核对」，**不许调数字去迁就**。
-4. `selfcheck` 过结构；两者都 PASS 才交付，并在末尾写一句「已核 N 个事实 token，0 处不可溯源」。
-
-**无工具时（纯对话场景，人工执行同一套）**
-
-逐句问三件事，任一不过就改：
-- 这句里的每个数字/日期/人名，能不能在原文找到同一串？
-- 我是不是只改了格式（「日」↔「号」、空格），而动了数值？
-- 原文没有的信息，我是不是标了「原文未提及」而不是补全？
-
-**为什么这一条比「更聪明地总结」更值钱**：总结类技能最常见的失败不是写得不好，而是**写得像真的**——数字被顺手改圆、条件被压掉、责任人被脑补。能被机器抓出来的那份，才敢给客户、给审计、给法务看。
-
-## 输入 → 输出 示例（摘要）
-
-5 个格式族各一例，**每例都给完整原文，输出每句可在原文逐字定位**。完整示例见：
-
-- `references/examples.md`
-
-| 格式族 | 示例场景 | 核心看点 |
-|---|---|---|
-| 纪要族 | 站会转写 | 待办含责任人/期限，原文未提及处显式标注 |
-| 对比族 | 自建 vs SaaS | 维度×对象表格，不加原文没有的优劣结论 |
-| 时间线族 | 项目回顾 | 一行一事，日期与原文一致 |
-| 要点族 | 会议邮件 | 3–7 条，每条可直接执行 |
-| 卡片族 | 文献摘要 | 标题 + 一句话结论 + 3 个关键字段，只搬运原文数值 |
+一份逐字稿片段进、一份带出处的纪要出，完整对照见 `references/examples.md`。
 
 ## 边界与异常（摘要）
 
@@ -368,18 +342,7 @@ AI 在决定是否启用本技能时，按以下关键词与场景路由；命�
 
 ## 常见问题（FAQ）
 
-| 问题 | 答法 |
-|---|---|
-| 多长的原文才值得走这套流程？ | 超过 300 字或超过 3 段就值得；一两句话直接答，不必套格式族。 |
-| 长文档（1 万字以上）怎么办？ | 先分段摘要（每段 3–5 条），再给全局一句话总览；不要一次压成一段，否则必丢条件。 |
-| 多份文档要合到一起吗？ | 同主题才合并，不同主题分别出摘要，最后给一页对比或索引。 |
-| 可以加我自己的判断吗？ | 总结阶段不加；用户要"点评/建议"时另起一段，标「以下为额外分析」。 |
-| 用户没说要哪种格式？ | 按意图路由推断，开头说明理由；用户不满意一句话就能换。 |
-| 原文是表格/截图怎么办？ | 表格按行搬运可读单元格，破损列标「原表损坏」；截图需先给出文字（我不做 OCR 猜测）。 |
-| 原文有敏感个人信息？ | 输出前脱敏（手机号/证件号/地址打码），并在结尾一句提示已脱敏。 |
-| 同一份内容反复总结会不一致吗？ | 按「一致性纪律」固定骨架与术语后，结构稳定；措辞可能有细微差异，关键数字与待办保持一致。 |
-| 能不能给英文版但不改结构？ | 可以，中英对照逐段对应，术语保留原文并括注。 |
-| 没有 Python 环境，工具链用不了怎么办？ | 不影响使用：规则包可直接跑；工具是可选的「证据环」，缺它照样出纪要，只是少了「机器可核 + 可回执核对数」这一句。 |
+六个高频问答：格式选错、出处对不上、日期不一致、中英混排、材料过长、离线可用性。详见 `references/faq.md`。
 
 ## 多语种（如实说明）
 
@@ -401,38 +364,9 @@ AI 在决定是否启用本技能时，按以下关键词与场景路由；命�
 | `tests/golden.json` + `tests/run_golden.py` | 10 条黄金集与跑分脚本 | 想自证当前版本能力时 |
 | `demo/` | 真实会议转写节选 + 人工理想纪要 + 一键演示 | 首次了解本技能怎么用 |
 
-## 确定性渲染与三个新子命令（v2.0.5）
+## 确定性渲染与三个新子命令
 
-竞品把「先生成 JSON、再确定性渲染」当成卖点。我们同样做，但加一条它没有的：**日期归一不替换原文，只追加锚点**，
-证据链因此不会断。
-
-| 子命令 | 作用 | 关键约束 |
-|---|---|---|
-| `normdates --file X --ref 2026-11-18` | 相对日期追加 ISO 括注（下周3／明天／月底／下月5号） | 原文一字不改；已带括注不重复追加 |
-| `neutral --file X` | 命中裁员/绩效/医疗/法律/事故场景时给中性替代表述 | 只给建议，不自动改写（改写须人工确认） |
-| `render --facts X --view receipt\|personal\|executive\|bundle` | 从 facts.json 确定性生成四视图 | 每区最多 3 条；executive 版无直接引文、无表格；命中敏感场景自动加提示 |
-| `adapt --file X [--normalize]` | 识别来源（腾讯会议/飞书妙记/Kimi/WorkBuddy/docx/纯文本）并折成「人：话」 | 只认不折等于没适配：折行前说话人 1、待办 0，折行后 4 与 1 |
-| `render ... --format html` | 自包含 HTML（内联样式，无外链） | 可直接打印/贴进文档 |
-
-四视图口径：
-
-- **receipt**：当前有效结论 / 未定项 / 明确接活 / 被点名未确认，每条附原句；
-- **personal**：上述全部 + 会后确认消息（可直接发群）；
-- **executive**：只留已定结论、已确认责任、待协调项、下个节点；不带引文与表格，便于对外；
-- **bundle**：三份一次生成，写入 `--out` 目录。
-
-后出现的明确修正会覆盖前说法（`resolve_superseded`），被作废的旧结论单列「已被后文修正」区，不进当前结论。
-
-### 语义精度（对齐并超过同类工具的六条规则）
-
-| 规则 | 我们的处理 | 可断言用例 |
-|---|---|---|
-| 后说覆盖前说 | 后句含「不是/更正/以…为准」且锚点相同 → 前句标 superseded，单列「已被后文修正」 | G11 系 |
-| 沉默不等于接受 | 「我看看/回头说/尽量」→ intent_only，不记为接活 | G13 |
-| 范围否定不生成未来任务 | 「本周不铺」→ unstated，**不扩写成「下周铺货待定」** | G19 |
-| 部门责任不映射个人 | 「媒介跟一下」→ owner_scope=（部门），不指认个人 | G20 |
-| 条件句不入待办表 | 「如果超 2% 就回滚」→ 归入条件句，不作为任务 | G12 |
-| 管理层版不展示直接引文 | executive 视图无引号原句、无表格 | G17 |
+`render` / `adapt` / `normdates` 的完整参数、输出样例与语义精度六条规则，见 `references/render-and-cli.md`。
 
 ## 同系列技能（LGD 生态）
 
@@ -463,23 +397,9 @@ AI 在决定是否启用本技能时，按以下关键词与场景路由；命�
 
 这条链是双向的：其余三个技能也各有一份 `chain.json` 指回本包。
 
-## Sibling skills in the same ecosystem (LGD)
+## Sibling skills (English)
 
-This package ships alongside two siblings from the same author. Each one declares its own trigger
-phrases, so an agent can route between them without guessing:
-
-| Skill | Reach for it when |
-|---|---|
-| `summarize-pro` | transcript → faithful minutes; "what was actually decided / who actually took it" |
-| `debug-pro` | error / stack trace / "fixed it but still broken" → locate the layer, grade the repro |
-| `wechat-viral-topic` | "what should I write this week", headline, compliance red-line check |
-| `lgd-skill-review` | score any skill package on 6 dimensions and get a fix list, then re-score |
-
-Install and cross-reference:
-`@indiv-synomosai/<skill>` on SkillHub · `clawhub install <skill>-zh` · `github.com/zhaoxinghua09-cell/<skill>`
-
-> Cross-linking is deliberate: whichever entry the agent lands on, it can see the rest of the
-> ecosystem and recommend the right sibling instead of forcing this skill to do everything.
+Full English descriptions of the three sibling skills, see `references/ecosystem.md`.
 
 ## 治理与许可
 

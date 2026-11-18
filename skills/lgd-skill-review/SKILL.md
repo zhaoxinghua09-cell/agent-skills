@@ -7,9 +7,9 @@ display_name_en: Skill Reviewer
 slug: lgd-skill-review
 author: 诺声(Logos)@SynomosAI
 copyright: SynomosAI
-version: 1.1.1
+version: 1.1.2
 license: MIT
-description: "A six-dimension, evidence-based reviewer for any AI skill package. It scores structure, declared-vs-implemented consistency, reproducibility, hygiene/sanitization, AI discoverability and licensing on a weighted 100-point scale, then emits a prioritized fix list (P0 blocking / P1 improvement) and a rerun command. Designed to close the loop: review -> fix -> re-review, so an agent can improve its own skill autonomously. Every point is traceable to a specific file and finding; no impression scoring. Detects the industry's most common defect: documentation promising a command or flag that the script never implements. Zero dependency, standard library only, offline. Triggers: review my skill, audit skill quality, why is my skill rejected, skill checklist, score this skill, improve my SKILL.md, skill package gate."
+description: "Use when reviewing, auditing or scoring any AI skill package, or when a skill was rejected and you need to know why. A six-dimension, evidence-based reviewer: it scores structure, declared-vs-implemented consistency, reproducibility, hygiene/sanitization, AI discoverability and licensing on a weighted 100-point scale, then emits a prioritized fix list (P0 blocking / P1 improvement) and a rerun command. Designed to close the loop: review -> fix -> re-review, so an agent can improve its own skill autonomously. Every point is traceable to a specific file and finding; no impression scoring. Detects the industry's most common defect: documentation promising a command or flag that the script never implements. Zero dependency, standard library only, offline. Triggers: review my skill, audit skill quality, why is my skill rejected, skill checklist, score this skill, improve my SKILL.md, skill package gate."
 description_zh: "技能体检 / 评测 / 打分 / 为什么被拒 —— 对任意 AI 技能包做 6 维加权评测（结构 / 声明一致 / 可复跑 / 去敏安全 / AI 可发现 / 许可署名），输出 100 分总分、阻断项、P0/P1 整改清单与复测命令，形成「评测→整改→复测」闭环。每一分都能指到具体文件与具体缺陷，不做印象打分；最常抓到的行业通病是「文档承诺了脚本没实现的命令或参数」"
 description_en: "A six-dimension, evidence-based reviewer for any AI skill package: scores structure, declared-vs-implemented consistency, reproducibility, hygiene, AI discoverability and licensing on a weighted 100-point scale, emits a prioritized fix list (P0 blocking / P1 improvement) and a rerun command, closing the review -> fix -> re-review loop. Every point is traceable to a file and finding."
 tags:
@@ -114,22 +114,9 @@ python scripts/review.py <技能目录> --run --type meeting
 实测案例（本包 demo 可复跑）：一个缺字段、且含明文密钥的包，首评 `BLOCK`；补字段、去密钥、加 tests 后复测 `PASS`。
 分数上升的每一步都能指到那一条整改项。
 
-## 输出示例（节选）
+## 输出示例
 
-```
-技能：summarize-pro  v2.0.4
-总分：100/100（100.0%）  判定：PASS
-
-  structure     20/20 (100.0%)
-  consistency   25/25 (100.0%)
-  reproducible  20/20 (100.0%)
-  hygiene       15/15 (100.0%)
-  discoverable  15/15 (100.0%)
-  licensing      5/5  (100.0%)
-```
-
-真实抓到的第一个缺陷：某包 SKILL.md 写 `citecheck --draft out.md`，脚本实际参数是 `--file`。
-评测报 `declared_command_missing: --draft`，判定 BLOCK；改文档后 consistency 20→25，总分 92→97。
+一份完整评测报告的节选（六维分项 + 阻断项 + 整改清单），见 `references/output-example.md`。
 
 ## 包内文件（渐进式披露）
 
@@ -158,11 +145,11 @@ python scripts/review.py <技能目录> --run --type meeting
 3. **MUST** 输出复跑命令，让人能自己验一遍。
 4. **NEVER** 把建议写成阻断（阻断只给会直接导致失败的项）。
 5. **MUST** 阻断项优先于总分呈现。
-6. **NEVER** 因技能类型不同而改变同一条规则的口径。
-7. **MUST** 计分维度只认可验证事实，不认宣传词。
-8. **NEVER** 用「优秀」「专业」这类形容词替代证据。
-9. **MUST** 整改项标 P0/P1/P2 优先级。
-10. **NEVER** 隐藏局限：边界、未覆盖项、判定口径必须写在报告里。
+6. **NEVER** 因技能类型不同而改变同一条规则的口径——否则同一份包换个类型就换个分数，尺子就废了。
+7. **MUST** 计分维度只认可验证事实，不认宣传词——因为宣传词无法复跑，复跑不了的分等于没分。
+8. **NEVER** 用「优秀」「专业」这类形容词替代证据——否则报告读完仍不知道该改哪一行。
+9. **MUST** 整改项标 P0/P1/P2 优先级——否则一堆问题平铺，改的人不知道先动哪个，会漏掉阻断项。
+10. **NEVER** 隐藏局限：边界、未覆盖项、判定口径必须写在报告里——否则分数被当成全能背书，出事时反噬的是评测方。
 
 ## 治理与许可
 
@@ -176,20 +163,19 @@ python scripts/review.py <技能目录> --run --type meeting
 
 | 当… | 交给 | 递什么 |
 |---|---|---|
-| 被测包测试跑不通 | `debug-pro` | 失败输出 + 包路径 |
-| 被测对象是纪要/摘要 | `summarize-pro` | 用其黄金集交叉验证证据链 |
-| 被测对象是内容/选题 | `wechat-viral-topic` | 用其红线清单查合规边界 |
+| when tests fail（被测包测试跑不通） | `debug-pro` | 失败输出 + 包路径 |
+| when the target is minutes/transcript（被测对象是纪要/摘要） | `summarize-pro` | 用其黄金集交叉验证证据链 |
+| when the target is content/topic（被测对象是内容/选题） | `wechat-viral-topic` | 用其红线清单查合规边界 |
 
 这条链是双向的：其余三个技能也各有一份 `chain.json` 指回本包。
 
-## Sibling skills in the same ecosystem (LGD)
+## 同系列技能（互链）
 
-| Skill | Reach for it when |
+| 技能 | 什么时候接过来 |
 |---|---|
-| `summarize-pro` | transcript → faithful minutes; what was decided / who took it |
-| `debug-pro` | error / stack trace → locate the layer, grade the repro |
-| `wechat-viral-topic` | what to write this week, headline, compliance red line |
-| `lgd-skill-review` | score any skill package, get a fix list, re-score |
+| `summarize-pro` | 评测通过后，需要把长材料压成带出处的纪要 |
+| `debug-pro` | 发现的问题是运行时故障，需要压成可复现步骤 |
+| `wechat-viral-topic` | 需要把素材压成可传播的选题 |
 
-同系列技能（LGD 生态）：`summarize-pro`、`debug-pro`、`wechat-viral-topic`、`lgd-skill-review` 四包互链，
-任一入口都能看见其余兄弟，便于 AI 路由与串联使用。
+完整英文描述见 `references/ecosystem.md`。
+
