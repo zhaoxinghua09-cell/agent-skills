@@ -4,6 +4,11 @@
 
 ## [Unreleased]
 
+### lgd-skill-review 1.1.1（2026-11-18）
+
+- 仅版本号跳号：1.1.0 在 registry 上被保留但版本从未真正创建，重发报 "already exists"、移动 tag 报 "Version not found"，只能跳到 1.1.1。
+- 功能与 1.1.0 完全一致（硬规则、Not-for 边界、`--token` / `--multi-role`）。
+
 ### 加固（2026-11-18 晚，升至 2.0.5 / 2.1.1 / 2.1.1 / 1.1.0）
 
 - 四包各补 **10 条硬规则（MUST / NEVER）** 与 **「什么时候不用（Not for）」边界段**。
