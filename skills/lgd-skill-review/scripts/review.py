@@ -18,6 +18,7 @@ import os
 import re
 import subprocess
 import sys
+import time
 from collections import OrderedDict
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -180,7 +181,14 @@ def d_consistency(root, fm, files):
 def d_reproducible(root, files, do_run):
     got, notes = 0, []
     has_golden = any(re.search(r"tests[/\\].*\.json", p) for p in files)
-    has_runner = any(re.search(r"tests[/\\]run_.*\.py", p) for p in files)
+    # 测试执行器：不限于 tests/run_*.py 这一种命名。
+    # 申诉反馈暴露过这个问题——tests/test_runner.py 真实存在却被判「无执行器」。
+    # 常见合法命名一并识别：run_*.py / test_*.py / *_test.py / run_tests.py / conftest.py 之外的 runner。
+    has_runner = any(
+        re.search(r"(?:^|[/\\])tests[/\\](?:run_.*\.py|test_.*\.py|.*_test\.py|run_tests\.py)", p)
+        or re.search(r"(?:^|[/\\])(?:run_tests|runtests|make_test)\.py$", p)
+        for p in files
+    )
     has_demo = any(re.search(r"demo[/\\]", p) for p in files)
     if has_golden:
         got += 6
@@ -195,7 +203,11 @@ def d_reproducible(root, files, do_run):
     else:
         notes.append("无 demo，首次使用者无从验证")
     if has_runner and do_run:
-        runner = [p for p in files if re.search(r"tests[/\\]run_.*\.py", p)][0]
+        runner = sorted(
+            [p for p in files
+             if re.search(r"(?:^|[/\\])tests[/\\](?:run_.*\.py|test_.*\.py|.*_test\.py)", p)],
+            key=lambda p: 0 if os.path.basename(p).startswith("run_") else 1,
+        )[0]
         try:
             r = subprocess.run([sys.executable, runner], cwd=root, capture_output=True,
                                text=True, encoding="utf-8", timeout=120)
@@ -465,6 +477,82 @@ def grade_reading(s_pct, y_pct):
     return "两制都在中段：能用，但结构有缺口、内容密度也一般"
 
 
+def appeal_check(root, data, appeal_path):
+    """处理申诉：只裁决「原判定依据是否成立」，不修改已给出的分数。
+
+    为什么不改分：自己改自己刚给的答案，等于自证。申诉的价值在于把一个
+    扣分点变成可核验的争议点，由证据回答，而不是由评测方口头让步。
+
+    申诉项格式（JSON）：
+      {"id": "R03", "claim": "测试存在且可跑",
+       "path": "tests/run_golden.py", "expect": "file_exists"}
+      expect 支持：file_exists / contains:<文本> / regex:<正则>
+    """
+    try:
+        raw = read(appeal_path) or "{}"
+        doc = json.loads(raw)
+    except Exception as e:
+        return {"ok": False, "error": "申诉文件不可解析：%s" % e, "items": []}
+
+    items = doc.get("items") or []
+    by_id = {a.get("id"): a for a in data.get("actions", []) if a.get("id")}
+    out = []
+    for it in items:
+        rid = it.get("id") or "?"
+        claim = it.get("claim") or ""
+        path = it.get("path") or ""
+        expect = it.get("expect") or "file_exists"
+        target = by_id.get(rid)
+        if not target:
+            out.append((rid, claim, "UNKNOWN_ID", "报告中无此整改项 ID，可能引用了别的报告"))
+            continue
+        if not path:
+            out.append((rid, claim, "UPHELD", "未提供可核验路径，无法推翻原判定"))
+            continue
+        fp = path if os.path.isabs(path) else os.path.join(root, path)
+        if not os.path.exists(fp):
+            out.append((rid, claim, "UPHELD", "所述路径不存在：%s" % path))
+            continue
+        if expect.startswith("contains:"):
+            body = read(fp) or ""
+            needle = expect[9:]
+            ok = needle in body
+            out.append((rid, claim, "OVERTURNED" if ok else "UPHELD",
+                        "文件存在且包含所述内容" if ok else "文件存在但不含所述内容"))
+        elif expect.startswith("regex:"):
+            body = read(fp) or ""
+            try:
+                ok = bool(re.search(expect[6:], body, re.S))
+            except re.error as e:
+                out.append((rid, claim, "UPHELD", "申诉正则非法：%s" % e))
+                continue
+            out.append((rid, claim, "OVERTURNED" if ok else "UPHELD",
+                        "文件存在且匹配所述模式" if ok else "文件存在但不匹配所述模式"))
+        else:
+            out.append((rid, claim, "OVERTURNED", "该文件确实存在，原判定依据不成立"))
+
+    # 追加审计日志：谁申诉了什么、证据是什么、裁决是什么
+    log = os.path.join(root, "appeal_log.json")
+    try:
+        hist = json.loads(read(log) or "[]")
+        if not isinstance(hist, list):
+            hist = []
+    except Exception:
+        hist = []
+    hist.append({
+        "root": os.path.basename(root.rstrip("\\/")),
+        "at": time.strftime("%Y-%m-%dT%H:%M:%S"),
+        "items": [{"id": r[0], "claim": r[1], "verdict": r[2], "reason": r[3]} for r in out],
+    })
+    try:
+        with open(log, "w", encoding="utf-8", newline="\n") as f:
+            json.dump(hist, f, ensure_ascii=False, indent=2)
+    except Exception:
+        pass
+
+    return {"ok": True, "items": out, "log": log}
+
+
 def eight_report(root, fm, files):
     """八维对照报告（对齐公开的 120 分制口径），不参与本引擎六维计分。
 
@@ -714,6 +802,12 @@ def review(root, do_run=False, skill_type=None):
             actions.append({"priority": "P1", "issue": n[:100],
                             "fix": "按该项补齐后复测"})
 
+    # 每条整改项给一个稳定 ID，供申诉引用（R01、R02…，按本次报告顺序）
+    for i, a in enumerate(actions[:12]):
+        a["id"] = "R%02d" % (i + 1)
+    for i, a in enumerate(type_actions):
+        a["id"] = "T%02d" % (i + 1)
+
     return {
         "ok": True,
         "error_id": None,
@@ -748,6 +842,8 @@ def main():
                     help="附加四视角独立评审（规范/代码/安全/设计），不参与计分")
     ap.add_argument("--eight", action="store_true",
                     help="附加八维对照报告（对齐公开 120 分制口径），不参与计分")
+    ap.add_argument("--appeal", default=None, metavar="FILE",
+                    help="对被扣分项提出申诉（JSON），引擎按证据裁决依据是否成立；不修改已给出的分数")
     a = ap.parse_args()
 
     if not os.path.isdir(a.path):
@@ -781,7 +877,7 @@ def main():
     if d["actions"]:
         print("\n整改清单：")
         for x in d["actions"]:
-            print("  [%s] %s" % (x["priority"], x["issue"]))
+            print("  [%s] %s  %s" % (x["priority"], x.get("id", "  "), x["issue"]))
     print("\n复测：%s" % d["rerun"])
 
     root_abs = os.path.abspath(a.path)
@@ -831,6 +927,25 @@ def main():
                          ("security", "安全"), ("design", "设计")):
             score, notes = mr[k]
             print("  %-9s %-4s %3d/100  %s" % (k, label, score, "；".join(notes) if notes else "无问题"))
+
+    if a.appeal:
+        ar = appeal_check(root_abs, d, a.appeal)
+        print("\n申诉裁决（只核验依据是否成立，不修改上面的分数）")
+        if not ar.get("ok"):
+            print("  ✗ " + ar.get("error", "申诉文件有问题"))
+        else:
+            cnt_ov = 0
+            for rid, claim, verdict, why in ar["items"]:
+                mark = "推翻" if verdict == "OVERTURNED" else ("无效ID" if verdict == "UNKNOWN_ID" else "维持")
+                if verdict == "OVERTURNED":
+                    cnt_ov += 1
+                print("  %-5s %-5s %s" % (rid, mark, why))
+                if claim:
+                    print("        申诉主张：%s" % claim)
+            print("  小结：%d 条申诉中 %d 条推翻原判定。推翻的项请在复测时重新评估该维度；"
+                  % (len(ar["items"]), cnt_ov))
+            print("        引擎不会因此直接加分——自己改自己的答案不叫翻案。")
+            print("  审计记录已追加：%s" % ar.get("log"))
 
     sys.exit(0 if d["verdict"] in ("PASS", "WARN") else 1)
 

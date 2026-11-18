@@ -7,10 +7,10 @@ display_name_en: Skill Reviewer
 slug: lgd-skill-review
 author: 诺声(Logos)@SynomosAI
 copyright: SynomosAI
-version: 1.1.6
+version: 1.1.7
 license: MIT
-description: "Use when reviewing, auditing or scoring any AI skill package, or when a skill was rejected and you need to know why. A six-dimension, evidence-based reviewer: it scores structure, declared-vs-implemented consistency, reproducibility, hygiene/sanitization, AI discoverability and licensing on a weighted 100-point scale, then emits a prioritized fix list (P0 blocking / P1 improvement) and a rerun command. Designed to close the loop: review -> fix -> re-review, so an agent can improve its own skill autonomously. Every point is traceable to a specific file and finding; no impression scoring. Detects the industry's most common defect: documentation promising a command or flag that the script never implements. Zero dependency, standard library only, offline. Triggers: review my skill, audit skill quality, why is my skill rejected, skill checklist, score this skill, improve my SKILL.md, skill package gate."
-description_zh: "技能体检 / 评测 / 打分 / 为什么被拒 —— 对任意 AI 技能包做 6 维加权评测（结构 / 声明一致 / 可复跑 / 去敏安全 / AI 可发现 / 许可署名），输出 100 分总分、阻断项、P0/P1 整改清单与复测命令，形成「评测→整改→复测」闭环。每一分都能指到具体文件与具体缺陷，不做印象打分；最常抓到的行业通病是「文档承诺了脚本没实现的命令或参数」"
+description: "Use when reviewing, auditing or scoring any AI skill package, or when a skill was rejected and you need to know why. A dual-ruler reviewer: reports a structure score (100) and a semantics score (120) as two orthogonal verdicts instead of merging them, and flags the case when the two disagree by 20 points or more. Structure asks whether the package can be used at all (tests, declared-vs-implemented consistency, reproducibility, hygiene, discovery, licensing); semantics asks whether it is worth using (knowledge delta, procedures, anti-patterns with reasons, specification, progressive disclosure, freedom calibration, pattern fit, usability). Every finding carries a stable ID and is traceable to a specific file. Accepts evidence-based appeals: the appellant supplies a path and a check, the engine opens it and rules OVERTURNED / UPHELD, and records the ruling in appeal_log.json. Appeals never silently change a score - they turn a deduction into a verifiable dispute. Zero dependency, standard library only, offline. Triggers: review my skill, audit skill quality, why is my skill rejected, skill checklist, score this skill, improve my SKILL.md, skill package gate, appeal a score."
+description_zh: "技能体检 / 评测 / 打分 / 为什么被拒 / 对评分不服 —— 对任意 AI 技能包做双制评测：结构制（100 分，量能不能用）与语义制（120 分，量值不值得用）各自出结论、绝不加权成一个数，两者背离 ≥20 分时会明确标出。每条整改项带稳定 ID、可指到具体文件；支持证据驱动的申诉（给出路径与核验方式，引擎自己打开判断），裁决推翻/维持并写入 appeal_log.json，但**不会因为申诉直接改分**——申诉的作用是把扣分变成可核验的争议点，不是让人自己给自己加分。"
 description_en: "A six-dimension, evidence-based reviewer for any AI skill package: scores structure, declared-vs-implemented consistency, reproducibility, hygiene, AI discoverability and licensing on a weighted 100-point scale, emits a prioritized fix list (P0 blocking / P1 improvement) and a rerun command, closing the review -> fix -> re-review loop. Every point is traceable to a file and finding."
 tags:
   - 技能评测
@@ -117,6 +117,7 @@ python scripts/review.py <技能目录> --run --type meeting
 | `SKILL.md` | 主文件：口径、用法、闭环 | 默认只读这一份 |
 | `references/scoring.md` | 每一维的判定细则与扣分点（可对外引用） | 要解释某一分为何这么扣 |
 | `references/faq.md` | 本评测器自己被推翻过五次的经过、常见误判识别法、已知边界 | 怀疑被误判，或要判断这个分数能不能信 |
+| `references/appeal.md` | 申诉规则：怎么提、引擎怎么裁、为什么不改分、留痕在哪 | 对某条扣分不服 |
 | `scripts/review.py` | 评测引擎（零依赖） | 直接跑 |
 | `tests/golden.json` + `tests/run_golden.py` | 评测器自检：好包应 PASS、坏包应 BLOCK | 想验证评测器本身没坏 |
 | `demo/run_demo.py` | 闭环演示：造坏包 → 出整改 → 修复 → 复测 | 第一次了解怎么用 |
