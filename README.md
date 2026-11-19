@@ -14,6 +14,8 @@
 
 > **层级定位**：**Agent 集成层（Integration）** — 把 LGD/UIBC 治理技能装入通用 Agent 技能生态（skills.sh 兼容）。词汇表与全景见 [XLGD 伞总览](https://github.com/zhaoxinghua09-cell/xlgd#readme)。
 
+**中文导读** → [`docs/zh-guide.md`](docs/zh-guide.md) — 三类技能如何对应三律、哪些技能会被门禁拦下（含四条常见拦截原因）、装进来后如何三步自检。
+
 ## 许可说明 · License Notice
 
 - **权利状态（分层许可）**：**代码**（仓内 `.py` 等源码文件）以 **MIT 许可** 发布，可依该许可证条款自由使用、修改与再分发；**理论文本**（各技能 `SKILL.md`、`README.md` 的文本内容、方法论、规范件，以及本仓 `README.md` / `TRADEMARK.md` / `CODE_OF_CONDUCT.md`）**不在 MIT 覆盖范围内，按 CC BY 4.0 授权**——可复制、转载、翻译、演绎与商用，须保留署名并标明是否修改。
@@ -332,3 +334,4 @@ Machine-readable index: [`llms.txt`](llms.txt).
 - [lgd-skill-marketplace](https://github.com/zhaoxinghua09-cell/lgd-skill-marketplace) — LGD 技能超市总目录
 - [governanceos](https://github.com/zhaoxinghua09-cell/governanceos) — 治理编排枢纽（SPEC→PLAN→GATE→AUDIT→EVO）
 - [skillgate](https://github.com/zhaoxinghua09-cell/skillgate) — 技能信任评分引擎
+
