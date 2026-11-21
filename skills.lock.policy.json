@@ -2,8 +2,8 @@
   "allowed_signers": [
     "9150e0b184a2c3c912f2926c373a713646bfe03636800e9adb12d4a7ddc6f8d4"
   ],
-  "signer": "zhaoxinghua09-cell/agent-skills",
   "path_prefixes": [
     "skills/"
-  ]
+  ],
+  "signer": "zhaoxinghua09-cell/agent-skills"
 }

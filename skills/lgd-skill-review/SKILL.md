@@ -21,6 +21,7 @@ tags:
 category: developer-tools
 allowed-tools: Read, Glob, Grep, Bash
 display_name_zh: 技能评测官
+capabilities: [read, write, exec]
 ---
 
 # lgd-skill-review · 技能评测官

@@ -76,6 +76,7 @@ governance: LGD (Lifecycle Governance Doctrine) / SynomosAI
 brand: SynomosAI
 fingerprint: FP-MX-4386B5FB95AB
 updated: 2026-11-06
+capabilities: [read, write]
 ---
 
 # AI 留痕与门禁

@@ -61,6 +61,12 @@ jobs:
           cd repo
           python3 tools/skill_lock.py verify --root .
 
+      - name: Capability declaration audit (advisory, never fails the build)
+        run: |
+          set -euo pipefail
+          cd repo
+          python3 tools/capability_scan.py --root . || true
+
       - name: Negative control - one mutated byte must fail
         run: |
           set -euo pipefail

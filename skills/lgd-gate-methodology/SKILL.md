@@ -10,6 +10,7 @@ tags:
 - security
 - trust
 - lgd
+capabilities: [read]
 ---
 
 # LGD-Gate 开源方法论

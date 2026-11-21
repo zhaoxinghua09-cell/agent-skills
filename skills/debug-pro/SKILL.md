@@ -53,6 +53,7 @@ trigger_keywords:
 display_name: 调试专家
 display_name_en: debug-pro
 
+capabilities: [read, write, exec]
 ---
 
 # 7-Step Debugging Protocol

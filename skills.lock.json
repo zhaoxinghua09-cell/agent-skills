@@ -4,842 +4,846 @@
     {
       "root_digest": "7e653effea8c6380ff5f1fcc88837c14456d16acca23b02292ff537a6396e14e",
       "sequence": 1
+    },
+    {
+      "root_digest": "e930bc8611da59aa1313dc8c8eb337300b8855a09e0e4926935e9247995cff74",
+      "sequence": 2
     }
   ],
-  "root_digest": "7e653effea8c6380ff5f1fcc88837c14456d16acca23b02292ff537a6396e14e",
+  "root_digest": "e930bc8611da59aa1313dc8c8eb337300b8855a09e0e4926935e9247995cff74",
   "schema_version": 2,
-  "sequence": 1,
+  "sequence": 2,
   "skill_count": 119,
   "skills": [
     {
       "declared_name": "a3-law-operational",
-      "digest": "eddf216a0a1b2c333129c3f592eb1683a00e45db4c7dc7d1f50842fe4db73897",
+      "digest": "15073c35c17d81ee3bb0569e16a86d447b18d4b521d75d1bce95bac53ce8f06d",
       "file_count": 10,
       "has_description": true,
       "path": "skills/a3-law-operational"
     },
     {
       "declared_name": "agent-boarding-pass",
-      "digest": "e2d4949337895c65ef3aa849d9632b34347878098d16f977628e252d35022127",
+      "digest": "8fcf99495db27a3afde998b23823db3743b37f24227f9343d6fbf03224725f1d",
       "file_count": 7,
       "has_description": true,
       "path": "skills/agent-boarding-pass"
     },
     {
       "declared_name": "agent-evolution",
-      "digest": "484feba462ac69c37009d850a5bddab74e43c1d0cc898011df4037c389c92885",
+      "digest": "974435bbe2c3ab1949d0c1c07731a1f99482d4d9b7c09a35fed9284f910084c8",
       "file_count": 11,
       "has_description": true,
       "path": "skills/agent-evolution"
     },
     {
       "declared_name": "agent-kill-switch",
-      "digest": "33d13010a480e81ec2488cbd0b46ba9742ad29ad3dba354c6a8a7b23224c1dba",
+      "digest": "e094e2032fc9ae2a7dcd57459f6fdf94e11720cfc2795adc2743c95d2b37cb79",
       "file_count": 7,
       "has_description": true,
       "path": "skills/agent-kill-switch"
     },
     {
       "declared_name": "agent-loop-guard",
-      "digest": "9b93958ef9035de18148deaaf7ef74b5279566907a42e0ce0d228cdbe335c899",
+      "digest": "36045a978db9c7e6e8e75cfa10ba8b19f25a4e21c30d9783218495653eada070",
       "file_count": 7,
       "has_description": true,
       "path": "skills/agent-loop-guard"
     },
     {
       "declared_name": "agent-memory-keeper",
-      "digest": "23899de16618ef8a8834167de77eeeb4dddcbb9f2943d609e779f7f2c2d560ef",
+      "digest": "f8c36a652e115753dfaf4abdc0b0e9bf6063eaaddfdc87602a6b0d3ef4bb9065",
       "file_count": 7,
       "has_description": true,
       "path": "skills/agent-memory-keeper"
     },
     {
       "declared_name": "agent-output-registry",
-      "digest": "526bdb98d0f7d312a0e1580d327dc25fe5a9517415f600296493458508bfc982",
+      "digest": "dd6ec94d98927c314ed7accbe96f1b7d9f09cf1e6343c9aff9730bad429e218c",
       "file_count": 10,
       "has_description": true,
       "path": "skills/agent-output-registry"
     },
     {
       "declared_name": "agent-redteam-kit",
-      "digest": "2cec0994ad95428ad37dfabe9e994126a2599933084976c127a2fe6a2a6cb50c",
+      "digest": "9f480a5b5c6925da8bb60d19b1f54865d28e0357fc8866881de13b8194948719",
       "file_count": 7,
       "has_description": true,
       "path": "skills/agent-redteam-kit"
     },
     {
       "declared_name": "agent-trace-audit",
-      "digest": "a12357ca5610e17d3dae4c92f338344d1ebfd6c1f71ccf03a39fbfcb600a8014",
+      "digest": "47d1945e219418c58f5b28ae8c0bc832f7221b8e8c8c9be85057a48355fae127",
       "file_count": 7,
       "has_description": true,
       "path": "skills/agent-trace-audit"
     },
     {
       "declared_name": "ai-brain-learning-memory",
-      "digest": "a4b595117de2e3716fd42196d706feaa3696dc6a736165d22f72d27fcba96b5a",
+      "digest": "ecd275c3c032de0134152b08d9edf26b49f42b991b08529a5b2ca2224b1a9aaa",
       "file_count": 10,
       "has_description": true,
       "path": "skills/ai-brain-learning-memory"
     },
     {
       "declared_name": "ai-brain-learning-memory-pro",
-      "digest": "c9ff8eff8dce0cd48bd9132bc7c33940a94bf4e5b9342d28c7523f7d39daf205",
+      "digest": "1663f5d71c31cb9582107a58bce70543fd87d103bf01b1d58079774bb1d747d7",
       "file_count": 14,
       "has_description": true,
       "path": "skills/ai-brain-learning-memory-pro"
     },
     {
       "declared_name": "ai-content-discloser",
-      "digest": "97cbc1e581c334b1dc5eee5d774895cf2991858ae62558180dd508d8da7e6faf",
+      "digest": "03041f59545b717e05734a8a778cfedf7ada517cf9576d34518f91467136b08a",
       "file_count": 7,
       "has_description": true,
       "path": "skills/ai-content-discloser"
     },
     {
       "declared_name": "ai-cost-cutter",
-      "digest": "23e9bc44e4eedb7069fa51fa09285180b11ef51d64c61b85c846572753136329",
+      "digest": "f67b0f9e5569e64c1e45a0825370ffbfd1cd4720d6b936268657d723a8686043",
       "file_count": 7,
       "has_description": true,
       "path": "skills/ai-cost-cutter"
     },
     {
       "declared_name": "ai-decision-log",
-      "digest": "6d79508f877b36055c50913dd1e2b0feb883718352a1bb1835830f13f2690e09",
+      "digest": "01cc093b8516c1aded4737992b2a475c5e627af78037c2d9972396e34a25f9db",
       "file_count": 7,
       "has_description": true,
       "path": "skills/ai-decision-log"
     },
     {
       "declared_name": "ai-governance-audit-chain",
-      "digest": "ee66487bddeb130164aaf55bfc744354c4e13f6d6c1328b451d1d6855487e0f8",
+      "digest": "b89ae187bc326cb1f0fa9319dbc7c323d6f36e9323e975bb0183663ee75bb913",
       "file_count": 12,
       "has_description": true,
       "path": "skills/ai-governance-audit-chain"
     },
     {
       "declared_name": "ai-incident-log",
-      "digest": "c9672d401eca2b42c6d55b86b94cdcdd81af52c4fe0c62bb31203f823e3cd069",
+      "digest": "a9f456732aaf58c9be3cf60d9e0d7fd8514703b4a99db5cfa3791dd15f99aeba",
       "file_count": 7,
       "has_description": true,
       "path": "skills/ai-incident-log"
     },
     {
       "declared_name": "ai-policy-radar",
-      "digest": "5c902a2321d10e96bfca917d18bc93a06811cccab720423d75e38a5d0ae76e26",
+      "digest": "010767fdf1fbd3cb80cb3bcf145c9c592801343ee7894480d7b04e824ebae51f",
       "file_count": 7,
       "has_description": true,
       "path": "skills/ai-policy-radar"
     },
     {
       "declared_name": "ai-reply-heuristics",
-      "digest": "9c92bb3879360fd54cd0dbd0beb240ac007c0cd9cca9b7dc10180eb3bbb6f575",
+      "digest": "f054f9bb3ee9d994a60518207795df02f5137b8ff753dcfddd5b593a7e65fed7",
       "file_count": 7,
       "has_description": true,
       "path": "skills/ai-reply-heuristics"
     },
     {
       "declared_name": "ai-usage-policy",
-      "digest": "e83210fe1325a2b50f07c6e568353600304cc6898da3e4f1be35302246118d8e",
+      "digest": "adab8de2036301c2cf45939e64bcc0f26572caf3e8d33afd53058b20d7794511",
       "file_count": 7,
       "has_description": true,
       "path": "skills/ai-usage-policy"
     },
     {
       "declared_name": "ai-vendor-checklist",
-      "digest": "91491b829a465c016b0a04c0524a1fa3ec5b43480ca4d18a6b8a053f8bd68151",
+      "digest": "3493175af3d0270b803c9a3eb317e9636f0df7802608262d78dc88c928bddd0a",
       "file_count": 7,
       "has_description": true,
       "path": "skills/ai-vendor-checklist"
     },
     {
       "declared_name": "aml-sentinel",
-      "digest": "06c8a7385afa501290d45e1dd38990feb116e8f87914cdc29448144cb6fb2d9a",
+      "digest": "ea5cba503701c94fcb60bd7599f6fe3647569495a2f2d610da8b60285204741d",
       "file_count": 7,
       "has_description": true,
       "path": "skills/aml-sentinel"
     },
     {
       "declared_name": "anti-cheat-identity",
-      "digest": "0318aede33a01f67c9997bbc2adaf425f9a1cbafca52d7a34b1f8ebde15cfaf4",
+      "digest": "b6fa3c53c6439697ac1a4fe1c395e209b8d5be28c657d468ebe305f8130d4f7c",
       "file_count": 5,
       "has_description": true,
       "path": "skills/anti-cheat-identity"
     },
     {
       "declared_name": "api-resilience",
-      "digest": "ce4cc20c098b804e7499862d13cd5e73adf02cb56da43d402652517d84d9764c",
+      "digest": "93790494045029e2ba4a956e48ffc82ed13b606c728871def57acf626ec3b40c",
       "file_count": 7,
       "has_description": true,
       "path": "skills/api-resilience"
     },
     {
       "declared_name": "aut-grade-checker",
-      "digest": "9c050318903651451cb164c37820984c6e157cf134117de1dda480e4e13f5127",
+      "digest": "4d0f247536a62be0bf140fef08186c557cac3937fad0784749b9dee38d6907ed",
       "file_count": 5,
       "has_description": true,
       "path": "skills/aut-grade-checker"
     },
     {
       "declared_name": "batch-renamer",
-      "digest": "e51f1895118edf4d7b755ecdb3235792e6e893c1cc5aed80e007973bab6fd850",
+      "digest": "e7711d199563908012548d2248bcbb547ffd8fd2d98bacd88659efe4d32c7195",
       "file_count": 7,
       "has_description": true,
       "path": "skills/batch-renamer"
     },
     {
       "declared_name": "bias-auditor",
-      "digest": "ba80ed003ab06be203db1183719bbd11f1f64f4f932fb4348962496562993668",
+      "digest": "0ae2868bd759b21d047435686f6a6e6cec5f341e282aa860a1c2b104d7220f88",
       "file_count": 7,
       "has_description": true,
       "path": "skills/bias-auditor"
     },
     {
       "declared_name": "cer-equivalence-check",
-      "digest": "7b6dcf4564b22bff5787274e99f29088f61f75d12009091689fba4c8c6dbe22e",
+      "digest": "2dcb349a22301d16c99f07fedb90aa6d694d3eaac556240280a78951b6e1d448",
       "file_count": 9,
       "has_description": true,
       "path": "skills/cer-equivalence-check"
     },
     {
       "declared_name": "changelog-draft-gen",
-      "digest": "97e8108f3aded09ff1626b5ba29b7067d3fb99bd3bb7bcf16c091a2469e97240",
+      "digest": "4b961772c16cdf294f32c93633123cc7f13928907379810908dd5e7e3ba6c2d0",
       "file_count": 7,
       "has_description": true,
       "path": "skills/changelog-draft-gen"
     },
     {
       "declared_name": "citation-coverage-check",
-      "digest": "76f456cefbe6254a8fa5ec98aa205f5bf05b953fed3c3be545a0c9e7d2b02eee",
+      "digest": "1e8e52efb61ec743e19fee24c606b77a1597a1cdbf832ad009ea472976c176f4",
       "file_count": 7,
       "has_description": true,
       "path": "skills/citation-coverage-check"
     },
     {
       "declared_name": "clin-eval-route-picker",
-      "digest": "eb9d19c20dfce0007d91a388270b7e65d9ca895a3c389ee36baddbb73b074b18",
+      "digest": "dbc655373922a6a8446190a3807a1308dcc3db439a2537a0295b75d1c0a9cfa4",
       "file_count": 7,
       "has_description": true,
       "path": "skills/clin-eval-route-picker"
     },
     {
       "declared_name": "contest-submission-portal",
-      "digest": "22fc47fe6c582db237f474860891edf2083ee43a16d01f3e6bc8d982d0215a8d",
+      "digest": "9cd1492775819c941df245b786934a354cb548d50ddfc252f2adbc99260ccd5b",
       "file_count": 5,
       "has_description": true,
       "path": "skills/contest-submission-portal"
     },
     {
       "declared_name": "context-engineering",
-      "digest": "7c5a84965546d396985576f92b419988d5db8dbce72931c45fbcba16ef9f8162",
+      "digest": "bf35e057607db3d506391fb4cd69506fab81c1d7d6c9cadd8bd7715e76db599e",
       "file_count": 7,
       "has_description": true,
       "path": "skills/context-engineering"
     },
     {
       "declared_name": "contract-clause-check",
-      "digest": "a438af5d0a5d959bff7df701761ae658d36db99ee40e53f418131c000e241514",
+      "digest": "03774ab11d763648bfc04aa03cfab318e8b5425a947bbd7f0d0c8dbbb3000ea0",
       "file_count": 7,
       "has_description": true,
       "path": "skills/contract-clause-check"
     },
     {
       "declared_name": "contract-interact-checklist",
-      "digest": "af7ecee9cbe220e3b25b75c5bbda0f4f316a37e8ab75d42c747a9f9ee2fadef5",
+      "digest": "1f8e2c42ca23567842dd6c71ff2c0b9587f4cc215d3a56efe97b046a79783827",
       "file_count": 7,
       "has_description": true,
       "path": "skills/contract-interact-checklist"
     },
     {
       "declared_name": "csv-slice",
-      "digest": "178d1b0b50418b08895358c7f6d9926886c4191d3183345d97c11eabb104d097",
+      "digest": "d01888a145c4af81db83e34f90f84cb0bd9778690d2b5e9f79b3b49e2b4ef5a9",
       "file_count": 7,
       "has_description": true,
       "path": "skills/csv-slice"
     },
     {
       "declared_name": "data-export-check",
-      "digest": "c2f1fb08e149b43cb301773df4d7aba13f3744196725305a7a18f5abe0105b57",
+      "digest": "790be361f0ab85df0660b45fddc6510e84dd821f1bd19d734f490813216de7ac",
       "file_count": 10,
       "has_description": true,
       "path": "skills/data-export-check"
     },
     {
       "declared_name": "data-grade-checker",
-      "digest": "9b494a1f2e40ec8b4016a54adfad6396633e0e52fce2cc09f726af288c99aed1",
+      "digest": "fbd5460015c5475d08f41628be123fa813fe8f7a3378588f5b13141325b6500e",
       "file_count": 5,
       "has_description": true,
       "path": "skills/data-grade-checker"
     },
     {
       "declared_name": "data-minimizer",
-      "digest": "5a7b58132ad3d016452d9bb40e645b92631067dc440883c73eeb78b3c9a9ea1f",
+      "digest": "d21682711a88e87a792a9623010af25e294ebb1eece18f4f17c0fef39d5dec9c",
       "file_count": 7,
       "has_description": true,
       "path": "skills/data-minimizer"
     },
     {
       "declared_name": "data-rights-guard",
-      "digest": "263764b94e08414978c82deb2a14ce6c632cffe225d0ff92dce04a740f997779",
+      "digest": "a97821861c52fc957e4f64e238fa31139762e144d1d83536263dd4f70734bc29",
       "file_count": 7,
       "has_description": true,
       "path": "skills/data-rights-guard"
     },
     {
       "declared_name": "debug-pro",
-      "digest": "a7cd66443046d1895f8a16573aa70c3702b73ec036b04b9fbe7a72aec803f305",
+      "digest": "df96013c19c6175cd4fd4f6dc1cb953edb406aa7ecb37e34a1de9ef422a41aa9",
       "file_count": 16,
       "has_description": true,
       "path": "skills/debug-pro"
     },
     {
       "declared_name": "dir-organizer",
-      "digest": "52e2d052b14ac4c82c750de9ecdb58476ba1e9055a9ce4ff2b0d7e0ee245b9be",
+      "digest": "57957e0e5dc7c444050a2821cdc54d23297d10f1748ccae6d40336b557cd9aad",
       "file_count": 7,
       "has_description": true,
       "path": "skills/dir-organizer"
     },
     {
       "declared_name": "disk-scan",
-      "digest": "58637f9a84b8019f4376d9c2dc03e8609c890f90e9a22157bf79945534a2665f",
+      "digest": "82aa9feb5d70f9a5bb87e8c502befeecfb8833e293ec85224ddb35ec92c44b74",
       "file_count": 7,
       "has_description": true,
       "path": "skills/disk-scan"
     },
     {
       "declared_name": "doc-desens-scanner",
-      "digest": "72a9fa8c20cb25b63ba145814f155402c535c9b721e97934d78851252a9a27c8",
+      "digest": "ab771fce9b72dc6b06516f3e5e7641e2ed1a4f86c00c8f571ab7e4bb6f3a22f8",
       "file_count": 7,
       "has_description": true,
       "path": "skills/doc-desens-scanner"
     },
     {
       "declared_name": "dpapi-local-vault",
-      "digest": "cce2da8e28dedde373dc9570337f26aa4fce7386955ff78ecfff14d374b73202",
+      "digest": "978c122c817bc18c4e3f8cd015e94598fb7b3861bbfb3a1adc4cfd2873afcf1f",
       "file_count": 10,
       "has_description": true,
       "path": "skills/dpapi-local-vault"
     },
     {
       "declared_name": "dup-finder",
-      "digest": "e84b9f0d55f689f326b65961936dc26795fe63aa4cf8bec363cb0bc99030bf36",
+      "digest": "d5662893a694ae82599971228b97c3ed560598a266c38b4c5be1c118a33c67d0",
       "file_count": 7,
       "has_description": true,
       "path": "skills/dup-finder"
     },
     {
       "declared_name": "env-var-audit",
-      "digest": "cc4868c4be7c5b62c4980c50d0bad53fe064801b5354f3e35247ad61684001a7",
+      "digest": "1617bd50898defca8bc252b8d0a4c54b9073dff68997bf39f242a8833a68a0fe",
       "file_count": 7,
       "has_description": true,
       "path": "skills/env-var-audit"
     },
     {
       "declared_name": "eu-ai-act-companion",
-      "digest": "5cc9fc83892a8f7da77431a21559c8347e574dbf11bff8a3e1cf8fbcfc8e226d",
+      "digest": "88ca7681a75d089031eb1ea46f21152a8c588e6b56b2cb72d55f891693648cfb",
       "file_count": 7,
       "has_description": true,
       "path": "skills/eu-ai-act-companion"
     },
     {
       "declared_name": "eval-bench-builder",
-      "digest": "5ce0a4ac9cb6c1719d4212d38ca7866833dae042a3a17a042e52841fb8bdb077",
+      "digest": "71172204cdfcab59946e0e799849b93ef553d167d430cbf7f5df9fb77381fb47",
       "file_count": 7,
       "has_description": true,
       "path": "skills/eval-bench-builder"
     },
     {
       "declared_name": "evid-four-check",
-      "digest": "0e8134e750dc3e26245fd29d995f3c0b969d6a265f83799f071d028b5760f599",
+      "digest": "e9ca3237353d5f07b7d14a807e262347f62ceddb96b119e161e8dd8a7ad844e7",
       "file_count": 5,
       "has_description": true,
       "path": "skills/evid-four-check"
     },
     {
       "declared_name": "evidence-chain-builder",
-      "digest": "cda1694419db246e6457e47da5a44c8459bec57d992243fb028140bfd862daf0",
+      "digest": "bb97234a4af9736a876af2589584d58e76a8a6b14a4bce4fd740ea4eb3b50c10",
       "file_count": 7,
       "has_description": true,
       "path": "skills/evidence-chain-builder"
     },
     {
       "declared_name": "evidence-chain-check",
-      "digest": "8f20f3d1bd903de844a0f231148483a3eb6f521772e7291e9147eae1269e21b6",
+      "digest": "88e1913d2d728631b78528ce9f7666574dbfe8a3657c038787c70ad6fb4882a5",
       "file_count": 7,
       "has_description": true,
       "path": "skills/evidence-chain-check"
     },
     {
       "declared_name": "fact-check-guard",
-      "digest": "995a5366060c9e4303c6a05b573ee6e7a40ced34f7ed01c9225b48d497f49736",
+      "digest": "6dd5bf06114be1278c4859119969e933921a55cfbf9eb64e74c275f526fa2cc3",
       "file_count": 7,
       "has_description": true,
       "path": "skills/fact-check-guard"
     },
     {
       "declared_name": "fin-ai-classifier",
-      "digest": "6926a01dbf3de8a94538120a560013eec699a1ed9095740a3a4b208944895d63",
+      "digest": "7479f97a4781dd84262ca0b149dcc8e2948da0eb4bde12755f914869a931a182",
       "file_count": 5,
       "has_description": true,
       "path": "skills/fin-ai-classifier"
     },
     {
       "declared_name": "fin-reg-calc",
-      "digest": "8dd288ecbe8730a2057be70a8f0607558991a2bf1c699dffe2e3c0233feb876a",
+      "digest": "2c0648ad75bb78b2fc38301b440a4684c2fe2248e13137c9f87a2c128d5cce1c",
       "file_count": 7,
       "has_description": true,
       "path": "skills/fin-reg-calc"
     },
     {
       "declared_name": "fund-fee-calc",
-      "digest": "4746d58836f39960da94f1e817e84febc25e572d7cf78bfd1df6a4c3adb12f96",
+      "digest": "243500621c61bf6aa0d51c9bdc4cdeac8cceff61785918945d46f69a9ea2c9f2",
       "file_count": 7,
       "has_description": true,
       "path": "skills/fund-fee-calc"
     },
     {
       "declared_name": "gate-policy-generator",
-      "digest": "bae680e0cc95a8801cbefb9064bc172af14a61ad4944330dd6d8d8e31b63039c",
+      "digest": "5c8a7c13fd19fbf7796b1b164fac092ff5a1965e474f32c7dd38f789ceca779a",
       "file_count": 7,
       "has_description": true,
       "path": "skills/gate-policy-generator"
     },
     {
       "declared_name": "github-api-push-workaround",
-      "digest": "3e8d95ee536aec01995d695faa43d0b05c268294c3bddb5925c6cfce03957c24",
+      "digest": "b3fabccc47074e269d336c0b01064f22c093d483d5a3556452af47921085a632",
       "file_count": 4,
       "has_description": true,
       "path": "skills/github-api-push-workaround"
     },
     {
       "declared_name": "gov-disclosure-check",
-      "digest": "caa1369e737e5bc92172e42738f7ca50174f1d63e94eb90048783126ab126f43",
+      "digest": "a4193c307fdc104ba03e77f9cd1f7f858a0b5e08f6a13fa9ede2afdf3b32ca6e",
       "file_count": 7,
       "has_description": true,
       "path": "skills/gov-disclosure-check"
     },
     {
       "declared_name": "hash-check",
-      "digest": "f5f91fcc0b2ddb63020903e68e4b29d6c66d398bb6918a94b6978a9df8f46b0f",
+      "digest": "724a0b9c70676aef6e99a264015a64e4628681893253beca74d9253894ab3e03",
       "file_count": 7,
       "has_description": true,
       "path": "skills/hash-check"
     },
     {
       "declared_name": "health-claim-guard",
-      "digest": "d3b10fc242b2dba365d13601ec69943ce9dc7106a14bf2f7eae6bdcc670ce606",
+      "digest": "f8a88de3e20054f042216d8bfffae91189dffdc29d0e1e6090d4550bab860ba0",
       "file_count": 7,
       "has_description": true,
       "path": "skills/health-claim-guard"
     },
     {
       "declared_name": "hgrac-route-checker",
-      "digest": "b1f8b22c73e978c7a498d2462b76a8028de3e92e9c2ae4fe518b110b0cf3dfba",
+      "digest": "c3fd1de496b248b6359a6e8c3f000ebf16959f6c0f79ed212ac12237ed481d1a",
       "file_count": 5,
       "has_description": true,
       "path": "skills/hgrac-route-checker"
     },
     {
       "declared_name": "import-export-router",
-      "digest": "eea332a99386a8b211f64f853322611583f6f369b901fa496c599e6cf19b01f8",
+      "digest": "bca728e06e0ce25df3b1d29e4780a0a501b13c344091e88834ce48d91bbd096d",
       "file_count": 5,
       "has_description": true,
       "path": "skills/import-export-router"
     },
     {
       "declared_name": "invoice-risk-scan",
-      "digest": "b3be54c95b98f62b28d3358170fa9b0dea89a63636bd393dd38eba8003798059",
+      "digest": "d086d1015e1d7bcc6aee73b651574486fff5bbc22b09e2806ef3360c741a34a9",
       "file_count": 7,
       "has_description": true,
       "path": "skills/invoice-risk-scan"
     },
     {
       "declared_name": "json-tidy",
-      "digest": "c1ff966b680856ab96614076aee1db39c4556f787db1592cedf0693fb75192f2",
+      "digest": "dc3ba715605dfd298d60f70946e1e39cc32db646bbb80f7050b82de585f13a28",
       "file_count": 7,
       "has_description": true,
       "path": "skills/json-tidy"
     },
     {
       "declared_name": "judging-rubric-grader",
-      "digest": "f81af5d8219cdecb7e90b08198bc7ace410afe52384c1c3d4eccd082771561a1",
+      "digest": "f706bbdab5cca24bd8e2ba50a7d37115574e7c8a407caf7375ddda8424ae69df",
       "file_count": 5,
       "has_description": true,
       "path": "skills/judging-rubric-grader"
     },
     {
       "declared_name": "kyc-checklist-gen",
-      "digest": "c169f0b22870851f98257443e1f38e3902c10d83b1f46f1a850634e0d1074a73",
+      "digest": "5e08f76bba604deaf27d9c424143e78edb4af9d7965e4ae922fc92785e399cad",
       "file_count": 7,
       "has_description": true,
       "path": "skills/kyc-checklist-gen"
     },
     {
       "declared_name": "label-compliance-checker",
-      "digest": "6a7029cdec90f822be1929ed83dd547cfbd0b3e2ca82138ad83b97d078513440",
+      "digest": "f34068525e36291b9fc4e361f9ac751982ff70f8076e71c9609d0c32b079188f",
       "file_count": 5,
       "has_description": true,
       "path": "skills/label-compliance-checker"
     },
     {
       "declared_name": "lgd-audit",
-      "digest": "b945448d5862b8294cb2cb58b4da263351e9887b37b7e7ee933cc11fbc044ab2",
+      "digest": "000759de67150c42c69bc5211a885c0efd109ce3f3b54b2639bc2c265aa4c920",
       "file_count": 6,
       "has_description": true,
       "path": "skills/lgd-audit"
     },
     {
       "declared_name": "lgd-badge-issuer",
-      "digest": "9f2d11a8afb3f9d434ca23777ffd1b863f682c04ab95978ed36d46d4270e2779",
+      "digest": "42e43fe58c7cc4b6675683259fbaeafe326257ff572aff4971dd2ad80dac2bce",
       "file_count": 7,
       "has_description": true,
       "path": "skills/lgd-badge-issuer"
     },
     {
       "declared_name": "lgd-badge-verify",
-      "digest": "907d2fe3c7aceba7fc6bc6733c49843de1c48eda5f48e8f26b226855e1533115",
+      "digest": "c99b7000ad67be14276748030a95318b405ef9f848dbae7c19de502784c40e6f",
       "file_count": 7,
       "has_description": true,
       "path": "skills/lgd-badge-verify"
     },
     {
       "declared_name": "lgd-bootstrap",
-      "digest": "4d7fe978ca73ed49a53fabff1682b79990fd0190218f7fbf0c3dc5476f3ca9a3",
+      "digest": "d36d20c7707f2950bda2dd7424c2a950849b9c6eb2901d0d7f401d48f2b4852e",
       "file_count": 1,
       "has_description": true,
       "path": "skills/lgd-bootstrap"
     },
     {
       "declared_name": "lgd-certify",
-      "digest": "265ceeda9d25e36a2ccb0654393467f3443ed96ba0ddf459d0891c2e03580e1b",
+      "digest": "806434d07404c2887f3d35aa09b242d0ca2eccf659134b219a1ce5c702a9b9b3",
       "file_count": 7,
       "has_description": true,
       "path": "skills/lgd-certify"
     },
     {
       "declared_name": "lgd-crypto-guard",
-      "digest": "56c6591b5f9ef64d71a1abc2519d15ca3e17cae53a5a569553c0701e61d55b85",
+      "digest": "e0e09f64d07eda1583e6e7a786ad3fca612e087afb7b3572eaf652a52ed33483",
       "file_count": 7,
       "has_description": true,
       "path": "skills/lgd-crypto-guard"
     },
     {
       "declared_name": "lgd-evo",
-      "digest": "9acc3c4be89d5e1f0ae525e12d4602c83adc7b9f11c3c9b7c303dc4ecfdd521f",
+      "digest": "97f6287dc63b9cf54377652161d84f086159d950380ab911a57f7af4b9ed353b",
       "file_count": 6,
       "has_description": true,
       "path": "skills/lgd-evo"
     },
     {
       "declared_name": "lgd-fin-guard",
-      "digest": "9f94bac31f2304a2cae116eb83723cdf5571e0686d15386e11554562dab944cf",
+      "digest": "d99a0deb4f08b09c2b9854922d04472cd527817eaa9ed9a92253768b6ff3fc02",
       "file_count": 7,
       "has_description": true,
       "path": "skills/lgd-fin-guard"
     },
     {
       "declared_name": "lgd-gate",
-      "digest": "43e7acfb06e1bfaabe9727103d283afa3e931c7040f7d2959c3b276fca099b2f",
+      "digest": "a23981863a5d87f60d7f345a40b7127985b30290cdf0132cce33bb8e22211fac",
       "file_count": 6,
       "has_description": true,
       "path": "skills/lgd-gate"
     },
     {
       "declared_name": "lgd-gate-methodology",
-      "digest": "13f6b6e685203215a8ade8135efa701022ab9839298aff70bd15dcee5ff484fc",
+      "digest": "3a9678bd8d6896fbd66f715e6b351b01b9426f92b68e565f639a7a67e98559a6",
       "file_count": 2,
       "has_description": true,
       "path": "skills/lgd-gate-methodology"
     },
     {
       "declared_name": "lgd-gov-guard",
-      "digest": "4fed274fc3e67266f458b63f8cfe8d2ebdbaa4c1d4ce72809585a021f356aa53",
+      "digest": "768e5f00adceee584928fa0bde973b8048190b8eaaf81f584d4e4bcf28595f3a",
       "file_count": 7,
       "has_description": true,
       "path": "skills/lgd-gov-guard"
     },
     {
       "declared_name": "lgd-law-ethic",
-      "digest": "29305da73925c49a390ecb1e67c44df26f941cf4ddea570ce7253b145441931a",
+      "digest": "52dbcf6c59cf34b2fc47043adc26a779a0be6f2226cbed2895d1e1646042eb55",
       "file_count": 7,
       "has_description": true,
       "path": "skills/lgd-law-ethic"
     },
     {
       "declared_name": "lgd-skill-review",
-      "digest": "65c636f7c9943f450f9dc49fcea270a6648a25858a28e5600a5e2462ff180692",
+      "digest": "3d648c05fa7608a69fea49ee8710f44f713bf704c524602782382395596b68ac",
       "file_count": 13,
       "has_description": true,
       "path": "skills/lgd-skill-review"
     },
     {
       "declared_name": "lgd-three-laws-auditor",
-      "digest": "ad43a2a90df03d8a62b713fd52b866569045814dac21fa3bdce85aea60a7c593",
+      "digest": "476f91659509163819d43b0b90524052846d49569e76cf34a9d46c89c3c0d0d1",
       "file_count": 7,
       "has_description": true,
       "path": "skills/lgd-three-laws-auditor"
     },
     {
       "declared_name": "loan-rate-disclosure",
-      "digest": "45302ab5d7f296064a909a41fe413c13c7ca7105972c2df2636cc12d93b4d100",
+      "digest": "95a0281c36c2dfc92e476d88e1a0aec168da77f07ae5689858f6fbe73b8a1e6a",
       "file_count": 7,
       "has_description": true,
       "path": "skills/loan-rate-disclosure"
     },
     {
       "declared_name": "mcp-security-scan",
-      "digest": "64f55666aeeb8d1422470fcd7e57187d05790c4754c16cc90b5f887a814b631e",
+      "digest": "afde0d8fa5fe9df8481fc47467c5004cc1f17d638060812a173bc4863b5d17c5",
       "file_count": 7,
       "has_description": true,
       "path": "skills/mcp-security-scan"
     },
     {
       "declared_name": "md-classification-route",
-      "digest": "30695787218ecc3350699d502bb550890d88c05fa02db627e8d53c8f80a7b565",
+      "digest": "f53dd49ee1650f8740f69d08f30ec4e629f6db7be5cacc30d113652e46fce40d",
       "file_count": 9,
       "has_description": true,
       "path": "skills/md-classification-route"
     },
     {
       "declared_name": "md-link-audit",
-      "digest": "884f689d4ce7d4c8bcdeb3aa4f54f4dc5cb02cddf299e707ff772718056945ca",
+      "digest": "f5f2ef90b46da6279609f381756d3898918a6df0f798d75820d9aef84dbf2e1f",
       "file_count": 7,
       "has_description": true,
       "path": "skills/md-link-audit"
     },
     {
       "declared_name": "model-card-generator",
-      "digest": "826dcab591b0fe67813f71cef885c952c4cf29f4313311542fb97e9ea1ea87d2",
+      "digest": "b28aefac2a24a4fbd2408298a7a8dc213af20300944b337eae2403394e42c2b5",
       "file_count": 7,
       "has_description": true,
       "path": "skills/model-card-generator"
     },
     {
       "declared_name": "model-router",
-      "digest": "7e215b30dfe33fd9db25f26147641f587f6def769070be7583c05a06d73568d7",
+      "digest": "4b9036532f25dd98b62a164decb53eaa04112a099c496f3c62f58ca34854f37e",
       "file_count": 7,
       "has_description": true,
       "path": "skills/model-router"
     },
     {
       "declared_name": "multi-agent-conductor",
-      "digest": "a77a950333001333a65a7749eac8d83917996456daec29f841c29edcbb01259a",
+      "digest": "9c63512168ca9671eff1f28f45955c029f0e401540e3e90551a901b75fa170fb",
       "file_count": 7,
       "has_description": true,
       "path": "skills/multi-agent-conductor"
     },
     {
       "declared_name": "non-clinical-checker",
-      "digest": "bd7214443b0ebcbaf7e22f28a8a7f318e456dfa32bdc61bae2b557866f1f47ff",
+      "digest": "eef138a4e3054924818aa2b6b491ebe8bb731191267feb31b1be9cd379eda564",
       "file_count": 5,
       "has_description": true,
       "path": "skills/non-clinical-checker"
     },
     {
       "declared_name": "originality-check",
-      "digest": "c0f6df4f37ea30cce5a9808ef3a26433cf148e045116fff09f8b36c497ce589c",
+      "digest": "5a4f53c9abc6089f391d0b07bc535e87011ddf888f917c32cd5ec1ec9f463f00",
       "file_count": 5,
       "has_description": true,
       "path": "skills/originality-check"
     },
     {
       "declared_name": "output-schema-guard",
-      "digest": "ffe43efee47fb07cf39207e5a326016b2eb96af1f1345da78487438506090d71",
+      "digest": "248117c502c64a96b5e8bd1371314bf6aff581945071b3f3202ec7ed2a34bfae",
       "file_count": 7,
       "has_description": true,
       "path": "skills/output-schema-guard"
     },
     {
       "declared_name": "pmcf-evaluation-report-check",
-      "digest": "70a205925d650ab1bd8413cf4c491cd1ccc0a242b532d0dd6e9d6f95362f5295",
+      "digest": "8a99b873e41ab56976d1d1c84788d84b595a68798cd7ff5409210c0b3372bcbc",
       "file_count": 9,
       "has_description": true,
       "path": "skills/pmcf-evaluation-report-check"
     },
     {
       "declared_name": "pmcf-plan-check",
-      "digest": "37c2af737e679186d02f036680935b7444d636c438e2465a9b096674f2c09310",
+      "digest": "89c35f613f20d1aad607a40233d5bc51264e2c70f037811207358ad1c8ed5569",
       "file_count": 7,
       "has_description": true,
       "path": "skills/pmcf-plan-check"
     },
     {
       "declared_name": "pms-vigilance-intake",
-      "digest": "f457e61986d13ca8ddebaeb0c9b0f2acc5a387a4ad5e3655c69739eb65c2dd87",
+      "digest": "98e2318a654c9669b39c9fd7a90893e3eedb98dfa7c2267b3579d5e6082a5e5f",
       "file_count": 5,
       "has_description": true,
       "path": "skills/pms-vigilance-intake"
     },
     {
       "declared_name": "problem-set-generator",
-      "digest": "3d7a2054a223a433f26451798bf0533b3d8293489a1e0d39d71caacc79e4cdd5",
+      "digest": "92f7a104de9ffb3f9ac529d99ce7c2159f7202c46f09451ce61b167606361b68",
       "file_count": 5,
       "has_description": true,
       "path": "skills/problem-set-generator"
     },
     {
       "declared_name": "prompt-compressor",
-      "digest": "94c9572149f8d6c9897002f883893aecaa92b857fc8d5f0a511f851eac5d4ab2",
+      "digest": "210ebd9b2613ab9cd220ee0eba1acf17e64754953c612c7fe8b65c8496da763f",
       "file_count": 7,
       "has_description": true,
       "path": "skills/prompt-compressor"
     },
     {
       "declared_name": "prompt-injection-drill",
-      "digest": "95bbcdae3d9617317fb4eb5a08b994b443ec677bb48f29f4f5583f7bc9d2ff80",
+      "digest": "bf7468cdc3b6829998b37ae1db85fe1b13f3d2ad27d0cbd865b873c08e37e95b",
       "file_count": 8,
       "has_description": true,
       "path": "skills/prompt-injection-drill"
     },
     {
       "declared_name": "prompt-injection-shield",
-      "digest": "ec1485c5daee314e424e1c6d6a4f28b9af4306a3c7887f6bf2a899a667740988",
+      "digest": "035f7ac864dce5fc43f38ea8f4d0c1efb0bb88bed04f96f2cc21066a29fa003a",
       "file_count": 8,
       "has_description": true,
       "path": "skills/prompt-injection-shield"
     },
     {
       "declared_name": "prompt-leak-scanner",
-      "digest": "47b88b8eade58371f181ef536f5aaf32d07b1746c95b46d7bcb17b1b6b5ee46c",
+      "digest": "b40ea376185b9fa5aef227b1da16f45484ee19a7281024cdfc65e4cfee497ec9",
       "file_count": 8,
       "has_description": true,
       "path": "skills/prompt-leak-scanner"
     },
     {
       "declared_name": "prompt-version-control",
-      "digest": "d2fbebe3338fddb0e31656afb77f4d2ed69c9a9a8d8274ed7fe68100e09fd0fb",
+      "digest": "1a0b3225ad6946c0d556dbd911bacb25a8a6aa95a78a64627de22b01bfbd15c1",
       "file_count": 7,
       "has_description": true,
       "path": "skills/prompt-version-control"
     },
     {
       "declared_name": "publish-quality-gate",
-      "digest": "e016a6b172f22ef0f5fd62f47fe8fc94398da84e34f6a10d351814ae1789e44d",
+      "digest": "c64ce3cbec4b70849f4888859a41fb3e57d9acff168fba2fa61b3d98ba2b736d",
       "file_count": 10,
       "has_description": true,
       "path": "skills/publish-quality-gate"
     },
     {
       "declared_name": "rag-grounding-guard",
-      "digest": "497ade1af33136da9cdd7626f8861d9e2b42602d4e896a0dca7becccba486c30",
+      "digest": "60c2006a6c5e061fbe34f2e5df7250f983268eccd732ded2d9a0a91d24f136d3",
       "file_count": 7,
       "has_description": true,
       "path": "skills/rag-grounding-guard"
     },
     {
       "declared_name": "recall-decision-checker",
-      "digest": "934944775c585aba8e07b1a740f3afb8eab62c6854129db854af333a71024e50",
+      "digest": "679a773dd75fb00e1a974f75eb5770f0a0d0f037920fe27da0d88e26da7dc5af",
       "file_count": 5,
       "has_description": true,
       "path": "skills/recall-decision-checker"
     },
     {
       "declared_name": "regex-sandbox",
-      "digest": "760e32ed8c2305f78f2bd6794a74df4d570088fbbe6d0e5659133c16c405998b",
+      "digest": "f3960c77cc6fec002f6adbe708c1390bd0d0a979a461e75c469fdebbee8c7d37",
       "file_count": 7,
       "has_description": true,
       "path": "skills/regex-sandbox"
     },
     {
       "declared_name": "session-continuity-protocol",
-      "digest": "9e2788d0704d90c270dc3dafc7ef8bafc1c2f2c32e8670c08bc2c4af387e358a",
+      "digest": "4ed9df78ae05ee664ecc275c9e67fadde41c2906a246d61d81705da8b887768a",
       "file_count": 7,
       "has_description": true,
       "path": "skills/session-continuity-protocol"
     },
     {
       "declared_name": "skill-admission-gate",
-      "digest": "44911e3122c814ea28f5d99d907c9c9b9007f142d5a071b8886dc22f1dcfc85b",
+      "digest": "eae7fac651d016e64676adf77987bbaac89051fabcf9e1b2abbd86fd07d2e367",
       "file_count": 5,
       "has_description": true,
       "path": "skills/skill-admission-gate"
     },
     {
       "declared_name": "skill-quality-gate",
-      "digest": "c0d51883618a0dcf613228d7d3e5e47a999ba21299eb020f0b299e672f5d187d",
+      "digest": "238d8825b0cbe8df478f063afff47a5413adc49ee24e6a16f3580460260dc690",
       "file_count": 7,
       "has_description": true,
       "path": "skills/skill-quality-gate"
     },
     {
       "declared_name": "summarize-pro",
-      "digest": "88afaba7c1663bfb691d60dc15c9de38e08862d57de5e0a436e2d7d97401c3ec",
+      "digest": "37e70632d3f5ed61cf845e30f63135f8792fa124c768a041aa415ee126063aef",
       "file_count": 19,
       "has_description": true,
       "path": "skills/summarize-pro"
     },
     {
       "declared_name": "test-lab-match-check",
-      "digest": "01a5bbcd231fb1b4ea89b28a7dafbf9ac1eb0857fbbf9023928a8e2aed9ff926",
+      "digest": "7669e229bb40072eeb70f01aa30192d9e22ff8f890ddbeacf9ea71ccfbbb256e",
       "file_count": 9,
       "has_description": true,
       "path": "skills/test-lab-match-check"
     },
     {
       "declared_name": "text-replace",
-      "digest": "a7118cdf94925a0795aae5e25aa1babaee883b9eb887c40bf648d16e471b5dfb",
+      "digest": "020110df9f6c67f3a5135380faa7a36172cc8ce5d13d9161adf11d13364af266",
       "file_count": 7,
       "has_description": true,
       "path": "skills/text-replace"
     },
     {
       "declared_name": "text-stats",
-      "digest": "ad79140f175be5ef7caba880bdf09281d4ef7289f7c114b39539a804028367f0",
+      "digest": "5de3757e3e62401d0406599436ab9725823e18ab59a4b024a7c9f0d9c75f693e",
       "file_count": 7,
       "has_description": true,
       "path": "skills/text-stats"
     },
     {
       "declared_name": "token-disclosure-check",
-      "digest": "6a67f73ba23ad1e83d3fcfcd43f71e1ca50b0ca9c11f0dc4bebe6cf4626b2f8a",
+      "digest": "022d37a9f7fe0cef0192a4f044820b8145a20e5b9de938518bf76a3e46dce5f3",
       "file_count": 7,
       "has_description": true,
       "path": "skills/token-disclosure-check"
     },
     {
       "declared_name": "tool-call-guard",
-      "digest": "f2e80d5b68a0d7f05c5d758deb07be6d6f60f9b5379973f6806f74f86a7f1dda",
+      "digest": "596018786a0b449597c441f1225ce1dfe5dbb480c1c3f057704c2148d96df4dd",
       "file_count": 7,
       "has_description": true,
       "path": "skills/tool-call-guard"
     },
     {
       "declared_name": "travel-rule-check",
-      "digest": "1aaf1ff7084f8a5fd36a7bb63a98c491f7de0bcc471e1a48025f6d3dbfa88a0b",
+      "digest": "fe0dbfc09ae9266a47cfce1a63cdbfa5d5e97e957a85e32b74243b0bcadc29b8",
       "file_count": 7,
       "has_description": true,
       "path": "skills/travel-rule-check"
     },
     {
       "declared_name": "uas-ops-checker",
-      "digest": "3a61dda59d6744805c4e6fff5728becf10e16cd3b3e90189b568fbcfe537364b",
+      "digest": "1f1ac5564ac6246b24fd14420bf8eb8fe8281a2ddaa585052e6b53c8dc05c27f",
       "file_count": 5,
       "has_description": true,
       "path": "skills/uas-ops-checker"
     },
     {
       "declared_name": "udi-db-submission-check",
-      "digest": "3e4ab3b609e527a2a042a5e4e6c9ff773e3434afac18821db2113a4d56ec1a3b",
+      "digest": "a9a4833972b85d9c5b8f1d134e3286f3fa1ada44a0e427f4ba8864700c8762c1",
       "file_count": 18,
       "has_description": true,
       "path": "skills/udi-db-submission-check"
     },
     {
       "declared_name": "udi-format-validator",
-      "digest": "19202542b4becc587604b1bb138a6cce0e6f1739abb3cbdbb3c617c6e4ae4ec7",
+      "digest": "ec9a304b57ed0746efc58ea23e5992ae40b2890e1386cd90f1ec240b79bee1d2",
       "file_count": 7,
       "has_description": true,
       "path": "skills/udi-format-validator"
     },
     {
       "declared_name": "wallet-address-check",
-      "digest": "e554d9238e94391a718ac623aa81e6334aaaf71f8e702387c11ed605f53c3842",
+      "digest": "e4f88b488a82fa82c3431d1332aa6e7965bc142205cc6d8bf30b3e25b0180ad5",
       "file_count": 7,
       "has_description": true,
       "path": "skills/wallet-address-check"
     },
     {
       "declared_name": "wechat-viral-topic",
-      "digest": "f36b6ba16e4637a5849b12702fe9dbb145cbc36de45d94c49d3f86b5aa755cf3",
+      "digest": "22bbe4c5fedb5ab356fecae3862fdc27fafe1dffd5005ce063aaf6a885d1a937",
       "file_count": 22,
       "has_description": true,
       "path": "skills/wechat-viral-topic"

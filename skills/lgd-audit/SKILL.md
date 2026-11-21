@@ -27,6 +27,7 @@ tags: [lgd-audit, AI 治理, 审计, 三律, 可追溯, 合规]
 ai_protocol: true
 
 lineage: ["LGD-有籍", "LGD-有证", "LGD-有门禁", "GovernanceOS-AUDIT"]
+capabilities: [read, write, exec]
 ---
 
 # LGD 审计中枢（lgd-audit）
