@@ -50,7 +50,8 @@ def _skill_dirs(root: Path) -> list[Path]:
     found: list[Path] = []
     for dirpath, dirnames, filenames in os.walk(root):
         dirnames[:] = sorted(d for d in dirnames if d not in SKIP_DIRS and not d.startswith("."))
-        if "SKILL.md" in filenames:
+        # 仓库根目录本身不算技能：否则 CI/基建文件会被算进摘要，造成跨环境假红
+        if "SKILL.md" in filenames and Path(dirpath) != root:
             found.append(Path(dirpath))
     # 只按 POSIX 相对路径字符串排序，避免 Windows 的大小写不敏感排序造成跨平台摘要不一致
     return sorted(found, key=lambda d: (d.relative_to(root).as_posix() or "."))
