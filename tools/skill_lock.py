@@ -37,6 +37,16 @@ SKIP_FILES = {"skills.lock.json", "skills.lock.sig", "skills.lock.pub", "skills.
 TEXT_LIMIT = 1_000_000  # 单文件 >1MB 按二进制处理，避免读爆内存
 
 
+def _write_lf(p: Path, text: str) -> None:
+    """一律写 LF 字节。
+
+    坑（2026-11-22 真踩）：Windows 上 Path.write_text 会把 \\n 转成 \\r\\n，
+    而 git blob 在 CI/Linux 侧是 LF，于是签名（对锁文件字节签名）在本地有效、
+    在 CI 里永远 ``signature invalid``。锁产物必须字节稳定，不能依赖平台换行。
+    """
+    p.write_bytes(text.encode("utf-8"))
+
+
 def _sha256_file(p: Path) -> str:
     h = hashlib.sha256()
     with p.open("rb") as f:
@@ -266,7 +276,7 @@ def cmd_generate(root: Path, out: Path) -> int:
     if isinstance(previous, dict) and previous.get("root_digest") == lock["root_digest"]:
         lock["sequence"] = previous.get("sequence", lock["sequence"])
         lock["history"] = previous.get("history", lock["history"])
-    out.write_text(json.dumps(lock, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    _write_lf(out, json.dumps(lock, ensure_ascii=False, indent=2, sort_keys=True) + "\n")
     print(
         f"wrote {out} : {lock['skill_count']} skills, root_digest={lock['root_digest'][:16]}, "
         f"sequence={lock['sequence']}"
@@ -287,7 +297,7 @@ def cmd_anchor(root: Path, lock_path: Path) -> int:
         "skill_count": lock.get("skill_count"),
     }
     path = root / ANCHOR_NAME
-    path.write_text(json.dumps(anchor, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    _write_lf(path, json.dumps(anchor, ensure_ascii=False, indent=2, sort_keys=True) + "\n")
     print(f"wrote {path} : sequence={anchor['sequence']}, root_digest={str(anchor['root_digest'])[:16]}")
     return 0
 
@@ -359,7 +369,8 @@ def cmd_selftest(root: Path) -> int:
         lock_path = work / LOCK_NAME
         cur_bytes = lock_path.read_bytes()
         cur = json.loads(cur_bytes.decode("utf-8"))
-        (work / ANCHOR_NAME).write_text(
+        _write_lf(
+            work / ANCHOR_NAME,
             json.dumps(
                 {
                     "schema_version": 1,
@@ -369,7 +380,6 @@ def cmd_selftest(root: Path) -> int:
                 },
                 indent=2,
             ),
-            encoding="utf-8",
         )
         rolled = dict(cur)
         if cur["sequence"] > 1:
@@ -379,7 +389,7 @@ def cmd_selftest(root: Path) -> int:
             rolled["sequence"] = 1
             rolled["history"] = [{"sequence": 1, "root_digest": "0" * 64}]
             rolled["root_digest"] = "0" * 64
-        lock_path.write_text(json.dumps(rolled, indent=2, sort_keys=True), encoding="utf-8")
+        _write_lf(lock_path, json.dumps(rolled, indent=2, sort_keys=True))
         rc3 = subprocess.run(
             [sys.executable, str(Path(__file__).resolve()), "verify", "--root", str(work)],
             capture_output=True, text=True
@@ -510,8 +520,8 @@ def cmd_sign(root: Path, lock_path: Path, key_path: Path) -> int:
     sig = _sign_bytes(lock_path.read_bytes(), key_path)
     if not sig:
         return 1
-    (root / SIG_FILE).write_text(sig + "\n", encoding="utf-8")
-    (root / PUB_FILE).write_text(pub_hex + "\n", encoding="utf-8")
+    _write_lf(root / SIG_FILE, sig + "\n")
+    _write_lf(root / PUB_FILE, pub_hex + "\n")
     print(f"signed {lock_path.name} -> {SIG_FILE} (pub {pub_hex[:16]}…)")
     return 0
 

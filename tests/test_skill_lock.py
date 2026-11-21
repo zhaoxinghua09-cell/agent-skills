@@ -4,7 +4,11 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+# 两种布局都支持：仓内 tests/ + tools/（CI 用法），
+# 以及工作台里工具与测试同目录（本地开发用法）。
 TOOL = ROOT / "tools" / "skill_lock.py"
+if not TOOL.exists():
+    TOOL = Path(__file__).resolve().parent / "skill_lock.py"
 
 
 def run(cmd, root):
