@@ -1,0 +1,849 @@
+{
+  "algorithm": "sha256(sorted relpath + NUL + file sha256, per line)",
+  "history": [
+    {
+      "root_digest": "7e653effea8c6380ff5f1fcc88837c14456d16acca23b02292ff537a6396e14e",
+      "sequence": 1
+    }
+  ],
+  "root_digest": "7e653effea8c6380ff5f1fcc88837c14456d16acca23b02292ff537a6396e14e",
+  "schema_version": 2,
+  "sequence": 1,
+  "skill_count": 119,
+  "skills": [
+    {
+      "declared_name": "a3-law-operational",
+      "digest": "eddf216a0a1b2c333129c3f592eb1683a00e45db4c7dc7d1f50842fe4db73897",
+      "file_count": 10,
+      "has_description": true,
+      "path": "skills/a3-law-operational"
+    },
+    {
+      "declared_name": "agent-boarding-pass",
+      "digest": "e2d4949337895c65ef3aa849d9632b34347878098d16f977628e252d35022127",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/agent-boarding-pass"
+    },
+    {
+      "declared_name": "agent-evolution",
+      "digest": "484feba462ac69c37009d850a5bddab74e43c1d0cc898011df4037c389c92885",
+      "file_count": 11,
+      "has_description": true,
+      "path": "skills/agent-evolution"
+    },
+    {
+      "declared_name": "agent-kill-switch",
+      "digest": "33d13010a480e81ec2488cbd0b46ba9742ad29ad3dba354c6a8a7b23224c1dba",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/agent-kill-switch"
+    },
+    {
+      "declared_name": "agent-loop-guard",
+      "digest": "9b93958ef9035de18148deaaf7ef74b5279566907a42e0ce0d228cdbe335c899",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/agent-loop-guard"
+    },
+    {
+      "declared_name": "agent-memory-keeper",
+      "digest": "23899de16618ef8a8834167de77eeeb4dddcbb9f2943d609e779f7f2c2d560ef",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/agent-memory-keeper"
+    },
+    {
+      "declared_name": "agent-output-registry",
+      "digest": "526bdb98d0f7d312a0e1580d327dc25fe5a9517415f600296493458508bfc982",
+      "file_count": 10,
+      "has_description": true,
+      "path": "skills/agent-output-registry"
+    },
+    {
+      "declared_name": "agent-redteam-kit",
+      "digest": "2cec0994ad95428ad37dfabe9e994126a2599933084976c127a2fe6a2a6cb50c",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/agent-redteam-kit"
+    },
+    {
+      "declared_name": "agent-trace-audit",
+      "digest": "a12357ca5610e17d3dae4c92f338344d1ebfd6c1f71ccf03a39fbfcb600a8014",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/agent-trace-audit"
+    },
+    {
+      "declared_name": "ai-brain-learning-memory",
+      "digest": "a4b595117de2e3716fd42196d706feaa3696dc6a736165d22f72d27fcba96b5a",
+      "file_count": 10,
+      "has_description": true,
+      "path": "skills/ai-brain-learning-memory"
+    },
+    {
+      "declared_name": "ai-brain-learning-memory-pro",
+      "digest": "c9ff8eff8dce0cd48bd9132bc7c33940a94bf4e5b9342d28c7523f7d39daf205",
+      "file_count": 14,
+      "has_description": true,
+      "path": "skills/ai-brain-learning-memory-pro"
+    },
+    {
+      "declared_name": "ai-content-discloser",
+      "digest": "97cbc1e581c334b1dc5eee5d774895cf2991858ae62558180dd508d8da7e6faf",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/ai-content-discloser"
+    },
+    {
+      "declared_name": "ai-cost-cutter",
+      "digest": "23e9bc44e4eedb7069fa51fa09285180b11ef51d64c61b85c846572753136329",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/ai-cost-cutter"
+    },
+    {
+      "declared_name": "ai-decision-log",
+      "digest": "6d79508f877b36055c50913dd1e2b0feb883718352a1bb1835830f13f2690e09",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/ai-decision-log"
+    },
+    {
+      "declared_name": "ai-governance-audit-chain",
+      "digest": "ee66487bddeb130164aaf55bfc744354c4e13f6d6c1328b451d1d6855487e0f8",
+      "file_count": 12,
+      "has_description": true,
+      "path": "skills/ai-governance-audit-chain"
+    },
+    {
+      "declared_name": "ai-incident-log",
+      "digest": "c9672d401eca2b42c6d55b86b94cdcdd81af52c4fe0c62bb31203f823e3cd069",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/ai-incident-log"
+    },
+    {
+      "declared_name": "ai-policy-radar",
+      "digest": "5c902a2321d10e96bfca917d18bc93a06811cccab720423d75e38a5d0ae76e26",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/ai-policy-radar"
+    },
+    {
+      "declared_name": "ai-reply-heuristics",
+      "digest": "9c92bb3879360fd54cd0dbd0beb240ac007c0cd9cca9b7dc10180eb3bbb6f575",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/ai-reply-heuristics"
+    },
+    {
+      "declared_name": "ai-usage-policy",
+      "digest": "e83210fe1325a2b50f07c6e568353600304cc6898da3e4f1be35302246118d8e",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/ai-usage-policy"
+    },
+    {
+      "declared_name": "ai-vendor-checklist",
+      "digest": "91491b829a465c016b0a04c0524a1fa3ec5b43480ca4d18a6b8a053f8bd68151",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/ai-vendor-checklist"
+    },
+    {
+      "declared_name": "aml-sentinel",
+      "digest": "06c8a7385afa501290d45e1dd38990feb116e8f87914cdc29448144cb6fb2d9a",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/aml-sentinel"
+    },
+    {
+      "declared_name": "anti-cheat-identity",
+      "digest": "0318aede33a01f67c9997bbc2adaf425f9a1cbafca52d7a34b1f8ebde15cfaf4",
+      "file_count": 5,
+      "has_description": true,
+      "path": "skills/anti-cheat-identity"
+    },
+    {
+      "declared_name": "api-resilience",
+      "digest": "ce4cc20c098b804e7499862d13cd5e73adf02cb56da43d402652517d84d9764c",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/api-resilience"
+    },
+    {
+      "declared_name": "aut-grade-checker",
+      "digest": "9c050318903651451cb164c37820984c6e157cf134117de1dda480e4e13f5127",
+      "file_count": 5,
+      "has_description": true,
+      "path": "skills/aut-grade-checker"
+    },
+    {
+      "declared_name": "batch-renamer",
+      "digest": "e51f1895118edf4d7b755ecdb3235792e6e893c1cc5aed80e007973bab6fd850",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/batch-renamer"
+    },
+    {
+      "declared_name": "bias-auditor",
+      "digest": "ba80ed003ab06be203db1183719bbd11f1f64f4f932fb4348962496562993668",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/bias-auditor"
+    },
+    {
+      "declared_name": "cer-equivalence-check",
+      "digest": "7b6dcf4564b22bff5787274e99f29088f61f75d12009091689fba4c8c6dbe22e",
+      "file_count": 9,
+      "has_description": true,
+      "path": "skills/cer-equivalence-check"
+    },
+    {
+      "declared_name": "changelog-draft-gen",
+      "digest": "97e8108f3aded09ff1626b5ba29b7067d3fb99bd3bb7bcf16c091a2469e97240",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/changelog-draft-gen"
+    },
+    {
+      "declared_name": "citation-coverage-check",
+      "digest": "76f456cefbe6254a8fa5ec98aa205f5bf05b953fed3c3be545a0c9e7d2b02eee",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/citation-coverage-check"
+    },
+    {
+      "declared_name": "clin-eval-route-picker",
+      "digest": "eb9d19c20dfce0007d91a388270b7e65d9ca895a3c389ee36baddbb73b074b18",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/clin-eval-route-picker"
+    },
+    {
+      "declared_name": "contest-submission-portal",
+      "digest": "22fc47fe6c582db237f474860891edf2083ee43a16d01f3e6bc8d982d0215a8d",
+      "file_count": 5,
+      "has_description": true,
+      "path": "skills/contest-submission-portal"
+    },
+    {
+      "declared_name": "context-engineering",
+      "digest": "7c5a84965546d396985576f92b419988d5db8dbce72931c45fbcba16ef9f8162",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/context-engineering"
+    },
+    {
+      "declared_name": "contract-clause-check",
+      "digest": "a438af5d0a5d959bff7df701761ae658d36db99ee40e53f418131c000e241514",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/contract-clause-check"
+    },
+    {
+      "declared_name": "contract-interact-checklist",
+      "digest": "af7ecee9cbe220e3b25b75c5bbda0f4f316a37e8ab75d42c747a9f9ee2fadef5",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/contract-interact-checklist"
+    },
+    {
+      "declared_name": "csv-slice",
+      "digest": "178d1b0b50418b08895358c7f6d9926886c4191d3183345d97c11eabb104d097",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/csv-slice"
+    },
+    {
+      "declared_name": "data-export-check",
+      "digest": "c2f1fb08e149b43cb301773df4d7aba13f3744196725305a7a18f5abe0105b57",
+      "file_count": 10,
+      "has_description": true,
+      "path": "skills/data-export-check"
+    },
+    {
+      "declared_name": "data-grade-checker",
+      "digest": "9b494a1f2e40ec8b4016a54adfad6396633e0e52fce2cc09f726af288c99aed1",
+      "file_count": 5,
+      "has_description": true,
+      "path": "skills/data-grade-checker"
+    },
+    {
+      "declared_name": "data-minimizer",
+      "digest": "5a7b58132ad3d016452d9bb40e645b92631067dc440883c73eeb78b3c9a9ea1f",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/data-minimizer"
+    },
+    {
+      "declared_name": "data-rights-guard",
+      "digest": "263764b94e08414978c82deb2a14ce6c632cffe225d0ff92dce04a740f997779",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/data-rights-guard"
+    },
+    {
+      "declared_name": "debug-pro",
+      "digest": "a7cd66443046d1895f8a16573aa70c3702b73ec036b04b9fbe7a72aec803f305",
+      "file_count": 16,
+      "has_description": true,
+      "path": "skills/debug-pro"
+    },
+    {
+      "declared_name": "dir-organizer",
+      "digest": "52e2d052b14ac4c82c750de9ecdb58476ba1e9055a9ce4ff2b0d7e0ee245b9be",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/dir-organizer"
+    },
+    {
+      "declared_name": "disk-scan",
+      "digest": "58637f9a84b8019f4376d9c2dc03e8609c890f90e9a22157bf79945534a2665f",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/disk-scan"
+    },
+    {
+      "declared_name": "doc-desens-scanner",
+      "digest": "72a9fa8c20cb25b63ba145814f155402c535c9b721e97934d78851252a9a27c8",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/doc-desens-scanner"
+    },
+    {
+      "declared_name": "dpapi-local-vault",
+      "digest": "cce2da8e28dedde373dc9570337f26aa4fce7386955ff78ecfff14d374b73202",
+      "file_count": 10,
+      "has_description": true,
+      "path": "skills/dpapi-local-vault"
+    },
+    {
+      "declared_name": "dup-finder",
+      "digest": "e84b9f0d55f689f326b65961936dc26795fe63aa4cf8bec363cb0bc99030bf36",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/dup-finder"
+    },
+    {
+      "declared_name": "env-var-audit",
+      "digest": "cc4868c4be7c5b62c4980c50d0bad53fe064801b5354f3e35247ad61684001a7",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/env-var-audit"
+    },
+    {
+      "declared_name": "eu-ai-act-companion",
+      "digest": "5cc9fc83892a8f7da77431a21559c8347e574dbf11bff8a3e1cf8fbcfc8e226d",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/eu-ai-act-companion"
+    },
+    {
+      "declared_name": "eval-bench-builder",
+      "digest": "5ce0a4ac9cb6c1719d4212d38ca7866833dae042a3a17a042e52841fb8bdb077",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/eval-bench-builder"
+    },
+    {
+      "declared_name": "evid-four-check",
+      "digest": "0e8134e750dc3e26245fd29d995f3c0b969d6a265f83799f071d028b5760f599",
+      "file_count": 5,
+      "has_description": true,
+      "path": "skills/evid-four-check"
+    },
+    {
+      "declared_name": "evidence-chain-builder",
+      "digest": "cda1694419db246e6457e47da5a44c8459bec57d992243fb028140bfd862daf0",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/evidence-chain-builder"
+    },
+    {
+      "declared_name": "evidence-chain-check",
+      "digest": "8f20f3d1bd903de844a0f231148483a3eb6f521772e7291e9147eae1269e21b6",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/evidence-chain-check"
+    },
+    {
+      "declared_name": "fact-check-guard",
+      "digest": "995a5366060c9e4303c6a05b573ee6e7a40ced34f7ed01c9225b48d497f49736",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/fact-check-guard"
+    },
+    {
+      "declared_name": "fin-ai-classifier",
+      "digest": "6926a01dbf3de8a94538120a560013eec699a1ed9095740a3a4b208944895d63",
+      "file_count": 5,
+      "has_description": true,
+      "path": "skills/fin-ai-classifier"
+    },
+    {
+      "declared_name": "fin-reg-calc",
+      "digest": "8dd288ecbe8730a2057be70a8f0607558991a2bf1c699dffe2e3c0233feb876a",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/fin-reg-calc"
+    },
+    {
+      "declared_name": "fund-fee-calc",
+      "digest": "4746d58836f39960da94f1e817e84febc25e572d7cf78bfd1df6a4c3adb12f96",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/fund-fee-calc"
+    },
+    {
+      "declared_name": "gate-policy-generator",
+      "digest": "bae680e0cc95a8801cbefb9064bc172af14a61ad4944330dd6d8d8e31b63039c",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/gate-policy-generator"
+    },
+    {
+      "declared_name": "github-api-push-workaround",
+      "digest": "3e8d95ee536aec01995d695faa43d0b05c268294c3bddb5925c6cfce03957c24",
+      "file_count": 4,
+      "has_description": true,
+      "path": "skills/github-api-push-workaround"
+    },
+    {
+      "declared_name": "gov-disclosure-check",
+      "digest": "caa1369e737e5bc92172e42738f7ca50174f1d63e94eb90048783126ab126f43",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/gov-disclosure-check"
+    },
+    {
+      "declared_name": "hash-check",
+      "digest": "f5f91fcc0b2ddb63020903e68e4b29d6c66d398bb6918a94b6978a9df8f46b0f",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/hash-check"
+    },
+    {
+      "declared_name": "health-claim-guard",
+      "digest": "d3b10fc242b2dba365d13601ec69943ce9dc7106a14bf2f7eae6bdcc670ce606",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/health-claim-guard"
+    },
+    {
+      "declared_name": "hgrac-route-checker",
+      "digest": "b1f8b22c73e978c7a498d2462b76a8028de3e92e9c2ae4fe518b110b0cf3dfba",
+      "file_count": 5,
+      "has_description": true,
+      "path": "skills/hgrac-route-checker"
+    },
+    {
+      "declared_name": "import-export-router",
+      "digest": "eea332a99386a8b211f64f853322611583f6f369b901fa496c599e6cf19b01f8",
+      "file_count": 5,
+      "has_description": true,
+      "path": "skills/import-export-router"
+    },
+    {
+      "declared_name": "invoice-risk-scan",
+      "digest": "b3be54c95b98f62b28d3358170fa9b0dea89a63636bd393dd38eba8003798059",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/invoice-risk-scan"
+    },
+    {
+      "declared_name": "json-tidy",
+      "digest": "c1ff966b680856ab96614076aee1db39c4556f787db1592cedf0693fb75192f2",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/json-tidy"
+    },
+    {
+      "declared_name": "judging-rubric-grader",
+      "digest": "f81af5d8219cdecb7e90b08198bc7ace410afe52384c1c3d4eccd082771561a1",
+      "file_count": 5,
+      "has_description": true,
+      "path": "skills/judging-rubric-grader"
+    },
+    {
+      "declared_name": "kyc-checklist-gen",
+      "digest": "c169f0b22870851f98257443e1f38e3902c10d83b1f46f1a850634e0d1074a73",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/kyc-checklist-gen"
+    },
+    {
+      "declared_name": "label-compliance-checker",
+      "digest": "6a7029cdec90f822be1929ed83dd547cfbd0b3e2ca82138ad83b97d078513440",
+      "file_count": 5,
+      "has_description": true,
+      "path": "skills/label-compliance-checker"
+    },
+    {
+      "declared_name": "lgd-audit",
+      "digest": "b945448d5862b8294cb2cb58b4da263351e9887b37b7e7ee933cc11fbc044ab2",
+      "file_count": 6,
+      "has_description": true,
+      "path": "skills/lgd-audit"
+    },
+    {
+      "declared_name": "lgd-badge-issuer",
+      "digest": "9f2d11a8afb3f9d434ca23777ffd1b863f682c04ab95978ed36d46d4270e2779",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/lgd-badge-issuer"
+    },
+    {
+      "declared_name": "lgd-badge-verify",
+      "digest": "907d2fe3c7aceba7fc6bc6733c49843de1c48eda5f48e8f26b226855e1533115",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/lgd-badge-verify"
+    },
+    {
+      "declared_name": "lgd-bootstrap",
+      "digest": "4d7fe978ca73ed49a53fabff1682b79990fd0190218f7fbf0c3dc5476f3ca9a3",
+      "file_count": 1,
+      "has_description": true,
+      "path": "skills/lgd-bootstrap"
+    },
+    {
+      "declared_name": "lgd-certify",
+      "digest": "265ceeda9d25e36a2ccb0654393467f3443ed96ba0ddf459d0891c2e03580e1b",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/lgd-certify"
+    },
+    {
+      "declared_name": "lgd-crypto-guard",
+      "digest": "56c6591b5f9ef64d71a1abc2519d15ca3e17cae53a5a569553c0701e61d55b85",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/lgd-crypto-guard"
+    },
+    {
+      "declared_name": "lgd-evo",
+      "digest": "9acc3c4be89d5e1f0ae525e12d4602c83adc7b9f11c3c9b7c303dc4ecfdd521f",
+      "file_count": 6,
+      "has_description": true,
+      "path": "skills/lgd-evo"
+    },
+    {
+      "declared_name": "lgd-fin-guard",
+      "digest": "9f94bac31f2304a2cae116eb83723cdf5571e0686d15386e11554562dab944cf",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/lgd-fin-guard"
+    },
+    {
+      "declared_name": "lgd-gate",
+      "digest": "43e7acfb06e1bfaabe9727103d283afa3e931c7040f7d2959c3b276fca099b2f",
+      "file_count": 6,
+      "has_description": true,
+      "path": "skills/lgd-gate"
+    },
+    {
+      "declared_name": "lgd-gate-methodology",
+      "digest": "13f6b6e685203215a8ade8135efa701022ab9839298aff70bd15dcee5ff484fc",
+      "file_count": 2,
+      "has_description": true,
+      "path": "skills/lgd-gate-methodology"
+    },
+    {
+      "declared_name": "lgd-gov-guard",
+      "digest": "4fed274fc3e67266f458b63f8cfe8d2ebdbaa4c1d4ce72809585a021f356aa53",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/lgd-gov-guard"
+    },
+    {
+      "declared_name": "lgd-law-ethic",
+      "digest": "29305da73925c49a390ecb1e67c44df26f941cf4ddea570ce7253b145441931a",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/lgd-law-ethic"
+    },
+    {
+      "declared_name": "lgd-skill-review",
+      "digest": "65c636f7c9943f450f9dc49fcea270a6648a25858a28e5600a5e2462ff180692",
+      "file_count": 13,
+      "has_description": true,
+      "path": "skills/lgd-skill-review"
+    },
+    {
+      "declared_name": "lgd-three-laws-auditor",
+      "digest": "ad43a2a90df03d8a62b713fd52b866569045814dac21fa3bdce85aea60a7c593",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/lgd-three-laws-auditor"
+    },
+    {
+      "declared_name": "loan-rate-disclosure",
+      "digest": "45302ab5d7f296064a909a41fe413c13c7ca7105972c2df2636cc12d93b4d100",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/loan-rate-disclosure"
+    },
+    {
+      "declared_name": "mcp-security-scan",
+      "digest": "64f55666aeeb8d1422470fcd7e57187d05790c4754c16cc90b5f887a814b631e",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/mcp-security-scan"
+    },
+    {
+      "declared_name": "md-classification-route",
+      "digest": "30695787218ecc3350699d502bb550890d88c05fa02db627e8d53c8f80a7b565",
+      "file_count": 9,
+      "has_description": true,
+      "path": "skills/md-classification-route"
+    },
+    {
+      "declared_name": "md-link-audit",
+      "digest": "884f689d4ce7d4c8bcdeb3aa4f54f4dc5cb02cddf299e707ff772718056945ca",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/md-link-audit"
+    },
+    {
+      "declared_name": "model-card-generator",
+      "digest": "826dcab591b0fe67813f71cef885c952c4cf29f4313311542fb97e9ea1ea87d2",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/model-card-generator"
+    },
+    {
+      "declared_name": "model-router",
+      "digest": "7e215b30dfe33fd9db25f26147641f587f6def769070be7583c05a06d73568d7",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/model-router"
+    },
+    {
+      "declared_name": "multi-agent-conductor",
+      "digest": "a77a950333001333a65a7749eac8d83917996456daec29f841c29edcbb01259a",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/multi-agent-conductor"
+    },
+    {
+      "declared_name": "non-clinical-checker",
+      "digest": "bd7214443b0ebcbaf7e22f28a8a7f318e456dfa32bdc61bae2b557866f1f47ff",
+      "file_count": 5,
+      "has_description": true,
+      "path": "skills/non-clinical-checker"
+    },
+    {
+      "declared_name": "originality-check",
+      "digest": "c0f6df4f37ea30cce5a9808ef3a26433cf148e045116fff09f8b36c497ce589c",
+      "file_count": 5,
+      "has_description": true,
+      "path": "skills/originality-check"
+    },
+    {
+      "declared_name": "output-schema-guard",
+      "digest": "ffe43efee47fb07cf39207e5a326016b2eb96af1f1345da78487438506090d71",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/output-schema-guard"
+    },
+    {
+      "declared_name": "pmcf-evaluation-report-check",
+      "digest": "70a205925d650ab1bd8413cf4c491cd1ccc0a242b532d0dd6e9d6f95362f5295",
+      "file_count": 9,
+      "has_description": true,
+      "path": "skills/pmcf-evaluation-report-check"
+    },
+    {
+      "declared_name": "pmcf-plan-check",
+      "digest": "37c2af737e679186d02f036680935b7444d636c438e2465a9b096674f2c09310",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/pmcf-plan-check"
+    },
+    {
+      "declared_name": "pms-vigilance-intake",
+      "digest": "f457e61986d13ca8ddebaeb0c9b0f2acc5a387a4ad5e3655c69739eb65c2dd87",
+      "file_count": 5,
+      "has_description": true,
+      "path": "skills/pms-vigilance-intake"
+    },
+    {
+      "declared_name": "problem-set-generator",
+      "digest": "3d7a2054a223a433f26451798bf0533b3d8293489a1e0d39d71caacc79e4cdd5",
+      "file_count": 5,
+      "has_description": true,
+      "path": "skills/problem-set-generator"
+    },
+    {
+      "declared_name": "prompt-compressor",
+      "digest": "94c9572149f8d6c9897002f883893aecaa92b857fc8d5f0a511f851eac5d4ab2",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/prompt-compressor"
+    },
+    {
+      "declared_name": "prompt-injection-drill",
+      "digest": "95bbcdae3d9617317fb4eb5a08b994b443ec677bb48f29f4f5583f7bc9d2ff80",
+      "file_count": 8,
+      "has_description": true,
+      "path": "skills/prompt-injection-drill"
+    },
+    {
+      "declared_name": "prompt-injection-shield",
+      "digest": "ec1485c5daee314e424e1c6d6a4f28b9af4306a3c7887f6bf2a899a667740988",
+      "file_count": 8,
+      "has_description": true,
+      "path": "skills/prompt-injection-shield"
+    },
+    {
+      "declared_name": "prompt-leak-scanner",
+      "digest": "47b88b8eade58371f181ef536f5aaf32d07b1746c95b46d7bcb17b1b6b5ee46c",
+      "file_count": 8,
+      "has_description": true,
+      "path": "skills/prompt-leak-scanner"
+    },
+    {
+      "declared_name": "prompt-version-control",
+      "digest": "d2fbebe3338fddb0e31656afb77f4d2ed69c9a9a8d8274ed7fe68100e09fd0fb",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/prompt-version-control"
+    },
+    {
+      "declared_name": "publish-quality-gate",
+      "digest": "e016a6b172f22ef0f5fd62f47fe8fc94398da84e34f6a10d351814ae1789e44d",
+      "file_count": 10,
+      "has_description": true,
+      "path": "skills/publish-quality-gate"
+    },
+    {
+      "declared_name": "rag-grounding-guard",
+      "digest": "497ade1af33136da9cdd7626f8861d9e2b42602d4e896a0dca7becccba486c30",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/rag-grounding-guard"
+    },
+    {
+      "declared_name": "recall-decision-checker",
+      "digest": "934944775c585aba8e07b1a740f3afb8eab62c6854129db854af333a71024e50",
+      "file_count": 5,
+      "has_description": true,
+      "path": "skills/recall-decision-checker"
+    },
+    {
+      "declared_name": "regex-sandbox",
+      "digest": "760e32ed8c2305f78f2bd6794a74df4d570088fbbe6d0e5659133c16c405998b",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/regex-sandbox"
+    },
+    {
+      "declared_name": "session-continuity-protocol",
+      "digest": "9e2788d0704d90c270dc3dafc7ef8bafc1c2f2c32e8670c08bc2c4af387e358a",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/session-continuity-protocol"
+    },
+    {
+      "declared_name": "skill-admission-gate",
+      "digest": "44911e3122c814ea28f5d99d907c9c9b9007f142d5a071b8886dc22f1dcfc85b",
+      "file_count": 5,
+      "has_description": true,
+      "path": "skills/skill-admission-gate"
+    },
+    {
+      "declared_name": "skill-quality-gate",
+      "digest": "c0d51883618a0dcf613228d7d3e5e47a999ba21299eb020f0b299e672f5d187d",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/skill-quality-gate"
+    },
+    {
+      "declared_name": "summarize-pro",
+      "digest": "88afaba7c1663bfb691d60dc15c9de38e08862d57de5e0a436e2d7d97401c3ec",
+      "file_count": 19,
+      "has_description": true,
+      "path": "skills/summarize-pro"
+    },
+    {
+      "declared_name": "test-lab-match-check",
+      "digest": "01a5bbcd231fb1b4ea89b28a7dafbf9ac1eb0857fbbf9023928a8e2aed9ff926",
+      "file_count": 9,
+      "has_description": true,
+      "path": "skills/test-lab-match-check"
+    },
+    {
+      "declared_name": "text-replace",
+      "digest": "a7118cdf94925a0795aae5e25aa1babaee883b9eb887c40bf648d16e471b5dfb",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/text-replace"
+    },
+    {
+      "declared_name": "text-stats",
+      "digest": "ad79140f175be5ef7caba880bdf09281d4ef7289f7c114b39539a804028367f0",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/text-stats"
+    },
+    {
+      "declared_name": "token-disclosure-check",
+      "digest": "6a67f73ba23ad1e83d3fcfcd43f71e1ca50b0ca9c11f0dc4bebe6cf4626b2f8a",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/token-disclosure-check"
+    },
+    {
+      "declared_name": "tool-call-guard",
+      "digest": "f2e80d5b68a0d7f05c5d758deb07be6d6f60f9b5379973f6806f74f86a7f1dda",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/tool-call-guard"
+    },
+    {
+      "declared_name": "travel-rule-check",
+      "digest": "1aaf1ff7084f8a5fd36a7bb63a98c491f7de0bcc471e1a48025f6d3dbfa88a0b",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/travel-rule-check"
+    },
+    {
+      "declared_name": "uas-ops-checker",
+      "digest": "3a61dda59d6744805c4e6fff5728becf10e16cd3b3e90189b568fbcfe537364b",
+      "file_count": 5,
+      "has_description": true,
+      "path": "skills/uas-ops-checker"
+    },
+    {
+      "declared_name": "udi-db-submission-check",
+      "digest": "3e4ab3b609e527a2a042a5e4e6c9ff773e3434afac18821db2113a4d56ec1a3b",
+      "file_count": 18,
+      "has_description": true,
+      "path": "skills/udi-db-submission-check"
+    },
+    {
+      "declared_name": "udi-format-validator",
+      "digest": "19202542b4becc587604b1bb138a6cce0e6f1739abb3cbdbb3c617c6e4ae4ec7",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/udi-format-validator"
+    },
+    {
+      "declared_name": "wallet-address-check",
+      "digest": "e554d9238e94391a718ac623aa81e6334aaaf71f8e702387c11ed605f53c3842",
+      "file_count": 7,
+      "has_description": true,
+      "path": "skills/wallet-address-check"
+    },
+    {
+      "declared_name": "wechat-viral-topic",
+      "digest": "f36b6ba16e4637a5849b12702fe9dbb145cbc36de45d94c49d3f86b5aa755cf3",
+      "file_count": 22,
+      "has_description": true,
+      "path": "skills/wechat-viral-topic"
+    }
+  ],
+  "validated_against": []
+}
