@@ -27,13 +27,15 @@ import shutil
 import subprocess
 import sys
 import tempfile
+from datetime import datetime, timezone
 from pathlib import Path
 
 LOCK_NAME = "skills.lock.json"
 ANCHOR_NAME = "skills.lock.anchor.json"
+LEDGER_NAME = "skills.lock.log.jsonl"
 SKIP_DIRS = {".git", "node_modules", "__pycache__", ".venv", "venv", "tests", "fixtures", "testdata"}
 # 锁自身的产物必须排除，否则"仓库根目录本身就是一个技能"的仓会自我递归漂移
-SKIP_FILES = {"skills.lock.json", "skills.lock.sig", "skills.lock.pub", "skills.lock.policy.json", "skills.lock.anchor.json"}
+SKIP_FILES = {"skills.lock.json", "skills.lock.sig", "skills.lock.pub", "skills.lock.policy.json", "skills.lock.anchor.json", "skills.lock.log.jsonl"}
 TEXT_LIMIT = 1_000_000  # 单文件 >1MB 按二进制处理，避免读爆内存
 
 
@@ -302,6 +304,140 @@ def cmd_anchor(root: Path, lock_path: Path) -> int:
     return 0
 
 
+def _git_meta(root: Path) -> dict:
+    """取 HEAD 与 repo 名，用于把日志条目钉到具体提交上（取不到就留空，不阻塞）。"""
+    meta = {"repo": "", "commit": ""}
+    try:
+        commit = subprocess.run(
+            ["git", "-C", str(root), "rev-parse", "HEAD"], capture_output=True, text=True
+        ).stdout.strip()
+        url = subprocess.run(
+            ["git", "-C", str(root), "config", "--get", "remote.origin.url"],
+            capture_output=True, text=True,
+        ).stdout.strip()
+        meta["commit"] = commit
+        if url:
+            meta["repo"] = url.rstrip("/").split("/")[-1].replace(".git", "")
+            if ":" in url.split("/")[0] and not url.startswith("http"):
+                owner = url.split(":")[-1].split("/")[0]
+                meta["repo"] = f"{owner}/{meta['repo']}"
+    except Exception:  # noqa: BLE001
+        pass
+    return meta
+
+
+def _content_hash(lock: dict) -> str:
+    payload = json.dumps(
+        {"root_digest": lock.get("root_digest"), "skill_count": lock.get("skill_count")},
+        sort_keys=True, ensure_ascii=False,
+    ).encode("utf-8")
+    return hashlib.sha256(payload).hexdigest()
+
+
+def _entry_chain(entry: dict) -> str:
+    """对**整条条目**（除 chain 自身）做承诺。
+
+    坑（2026-11-22 真踩）：第一版只承诺 content_hash|prev_chain|ts|repo，
+    于是往条目里加一个字段（`"note":"x"`）仍能验过 —— 等于日志可被悄悄篡改。
+    SCITT 的做法是对整条受保护字段做承诺，这里照做。
+    """
+    payload = {k: v for k, v in entry.items() if k != "chain"}
+    raw = json.dumps(payload, sort_keys=True, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
+    return hashlib.sha256(raw).hexdigest()
+
+
+def _read_ledger(path: Path) -> list[dict]:
+    out: list[dict] = []
+    if not path.exists():
+        return out
+    for line in path.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        out.append(json.loads(line))
+    return out
+
+
+def cmd_ledger(root: Path, lock_path: Path) -> int:
+    """把当前锁追加进哈希链日志（skills.lock.log.jsonl）。幂等：内容没变就不追加。"""
+    if not lock_path.exists():
+        print(f"::error::missing {LOCK_NAME}; run generate first")
+        return 1
+    lock = json.loads(lock_path.read_text(encoding="utf-8"))
+    path = root / LEDGER_NAME
+    entries = _read_ledger(path)
+    last = entries[-1] if entries else None
+    if last and last.get("root_digest") == lock.get("root_digest") and last.get(
+        "skill_count"
+    ) == lock.get("skill_count"):
+        print(f"ledger unchanged: seq={last.get('seq')} root_digest={str(lock.get('root_digest'))[:16]}")
+        return 0
+    meta = _git_meta(root)
+    ts = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    content = _content_hash(lock)
+    prev_chain = str(last.get("chain")) if last else "0" * 64
+    entry = {
+        "seq": (int(last.get("seq", 0)) + 1) if last else 1,
+        "ts": ts,
+        "repo": meta["repo"],
+        "commit": meta["commit"],
+        "root_digest": lock.get("root_digest"),
+        "skill_count": lock.get("skill_count"),
+        "content_hash": content,
+        "prev_chain": prev_chain,
+    }
+    entry["chain"] = _entry_chain(entry)
+    with path.open("a", encoding="utf-8", newline="\n") as f:
+        f.write(json.dumps(entry, ensure_ascii=False, sort_keys=True) + "\n")
+    print(f"ledger appended: seq={entry['seq']} chain={entry['chain'][:16]}")
+    return 0
+
+
+def _ledger_problems(root: Path, lock: dict) -> list[str]:
+    """校验哈希链：链接连续性、逐条 chain 重算、序号连续性、是否覆盖当前锁、是否被截断。"""
+    path = root / LEDGER_NAME
+    if not path.exists():
+        return []  # 未启用日志不阻塞，属于可选加固
+    problems: list[str] = []
+    try:
+        entries = _read_ledger(path)
+    except Exception as exc:  # noqa: BLE001
+        return [f"{LEDGER_NAME}: unreadable ({exc})"]
+    if not entries:
+        return [f"{LEDGER_NAME}: empty"]
+    prev_chain = "0" * 64
+    for i, e in enumerate(entries):
+        if e.get("seq") != i + 1:
+            problems.append(f"ledger[{i}]: seq={e.get('seq')} breaks 1-based continuity")
+        if str(e.get("prev_chain")) != prev_chain:
+            problems.append(f"ledger[{i}]: prev_chain does not link to previous entry (truncated or rewritten)")
+        recomputed = _entry_chain(e)
+        if recomputed != str(e.get("chain")):
+            problems.append(f"ledger[{i}]: chain hash mismatch (entry edited after being written)")
+        prev_chain = str(e.get("chain"))
+    last = entries[-1]
+    if last.get("root_digest") != lock.get("root_digest") or last.get("skill_count") != lock.get(
+        "skill_count"
+    ):
+        problems.append(
+            "ledger does not cover the current lockfile (lock changed without appending a ledger entry)"
+        )
+    if int(last.get("seq", 0)) < int(lock.get("sequence", 1)):
+        problems.append(
+            f"ledger behind lockfile: ledger seq={last.get('seq')} but lock sequence={lock.get('sequence')} "
+            f"(entries were truncated)"
+        )
+    anchor = root / ANCHOR_NAME
+    if anchor.exists():
+        try:
+            seq = int(json.loads(anchor.read_text(encoding="utf-8")).get("sequence", 1))
+            if int(last.get("seq", 0)) < seq:
+                problems.append(f"ledger truncated relative to anchor: ledger seq={last.get('seq')} < anchor seq={seq}")
+        except Exception:  # noqa: BLE001
+            pass
+    return problems
+
+
 def cmd_verify(root: Path, lock_path: Path) -> int:
     if not lock_path.exists():
         print(f"::error file={lock_path}::missing {LOCK_NAME}; run `python tools/skill_lock.py generate`")
@@ -309,6 +445,7 @@ def cmd_verify(root: Path, lock_path: Path) -> int:
     lock = json.loads(lock_path.read_text(encoding="utf-8"))
     problems = diff_lock(root, lock)
     problems.extend(_signature_problems(root, lock_path))
+    problems.extend(_ledger_problems(root, lock))
     for p in problems:
         print(f"::error::{p}")
     if problems:
@@ -413,6 +550,36 @@ def cmd_selftest(root: Path) -> int:
             else:
                 print(f"signature control OK: post-signing edit rejected (exit {rc4.returncode})")
             lock_path.write_bytes(cur_bytes)
+
+        # 第五个负控：哈希链日志被截断。前面的环仍然自洽，只删最后一环——必须被拒。
+        ledger_path = work / LEDGER_NAME
+        if ledger_path.exists():
+            lines = ledger_path.read_text(encoding="utf-8").splitlines()
+            if len(lines) > 1:
+                _write_lf(ledger_path, "\n".join(lines[:-1]) + "\n")
+                rc5 = subprocess.run(
+                    [sys.executable, str(Path(__file__).resolve()), "verify", "--root", str(work)],
+                    capture_output=True, text=True
+                ).returncode
+                if rc5 == 0:
+                    print("::error::ledger control failed: a truncated transparency log still verified clean")
+                    failures += 1
+                else:
+                    print(f"ledger control OK: truncated log rejected (exit {rc5})")
+                _write_lf(ledger_path, "\n".join(lines) + "\n")
+            else:
+                # 只有一环时，把整条日志清空：链必须因此判红（不能出现"空日志也算通过"）
+                ledger_path.write_bytes(b"")
+                rc5 = subprocess.run(
+                    [sys.executable, str(Path(__file__).resolve()), "verify", "--root", str(work)],
+                    capture_output=True, text=True
+                ).returncode
+                if rc5 == 0:
+                    print("::error::ledger control failed: an emptied transparency log still verified clean")
+                    failures += 1
+                else:
+                    print(f"ledger control OK: emptied log rejected (exit {rc5})")
+                _write_lf(ledger_path, "\n".join(lines) + "\n")
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
     return 1 if failures else 0
@@ -420,7 +587,7 @@ def cmd_selftest(root: Path) -> int:
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("command", choices=["generate", "verify", "selftest", "anchor", "keygen", "sign"])
+    ap.add_argument("command", choices=["generate", "verify", "selftest", "anchor", "keygen", "sign", "ledger"])
     ap.add_argument("--root", default=".")
     ap.add_argument("--out", default=None)
     ap.add_argument("--key", default=None)
@@ -440,6 +607,8 @@ def main() -> int:
         return cmd_keygen(key_path)
     if a.command == "sign":
         return cmd_sign(root, lock_path, key_path)
+    if a.command == "ledger":
+        return cmd_ledger(root, lock_path)
     return cmd_selftest(root)
 
 

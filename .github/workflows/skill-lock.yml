@@ -45,6 +45,16 @@ jobs:
           python3 -c "import pytest, cryptography" 2>/dev/null || python3 -m pip install --quiet pytest cryptography
           python3 -m pytest tests/test_skill_lock.py -q
 
+      - name: Preflight - actions.lock must cover every `uses:` ref
+        run: |
+          set -euo pipefail
+          cd repo
+          if [ -f .github/workflows/actions.lock ]; then
+            python3 tools/check_lockfile_refs.py .
+          else
+            echo "no actions.lock in this repo - preflight skipped"
+          fi
+
       - name: Verify the skills lock
         run: |
           set -euo pipefail

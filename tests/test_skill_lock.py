@@ -154,3 +154,28 @@ def test_selftest_reports_three_controls(tmp_path):
     assert "negative control OK" in r.stdout
     assert "positive control OK" in r.stdout
     assert "rollback control OK" in r.stdout
+def test_ledger_covers_lock_and_tamper_is_rejected(tmp_path):
+    """透明日志：追加后必须覆盖当前锁；往条目里加一个字段必须被判红。"""
+    make_tree(tmp_path)
+    assert run("generate", tmp_path).returncode == 0
+    assert run("ledger", tmp_path).returncode == 0
+    log = tmp_path / "skills.lock.log.jsonl"
+    assert log.exists()
+    assert run("verify", tmp_path).returncode == 0
+    entry = json.loads(log.read_text(encoding="utf-8").splitlines()[0])
+    entry["note"] = "x"  # 悄悄加一个字段
+    log.write_text(json.dumps(entry) + "\n", encoding="utf-8")
+    r = run("verify", tmp_path)
+    assert r.returncode != 0, r.stdout
+    assert "chain hash mismatch" in r.stdout
+
+
+def test_ledger_truncation_is_rejected(tmp_path):
+    """把日志清空（链断/丢失）必须被判红，而不是"没有日志=通过"。"""
+    make_tree(tmp_path)
+    assert run("generate", tmp_path).returncode == 0
+    assert run("ledger", tmp_path).returncode == 0
+    (tmp_path / "skills.lock.log.jsonl").write_bytes(b"")
+    r = run("verify", tmp_path)
+    assert r.returncode != 0, r.stdout
+    assert "empty" in r.stdout
