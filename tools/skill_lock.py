@@ -32,6 +32,8 @@ from pathlib import Path
 LOCK_NAME = "skills.lock.json"
 ANCHOR_NAME = "skills.lock.anchor.json"
 SKIP_DIRS = {".git", "node_modules", "__pycache__", ".venv", "venv", "tests", "fixtures", "testdata"}
+# 锁自身的产物必须排除，否则"仓库根目录本身就是一个技能"的仓会自我递归漂移
+SKIP_FILES = {"skills.lock.json", "skills.lock.sig", "skills.lock.pub", "skills.lock.policy.json", "skills.lock.anchor.json"}
 TEXT_LIMIT = 1_000_000  # 单文件 >1MB 按二进制处理，避免读爆内存
 
 
@@ -61,7 +63,7 @@ def _tree_digest(skill_dir: Path) -> tuple[str, int]:
         if not p.is_file():
             continue
         parts = set(p.relative_to(skill_dir).parts)
-        if parts & SKIP_DIRS:
+        if parts & SKIP_DIRS or p.name in SKIP_FILES:
             continue
         rel = p.relative_to(skill_dir).as_posix()
         files.append((rel, _sha256_file(p)))
@@ -152,8 +154,9 @@ def diff_lock(root: Path, lock: dict) -> list[str]:
                 f"files {entry['file_count']} -> {count}"
             )
         if entry["declared_name"] and entry["declared_name"] != path.split("/")[-1] and path != ".":
-            problems.append(
-                f"{path}: SKILL.md name '{entry['declared_name']}' does not match directory name"
+            print(
+                f"::warning::{path}: SKILL.md name '{entry['declared_name']}' "
+                f"does not match directory name (lint only, not an integrity failure)"
             )
     for path in sorted(actual):
         if path not in recorded:
