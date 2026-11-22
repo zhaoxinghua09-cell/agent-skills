@@ -53,6 +53,7 @@ trigger_keywords:
 - 标题
 - 策划
 - 公众号
+capabilities: [read, write]
 ---
 
 # Topic Selection: Four Questions That Turn a Trend Into Your Story

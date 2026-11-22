@@ -1,4 +1,4 @@
-﻿---
+---
 name: lgd-bootstrap
 slug: lgd-bootstrap
 display_name: "LGD Bootstrap: Zero to Three-Law Mode in 5 Minutes · LGD 快速通道：5 分钟进入三律运行模式"
@@ -12,6 +12,7 @@ license: "理论文本 CC BY 4.0（2026-11-03 口径，引用须署名+DOI）；
 category: "methodology"
 tags: ["LGD", "AI-governance", "three-laws", "onboarding", "agent-governance", "evidence-gate"]
 platforms: ["workbuddy", "claude", "generic-agent"]
+capabilities: [read]
 ---
 
 # LGD 快速通道

@@ -24,6 +24,7 @@ classification:
   iso_25010: ["Security"]
 risk_tier: medium
 risk_rationale: "门禁批量补丁默认 medium（Steven 2026-09-28 令：我们的 skill 设计为中等风险）：调用 API/读写文件/本地执行，最小权限，密钥走 Secret；若实际涉对外代执行(push/发布/发送/上架)须人工复评，改 high 并走 Steven 批准。"
+capabilities: [read]
 ---
 # 资管费率净收益试算器 / Fund Fee & Net Return Calc
 

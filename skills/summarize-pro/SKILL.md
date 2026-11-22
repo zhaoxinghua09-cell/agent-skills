@@ -54,6 +54,7 @@ trigger_keywords:
 display_name: 会议纪要专家
 display_name_en: summarize-pro
 
+capabilities: [read, write]
 ---
 
 # Enhanced Summarization: Pick the Format, Then Stay Faithful

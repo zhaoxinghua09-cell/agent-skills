@@ -27,6 +27,7 @@ tags: [lgd-gate, AI 治理, 门禁, 质量门, 发布门]
 ai_protocol: true
 
 lineage: ["LGD-有籍", "LGD-有门禁", "GovernanceOS-GATE"]
+capabilities: [read, write, exec]
 ---
 
 # LGD 门禁中枢（lgd-gate）

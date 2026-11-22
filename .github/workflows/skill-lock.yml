@@ -1,0 +1,80 @@
+name: skill-lock
+
+# 技能包完整性锁（零第三方 action 依赖）
+# 刻意不使用 actions/checkout 等任何第三方 action：
+#   1) 供应链面为零，不需要在 actions.lock 里新增条目；
+#   2) 不受组织"必须 40 位 SHA"策略影响；
+#   3) 只依赖 git 与 runner 自带的 python3。
+# 这个 job 自带负控（改坏一个字节必须变红），不是"只能通过"的门禁。
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: skill-lock-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lock:
+    name: skill tree integrity lock (can fail)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Fetch the exact commit (shell only, no actions)
+        run: |
+          set -euo pipefail
+          git clone --quiet --depth 1 "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" repo
+          cd repo
+          if [ "${GITHUB_EVENT_NAME}" = "pull_request" ] || [ "${GITHUB_EVENT_NAME}" = "pull_request_target" ]; then
+            git fetch --quiet --depth 1 origin "${GITHUB_SHA}"
+            git checkout --quiet FETCH_HEAD
+          fi
+          echo "checked out: $(git rev-parse HEAD)"
+
+      - name: Regression tests for the lock tool
+        run: |
+          set -euo pipefail
+          cd repo
+          python3 -c "import pytest, cryptography" 2>/dev/null || python3 -m pip install --quiet pytest cryptography
+          python3 -m pytest tests/test_skill_lock.py -q
+
+      - name: Preflight - actions.lock must cover every `uses:` ref
+        run: |
+          set -euo pipefail
+          cd repo
+          if [ -f .github/workflows/actions.lock ]; then
+            python3 tools/check_lockfile_refs.py .
+          else
+            echo "no actions.lock in this repo - preflight skipped"
+          fi
+
+      - name: Verify the skills lock
+        run: |
+          set -euo pipefail
+          cd repo
+          python3 tools/skill_lock.py verify --root .
+
+      - name: Capability declaration audit (advisory, never fails the build)
+        run: |
+          set -euo pipefail
+          cd repo
+          python3 tools/capability_scan.py --root . || true
+
+      - name: Negative control - one mutated byte must fail
+        run: |
+          set -euo pipefail
+          cd repo
+          python3 tools/skill_lock.py selftest --root .
+
+      - name: Audit trail (skill count + root digest)
+        run: |
+          set -euo pipefail
+          cd repo
+          python3 -c "import json;d=json.load(open('skills.lock.json',encoding='utf-8'));print('skill_count=%d root_digest=%s'%(d['skill_count'],d['root_digest']))"

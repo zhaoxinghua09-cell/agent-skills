@@ -32,6 +32,7 @@ risk_rationale: "门禁批量补丁默认 medium（Steven 2026-09-28 令：我�
 ai_protocol: true
 
 lineage: ["LGD-有籍"]
+capabilities: [read]
 ---
 > 凡自治之物 · LGD 治理学 · 创造术家族 ｜ 评测协议：[skill-quality-gate](../skill-quality-gate/SKILL.md)
 

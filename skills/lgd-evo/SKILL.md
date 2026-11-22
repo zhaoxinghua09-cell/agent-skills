@@ -27,6 +27,7 @@ tags: [lgd-evo, AI 治理, 演化, 自进化, 经验回流]
 ai_protocol: true
 
 lineage: ["LGD-有籍", "LGD-有门禁", "GovernanceOS-EVO"]
+capabilities: [read, write, exec]
 ---
 
 # LGD 演化中枢（lgd-evo）

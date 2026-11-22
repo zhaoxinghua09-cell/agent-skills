@@ -1,0 +1,41 @@
+name: attest
+
+# 让"外人不需要信任我们的私钥"也能验证锁：
+# 用 GitHub 原生 artifact attestation（Sigstore + GitHub OIDC）给 skills.lock.json 出证。
+# 验证方只需一条命令（无需任何凭据）：
+#   gh attestation verify skills.lock.json --repo <owner>/<repo>
+# 凭据里绑定的是"哪个仓库、哪个 workflow、哪个 commit"签发，不是我们保管的 Ed25519 私钥。
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write        # OIDC 身份
+  attestations: write    # 写入 attestation
+
+concurrency:
+  group: attest-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  attest:
+    name: attest the integrity lock (external-verifiable)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Fetch the exact commit (shell only, no checkout action)
+        run: |
+          set -euo pipefail
+          git clone --quiet --depth 1 "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" repo
+          cd repo
+          echo "attesting $(git rev-parse HEAD) / skills.lock.json"
+
+      # 唯一一个第三方 action：钉到 v4.2.2 的 40 位 commit
+      - name: Attest the lockfile
+        uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8
+        with:
+          subject-path: repo/skills.lock.json
