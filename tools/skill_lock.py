@@ -33,9 +33,12 @@ from pathlib import Path
 LOCK_NAME = "skills.lock.json"
 ANCHOR_NAME = "skills.lock.anchor.json"
 LEDGER_NAME = "skills.lock.log.jsonl"
+REVOKE_NAME = "skills.lock.revocations.jsonl"
+# 单技能仓（SKILL.md 在仓库根）：由 CLI 开关或环境变量打开；selftest 的子进程靠环境变量继承
+ALLOW_ROOT_SKILL = os.environ.get("SKILLLOCK_ALLOW_ROOT") == "1"
 SKIP_DIRS = {".git", "node_modules", "__pycache__", ".venv", "venv", "tests", "fixtures", "testdata"}
 # 锁自身的产物必须排除，否则"仓库根目录本身就是一个技能"的仓会自我递归漂移
-SKIP_FILES = {"skills.lock.json", "skills.lock.sig", "skills.lock.pub", "skills.lock.policy.json", "skills.lock.anchor.json", "skills.lock.log.jsonl"}
+SKIP_FILES = {"skills.lock.json", "skills.lock.sig", "skills.lock.pub", "skills.lock.policy.json", "skills.lock.anchor.json", "skills.lock.log.jsonl", "skills.lock.revocations.jsonl"}
 TEXT_LIMIT = 1_000_000  # 单文件 >1MB 按二进制处理，避免读爆内存
 
 
@@ -57,27 +60,36 @@ def _sha256_file(p: Path) -> str:
     return h.hexdigest()
 
 
-def _skill_dirs(root: Path) -> list[Path]:
-    """任何含 SKILL.md 的目录都算一个技能，跳过明显的非技能目录。"""
+def _skill_dirs(root: Path, allow_root: bool | None = None) -> list[Path]:
+    """任何含 SKILL.md 的目录都算一个技能，跳过明显的非技能目录。
+
+    allow_root=True 时支持"单技能仓"：SKILL.md 就在仓库根上（SynomosAI 那批
+    *-checker 全是这个形态）。此时根技能只锁 SKILL.md 本身，不把 CI/基建文件
+    算进摘要 —— 既覆盖了技能声明，又不至于"仓库根即技能"自我递归。
+    """
+    if allow_root is None:
+        allow_root = ALLOW_ROOT_SKILL
     found: list[Path] = []
     for dirpath, dirnames, filenames in os.walk(root):
         dirnames[:] = sorted(d for d in dirnames if d not in SKIP_DIRS and not d.startswith("."))
-        # 仓库根目录本身不算技能：否则 CI/基建文件会被算进摘要，造成跨环境假红
-        if "SKILL.md" in filenames and Path(dirpath) != root:
+        # 仓库根目录默认不算技能：否则 CI/基建文件会被算进摘要，造成跨环境假红
+        if "SKILL.md" in filenames and (Path(dirpath) != root or allow_root):
             found.append(Path(dirpath))
     # 只按 POSIX 相对路径字符串排序，避免 Windows 的大小写不敏感排序造成跨平台摘要不一致
     return sorted(found, key=lambda d: (d.relative_to(root).as_posix() or "."))
 
 
-def _tree_digest(skill_dir: Path) -> tuple[str, int]:
+def _tree_digest(skill_dir: Path, root_skill: bool = False) -> tuple[str, int]:
     """目录摘要 = sha256( 排序后的 "相对路径\\0文件sha256" 逐行拼接 )。"""
     files: list[tuple[str, str]] = []
-    for p in skill_dir.rglob("*"):
+    candidates = [skill_dir / "SKILL.md"] if root_skill else list(skill_dir.rglob("*"))
+    for p in candidates:
         if not p.is_file():
             continue
-        parts = set(p.relative_to(skill_dir).parts)
-        if parts & SKIP_DIRS or p.name in SKIP_FILES:
-            continue
+        if not root_skill:
+            parts = set(p.relative_to(skill_dir).parts)
+            if parts & SKIP_DIRS or p.name in SKIP_FILES:
+                continue
         rel = p.relative_to(skill_dir).as_posix()
         files.append((rel, _sha256_file(p)))
     # 关键：按 POSIX 字符串排序（字节序），Windows 的 case-insensitive 排序会让摘要跨平台不一致
@@ -107,11 +119,11 @@ def _front_matter(skill_md: Path) -> tuple[str, str]:
     return name, desc
 
 
-def build_lock(root: Path, previous: dict | None = None) -> dict:
+def build_lock(root: Path, previous: dict | None = None, allow_root: bool | None = None) -> dict:
     entries = []
-    for d in _skill_dirs(root):
+    for d in _skill_dirs(root, allow_root):
         rel = d.relative_to(root).as_posix() or "."
-        digest, count = _tree_digest(d)
+        digest, count = _tree_digest(d, root_skill=(rel == "."))
         fm_name, fm_desc = _front_matter(d / "SKILL.md")
         entries.append(
             {
@@ -160,7 +172,7 @@ def diff_lock(root: Path, lock: dict) -> list[str]:
         if d is None:
             problems.append(f"{path}: recorded in {LOCK_NAME} but missing on disk (skill removed)")
             continue
-        digest, count = _tree_digest(d)
+        digest, count = _tree_digest(d, root_skill=(path == "."))
         if digest != entry["digest"]:
             problems.append(
                 f"{path}: digest drift (locked {entry['digest'][:12]}, actual {digest[:12]}); "
@@ -446,12 +458,89 @@ def cmd_verify(root: Path, lock_path: Path) -> int:
     problems = diff_lock(root, lock)
     problems.extend(_signature_problems(root, lock_path))
     problems.extend(_ledger_problems(root, lock))
+    problems.extend(_revocation_problems(root, lock))
     for p in problems:
         print(f"::error::{p}")
     if problems:
         print(f"SKILL LOCK FAIL: {len(problems)} problem(s)")
         return 1
     print(f"SKILL LOCK OK: {lock['skill_count']} skills match {lock_path.name}")
+    return 0
+
+
+def _revocation_problems(root: Path, lock: dict) -> list[str]:
+    """撤销表：某个 (path, digest) 一旦被撤销，带这个摘要的锁必须直接判红。
+
+    竞品（PromptSign spec 06 / Sigstore 生态）都有 revocation feed，缺了它等于"签了就不能反悔"，
+    被投毒的技能一旦签过就永远可用。撤销表本身也做哈希链，防静默删条目。
+    """
+    path = root / REVOKE_NAME
+    if not path.exists():
+        return []
+    problems: list[str] = []
+    try:
+        entries = _read_ledger(path)
+    except Exception as exc:  # noqa: BLE001
+        return [f"{REVOKE_NAME}: unreadable ({exc})"]
+    prev_chain = "0" * 64
+    for i, e in enumerate(entries):
+        if e.get("seq") != i + 1:
+            problems.append(f"revocation[{i}]: seq={e.get('seq')} breaks 1-based continuity")
+        if str(e.get("prev_chain")) != prev_chain:
+            problems.append(f"revocation[{i}]: prev_chain does not link (entry deleted or reordered)")
+        if _entry_chain(e) != str(e.get("chain")):
+            problems.append(f"revocation[{i}]: chain hash mismatch (entry edited after being written)")
+        prev_chain = str(e.get("chain"))
+    revoked: dict[tuple[str, str], dict] = {}
+    for e in entries:
+        revoked[(str(e.get("path")), str(e.get("digest")))] = e
+    for skill in lock.get("skills", []):
+        hit = revoked.get((skill["path"], skill["digest"]))
+        if hit:
+            problems.append(
+                f"{skill['path']}: REVOKED at {hit.get('ts')} ({hit.get('reason')}); "
+                f"this digest must not be trusted - regenerate after fixing the skill"
+            )
+    return problems
+
+
+def cmd_revoke(root: Path, lock_path: Path, path_sel: str, reason: str) -> int:
+    """把某个技能当前摘要登记进撤销表（只追加，带哈希链）。"""
+    if not lock_path.exists():
+        print(f"::error::missing {LOCK_NAME}; run generate first")
+        return 1
+    lock = json.loads(lock_path.read_text(encoding="utf-8"))
+    skills = lock.get("skills", [])
+    hits = [s for s in skills if s["path"] == path_sel] or (
+        [s for s in skills if path_sel == "*"]
+    )
+    if not hits:
+        print(f"::error::{path_sel}: not found in {LOCK_NAME}")
+        return 1
+    p = root / REVOKE_NAME
+    entries = _read_ledger(p) if p.exists() else []
+    last = entries[-1] if entries else None
+    prev_chain = str(last.get("chain")) if last else "0" * 64
+    ts = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    added = 0
+    for s in hits:
+        if any(e.get("path") == s["path"] and e.get("digest") == s["digest"] for e in entries):
+            continue
+        entry = {
+            "seq": (int(last.get("seq", 0)) + len([h for h in hits]) + 1) if last else added + 1,
+            "ts": ts,
+            "path": s["path"],
+            "digest": s["digest"],
+            "reason": reason,
+            "prev_chain": prev_chain,
+        }
+        entry["seq"] = (int(last.get("seq", 0)) if last else 0) + added + 1
+        entry["chain"] = _entry_chain(entry)
+        with p.open("a", encoding="utf-8", newline="\n") as f:
+            f.write(json.dumps(entry, ensure_ascii=False, sort_keys=True) + "\n")
+        prev_chain = entry["chain"]
+        added += 1
+    print(f"revoked {added} skill(s) -> {REVOKE_NAME}")
     return 0
 
 
@@ -468,11 +557,16 @@ def cmd_selftest(root: Path) -> int:
         lock = json.loads((work / LOCK_NAME).read_text(encoding="utf-8"))
         target = None
         for e in lock["skills"]:
-            d = work / e["path"]
-            for p in sorted(d.rglob("*")):
-                if p.is_file():
-                    target = p
-                    break
+            d = work / e["path"] if e["path"] != "." else work
+            # 根技能只锁 SKILL.md，负控必须改它，改 README 之类的不会触发摘要
+            if e["path"] == ".":
+                if (d / "SKILL.md").exists():
+                    target = d / "SKILL.md"
+            else:
+                for p in sorted(d.rglob("*")):
+                    if p.is_file():
+                        target = p
+                        break
             if target:
                 break
         if target is None:
@@ -587,11 +681,19 @@ def cmd_selftest(root: Path) -> int:
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("command", choices=["generate", "verify", "selftest", "anchor", "keygen", "sign", "ledger"])
+    ap.add_argument("command", choices=["generate", "verify", "selftest", "anchor", "keygen", "sign", "ledger", "revoke"])
     ap.add_argument("--root", default=".")
     ap.add_argument("--out", default=None)
     ap.add_argument("--key", default=None)
+    ap.add_argument("--path", default="*", help="revoke: 技能相对路径，'*' 表示当前锁里全部技能")
+    ap.add_argument("--reason", default="manual", help="revoke: 撤销原因（会写进撤销表并参与哈希链）")
+    ap.add_argument("--allow-root-skill", action="store_true",
+                    help="单技能仓模式：SKILL.md 在仓库根时也算一个技能（只锁 SKILL.md）")
     a = ap.parse_args()
+    global ALLOW_ROOT_SKILL
+    if a.allow_root_skill:
+        ALLOW_ROOT_SKILL = True
+        os.environ["SKILLLOCK_ALLOW_ROOT"] = "1"  # 让 selftest 的子进程继承同一模式
     root = Path(a.root).resolve()
     lock_path = Path(a.out).resolve() if a.out else root / LOCK_NAME
     key_path = Path(a.key).resolve() if a.key else Path(
@@ -609,6 +711,8 @@ def main() -> int:
         return cmd_sign(root, lock_path, key_path)
     if a.command == "ledger":
         return cmd_ledger(root, lock_path)
+    if a.command == "revoke":
+        return cmd_revoke(root, lock_path, a.path, a.reason)
     return cmd_selftest(root)
 
 
